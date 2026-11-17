@@ -1,10 +1,11 @@
 KIND: tests
 TASK: T-0004
-AT: 2026-11-17T18:06+08:00
+AT: 2026-11-17T21:14+08:00
 SCOPE: .agent/requirements.md 静态校验（规模/覆盖/编号/表格/禁止内容）
 COMMAND: PowerShell 7 inline；显式 -Encoding UTF8
+HEAD_AT_TEST: 482a53192317b966683729f3b3447dcab843c72b
 RESULT: PASS (fail=0)
-NOTE: 本单为需求文档，无固件/硬件构建物；以结构、关键词、边界检查代替构建测试。
+NOTE: 本单为需求文档，无固件/硬件构建物；以结构、关键词、边界检查代替构建测试；本轮为 C4 计数修正后的重跑。
 
 [1] 规模
 LINES=135; BYTES=11,880; LIMIT=400 -> PASS
@@ -16,7 +17,7 @@ LINES=135; BYTES=11,880; LIMIT=400 -> PASS
 [3] P/D 编号（21/21 PASS）
 P-01..P-14；D-01..D-07
 
-[4] 表格结构（21/21 PASS）
+[4] 表格结构与来源（21/21 PASS）
 每行 4 列；来源均命中 T4-* / T3-* / D-* 定义；无空来源
 
 [5] 验收覆盖（10/10 PASS）
@@ -24,4 +25,12 @@ P-01..P-14；D-01..D-07
 
 [6] 禁止规格/针脚模式（26/26 CLEAN）
 B25; A25; SDA; SCL; SENSE+; SENSE−; SHARE; SYNC; 100ms; 500ms; 10k; 75℃; 95℃; mVpp; ppm; 240W; STM32; LLC; 200kHz; 55V; 120×; 180mm; 215mm; ±10%; ±0.1%; 0.01V
+
+[7] 输出原文
+HEAD_AT_TEST=482a53192317b966683729f3b3447dcab843c72b
+LINES=135; BYTES=11880; LIMIT=400 -> PASS
+REQUIRED=28/28 MISS=none
+IDS=21/21 MISS=none
+TABLEROWS=21/21 BAD=0 COVERAGE=10/10
+FORBIDDEN_CLEAN=26/26 FOUND=none
 RESULT: PASS (fail=0)

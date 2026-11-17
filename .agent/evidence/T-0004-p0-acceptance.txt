@@ -1,7 +1,7 @@
 KIND: acceptance
 TASK: T-0004
-AT: 2026-11-17T18:09+08:00
-SCOPE: 工单验收 1–4 逐条（含验收 2 的 11 项覆盖）
+AT: 2026-11-17T21:14+08:00
+SCOPE: 工单验收 1–4 逐条（含验收 2 的 10 项覆盖）
 RESULT: PASS
 
 [验收 1] 第 1 部分：定位 + 功能清单 + 范围外
@@ -14,7 +14,7 @@ RESULT: PASS
 04 PASS 范围外：无上位机、硬件用立创EDA 本地 Hardware/、仓库只放固件
    requirements.md:104-114
 
-[验收 2] 11 项必须覆盖
+[验收 2] 10 项必须覆盖
 05 PASS 输出电压 0.5–48V；设定 0–48V；低于 0.5V 不保证 + 原因
    requirements.md:71、97-102
 06 PASS 电流 0–5A
@@ -45,6 +45,10 @@ RESULT: PASS
 [验收 4] 交付
 17 PASS C1 17821d8b539f3d4cea1e9c89d64223ebf3315ba2 已 push origin/master，本地=远端
    T-0004-p0-sha.txt [1]
-18 PASS C2 c5951ed4798c4b2dd60af291e70754f77db0b91e 证据提交已 push；C3 最终一致性修复 + 证据提交后 push，最终 commit 与远端 SHA 见报告
-   T-0004-p0-sha.txt [2-3]
+18 PASS C2 c5951ed4798c4b2dd60af291e70754f77db0b91e 已 push origin/master，本地=远端
+   T-0004-p0-sha.txt [2]
+19 PASS C4 482a53192317b966683729f3b3447dcab843c72b 最终内容提交（含 P-01/D-07 修复与 10 项计数修正）已 push origin/master，本地=远端
+   T-0004-p0-sha.txt [2]
+20 PASS C5 证据提交（本文件所在提交）后 push，最终 HEAD 与远端 SHA 见报告
+   T-0004-p0-sha.txt [3]
 RESULT: PASS

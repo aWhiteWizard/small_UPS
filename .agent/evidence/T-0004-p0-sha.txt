@@ -1,16 +1,15 @@
 KIND: sha
 TASK: T-0004
-AT: 2026-11-17T18:12+08:00
+AT: 2026-11-17T21:14+08:00
 BRANCH: task/T-0004
+FINAL_CONTENT_COMMIT: 482a53192317b966683729f3b3447dcab843c72b
 INITIAL_CONTENT_COMMIT: 17821d8b539f3d4cea1e9c89d64223ebf3315ba2
-EVIDENCE_COMMIT: c5951ed4798c4b2dd60af291e70754f77db0b91e
-[1] C1 内容提交本地/远端对照
-$ git rev-parse HEAD -> 17821d8b539f3d4cea1e9c89d64223ebf3315ba2
-$ git ls-remote origin refs/heads/master -> 17821d8b539f3d4cea1e9c89d64223ebf3315ba2	refs/heads/master
-RESULT: PASS（C1 本地=远端）
-[2] C2 证据提交本地/远端对照
-$ git rev-parse HEAD -> c5951ed4798c4b2dd60af291e70754f77db0b91e
-$ git ls-remote origin refs/heads/master -> c5951ed4798c4b2dd60af291e70754f77db0b91e	refs/heads/master
-RESULT: PASS（C2 本地=远端）
-[3] 最终提交
-FINAL_COMMIT: C3（本文件所在提交；含 P-01/D-07 一致性修复与最终证据）；C3 push 后最终 SHA 见报告。
+[1] 历史提交（均已 push，本地=远端）
+C1 17821d8b539f3d4cea1e9c89d64223ebf3315ba2; C2 c5951ed4798c4b2dd60af291e70754f77db0b91e; C3 f63f31b350ab7e5bb6bc25fe179fbca7e2ad2fb1
+[2] C4 最终内容提交本地/远端对照
+$ git rev-parse HEAD -> 482a53192317b966683729f3b3447dcab843c72b
+$ git ls-remote origin refs/heads/master -> 482a53192317b966683729f3b3447dcab843c72b	refs/heads/master
+COMPARE: local=482a53192317b966683729f3b3447dcab843c72b remote=482a53192317b966683729f3b3447dcab843c72b match=True
+RESULT: PASS（C4 最终内容）
+[3] 证据提交
+EVIDENCE_COMMIT: C5（本文件所在提交）；C5 push 后最终 HEAD 与远端 SHA 见交付报告。
