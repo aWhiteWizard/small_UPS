@@ -1,14 +1,11 @@
 KIND: tests
 TASK: T-0016
-AT: 2026-11-18T00:03+08:00
-CMD: PowerShell 7 + [IO.File] UTF8：表列/章节/针脚/寄存器/引用/编码/key-fact 校验；git diff --cached --check
-LINES: requirements=577；docs：architecture=67、module-design=95、interface=56、test-plan=61（四份行数与 T-0015 完全一致）
-CHAPTERS: 5（1 定位与范围 / 2 系统级 / 3 电源本体 / 4 电源调试板 / 5 附录）；附录 A–E=5
-TABLE: 6 份 md 表格 TABLE_BAD=0（表头/分隔/数据行列数一致）
-PIN: 2.1.2 表 12 行 × A/B 各 32 = 64 针（PIN_PER_SIDE=32）
-REG: 3.3.1 表 0x00–0x3F 连续 64/64，REG_UNIQUE=64，min=0 max=63
-CONTENT: key-fact 缺失 0（0.5–48V、EN 四条件、无多机均流、PFC_FAULT、6 点 V、3 点 I、CLEAR 0xA5、ALERT 低有效开漏、PT100 Modbus）
-REFS: docs 四份 §引用全部命中 requirements 标题；docs 内 requirements-part2/R1/R2 旧引用=0（仅 README/附录 D 历史说明保留）
-ENCODING: UTF-8 无 BOM；行尾空白=0；requirements-part2.md 不存在（Test-Path=False）
-DIFF: 8 文件 592 insertions + 429 deletions = 1021 行（>400 提示线，<1200 硬上限）；git diff --cached --check exit 0
+AT: 2026-11-18T07:52+08:00
+CMD: PowerShell 7 + [IO.File] UTF8 结构校验；git diff --numstat/--check；git show 895f143 -- docs
+STRUCT: REQ_LINES=607 H1=6（含文档标题）CH=5 APPX=5（H2 A–E）TABLE_BAD=0 VER_OK=True RULE_OK=True PENDING=3 PART2=False
+DOCS: architecture=67 module-design=103 interface=228 test-plan=83 行；标题数 13/17/6/7，与 T-0016 提交前一致
+README: DOC_MAP=True RULES=True
+ENC: BOM=False TRAILING_WS=0 DIFF_CHECK_EXIT=0
+SIZE: doc=15 文件/1824 行；code=0/0；excluded=21 文件/386 行；total=36/2210（29470ae..本轮 HEAD）
+T0016_DIFF: cb3d9df..b678a7a = 8 文件 601+/429- = 1030 行（非证据；T-0016 内容提交 895f143 已 push）
 RESULT: PASS
