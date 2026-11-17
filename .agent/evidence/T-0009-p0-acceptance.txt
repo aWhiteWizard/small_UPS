@@ -1,0 +1,15 @@
+KIND: acceptance
+TASK: T-0009
+AT: 2026-11-18 +08:00
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); real base 862335905e4117adbd6cff94453a8dd7a4118a58 (ff-only)
+CONTENT_COMMIT: 29c323d5741fe5dbf19f863dd8c3096961cea802
+1 范围：R:587–888 §4 只写 D 侧；§2.4/§3.3/§3.4 本体阈值与寄存器未改；interface 只填 §3 两行与 §4.4：PASS
+2 功能清单：R:589–602 D-01 金手指、D-02 双色灯/两页 8 位、D-03 5 键+电源键、D-04 EN/心跳、D-05 ALERT、D-06 PT100、D-07 掉电、D-08 USB-C、D-09 升级透传、D-10 使能按钮：PASS
+3 按键交互：R:638–646 左右选位/上下改数、SET①V→SET②I→SET③生效、温度页 SET①/②、长按 SET 2s 锁存；R:648–688 状态机与页面切换图各 1：PASS
+4 使能序列：R:692–699 前置（在位/无故障/温度/通信/设定/EN 低）；R:704 EN↑等 20ms（验收 10–20ms 上限）；R:705 V/I+COMMIT+HB+ENABLE；R:706 读回 OUT_ON；R:710–716 关断 ENABLE=0→8ms→EN↓；R:720 100ms 心跳；R:721 EN 复位低（GPIO 上电首步输出低）；R:725–743 时序图：PASS
+5 显示异常：R:614–636 8 位 2×4、≥100Hz/10Hz/2Hz/2 字符每秒；超温 ot、故障 Fxx、通信 E01、PT100 E02、校准 CAL、升级 UP、强制关断 OFF/LOC：PASS
+6 PT100：R:745–762 9600/8N1、地址 1、FC03、500ms、3 次掉线、掉线/超温禁输出+报警、阈值存调试板 A/B+CRC：PASS
+7 规模：内容 4 文件 247 行；含 4 份 P0 证据与 worklog 的 C1..C2 合计 9 文件 / 344 行（≤400 行；内容文件 4≤8）：PASS
+8 交付：C1=29c323d 已 commit/push；sha 文件含 COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文；C1 时 LOCAL=REMOTE=29c323d；C2 证据提交后最终 SHA 见报告：PASS
+NOTE: EN 20ms 取验收 10–20ms 上限，同时满足本体 S1_CHECK「EN 高 ≥20ms」，理由见 R:704 与 KB；页面切换键/解锁键/阈值默认值为建议口径，已标 §4.3 待 owner，不静默定版。
+RESULT: PASS

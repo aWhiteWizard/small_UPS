@@ -1,0 +1,12 @@
+KIND: g0
+TASK: T-0009
+AT: 2026-11-18 +08:00
+TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
+BASE_REAL: 862335905e4117adbd6cff94453a8dd7a4118a58 (ff-only origin/master; +15 upstream commits)
+CONTENT_COMMIT: 29c323d5741fe5dbf19f863dd8c3096961cea802
+CHECK_START: worktree clean; git merge --ff-only ba16717..8623359 exit 0; origin/master=8623359
+CHECK_SCOPE: only D-side docs: requirements §4.1–§4.3, interface §3/§4.4, README §6/§7, kb; no §2.4/§3.3/§3.4 body thresholds changed
+CHECK_STRUCT: requirements=888 interface=236 README=107 kb=97 worklog=33; TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=False
+CHECK_DIFF: content 4 files 218+/29-=247 lines; C1 total 5 files 251+/29-=280 lines (<=400)
+CHECK_SHA: C1 push 8623359..29c323d HEAD -> master; LOCAL_HEAD=REMOTE_HEAD=29c323d
+RESULT: PASS

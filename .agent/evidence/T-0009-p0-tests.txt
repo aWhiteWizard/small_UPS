@@ -1,0 +1,14 @@
+KIND: tests
+TASK: T-0009
+AT: 2026-11-18 +08:00
+CMD: PowerShell 7 UTF8 ReadAllLines + regex checks; git diff --check; git diff --numstat
+LINES: requirements=888 interface=236 README=107 kb=97
+TABLE: TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=False
+MERMAID: fences=6 blocks=3 (stateDiagram-v2=1 flowchart=1 sequenceDiagram=1), all closed
+D_IDS: D-01..D-10 = 10/10; covers slot display keys power-button PT100 USB-C upgrade-passthrough
+FLOW: SET1→SET2→SET3 (V→I→apply); page2 SET1→SET2 (threshold); long SET 2s; state map + page map
+EN: precondition(short-pin/no-fault/temp normal); EN↑→20ms(accept 10–20ms)→I2C V/I+COMMIT+HB+ENABLE→OUT_ON; off ENABLE=0→8ms(accept 5–10ms)→EN↓; HB 100ms; GPIO reset low
+DISPLAY: 8 digits 2×4; screen ≥100Hz; data 10Hz; flash 2Hz; scroll 2 chars/s; Ot/Fxx/E01/E02/CAL/UP/OFF-LOC
+PT100: 9600/8N1 addr1 FC03; 500ms poll; 3 consecutive fail=offline; disable output+alarm; threshold stored on D side
+ANCHORS: R §4.2.1–§4.2.6 present; interface §3 two rows filled; §4.4 present; T-0009 placeholder=0; diff --check exit 0
+RESULT: PASS
