@@ -1,0 +1,12 @@
+KIND: sha
+TASK: T-0003
+AT: 2026-11-17T13:22+08:00
+BRANCH: task/T-0003
+CONTENT_COMMIT: abfc9356e80517ada6bc45ccfdbde1b3b9fef6be
+[1] 内容提交核对
+$ git rev-parse HEAD -> abfc9356e80517ada6bc45ccfdbde1b3b9fef6be
+$ git ls-remote origin refs/heads/task/T-0003 -> abfc9356e80517ada6bc45ccfdbde1b3b9fef6be refs/heads/task/T-0003
+$ git ls-remote origin refs/heads/master -> bdc0512e4f9e5db92ee24a485dd891c75bb1ce55 refs/heads/master
+[2] 证据提交
+EVIDENCE_COMMIT: C2（本文件所在提交）；提交后同一命令核对，C2 见报告。
+RESULT: PASS（内容 C1 本地=远端；最终 C2 已在报告核对）
