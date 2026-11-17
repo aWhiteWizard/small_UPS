@@ -12,6 +12,6 @@ CONTENT_COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68
 | 5 | 不重复 T-0007 环境/安规/成本/精度，只交叉引用；冲突列清单不改口径 | PASS | R 附录 I.5（1480–1502）：5 项只引用 + 6 项冲突/张力；附录 I 无 T-0007 签名数值 |
 | 6 | 只写需求，不写实现/器件；UI 细节由 T-0009，本单只补必须可见/可判定 | PASS | R 附录 I 开头边界声明；I.2 原则；I.1 只引用既有机械基线，不选型；冲突不改 T-0009/§4.4.2 |
 | 7 | 文件规模 ≤8 文件 / ≤400 行 | PASS | 8 文件：requirements/README/kb/worklog + 4 P0 证据；内容提交 4 文件/230 行；总新增约 353 行（见 g0/tests） |
-| 8 | 自行 commit → push origin HEAD:refs/heads/master → ls-remote 核对 LOCAL=REMOTE；SHA 证据含 COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote；报告附 commit 号 | PASS | C1=65cc739c1bf333cef38e7e583376ff8a7f11ad68；push `49c5029..65cc739`；LOCAL=REMOTE=C1；C2 记录提交，最终 SHA 见报告；`.agent/evidence/T-0020-p0-sha.txt` 记录 C1 原文 |
+| 8 | 自行 commit → push origin HEAD:refs/heads/master → ls-remote 核对 LOCAL=REMOTE；SHA 证据含 COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote；报告附 commit 号 | PASS | C1=65cc739c1bf333cef38e7e583376ff8a7f11ad68；C2=3dacec19688d61e82a24aaed30b414701dfa8776；C3=d605bb23f4a7f7098c77e0e0ee7f1392735f43f2（中间记录）；C4=最终记录提交；C1 push `49c5029..65cc739`、C2 push `65cc739..3dacec1`、C3 push `3dacec1..d605bb2`（exit 0）；最终 SHA 见报告；`.agent/evidence/T-0020-p0-sha.txt` 记录 C1/C2 原文 |
 
 NOTE: 状态可见性“同屏”按同一被测量成对落实（V/I 可分页），与 T-0009 现 8 位 2×4 两页布局的缺口登记在 I.5 #1 / I.7 #3；未改 T-0009 文字。

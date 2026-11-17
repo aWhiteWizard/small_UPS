@@ -13,5 +13,5 @@ PUSH_C1: 49c5029..65cc739  HEAD -> master（exit 0）
 PUSH_C2: 65cc739..3dacec1  HEAD -> master（exit 0）
 LS_REMOTE: 3dacec19688d61e82a24aaed30b414701dfa8776	refs/heads/master
 VERIFY: LOCAL_HEAD == REMOTE_HEAD == 3dacec19688d61e82a24aaed30b414701dfa8776
-NOTE: 本文件随记录提交 C3 落库；C3 为记录提交，最终 LOCAL=REMOTE=C3 在报告给出（文件无法包含自身提交哈希）。
+NOTE: 本文件随记录提交 C3/C4 落库；C3 为中间记录（本文件/worklog），C4 为最终记录提交（G0/acceptance/sha/worklog 收口）；最终 LOCAL=REMOTE=C4 在报告给出（文件无法包含自身提交哈希）。
 RESULT: PASS

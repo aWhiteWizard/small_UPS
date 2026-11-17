@@ -17,4 +17,4 @@ G0 CHECKS
 - working tree before C2 -> only T-0020 P0 evidence/worklog changes; no source changes
 
 RESULT: PASS
-NOTE: C2 is the record commit for this G0 file, worklog and P0 evidence; final LOCAL_HEAD=REMOTE_HEAD=C2 is recorded in the delivery report.
+NOTE: C2 is the evidence commit for this G0 file, worklog and P0 evidence; C3 was an intermediate record commit (sha/worklog); C4 is the final record commit. Final LOCAL_HEAD=REMOTE_HEAD=C4 is recorded in the delivery report.
