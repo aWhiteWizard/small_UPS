@@ -1,10 +1,10 @@
 KIND: g0
 TASK: T-0016
-AT: 2026-11-18T00:03+08:00
+AT: 2026-11-18T07:52+08:00
 BRANCH: task/T-0016 @ D:\workspace\wt\small-ups\T-0016
-BASE: 29470aee04c223175f8f0d7a21f5cef141f623c4（看板 baseSha）→ cb3d9dff5d5a69c1354ba84f9ae54c0320cd758b（origin/master，T-0015 最终提交）
-CMD: git merge --ff-only origin/master; git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain=v1 --untracked-files=all
-STATUS: 开工 HEAD=29470ae、origin/master=cb3d9df（behind，含 T-0013/T-0015）；已 ff-only 到 cb3d9df；docs 四份骨架与 requirements v0.2 到位；工作区在 ff 后干净
-OBJECT: .agent/requirements.md=577 行（合并后）；requirements-part2.md 已删除；docs 67/95/56/61 行（骨架结构未变）
-DELIVERY: 2026-11-18 00:50 已 merge origin/master(5c48e08，含 T-0006/T-0021) 后工作区干净；交付 push 与 SHA 见 T-0016-p0-sha.txt。
+BASE: 看板 baseSha=29470ae（拆分前旧值）；真实开工 cb3d9df（ff-only T-0015 后）；本轮开工 HEAD=c2f67af，origin/master=d072d40
+CMD: git status --porcelain=v1 --untracked-files=all; git rev-parse HEAD; git ls-remote origin refs/heads/master; git merge-base --is-ancestor HEAD origin/master; git diff --check
+STATUS: 工作区干净；HEAD=c2f67af 是 origin/master 祖先（历史交付均已入 master）；本轮只改 .agent/evidence 与 .agent/worklogs
+OBJECT: .agent/requirements.md=607 行；requirements-part2.md 不存在；docs 67/103/228/83 行（T-0006 填充后；T-0016 未改骨架标题）
+DELIVERY: 证据提交经合并提交入 master；COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文见 T-0016-p0-sha.txt 与报告
 RESULT: PASS
