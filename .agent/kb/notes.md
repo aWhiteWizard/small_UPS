@@ -88,6 +88,30 @@ KB-TAGS: docs, requirements, merge, references, single-source
 
 把 requirements 第 1/2 部分并成单文件时，除了搬正文，必须同步做三件事：①在合并文件开头与附录写“来源映射 + 删除原因 + git 历史可追溯”；②把 docs/README 里所有 `R1`/`R2`/`requirements-part2.md` 引用改成新章节号（只改引用，不动骨架标题）；③知识库中指向被删文件的旧证据行要标注为历史，新的证据行改用合并后的文件:行。只删文件不改引用，会让下游把“引用缺口”误判成需求缺失。
 
+## 安全边界变更必须三处同步：需求项 / 故障码 / T-0006 保护清单
+
+KB-TYPE: method
+KB-EVIDENCE: `.agent/requirements.md:385`（P-09）、`.agent/requirements.md:482`（0x05）、`docs/interface.md:205`（T-0006 保护清单 0x05）
+KB-TAGS: requirements, safety, otp, consistency
+
+只改需求 P-09 会让 `docs/interface.md` 的 T-0006 保护表仍停在旧动作（如 OTP 只写“断输出”），设计/固件按旧表实现后与需求冲突。裁决安全项时按“需求项 → 故障码语义 → T-0006 保护清单 → 测试计划”全链路同步；本单把 OTP 二级统一为“仅关断输出并锁存、不切 220V、保辅助/风扇”，三处文字均含该口径。
+
+## 急停“切市电”与“状态可读”的张力
+
+KB-TYPE: hardware
+KB-EVIDENCE: `.agent/requirements.md:393-399`（P-15/§3.1.1）
+KB-TAGS: estop, safety, status, power-loss
+
+急停机械切断 220VAC 后整机可能失电，若要求“状态可被 MCU/I2C 读取”会自相矛盾。需求必须写明：状态读取形式由设计定，允许整机失电时仅以无源触点/机械指示对外呈现；寄存器只作补充，且不得被 CLEAR/软件复位/重新上电伪造。否则设计无法同时满足“切市电”和“状态可读”。
+
+## 旧口径只存在于历史草稿时，收口要引用旧行号并在草稿加历史标注
+
+KB-TYPE: method
+KB-EVIDENCE: `.agent/requirements.md:326`（§2.9 收口）、`.agent/requirements.md:1089-1093`（附录 F.4）、`.agent/requirements-draft.md:6`（历史标注）、`:30,32,54`（原始旧句）
+KB-TAGS: requirements, deprecation, traceability, review
+
+本单要废止“自然散热/二级切整机 220V”，但 `requirements.md` 正文已无这些词，旧句只在 `requirements-draft.md`。只改正文会让 reviewer grep 到草稿旧句而误判未收口。做法：正文写“旧表述作废”并引用草稿行号，草稿顶部加历史标注（保留原文），附录 F.4 列 old→new；三处都不删原文，只标作废。
+
 ## 工单 baseSha 落后于真实开工基线会把继承变更算进本单规模
 
 KB-TYPE: system
