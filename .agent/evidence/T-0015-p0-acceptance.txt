@@ -1,10 +1,10 @@
 KIND: acceptance
 TASK: T-0015
-AT: 2026-11-17T23:46+08:00
+AT: 2026-11-17T23:50+08:00
 1 docs 四份骨架及结构项（框图/供电链/模块表/边界表/时序；P/D 模块四栏表；针脚/寄存器/时序/升级引用；6 点/纹波/效率/安全/出厂）：PASS
 2 仅标题/表头/占位，无编造与需求正文复制；每份 ≤120 行（67/95/56/61）：PASS
 3 每份开头写明骨架阶段、填充单、需求为唯一事实源且本文档只做设计展开：PASS
-4 commit + push + SHA 一致：ENGINE_OWNED（worker 按执行模式未 commit；见 T-0015-p0-sha.txt）
+4 commit + push + SHA 一致：PASS（COMMIT=2971101、LOCAL_HEAD=REMOTE_HEAD=2971101，见 T-0015-p0-sha.txt）
 5 未改 .agent/requirements*.md 与任何工单状态；docs 4 文件 279 行：PASS
-SIZE: 10 文件 / 362 行新增（4 docs=279、4 P0=40、worklog=34、KB 增量=9）；超提示线 8 文件，理由见报告「超限理由」
-RESULT: CONTENT_PASS / DELIVERY_PENDING_ENGINE
+SIZE: 10 文件 / 366 行新增 / 1 行删除（4 docs=279、4 P0=43、worklog=34、KB=10）；10 文件超 8 文件提示线（9–10 只记提示），行数 366≤400
+RESULT: PASS / DELIVERED（local HEAD == origin/master）

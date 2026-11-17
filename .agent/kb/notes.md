@@ -6,7 +6,7 @@ KB-TYPE: system
 KB-EVIDENCE: `Get-Content .agent/requirements.md -Raw` 读到 7235 字符且中文乱码（`'数控可调直流电源'` 的 `.Contains()` 为 False）；加 `-Encoding UTF8` 后读到 12050 字节原文，同一断言为 True。
 KB-TAGS: powershell, utf8, encoding, validation
 
-校验中文文档必须显式 `-Encoding UTF8`（或 `[IO.File]::ReadAllText(..., UTF8)`）；不要用默认 `Get-Content` 的 `.Contains()` 结果判定缺失，否则会把正常文档误判为 FAIL。
+校验中文文档必须显式 `-Encoding UTF8`（或 `[IO.File]::ReadAllText(..., UTF8)`）；不要用默认 `Get-Content` 的 `.Contains()` 结果判定缺失，否则会把正常文档误判为 FAIL。同一根因还会让行数假缩水：`(Get-Content docs/architecture.md).Count`=47，而 `-Encoding UTF8` 与 `[IO.File]::ReadAllLines` 均为 67（文件 LF=67）；做 ≤120 行/文件规模校验时同样必须显式 UTF8。
 
 ## worktree 基点落后 origin/master 时先 ff-only 再开发
 
@@ -30,6 +30,15 @@ KB-TYPE: content
 KB-EVIDENCE: .agent/requirements-part2.md:247-251（每通道 5 点）、:145-168（无 PFC_FAULT；UNDERVOLTAGE=0x04）、:61（4.7k 仅调试板侧）、:32-33（A28/A29 已为 UART）
 KB-CONFLICT: T-0012 验收要求 6 点电压 + 3 点电流、故障码含 PFC_FAULT；T-0005 验收与第 2 部分为每通道 5 点且无 PFC_FAULT。
 KB-TAGS: requirements, calibration, fault-code, salvage
+
+## worktree 内看板可能停在建单时，填充单映射以主仓看板为准
+
+KB-TYPE: system
+KB-EVIDENCE: worktree `.agent/board/tasks.json` 仅 3 单、末单 T-0003（29,572B）；`[IO.File]::ReadAllText("D:\workspace\small-ups\.agent\board\tasks.json", UTF8)` 为 100,414B、T-0001–T-0020。`Get-Content .agent/board/tasks.json -Raw | ConvertFrom-Json` 报 `传入的对象无效，应为“:”或“}”`；显式 UTF8 后同一 worktree 文件可解析，确认是旧数据而非损坏。
+KB-TAGS: worktree, board, tasks, powershell, utf8
+
+worktree 只带建单时的看板副本，可能缺后续单；确认「本文由哪些单填充」时读主仓最新看板，并显式 UTF8。不要把 worktree 看板当验收基准或据此判定文件损坏。
+
 
 ## 需求审计以主仓最新看板为准，worktree 的 tasks.json 可能停在 init
 

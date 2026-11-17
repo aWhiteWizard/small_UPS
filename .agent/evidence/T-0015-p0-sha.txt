@@ -1,10 +1,13 @@
 KIND: sha
 TASK: T-0015
-AT: 2026-11-17T23:46+08:00
+AT: 2026-11-17T23:48+08:00
 BASE: 29470aee04c223175f8f0d7a21f5cef141f623c4（看板 baseSha）
 UPSTREAM: f18e0c304765cadf5862a9dc64a5413797c88e65（开工 origin/master；已 ff-only）
-LOCAL_HEAD: f18e0c304765cadf5862a9dc64a5413797c88e65
-REMOTE_HEAD: f18e0c304765cadf5862a9dc64a5413797c88e65 refs/heads/master
-COMMIT: 未由 worker 提交（执行模式 worktree 注明「引擎会提交」）
-DELIVERY: 引擎 commit+push 后以 git rev-parse HEAD == git ls-remote origin refs/heads/master 复核；本文件不伪填 commit SHA
-RESULT: PENDING_ENGINE
+COMMIT: 297110109badc32fad5aa2aecf0e9c6df86d02ee
+LOCAL_HEAD: 297110109badc32fad5aa2aecf0e9c6df86d02ee
+REMOTE_HEAD: 297110109badc32fad5aa2aecf0e9c6df86d02ee refs/heads/master
+CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+LS_REMOTE: 297110109badc32fad5aa2aecf0e9c6df86d02ee	refs/heads/master
+PUSH: f18e0c3..2971101  HEAD -> master（exit 0）
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 297110109badc32fad5aa2aecf0e9c6df86d02ee
+RESULT: PASS
