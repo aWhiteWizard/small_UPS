@@ -1,6 +1,6 @@
 KIND: acceptance
 TASK: T-0004
-AT: 2026-11-17T21:14+08:00
+AT: 2026-11-17T21:15+08:00
 SCOPE: 工单验收 1–4 逐条（含验收 2 的 10 项覆盖）
 RESULT: PASS
 
@@ -47,8 +47,8 @@ RESULT: PASS
    T-0004-p0-sha.txt [1]
 18 PASS C2 c5951ed4798c4b2dd60af291e70754f77db0b91e 已 push origin/master，本地=远端
    T-0004-p0-sha.txt [2]
-19 PASS C4 482a53192317b966683729f3b3447dcab843c72b 最终内容提交（含 P-01/D-07 修复与 10 项计数修正）已 push origin/master，本地=远端
+19 PASS C6 5e273a5beaf414e469a6bcb623ac0ea58cadaf09 最终内容提交（含 P-01/D-07 修复、10 项计数、电压边界/V-I 文案澄清）已 push origin/master，本地=远端
    T-0004-p0-sha.txt [2]
-20 PASS C5 证据提交（本文件所在提交）后 push，最终 HEAD 与远端 SHA 见报告
+20 PASS C7 证据提交（本文件所在提交）后 push，最终 HEAD 与远端 SHA 见报告
    T-0004-p0-sha.txt [3]
 RESULT: PASS
