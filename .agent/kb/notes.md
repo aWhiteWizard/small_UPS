@@ -71,3 +71,11 @@ KB-EVIDENCE: `.agent/requirements-part2.md:113-114,142-144,167-168,207`；`.agen
 KB-TAGS: requirements, parallel, consistency
 
 取消多 PSU 均流时，容易只改针脚“SHARE/SYNC 预留”，遗漏 PARALLEL_MODE/CURRENT_SHARE_EN 寄存器、OUTPUT_STATUS 的 MASTER/SLAVE/SHARE_ACTIVE 位、IMBALANCE/PARALLEL_FAULT 故障码、3.6 语义和覆盖表。审计要按“针脚→寄存器→状态位→故障码→功能条目→覆盖表”全链路扫一遍，保留编号但标“保留/不产生”比删行更利于兼容。
+
+## 需求并单后必须同步改写 docs 与 KB 的旧路径/章节引用
+
+KB-TYPE: method
+KB-EVIDENCE: `.agent/requirements.md:7`（合并说明）、`:525-560`（附录 D 映射与删除原因）；`docs/architecture.md:5,53-67`（R1/R2 已改为 requirements.md §2/§3）；`Test-Path .agent/requirements-part2.md` → `False`
+KB-TAGS: docs, requirements, merge, references, single-source
+
+把 requirements 第 1/2 部分并成单文件时，除了搬正文，必须同步做三件事：①在合并文件开头与附录写“来源映射 + 删除原因 + git 历史可追溯”；②把 docs/README 里所有 `R1`/`R2`/`requirements-part2.md` 引用改成新章节号（只改引用，不动骨架标题）；③知识库中指向被删文件的旧证据行要标注为历史，新的证据行改用合并后的文件:行。只删文件不改引用，会让下游把“引用缺口”误判成需求缺失。

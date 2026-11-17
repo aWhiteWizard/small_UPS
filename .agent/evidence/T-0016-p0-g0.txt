@@ -1,0 +1,9 @@
+KIND: g0
+TASK: T-0016
+AT: 2026-11-18T00:03+08:00
+BRANCH: task/T-0016 @ D:\workspace\wt\small-ups\T-0016
+BASE: 29470aee04c223175f8f0d7a21f5cef141f623c4（看板 baseSha）→ cb3d9dff5d5a69c1354ba84f9ae54c0320cd758b（origin/master，T-0015 最终提交）
+CMD: git merge --ff-only origin/master; git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain=v1 --untracked-files=all
+STATUS: 开工 HEAD=29470ae、origin/master=cb3d9df（behind，含 T-0013/T-0015）；已 ff-only 到 cb3d9df；docs 四份骨架与 requirements v0.2 到位；工作区在 ff 后干净
+OBJECT: .agent/requirements.md=577 行（合并后）；requirements-part2.md 已删除；docs 67/95/56/61 行（骨架结构未变）
+RESULT: PASS
