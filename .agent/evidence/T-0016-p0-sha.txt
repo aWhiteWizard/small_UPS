@@ -1,13 +1,15 @@
 KIND: sha
 TASK: T-0016
-AT: 2026-11-18T00:05+08:00
-BASE: 29470aee04c223175f8f0d7a21f5cef141f623c4（看板 baseSha）→ cb3d9dff5d5a69c1354ba84f9ae54c0320cd758b（origin/master，ff-only 取得 T-0015 骨架）
-COMMIT: 895f1438ee4e157155a8818c8b663ae111d67895（内容交付提交）
-LOCAL_HEAD: 895f1438ee4e157155a8818c8b663ae111d67895（push 后验证时）
-REMOTE_HEAD: 895f1438ee4e157155a8818c8b663ae111d67895
+AT: 2026-11-18T00:56+08:00
+BASE: cb3d9dff5d5a69c1354ba84f9ae54c0320cd758b (corrected: real start after ff-only; ticket baseSha 29470aee was pre-T-0015 and counted inherited changes)
+REVIEW_UPPER: b678a7ab7448599764fd4471408eef65afdce186 (T-0016 final content+evidence commit; later T-0006/T-0021 commits on master are outside this ticket's review range)
+SIZE: 8 files / 1030 lines = git diff cb3d9df..b678a7a excluding .agent/evidence and .agent/kb (601 insertions + 429 deletions); incl. evidence/kb = 13 files / 1111 lines; over 400 soft line, under 1200 hard cap
+COMMIT: 078e2f689b1008aad5a9c24a2a0a33863e0e4c01 (delivery-record commit C1)
+LOCAL_HEAD: 078e2f689b1008aad5a9c24a2a0a33863e0e4c01
+REMOTE_HEAD: 078e2f689b1008aad5a9c24a2a0a33863e0e4c01
 CMD: git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-LS_REMOTE: 895f1438ee4e157155a8818c8b663ae111d67895	refs/heads/master
-PUSH: cb3d9df..895f143  HEAD -> master（exit 0）
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 895f1438ee4e157155a8818c8b663ae111d67895
-NOTE: 本 sha 证据以紧随其后的证据提交（C2）落库并 push；C2 的本地 HEAD 与远端 SHA 亦相等，最终 head 见报告与 worklog。
+LS_REMOTE: 078e2f689b1008aad5a9c24a2a0a33863e0e4c01	refs/heads/master
+PUSH: 5c48e08..078e2f6  HEAD -> master (exit 0)
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 078e2f689b1008aad5a9c24a2a0a33863e0e4c01
+NOTE: T-0016 content commit 895f143 + evidence commit b678a7a are already on master. C2 = the evidence commit carrying this file; its own SHA is self-referential and is reported in the report/worklog, with LOCAL_HEAD == REMOTE_HEAD verified again after its push.
 RESULT: PASS
