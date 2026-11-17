@@ -1,0 +1,26 @@
+KIND: acceptance
+TASK: T-0001
+AT: 2026-11-17T12:50+08:00
+RANGE: f4cbc29..c355df4（H1）
+---
+C1 目录结构：firmware/、Hardware/（+各目录 README），docs/ 可选
+结论：PASS
+依据：firmware/README.md（H1）；Hardware/README.md（本地存在，按“整目录排除”被忽略）；README.md:25-39 目录约定；docs/ 未创建（可选，避免空目录）。
+
+C2 .gitignore 排除：Hardware/、构建产物、立创EDA 备份/临时、IDE 配置 + 忽略清单
+结论：PASS
+依据：.gitignore:8（/Hardware/）、:11-21（build、*.o/*.elf/*.bin/*.hex 等）、:23-37（EDA 备份/临时）、:39-50（IDE 与系统杂项）；清单 README.md:50-59；行为证据 T-0001-p0-tests.txt。
+
+C3 README：PSU 定位、技术栈、目录约定、硬件图纸不入库原因
+结论：PASS
+依据：README.md:1-10（定位/不含上位机）、:12-21（技术栈）、:23-39（目录约定）、:41-48（不进 git 原因，立创EDA 本地 Hardware/）。
+
+C4 验证不误提交：Hardware 探针不可见；firmware 新文件可识别
+结论：PASS
+依据：T-0001-p0-tests.txt [1][2] 两条命令原文；`git status --porcelain=v1 --untracked-files=all -- Hardware/` 无输出；`... -- firmware/` 输出 `?? firmware/README.md`。
+
+C5 首次提交并 push 到 origin/master，ls-remote 核对 SHA
+结论：PASS（代码提交 H1）
+依据：T-0001-p0-sha.txt；commit c355df46a46735d63cb748f67b043574f72b95ee；push f4cbc29..c355df4；本地与远端 SHA 一致。H2 仅追加证据，最终复核见报告。
+
+RESULT: 5/5 PASS

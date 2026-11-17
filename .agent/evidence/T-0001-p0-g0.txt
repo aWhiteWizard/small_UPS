@@ -1,0 +1,41 @@
+KIND: g0
+TASK: T-0001
+AT: 2026-11-17T12:48+08:00
+SCOPE: 仓库初始化（无固件构建；G0 = 仓库/基线/远端/忽略/预算门禁）
+BASE: f4cbc29e1b383c5303f8c74e529cba9612d8a122（origin/master）
+INIT_COMMIT: c355df46a46735d63cb748f67b043574f72b95ee
+
+[1] Git 仓库与分支
+$ git rev-parse --is-inside-work-tree
+true
+$ git rev-parse --abbrev-ref HEAD
+task/T-0001
+
+[2] 基线一致（开工时）
+$ git rev-parse HEAD
+f4cbc29e1b383c5303f8c74e529cba9612d8a122
+$ git ls-remote origin refs/heads/master
+f4cbc29e1b383c5303f8c74e529cba9612d8a122	refs/heads/master
+
+[3] 提交范围（H1）
+$ git diff --cached --name-status
+A	.agent/worklogs/T-0001.md
+A	.gitignore
+A	README.md
+A	firmware/README.md
+$ git diff --cached --stat
+ 4 files changed, 164 insertions(+)
+$ git diff --cached --name-only | Select-String '^Hardware/'
+（无输出）
+$ git status --porcelain=v1 --untracked-files=all
+?? .agent/worklogs/T-0001.md
+?? .gitignore
+?? README.md
+?? firmware/README.md
+（无 Hardware/ 路径）
+
+[4] 预算
+- 文件：H1=4；最终=8（含 4 个 P0 证据），未超提示线 8 文件 / 400 行。
+- 行数：H1=164；最终约 240 行，未超提示线。
+
+G0 RESULT: PASS

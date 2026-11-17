@@ -1,0 +1,45 @@
+KIND: tests
+TASK: T-0001
+AT: 2026-11-17T12:44+08:00
+SCOPE: .gitignore 行为验证（Hardware 不跟踪 / firmware 可识别 / 规则命中）
+BASELINE: f4cbc29（H1 提交前工作区）
+
+[1] 在 Hardware/ 放测试文件后，git status 看不到它
+$ Set-Content Hardware/__gitignore_probe__.txt -Value 'T-0001 ignore probe'
+probe exists: True
+$ git status --porcelain=v1 --untracked-files=all
+?? .agent/worklogs/T-0001.md
+?? .gitignore
+?? README.md
+?? firmware/README.md
+$ git status --porcelain=v1 --untracked-files=all -- Hardware/
+（无输出）
+$ git check-ignore -v Hardware/__gitignore_probe__.txt
+.gitignore:8:/Hardware/	Hardware/__gitignore_probe__.txt
+
+[2] firmware 目录新增文件能被正常识别
+$ git status --porcelain=v1 --untracked-files=all -- firmware/
+?? firmware/README.md
+
+[3] 代表性忽略路径（git check-ignore -v --no-index）
+.gitignore:8:/Hardware/	Hardware/small_ups.epro
+.gitignore:8:/Hardware/	Hardware/exports/v1/psu.pdf
+.gitignore:11:build/	firmware/build/app.elf
+.gitignore:12:*.o	firmware/src/main.o
+.gitignore:14:*.bin	firmware/src/app.bin
+.gitignore:15:*.hex	firmware/src/app.hex
+.gitignore:16:*.map	firmware/src/app.map
+.gitignore:18:*.d	firmware/src/app.d
+.gitignore:24:*.bak	firmware/project.epro.bak
+.gitignore:28:*.autosave	firmware/x.autosave
+.gitignore:36:backup/	backup/x.epro
+.gitignore:37:history/	history/x.epro
+.gitignore:40:.vscode/	.vscode/settings.json
+.gitignore:41:.idea/	.idea/workspace.xml
+.gitignore:48:Thumbs.db	Thumbs.db
+
+[4] 清理探针
+$ Remove-Item Hardware/__gitignore_probe__.txt
+probe removed, exists=False
+
+RESULT: PASS（Hardware 内文件被忽略；firmware 新文件正常识别）

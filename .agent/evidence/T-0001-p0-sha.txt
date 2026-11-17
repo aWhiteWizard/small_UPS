@@ -1,0 +1,19 @@
+KIND: sha
+TASK: T-0001
+AT: 2026-11-17T12:50+08:00
+INIT_COMMIT: c355df46a46735d63cb748f67b043574f72b95ee
+---
+$ git push origin HEAD:master
+To github.com:aWhiteWizard/small_UPS.git
+   f4cbc29..c355df4  HEAD -> master
+[push exit: 0]
+
+$ git rev-parse HEAD
+c355df46a46735d63cb748f67b043574f72b95ee
+
+$ git ls-remote origin refs/heads/master
+c355df46a46735d63cb748f67b043574f72b95ee	refs/heads/master
+
+COMPARE: local=c355df4... remote=c355df4... match=True
+
+NOTE: 本文件随证据提交 H2 入库；H2 仅新增 .agent/evidence/* 与更新 worklog，推送后的最终 HEAD 复核输出见报告。
