@@ -228,7 +228,7 @@
 ### 2.4.1 上电、自检与掉电
 
 - 上电顺序固定：辅助电源 → MCU 自检 → PFC 建 400V → LLC 建 55V → READY。任一步失败即停在安全态（输出级关断、继电器断开、ALERT 按 §2.3 上报），不得跳步使能。
-- 异常分支：辅助电源超窗 → 不驱动 I2C/ALERT、不使能；MCU 自检失败 → INTERNAL 锁存、禁输出；PFC 母线 <320V → PFC_FAULT 锁存、禁输出；55V 母线 <50V → 母线欠压锁存、禁 buck；AC <180VAC → POWER_LOST（欠压）；AC <150VAC 或丢失 → POWER_LOST（掉电）。均不自动重试、不自动输出。
+- 异常分支：辅助电源超窗 → 不驱动 I2C/ALERT、不使能；MCU 自检失败 → INTERNAL 锁存、禁输出；PFC 母线 <320V → PFC_FAULT 锁存、禁输出；55V 母线 <50V → UNDERVOLTAGE（0x04）锁存、禁 buck；AC <180VAC → POWER_LOST（欠压）；AC <150VAC 或丢失 → POWER_LOST（掉电）。均不自动重试、不自动输出。
 - READY 前 I2C 只读状态，写 OUTPUT_ENABLE 被忽略；READY 后才接受使能命令。上电默认 OUTPUT_ENABLE=0、继电器断开、PWM 关断；EEPROM 只恢复 V/I 设定，不恢复输出状态。
 - 关断/掉电顺序：先禁 buck，再释放继电器；输出电容经反灌比较器（>0.2A、10µs）与理想二极管/ORing 阻断向 55V 母线倒灌；输出针不得高于 55V 母线。掉电后不再写 EEPROM。
 - 去抖窗口由设计定；欠压确认不得短于 1 个工频周期，掉电可更快，但不得把已确认的掉电/欠压再放行输出。
@@ -354,7 +354,7 @@
 | 0x01 | OCP | 电流 > 设定限值 +5% 或硬件阈值，>10µs；硬件断输出 | 故障消失 + CLEAR |
 | 0x02 | SCP | 电流 >8A，或 Vout<0.3V 且 I>6A，>10µs；硬件断输出 | 故障消失 + CLEAR |
 | 0x03 | OVP | Vout > 设定值 +2V 或 >50V，>50µs；断输出 | 故障消失 + CLEAR |
-| 0x04 | UNDERVOLTAGE | Vout <90% 设定 >100ms（非 CC）；断输出 | 恢复 + CLEAR |
+| 0x04 | UNDERVOLTAGE | Vout <90% 设定 >100ms（非 CC），或 55V 母线 <50V；断输出 | 恢复 + CLEAR |
 | 0x05 | OTP | NTC ≥95°C；硬件断输出并锁存 | NTC<80°C + CLEAR；不自动恢复 |
 | 0x06 | NTC_OPEN | NTC 开路/超窗口；禁输出 | 恢复 + CLEAR |
 | 0x07 | NTC_SHORT | NTC 短路/超窗口；禁输出 | 恢复 + CLEAR |
@@ -375,7 +375,7 @@
 | 0x16 | POWER_LOST | AC 150VAC 掉电 / 180VAC 欠压；断输出 | 恢复 + CLEAR；不自动输出 |
 | 0x17–0xFF | 保留 | — | — |
 
-> 0x15/0x16 为 T-0013 按 T-0005 第 3 条、T-0006 第 8 条新增的编号，待 owner 确认；旧 0x15–0xFF 保留区相应后移为 0x17–0xFF。55V 母线 <50V 的具体故障码归属（INTERNAL/UNDERVOLTAGE）亦待 owner 确认（T-0006 第 8 条）。
+> 0x15/0x16 为 T-0013 按 T-0005 第 3 条、T-0006 第 8 条新增的编号，待 owner 确认；旧 0x15–0xFF 保留区相应后移为 0x17–0xFF。55V 母线 <50V 归 0x04 UNDERVOLTAGE（T-0006 按验收第 8 条定；原 INTERNAL/UNDERVOLTAGE 待确认项关闭）。
 >
 > 优先级：OCP/SCP > OVP > OTP > REVERSE_CURRENT > EN_LOST/HEARTBEAT_LOST > PFC_FAULT/POWER_LOST > UNDERVOLTAGE > IMBALANCE/PARALLEL_FAULT（保留） > 其它；FAULT_FLAGS 保留全部锁存位，不因显示低优先级码而丢位。
 
@@ -475,7 +475,7 @@
 
 - 效率/PF/空载/纹波/精度矩阵/热指标：详细指标与测法待填（来源：T-0007、T-0011）；本文件只保留功能级引用。
 - 保护阈值（OCP/SCP/OVP/OTP/母线欠压等）的最终数值待填（来源：T-0011）。
-- 校准温度字段编码/采样点、次数/温度是否纳入 CRC、magic 最终取值、55V 母线故障码归属：待确认（owner），见附录 E。
+- 校准温度字段编码/采样点、次数/温度是否纳入 CRC、magic 最终取值：待确认（owner），见附录 E。
 
 # 4. 电源调试板
 
@@ -550,6 +550,7 @@
 | 2026-11-17 | T-0013 | 一致性修订：取消多机均流、补 PFC_FAULT/POWER_LOST、竖排/偏左/定位销、0.01V/0.01A 步进、无版本兼容门禁。 |
 | 2026-11-18 | T-0016 | 合并第 1/2 部分为单文件 v0.3；统一 5 章；建立完成度表与填写规则；删除 `requirements-part2.md`（内容并入第 2/3/5 章，映射见附录 D）。 |
 | 2026-11-18 | T-0006 | 填写 §2.4：上电/自检/掉电、使能/心跳/热调、Bootloader/升级、保护动作与耐受；新增使能链/热调/升级/PFC 联动的系统级口径，未改既有章节验收阈值。 |
+| 2026-11-18 | T-0006（G2 复审） | 按验收第 8 条关闭 55V 母线码位待确认：定 0x04 UNDERVOLTAGE；同步 §2.4.1、§3.3.3、§3.5、附录 E.2；未改其他阈值。 |
 
 ## 附录 D：合并来源、删除说明与历史差异留痕
 
@@ -601,6 +602,6 @@
 - 4.7k 上拉最终位置。
 - 校准温度字段编码/采样点；次数/温度是否纳入 CRC；magic 最终取值。
 - 状态灯三态定义。
-- PFC_FAULT/POWER_LOST 编号；55V 母线故障码归属（INTERNAL/UNDERVOLTAGE）。
+- PFC_FAULT/POWER_LOST 编号（55V 母线码位已由 T-0006 定为 0x04，不再待确认）。
 - CAL 命令名映射（CAL POINT 合并 SET+MEAS、CAL STATUS 承担 READ）。
 - PT100 温度阈值。

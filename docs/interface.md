@@ -58,11 +58,11 @@
 | S0 辅助电源 | A22 12V、3.3V/5V 进入窗口，释放复位 | 300ms | 不驱动 I2C/ALERT；输出级硬件关断；无电源不上报 |
 | S1 自检 | 时钟/WDG/ADC/DAC/比较器/EEPROM CRC/校准表/继电器辅助触点 | 200ms | INTERNAL 锁存、ALERT、禁输出 |
 | S2 PFC | AC ≥180VAC 且无 UV/POWER_LOST；PFC_EN=1 软启动 | 2s 建 400V | <320V → PFC_FAULT（母线欠压）；AC<150 → POWER_LOST；不重试 |
-| S3 LLC | PFC 稳定；LLC_EN=1 软启动 | 1s 建 55V | <50V → 母线欠压（码位待 owner：UNDERVOLTAGE/INTERNAL）；禁 buck |
+| S3 LLC | PFC 稳定；LLC_EN=1 软启动 | 1s 建 55V | <50V → UNDERVOLTAGE（0x04）；禁 buck |
 | S4 READY | 无锁存故障、校准有效/恒等、设定已 COMMIT | — | 否则拒绝 OUTPUT_ENABLE，OUTPUT_STATUS 给原因 |
-| S5 掉电 | AC<180 去抖 20ms / AC<150 4ms / PFC<320V / 55V<50V | ≤1ms 动作 | 禁 buck → 开继电器 → 泄放；POWER_LOST/PFC_FAULT/母线欠压；不自动输出 |
+| S5 掉电 | AC<180 去抖 20ms / AC<150 4ms / PFC<320V / 55V<50V | ≤1ms 动作 | 禁 buck → 释放继电器 → 泄放；POWER_LOST/PFC_FAULT/UNDERVOLTAGE；不自动输出 |
 
-- 欠压类码位：AC 180/150VAC 均落 0x16 POWER_LOST（显示层按 AC 测量值区分欠压/掉电阶段）；PFC 母线 <320V 落 0x15 PFC_FAULT；55V 母线 <50V 的码位归属待 owner（UNDERVOLTAGE/INTERNAL）。三者动作一致：禁 buck、锁存、不自动输出。
+- 欠压类码位：AC 180/150VAC 均落 0x16 POWER_LOST（显示层按 AC 测量值区分欠压/掉电阶段）；PFC 母线 <320V 落 0x15 PFC_FAULT；55V 母线 <50V 落 0x04 UNDERVOLTAGE（T-0006 按验收第 8 条定）。三者动作一致：禁 buck、锁存、不自动输出。
 
 - 上电默认：OUTPUT_ENABLE=0、RELAY_STATE=0、PFC/LLC/BUCK 全关；READY 前 I2C 只读。
 - 掉电后不再写 EEPROM；辅助电源维持到关断/记录完成；恢复后必须重新走 S0–S4 与使能序列。
@@ -107,7 +107,7 @@
 | 0x01 | OCP | DAC 阈值比较器 + PWM trip | ≤10µs，RS 锁存 | 源消失+读码+CLEAR+重新使能 |
 | 0x02 | SCP | 8A 或 0.3V+6A 比较器 | ≤10µs | 同上 |
 | 0x03 | OVP | DAC(V_ramp+2V)/50V 比较器 | ≤10µs 关门，50µs 确认 | 同上 |
-| 0x04 | UNDERVOLTAGE | Vout<90% 设定 >100ms（非 CC） | ≤1ms | 恢复+CLEAR+重新使能 |
+| 0x04 | UNDERVOLTAGE | Vout<90% 设定 >100ms（非 CC）或 55V 母线<50V | ≤1ms | 恢复+CLEAR+重新使能 |
 | 0x05 | OTP | NTC 比较器/软件 | 硬件 ≤10µs / 软件 ≤1ms | <80°C+CLEAR+重新使能 |
 | 0x0A | EN_LOST | EN 门 | ≤1ms 关门，20ms 锁存 | EN 高+重新使能+CLEAR |
 | 0x0B | HEARTBEAT_LOST | 500ms 定时器 | 硬件 ≤10µs / 软件 ≤1ms | 心跳恢复+CLEAR+重新使能 |

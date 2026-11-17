@@ -5,5 +5,6 @@ BRANCH: task/T-0006 @ D:\workspace\wt\small-ups\T-0006
 BASE: ba16717db86caa3c791e97a6d734501f707aa84f（开工 HEAD = origin/master，未 ff）
 CMD: git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain=v1 -uall; git diff --check
 STATUS: 开工 HEAD=REMOTE=ba16717、工作区干净；收尾仅 5 文档 + worklog + 4 类 P0，未改 firmware/Hardware/看板/需求既有阈值
-OBJECT: requirements=606、architecture=67、module-design=103、interface=227、test-plan=83（均 ≤400 行/文件；改动 +271/−41=312 行）
+OBJECT: requirements=607、architecture=67、module-design=103、interface=228、test-plan=83（均 ≤400 行/文件；改动行数见 acceptance SIZE）
+NOTE: G2 第 1 轮 FAIL 修复后重跑；55V 母线码位定 0x04 UNDERVOLTAGE，结构校验仍全绿
 RESULT: PASS
