@@ -1,0 +1,12 @@
+KIND: g0
+TASK: T-0008
+AT: 2026-11-18 +08:00
+BRANCH: task/T-0008 @ D:\workspace\wt\small-ups\T-0008
+BASE: ba16717（开工 HEAD）→ d3353ac（origin/master，ff-only；behind 43）
+HEAD: d3353ac + 本单未提交改动（工具/README/截图/worklog/证据）
+REMOTE: d3353ac（写证据时；最终 push 后见 T-0008-p0-sha.txt）
+CMD: py_compile; --selftest; GUI integration; git status; git diff --check; git diff --name-only -- .agent/requirements.md docs .agent/board/tasks.json
+CHECK: COMPILE OK；selftest PASS；integration 17/17 PASS；requirements/docs/看板 0 改动
+SCALE: tools/calib_tool.py=854 行 + tools/README.md=72 行（合计 926；>400 提示线，<1200 硬上限；工具文件 2 个 + 截图 1 个）
+PY: C:\Users\Future_Tech_WorkShop\AppData\Roaming\uv\python\cpython-3.14.6-windows-x86_64-none\python.exe（3.14.6，Tk 8.6，pyserial 3.5）
+RESULT: PASS

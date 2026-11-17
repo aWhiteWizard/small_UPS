@@ -1,0 +1,18 @@
+PASS auto-connect 已连接 DEMO (mock)
+PASS device-info PSU-DEMO-0001
+PASS begin-V 限流: 0.5 A（设备内部）
+PASS points-V
+PASS crc-V CRC 设备=4635 期望=4635 → PASS
+PASS begin-I 限流: 目标+1 A（设备内部）
+PASS points-I
+PASS crc-I CRC 设备=003C 期望=003C → PASS
+PASS csv-file C:\Users\FUTURE~1\AppData\Local\Temp\tmpfnemkdf4\calib.csv
+PASS csv-columns 17 columns
+PASS csv-result result=PASS fw=0.9.0 temp=25
+PASS csv-crc crc=003C
+PASS manual-abort
+PASS invalid-input-abort
+PASS device-err-abort
+PASS timeout-abort
+PASS crc-mismatch-visible CRC 设备=0000 期望=1D2C → FAIL
+RESULT: PASS (17 checks, 0 failed)

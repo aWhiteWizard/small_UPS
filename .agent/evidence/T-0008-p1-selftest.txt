@@ -1,0 +1,9 @@
+﻿PASS INFO: INFO 1.0 0.9.0 PSU-DEMO-0001
+PASS V: points=6 state=2 active=1 version=1 CRC=1FF7
+PASS I: points=3 state=2 active=1 version=2 CRC=A22F
+PASS ERR handling: ERR 9 unknown command
+PASS invalid input: 'abc' rejected
+PASS invalid input: '-1' rejected
+PASS invalid input: '999999' rejected
+PASS CSV: 2 rows
+RESULT: PASS (26 commands logged)

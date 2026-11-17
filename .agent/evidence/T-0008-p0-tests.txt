@@ -1,0 +1,13 @@
+KIND: tests
+TASK: T-0008
+AT: 2026-11-18 +08:00
+ENV: Python 3.14.6 / Tk 8.6 / pyserial 3.5
+CMD: py -3 tools\calib_tool.py --selftest；临时 tkinter+Mock UI 集成测试（完整输出见 T-0008-p1-*.txt）
+SELFTEST: 8/8 PASS；INFO、V 6 点、I 3 点、ERR、3 个非法输入、CSV；`RESULT: PASS (26 commands logged)`
+INTEGRATION: 17/17 PASS；自动连接、设备信息、V/I BEGIN、V6/I3 点、CRC PASS、CSV、手动 ABORT、
+  非法输入 ABORT、设备 ERR ABORT、串口超时 ABORT、CRC 失配 FAIL 可见；`RESULT: PASS (17 checks, 0 failed)`
+CRC: V 设备=4635 期望=4635；I 设备=003C 期望=003C；失配用例 设备=0000 期望=1D2C → FAIL
+CSV: 17 列；result=PASS、fw=0.9.0、temp=25、CRC=003C 回读一致
+UI: 1180×840 PNG，75346 B；SHA256=492DB7EC19A35A93EBD5A0669827C2839DC4EFF7EF423143BECCAEA7E1F5B32F
+NOTE: 无真实 PSU/串口，真机 e2e 未做；本轮用 Mock + 临时集成测试，未起嵌套引擎。
+RESULT: PASS

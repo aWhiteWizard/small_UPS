@@ -88,6 +88,23 @@ KB-TAGS: docs, requirements, merge, references, single-source
 
 把 requirements 第 1/2 部分并成单文件时，除了搬正文，必须同步做三件事：①在合并文件开头与附录写“来源映射 + 删除原因 + git 历史可追溯”；②把 docs/README 里所有 `R1`/`R2`/`requirements-part2.md` 引用改成新章节号（只改引用，不动骨架标题）；③知识库中指向被删文件的旧证据行要标注为历史，新的证据行改用合并后的文件:行。只删文件不改引用，会让下游把“引用缺口”误判成需求缺失。
 
+## PC 标定工具协议存在“工单明列命令”与 T-0006 文档命令名的漂移
+
+KB-TYPE: method
+KB-EVIDENCE: `tools/calib_tool.py:5-6`（CAL BEGIN/SET/MEAS/COMMIT/READ/ABORT）；`.agent/requirements.md:602`（T-0006 §3.4.5 的 CAL POINT/CAL STATUS）；`docs/interface.md:320`（命令映射）；`.agent/evidence/T-0008-p0-acceptance.txt:21`
+KB-TAGS: calibration, protocol, t-0008, firmware
+
+写上位机工具前先对齐“工单明列命令”与需求/设计文档的命令表。T-0008 工单要求 SET/MEAS/READ，而 T-0006 串口文档 §3.4.5 写 CAL POINT/CAL STATUS；两者不是同一套文本命令。按工单实现并在 README/报告中登记偏差，不要静默选一套。设备信息 INFO、READ 的 CRC 回包字段也未定，需在工具端做兼容并明确“缺字段=未校验”。
+
+## Windows 高 DPI 下 tkinter 窗口截图被裁剪
+
+KB-TYPE: bug
+KB-EVIDENCE: 未设 DPI awareness 时 `CopyFromScreen(1180×790)` 只截到左侧/上半，右侧按钮与日志丢失；在创建 Tk 前执行 `windll.shcore.SetProcessDpiAwareness(1)` 后同尺寸截图完整（T-0008-p0-ui.png 1180×840）
+KB-TAGS: windows, tkinter, dpi, screenshot, evidence
+
+给 tkinter 窗口做 P0 截图时，先在进程启动处声明 DPI awareness，再用 `winfo_rootx/y/width/height` + `CopyFromScreen` 截客户区；否则 Windows 会把逻辑尺寸放大，截图像素对不上，右侧控件被裁掉。
+
+
 ## 需求长文追加变更用附录，不重排章节号
 
 KB-TYPE: method

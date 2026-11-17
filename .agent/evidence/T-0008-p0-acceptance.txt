@@ -1,0 +1,22 @@
+KIND: acceptance
+TASK: T-0008
+AT: 2026-11-18 +08:00
+RESULT: 7/7 功能项满足；第 6 项行数超 400 提示线（已留痕）；SHA 见 T-0008-p0-sha.txt
+1 PASS 源码：tools/calib_tool.py（tkinter GUI，仅 pyserial 额外依赖，源码进 git）；README 安装/启动/截图
+  证据：calib_tool.py:1-8,18-20；README.md:9-23；截图 T-0008-p0-ui.png
+2 PASS 界面：串口下拉+刷新/连接、设备信息、V/I 通道、序号/设定/实测/误差表、6 功能按钮、状态/日志、导出 CSV
+  证据：calib_tool.py:239-256,271-273,283-286,313,317,480-527
+3 PASS 流程：连接→INFO→BEGIN（显示设备内部 0.5A/目标+1A 限流）→逐点 SET/MEAS→COMMIT→自动 READ
+  →CRC 校验与最大/平均误差→CSV（时间/温度/万用表/固件）；集成测试 17/17 PASS
+  证据：calib_tool.py:529-625,710-776；T-0008-p1-integration.txt
+4 PASS 协议：CAL BEGIN/SET/MEAS/COMMIT/READ/ABORT 文本行；OK/ERR 解析；日志逐条 TX>/RX< 原文
+  注：I 通道按 mA 下发（工单 <mV> 按通道单位解释）；READ 回包用 OK <state> <active> <version> <crc>
+  证据：calib_tool.py:5-8,63-75,532-625；README.md:41-58
+5 PASS 异常：断开/超时/设备 ERR/非法输入均有弹窗+日志，自动 ABORT；不 COMMIT、不写 EEPROM；连接状态可见
+  证据：calib_tool.py:439-457,551-601,622-695；集成测试 manual/invalid/device-err/timeout/CRC-mismatch 全 PASS
+6 PASS* PyInstaller 单文件打包命令已写；源码运行 `--demo` 窗口启动成功；工具文件 2 个（≤8）
+  NOTE：源码 854 行 + README 72 行 = 926 行，超 400 行提示线（<1200 硬上限）；理由见报告「超限理由」
+7 PASS 提交/推送/SHA：见 T-0008-p0-sha.txt（COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文）
+DEVIATION: 工单标题写 Python CLI，验收第 1/2 条明确要求 tkinter 图形界面；实现为 GUI（含 --selftest CLI）。
+DEVIATION: T-0006 文档 §3.4.5 命令名为 CAL POINT/CAL STATUS，工单明列 SET/MEAS/READ；按工单实现并在 README 记录。
+RISK: INFO 与 READ 的响应字段工单未定义；工具采用明确约定，缺字段时显示未校验，不静默放行。
