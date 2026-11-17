@@ -1,0 +1,11 @@
+KIND: tests
+TASK: T-0010
+AT: 2026-11-18 +08:00
+CMD: PowerShell 7 UTF8 ReadAllLines + 表格/空白检查；2D 矩形越界/重叠检查；git diff --check
+LINES: requirements=943 interface=337 architecture=74 module-design=107 README=108 kb=115
+TABLE: TABLE_BAD=0；TRAILING_WS=0；TABS=0；BOM=False
+LAYOUT: 17 rects；0 out-of-bounds；0 unexpected overlap；display-socket 前后分层允许；最小间距 display-Up 2.0、left-socket 2.0、black banana-bottom block 1.0、magnet-right edge 1.0
+ANCHORS: R §4.4.1–§4.4.7；interface §1.2.1–§1.2.5/§5.3；architecture §1.2/§3/§4；module-design §2.1；README v0.6
+PLACEHOLDERS: T-0010 placeholder=0
+DIFF: C1 7 files 248+/29-=277；git diff --check exit 0
+RESULT: PASS
