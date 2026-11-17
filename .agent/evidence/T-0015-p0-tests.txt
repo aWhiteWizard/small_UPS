@@ -1,0 +1,11 @@
+KIND: tests
+TASK: T-0015
+AT: 2026-11-17T23:44+08:00
+CMD: PowerShell 7 UTF8：行数/表格列数/占位符/章节引用/需求正文复制/编码空白检查
+LINES: architecture=67、module-design=95、interface=56、test-plan=61（合计 279；每份 ≤120，总量 ≤400）
+TABLE: 4/4 文件 TABLE_OK（每个表头/分隔行/数据行列数一致）
+PLACEHOLDER: 19/14/25/21=79；每个模块或表格均含「待填（来源：T-00xx）」
+REFS: R1/R2 章节引用 35 处，章节缺失 0（R2 §1.1–1.4、§2、§2.1–2.3、§3.1–3.7、§4.1/§4.5、§5.1–5.6；R1 §1.5、§2.2、附录 B）
+COPY: 与 requirements*.md 逐行精确相同的内容 0 行；未检出 V/A/W/mV/mm 等指标值
+ENCODING: UTF-8 无 BOM、EOF 有换行、无行尾空白/Tab
+RESULT: PASS
