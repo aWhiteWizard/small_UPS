@@ -1,0 +1,31 @@
+KIND: g0
+TASK: T-0004
+AT: 2026-11-17T18:06+08:00
+SCOPE: 需求第 1 部分（纯文档；无固件/硬件构建物）
+BRANCH: task/T-0004
+BASE: bdc0512e4f9e5db92ee24a485dd891c75bb1ce55（origin/master；worktree 原点 f4cbc29 已 ff）
+WORKTREE: D:\workspace\wt\small-ups\T-0004
+RESULT: PASS
+
+[1] 仓库/分支
+$ git rev-parse --is-inside-work-tree -> true
+$ git branch --show-current -> task/T-0004
+$ git rev-parse HEAD -> bdc0512e4f9e5db92ee24a485dd891c75bb1ce55（C1 前）
+[2] 基线
+$ git merge --ff-only origin/master -> Updating f4cbc29..bdc0512
+$ git ls-remote origin refs/heads/master -> bdc0512e4f9e5db92ee24a485dd891c75bb1ce55	refs/heads/master
+[3] 改动范围（C1 暂存）
+$ git diff --cached --name-status
+A .agent/requirements.md
+A .agent/worklogs/T-0004.md
+A .agent/kb/notes.md
+A .agent/evidence/T-0004-p0-g0.txt
+A .agent/evidence/T-0004-p0-tests.txt
+未改 firmware/、Hardware/、README、.gitignore 或工单验收口径。
+[4] 规模
+- requirements.md：135 行 / 11,862 字节（≤400 行）
+- C1：5 文件；C2 增 acceptance/sha 证据后 7 文件（≤8）
+- T-0001 上游文件（README/.gitignore/firmware 等）不计入本单改动。
+[5] 校验
+$ 见 T-0004-p0-tests.txt -> RESULT: PASS (fail=0)
+G0 RESULT: PASS

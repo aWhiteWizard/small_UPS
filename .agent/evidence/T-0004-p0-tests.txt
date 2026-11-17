@@ -1,0 +1,27 @@
+KIND: tests
+TASK: T-0004
+AT: 2026-11-17T18:06+08:00
+SCOPE: .agent/requirements.md 静态校验（规模/覆盖/编号/表格/禁止内容）
+COMMAND: PowerShell 7 inline；显式 -Encoding UTF8
+RESULT: PASS (fail=0)
+NOTE: 本单为需求文档，无固件/硬件构建物；以结构、关键词、边界检查代替构建测试。
+
+[1] 规模
+LINES=135; BYTES=11,862; LIMIT=400 -> PASS
+最终交付文件=7（requirements + worklog + kb + g0/tests/acceptance/sha）; LIMIT=8 -> PASS
+
+[2] 必需关键词（28/28 PASS）
+数控可调直流电源; 不是 UPS; 历史命名; 0.00–48.00V; 0.5–48V; 0–5A; 0x30–0x3F; 不实现广播; 掉电保存; EEPROM; EN 高; I2C 软使能; 短针在位; 无故障; ALERT; 并联均流; 热替换; 过温两级; PT100; Modbus; 无上位机; 立创EDA; Hardware/; 仓库只放固件; 为什么 0.5V 以下; 同步 buck; 最小可控脉宽; 跳周期
+
+[3] P/D 编号（21/21 PASS）
+P-01..P-14；D-01..D-07
+
+[4] 表格结构（21/21 PASS）
+每行 4 列；来源均命中 T4-* / T3-* / D-* 定义；无空来源
+
+[5] 验收覆盖（10/10 PASS）
+0.5–48V; 0–5A; 0x30–0x3F; 掉电保存; EN; ALERT; 并联; 热替换; 过温; PT100 Modbus
+
+[6] 禁止规格/针脚模式（26/26 CLEAN）
+B25; A25; SDA; SCL; SENSE+; SENSE−; SHARE; SYNC; 100ms; 500ms; 10k; 75℃; 95℃; mVpp; ppm; 240W; STM32; LLC; 200kHz; 55V; 120×; 180mm; 215mm; ±10%; ±0.1%; 0.01V
+RESULT: PASS (fail=0)
