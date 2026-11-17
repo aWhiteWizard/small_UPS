@@ -1,0 +1,50 @@
+# ============================================================
+# 小型PSU电源（small_UPS）仓库忽略规则
+# 原则：源码/文档/配置入库；硬件工程、构建产物、本机临时文件不入库。
+# ============================================================
+
+# --- 1. 立创EDA 硬件工程（整目录本地维护，不进 git）---
+# 原理图/PCB/工程与导出文件统一放 Hardware/，目录内 README 一并忽略。
+/Hardware/
+
+# --- 2. 固件构建产物 ---
+build/
+*.o
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.d
+*.su
+cmake-build-*/
+.pio/
+
+# --- 3. 立创EDA 备份与临时文件（工程目录已整体忽略，此处兜底）---
+*.bak
+*.bak.*
+*_bak
+*.backup
+*.autosave
+*.tmp
+*.temp
+*~
+*.lck
+.~lock.*
+*.swp
+*.swo
+backup/
+history/
+
+# --- 4. IDE / 编辑器配置目录 ---
+.vscode/
+.idea/
+.vs/
+.settings/
+.metadata/
+.clangd/
+
+# --- 5. 操作系统与编辑器杂项 ---
+Thumbs.db
+Desktop.ini
+.DS_Store
