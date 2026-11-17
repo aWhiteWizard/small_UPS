@@ -3,6 +3,7 @@ TASK: T-0007
 AT: 2026-11-18 +08:00
 BASE_REAL: c2f67af19f7c176749a76b3459f4372540f1b90a
 CONTENT_COMMIT: c42f14f569054d7cb1baf3859cd8e5fba9793dd9
+C5_FINAL: c3538fd769a95d2bf2defbdc550b5845f3038f46
 1 范围/定位：R §2.5:260–276（§1.1 定位回引）+ §2.5–§2.12；跨两板安全/指标/热/成本/待确认/参考：PASS
 2 标准清单：R §2.5:260–276，IEC 62368-1/GB 4943.1、EN 55032/GB 9254.1 Class B、IEC 61000-4-2/4/5、IEC 61000-3-2 Class D、IEC 60038/GB 156、IEC 60068；逐条条款+典型值：PASS
 3 环境与安规：R §2.6:278–289，0–40℃/−20–+70℃/80%RH/2000m；≤55℃；6/8mm、1500VAC、10MΩ、PE 0.1Ω；保险丝+EN fail-safe+无急停声明：PASS
@@ -16,11 +17,11 @@ CONTENT_COMMIT: c42f14f569054d7cb1baf3859cd8e5fba9793dd9
 11 成本：R §2.10:328，小批 100 套 ≤600（上限 700）、打样 1,500–2,000、BOM 两栏：PASS
 12 待确认：R §2.11:333–344，插槽/SN/蜂鸣器/PT100/线材保修/包装丝印 6 项均给默认值并标待 owner：PASS
 13 参考对照：R §2.12:346–362，RT300-MKV 与 DP6020 逐条可借鉴/需改造/不适用：PASS
-14 规模：c2f67af..c42f14f 5 文件/305 行（258+/47−，含 worklog，排除 evidence/kb）≤400/8：PASS
-15 交付：C1=c42f14f 已 push origin/master，ls-remote=c42f14f；C2 证据/记录提交与最终 SHA 见 sha 文件/报告：PASS
+14 规模：内容 5 文件/305 行；含 4 份 P0 证据 c2f67af..C5 9 文件/382 行；引擎视角 21 文件/868 行含上游继承（T-0165 提示，不判 FAIL）：PASS
+15 交付：C1..C5 已 push；C5=c3538fd，ls-remote=c3538fd；C6 仅记录提交，最终 LOCAL=REMOTE 见报告：PASS
 NOTE: 工单标题“五点验收”与验收第 8 条“6 点”不一致，按第 8 条 6 点执行（与精度矩阵 6 点一致）。
 NOTE: 验收第 8 条“USB”按调试板 USB-UART 升级口执行；本体无板载 USB。
 NOTE: 1000W 级对照采用公开 DP6020 1200W 开源板；owner 若指定其他机型按 §2.12 同表替换。
 NOTE: 1500VAC/1min 按工单定版值；加强绝缘是否需更高电压由 T-0017/认证确认。
-NOTE: ticket baseSha=ba16717 落后远端 8 个提交；实际基线 c2f67af，engine-view 791 行含上游继承。
+NOTE: ticket baseSha=ba16717 落后远端 8 个提交；实际基线 c2f67af，engine-view 868 行含上游继承。
 RESULT: PASS
