@@ -11,14 +11,16 @@ PUSH_C1: dfcbcc6..c0259b8  HEAD -> master (exit 0)
 LS_REMOTE: c0259b83b979f579affbc34dc67fa567b9702b64	refs/heads/master
 VERIFY: LOCAL_HEAD == REMOTE_HEAD == c0259b8 True
 C2_EVIDENCE: ebd6f4162fd5cc30127b53bd28a8af3d38de275c
-C3_RECORD: pending (this commit)
-COMMIT: ebd6f4162fd5cc30127b53bd28a8af3d38de275c
-LOCAL_HEAD: ebd6f4162fd5cc30127b53bd28a8af3d38de275c
-REMOTE_HEAD: ebd6f4162fd5cc30127b53bd28a8af3d38de275c refs/heads/master
+C3_RECORD: 78c40493d49d09ca34b474efadd922e3d8b9fa29
+C4_RECORD: pending (this commit)
+COMMIT: 78c40493d49d09ca34b474efadd922e3d8b9fa29
+LOCAL_HEAD: 78c40493d49d09ca34b474efadd922e3d8b9fa29
+REMOTE_HEAD: 78c40493d49d09ca34b474efadd922e3d8b9fa29 refs/heads/master
 CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
 PUSH_C1: dfcbcc6..c0259b8  HEAD -> master (exit 0)
 PUSH_C2: c0259b8..ebd6f41  HEAD -> master (exit 0)
-LS_REMOTE: ebd6f4162fd5cc30127b53bd28a8af3d38de275c	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == ebd6f41 True
-NOTE: C1 内容、C2 证据；C3 仅回填本文件与 worklog。C3 push 后最终 LOCAL_HEAD=REMOTE_HEAD=C3，最终 SHA 见报告。
+PUSH_C3: ebd6f41..78c4049  HEAD -> master (exit 0)
+LS_REMOTE: 78c40493d49d09ca34b474efadd922e3d8b9fa29	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 78c4049 True
+NOTE: C1 内容、C2 证据、C3 记录；C4 仅回填本文件与 worklog。C4 push 后最终 LOCAL_HEAD=REMOTE_HEAD=C4，最终 SHA 见报告。
 RESULT: PASS
