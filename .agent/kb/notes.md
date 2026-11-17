@@ -95,3 +95,21 @@ KB-EVIDENCE: 看板 baseSha=29470ae 按 `git diff` 计 10 文件/1311 行（>120
 KB-TAGS: baseSha, diff, size, worktree, delivery
 
 worktree 的 baseSha 必须是本单真实开工点（`git merge --ff-only origin/master` 后的 HEAD），并与审查上界配套计算 diff；从上游继承的 T-0013/T-0015 变更、以及本单之后叠加的 T-0006/T-0021 提交都不应计入本单规模。引擎按旧 baseSha 判超限时，先核对 ff 记录与 `git merge-base`，用真实区间留痕后再交付，不要为凑规模拆单或把上游文件重做成自己的 diff。
+
+## 60mm 面宽上 0.56" 双行数码管与屏侧上/下键不可兼得
+
+KB-TYPE: hardware
+KB-EVIDENCE: .agent/requirements.md:826-827（屏 ≤50×26、0.40"；0.56" 高约 38mm 与屏侧键冲突）；docs/interface.md:67（屏 48×25，Up/Down 在 x=52.5–58.5）
+KB-LAYER: 3_hardware
+KB-TAGS: panel, display, layout, 60mm, 0.56in
+
+60mm 宽面板若屏占约 50mm，左右仅剩约 5mm，放不下 6mm 轻触键。0.56" 双行 4 位模块典型高约 38mm、宽约 50.8mm，屏侧上/下键无空间；T-0010 选 0.40" 48×25 模块并把 Up/Down 竖排在屏右侧，才满足“屏侧上/下”。若 owner 要求 0.56"，必须改为屏下 5 键或加宽面板，不能只改字高。
+
+## 定位销进入承插腔时，整机总深不能叠加销长
+
+KB-TYPE: hardware
+KB-EVIDENCE: .agent/requirements.md:293（§2.7 总深 180+35=215，销 15–18 在腔内不叠加）；.agent/requirements.md:794（承插腔容纳销 15–18）
+KB-LAYER: 3_hardware
+KB-TAGS: mechanical, depth, locating-pin, cavity
+
+调试板贴本体前面时，定位销前伸 15–18mm 进入调试板 35mm 承插腔，不应再把销长加到整机总深。T-0007 旧口径写成 180+35+15–18=230–233，T-0010 修正为壳体 215mm、含香蕉头正面凸出 ≤233mm；做深度链时先算腔内容纳（销+插座+PCB+显示+间隙），不要重复计销长。
