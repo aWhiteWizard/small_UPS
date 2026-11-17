@@ -25,7 +25,7 @@
 ```text
 small_UPS/
 ├── README.md            # 项目定位、目录约定、文档地图、填写规则
-├── .gitignore           # 硬件工程 / 构建产物 / IDE 配置忽略规则
+├── .gitignore           # 硬件工程 / 构建产物 / IDE 配置 / 影运行期记录忽略规则
 ├── firmware/            # 固件源码（入库）
 │   └── README.md        # 固件目录说明
 ├── docs/                # 设计展开（四份骨架，只填不新建）
@@ -33,15 +33,15 @@ small_UPS/
 │   ├── module-design.md # 模块设计
 │   ├── interface.md     # 接口
 │   └── test-plan.md     # 测试计划
-├── Hardware/            # 立创EDA 工程与导出（仅本地，整目录不入库）
-│   └── README.md        # 目录说明（随目录一起被忽略）
-└── .agent/              # 流程看板、工作日志与证据（执行器维护）
+├── Hardware/            # 立创EDA 工程与导出（内容仅本地，不入库）
+│   └── README.md        # 目录说明（入库，保住 clone 后的目录）
+└── .agent/              # 流程看板（入库）与运行期记录（不入库）
     ├── requirements.md  # 需求唯一入口（v1.1，五章 + 附录 I）
     └── requirements-draft.md  # 历史草稿，仅追溯
 ```
 
 - `firmware/`：STM32 源码、链接脚本、启动文件、构建脚本、单元测试；构建产物不入库。
-- `Hardware/`：立创EDA 工程、自定义库、BOM、原理图/PCB 导出、Gerber、装配图；**只在本地维护**。
+- `Hardware/`：立创EDA 工程、自定义库、BOM、原理图/PCB 导出、Gerber、装配图；**只在本地维护（`README.md` 除外，入库占位）**。
 - `docs/`：四份设计文档的既有骨架；后续工单只填对应小节，**不得新建散文档**。硬件审阅导出件（PDF/BOM/图片）作为证据放 `.agent/evidence/` 或工单指定位置，不塞进 `docs/`。
 - `.agent/requirements.md`：需求唯一入口；`requirements-draft.md` 仅历史追溯，不作为执行依据。
 - 约定：新代码进 `firmware/`，新硬件资料进 `Hardware/`，需求只进 `.agent/requirements.md`，设计只进 `docs/` 四份文件。
@@ -53,24 +53,27 @@ small_UPS/
 3. 硬件版本以立创EDA 工程历史 + 本地备份为准；进 git 的应当是**导出审阅件**（PDF/图片/BOM），按需作为证据入库。
 4. 固件按冻结的针脚表/寄存器表开发，接口文档入库即可，无需依赖工程源文件。
 
-因此 `Hardware/` **整个目录**被 `.gitignore` 排除；请勿使用 `git add -f Hardware/...` 绕过。目录内的 `Hardware/README.md` 仅本机存在，作用与本节一致。
+因此 `Hardware/` 的内容（`README.md` 除外）由 `.gitignore` 的 `/Hardware/*` 排除，`README.md` 由 `!/Hardware/README.md` 放行入库；请勿使用 `git add -f Hardware/...` 绕过。保留该 README 是为了让 clone 后 `Hardware/` 目录仍然存在（git 不跟踪空目录），工程文件依旧只在本地维护。
 
 ## 5. 被忽略路径清单
 
 | 类别 | `.gitignore` 规则 | 覆盖路径示例 |
 |---|---|---|
-| 硬件工程 | `/Hardware/` | `Hardware/small_ups.epro`、`Hardware/exports/v1/psu.pdf` |
+| 硬件工程（README 除外） | `/Hardware/*`、`!/Hardware/README.md` | `Hardware/small_ups.epro`、`Hardware/exports/v1/psu.pdf`（`Hardware/README.md` 入库） |
 | 构建目录 | `build/`、`cmake-build-*/`、`.pio/` | `firmware/build/`、`firmware/cmake-build-debug/` |
 | 构建产物 | `*.o`、`*.elf`、`*.bin`、`*.hex`、`*.map`、`*.lst`、`*.d`、`*.su` | `firmware/build/main.o`、`firmware/build/app.elf` |
 | 立创EDA 备份/临时 | `*.bak`、`*.bak.*`、`*_bak`、`*.backup`、`*.autosave`、`*.tmp`、`*.temp`、`*~`、`*.lck`、`.~lock.*`、`*.swp`、`*.swo`、`backup/`、`history/` | `Hardware/backup/...`、`project.epro.bak`、`.~lock.x.epro#` |
 | IDE 配置 | `.vscode/`、`.idea/`、`.vs/`、`.settings/`、`.metadata/`、`.clangd/` | `.vscode/settings.json`、`.idea/workspace.xml` |
 | 系统杂项 | `Thumbs.db`、`Desktop.ini`、`.DS_Store` | 资源管理器/访达缓存 |
+| 影运行期记录 | `.agent/tx/`、`.agent/worklogs/`、`.agent/evidence/` | 调用流水、单 worklog、单证据（均不入库） |
 
 验证命令：
 
 ```bash
-git status --porcelain=v1 --untracked-files=all   # Hardware/ 内文件不应出现
-git check-ignore -v Hardware/<任意文件>            # 应命中 /Hardware/ 规则
+git status --porcelain=v1 --untracked-files=all   # Hardware/ 内除 README 外的文件不应出现
+git check-ignore -v Hardware/<任意工程文件>        # 应命中 /Hardware/* 规则（exit 0）
+git check-ignore -v Hardware/README.md            # 命中 !/Hardware/README.md（负向规则，即不忽略）
+git add -n Hardware/README.md                     # 应输出 add ...，证明 README 可入库
 ```
 
 ## 6. 当前状态
@@ -87,6 +90,7 @@ git check-ignore -v Hardware/<任意文件>            # 应命中 /Hardware/ �
 - T-0018：完成能力补齐需求（v0.9 附录 G）：保护阈值可设性、故障可追溯、异常安全态/看门狗、8 组参数预设、能力留口（升级/远端采样补偿/校准会话）；4 项冲突/口径待 owner 确认（G.6）。
 - T-0019：完成输出能力包络与环境降额变更单（v1.0 附录 H）：0.5–48V×0–5A 全段 5A/240W 角点、0–0.5V 同 5A 上限不保证、0–40℃ 连续满载/超 40℃ 降额或关断判据、不需独立 OPP、7 项自洽核对。
 - T-0020：完成对标补缺（v1.1 附录 I）：插拔寿命/接触可靠性判据、状态可见性能力、范围外 O-02 修订与 O-06～O-10、PC 标定工具/USB-C 服务口径、T-0007 交叉引用与冲突清单；未改既有环境/安规/成本/精度数值。
+- T-0014：`Hardware/README.md` 入库占位；`.gitignore` 改为 `/Hardware/*` + `!/Hardware/README.md`，并新增 `.agent/tx/`、`.agent/worklogs/`、`.agent/evidence/` 运行期记录忽略（历史已跟踪文件未删除）。
 - 后续：按第 8 节规则填既有文件，不再新建需求/设计散文档。
 
 ## 7. 文档地图

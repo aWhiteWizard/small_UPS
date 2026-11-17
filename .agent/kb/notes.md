@@ -88,6 +88,25 @@ KB-TAGS: docs, requirements, merge, references, single-source
 
 把 requirements 第 1/2 部分并成单文件时，除了搬正文，必须同步做三件事：①在合并文件开头与附录写“来源映射 + 删除原因 + git 历史可追溯”；②把 docs/README 里所有 `R1`/`R2`/`requirements-part2.md` 引用改成新章节号（只改引用，不动骨架标题）；③知识库中指向被删文件的旧证据行要标注为历史，新的证据行改用合并后的文件:行。只删文件不改引用，会让下游把“引用缺口”误判成需求缺失。
 
+## Git 忽略目录内容但保留 README：用 `Hardware/*` + `!`，不能整目录忽略
+
+KB-TYPE: method
+KB-EVIDENCE: `.gitignore:9-11`（`/Hardware/*`、`!/Hardware/README.md`）；旧规则 `/Hardware/` 下 `git check-ignore -v --no-index Hardware/README.md` → `.gitignore:8:/Hardware/`；改后 `git check-ignore -q Hardware/README.md` → exit 1、`git status` → `?? Hardware/README.md`、`git add -n` → `add 'Hardware/README.md'`
+KB-TAGS: gitignore, hardware, directory, clone, negation
+
+整目录规则（`/Hardware/`）排除后，`!/Hardware/README.md` 无法把文件反选回来（Git 不会进入被排除目录）。要让目录在 clone 后存在且只保留 README，写成 `/Hardware/*` 忽略一层，再 `!/Hardware/README.md` 放行；子目录文件仍被父目录规则覆盖忽略。
+
+验证 `git check-ignore -v` 有坑：命中负向规则时仍打印带 `!` 的行且 exit 0，看起来像“被忽略”；应配合 `git check-ignore -q`（未忽略时 exit 1）、`git status` 的 `??` 或 `git add -n` 判定。
+
+## .gitignore 不会让已跟踪文件停止跟踪，历史运行期记录需 `git rm --cached` 另单清理
+
+KB-TYPE: method
+KB-EVIDENCE: `.gitignore:57-63` 新增 `.agent/tx/`、`.agent/worklogs/`、`.agent/evidence/` 忽略后，`git ls-files .agent/tx | Measure-Object` → Count=41（仍被跟踪）；`git status --porcelain` 不显示这些路径
+KB-TAGS: gitignore, tracked-files, agent, cleanup
+
+`git check-ignore` 命中不等于文件会从版本库移除；忽略只影响未跟踪文件，已跟踪文件继续被 git 管理。历史运行期记录要真正移出版本库需 `git rm -r --cached` 并单独提交，会删除大量历史路径，应另立清理单并确认他人记录去留，不要混在规则整理单里。
+
+
 ## PC 标定工具协议存在“工单明列命令”与 T-0006 文档命令名的漂移
 
 KB-TYPE: method

@@ -3,9 +3,12 @@
 # 原则：源码/文档/配置入库；硬件工程、构建产物、本机临时文件不入库。
 # ============================================================
 
-# --- 1. 立创EDA 硬件工程（整目录本地维护，不进 git）---
-# 原理图/PCB/工程与导出文件统一放 Hardware/，目录内 README 一并忽略。
-/Hardware/
+# --- 1. 立创EDA 硬件工程（工程/导出文件本地维护，不进 git）---
+# 原理图、PCB、工程与导出文件统一放 Hardware/，只忽略目录内容，不忽略目录本身。
+# 必须用 /Hardware/* 而不是 /Hardware/：整目录被排除后无法再用 ! 反选 README。
+/Hardware/*
+# 例外：本占位 README 入库，使 clone 后 Hardware/ 不消失（git 不跟踪空目录）。
+!/Hardware/README.md
 
 # --- 2. 固件构建产物 ---
 build/
@@ -50,3 +53,16 @@ history/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# --- 6. 影（Agent）运行期记录（不入库；已在库中的历史文件不受 .gitignore 影响）---
+# .agent/tx/：模型/工具调用流水，运行期连续追加，只反映执行过程，无长期评审价值。
+.agent/tx/
+# .agent/worklogs/：逐单工作日志与断点续做状态，属运行期状态，由工作区/引擎保管。
+.agent/worklogs/
+# .agent/evidence/：逐单 P0/P1 证据，时效性强且含截图等大文件，避免每单污染提交历史。
+.agent/evidence/
+
+# 需要继续入库的 .agent 内容（以下不写忽略规则，仅声明边界，勿改成忽略整个 .agent/）：
+#   board/tasks.json、project.json、team.json、schedule.json、approvals.json
+#   requirements*.md、mech-draft.md、kb/（知识库按 G2 分层入库）
+#   以及既有的 .agent/docs/ 入场检查骨架
