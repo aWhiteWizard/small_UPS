@@ -7,10 +7,10 @@ AT: 2026-11-18T00:03+08:00
 4 填写规则三条：done 报告写“写入文件:章节”、需求改动只改对应章节 + 附录 C 追加、设计只写 docs/ 四份且不复制：PASS
 5 README §7 文档地图：requirements + docs 四份的用途/负责单号/状态，并指向 requirements 开头完成度表：PASS
 6 requirements-part2.md 已删除；合并来源见 requirements 开头、逐节映射与删除原因见附录 D，报告同步注明：PASS
-7 规模：内容 8 文件 / 592 insertions + 429 deletions = 1021 行；超 400 提示线、低于 1200 硬上限，报告写超限理由：PASS（提示）
-8 自行 commit → push origin HEAD:refs/heads/master → git ls-remote 校验：见 T-0016-p0-sha.txt
+7 规模：审查区间 cb3d9df..b678a7a = 8 文件 / 601 insertions + 429 deletions = 1030 行（排除 .agent/evidence 与 .agent/kb；含证据 13 文件 / 1111 行）；超 400 提示线、低于 1200 硬上限，报告写超限理由：PASS（提示）
+8 自行 commit → push origin HEAD:refs/heads/master → git ls-remote 校验：见 T-0016-p0-sha.txt（内容提交 895f143 / 证据提交 b678a7a 已在 master；交付记录提交见该文件与报告 commit 号）
 
-完成度表快照（.agent/requirements.md 开头）：
+完成度表快照（.agent/requirements.md 开头；T-0016 交付时状态，T-0006 之后已将 §2.4 置为已定稿）：
 | 章节 | 状态 | 负责单号 |
 |---|---|---|
 | 第 1 章 定位与范围（1.1–1.7） | 已定稿 | T-0004（T-0013 修订） |
@@ -33,5 +33,7 @@ README 文档地图节选（§7）：
 | `docs/interface.md` | 针脚/寄存器/时序/升级/其他接口引用 | 骨架 T-0015；填充 T-0010/T-0006/T-0009 | 待填 |
 | `docs/test-plan.md` | 精度/纹波/效率/安全/出厂测试 | 骨架 T-0015；填充 T-0007/T-0011/T-0006/T-0010/T-0017 | 待填 |
 
-SIZE: 内容 8 文件（requirements+part2 删除+README+docs×4+worklog）/ 1021 行；P0 证据另计 4 文件。
+SIZE: 8 文件 / 1030 行（cb3d9df..b678a7a，排除 .agent/evidence 与 .agent/kb）；含证据 13 文件 / 1111 行；P0 证据 4 文件另列。
+交付门禁（2026-11-18 00:50）：引擎按旧 baseSha=29470ae 计 >1200 拒付；owner 选 A 校正 baseSha=cb3d9df、按 1030 行留痕交付、不拆单。审查上界 b678a7a；T-0006/T-0021 在 master 之上的提交不计入本单。
+规则生效验证：T-0006 直接填写 requirements.md §2.4 + docs 四份对应小节并更新完成度表，未新建项目需求/设计散文档。
 RESULT: PASS（SHA 证据见 T-0016-p0-sha.txt；超限理由见报告）

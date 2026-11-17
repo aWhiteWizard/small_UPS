@@ -79,3 +79,11 @@ KB-EVIDENCE: `.agent/requirements.md:7`（合并说明）、`:525-560`（附录 
 KB-TAGS: docs, requirements, merge, references, single-source
 
 把 requirements 第 1/2 部分并成单文件时，除了搬正文，必须同步做三件事：①在合并文件开头与附录写“来源映射 + 删除原因 + git 历史可追溯”；②把 docs/README 里所有 `R1`/`R2`/`requirements-part2.md` 引用改成新章节号（只改引用，不动骨架标题）；③知识库中指向被删文件的旧证据行要标注为历史，新的证据行改用合并后的文件:行。只删文件不改引用，会让下游把“引用缺口”误判成需求缺失。
+
+## 工单 baseSha 落后于真实开工基线会把继承变更算进本单规模
+
+KB-TYPE: system
+KB-EVIDENCE: 看板 baseSha=29470ae 按 `git diff` 计 10 文件/1311 行（>1200 硬上限拒付）；真实开工基线为 ff-only 后的 cb3d9df；`git diff --shortstat cb3d9df..b678a7a -- . ':!.agent/evidence' ':!.agent/kb'` → `8 files changed, 601 insertions(+), 429 deletions(-)` = 1030 行（<1200）。
+KB-TAGS: baseSha, diff, size, worktree, delivery
+
+worktree 的 baseSha 必须是本单真实开工点（`git merge --ff-only origin/master` 后的 HEAD），并与审查上界配套计算 diff；从上游继承的 T-0013/T-0015 变更、以及本单之后叠加的 T-0006/T-0021 提交都不应计入本单规模。引擎按旧 baseSha 判超限时，先核对 ff 记录与 `git merge-base`，用真实区间留痕后再交付，不要为凑规模拆单或把上游文件重做成自己的 diff。
