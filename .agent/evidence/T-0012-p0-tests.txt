@@ -1,0 +1,13 @@
+KIND: tests
+TASK: T-0012
+AT: 2026-11-17T22:40+08:00
+RESULT: PASS（搬运与四部分结构）；内容差异见 acceptance D1-D4，不阻断本单
+SIZE: requirements-part2.md=320 行/26591B；requirements.md=135 行/12185B
+COPY: SHA256 req1 9277AAF7…=9277AAF7… True；req2 DD6855C6…=DD6855C6… True
+BLOB: req1=4a24d25（=origin/master:requirements.md）；req2=4ce1810（=task/T-0005 HEAD）
+PINS: 1.2 表展开=64/64；A28=UART_TX、A29=UART_RX、B28/B29=备用
+REG: 3.1 表 0x00-0x3F；PROTOCOL_VERSION/FW_VERSION/OUTPUT_STATUS/FAULT_CODE/FAULT_FLAGS/CLEAR/RELAY_STATE/VOUT_ZERO/V 粗设+微调/I/实测/温度/心跳/并联/CAL 全命中
+ALERT: 4.1-4.5 含低有效开漏、10kΩ 上拉、硬件直拉、逐地址读、读码后 CLEAR
+CAL: 5.1-5.6 每通道 5 点（V/I 各 5）、CRC16-CCITT-FALSE、CAL_CTRL=0x04 COMMIT、双区 EEPROM
+PROBE: PFC_FAULT=0；UNDERVOLTAGE=3；"6 点"=0；"每通道 5 点"=2；part1 "两点/五点"=1
+T-0003: 仅出现在 3/7/310-313（拆分来源与差异留痕），无规范性引用
