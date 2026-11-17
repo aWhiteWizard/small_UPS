@@ -1,0 +1,25 @@
+KIND: acceptance
+TASK: T-0011
+BASE: e4b660c257f00dba0c172c2ff2bfd2cfa8aa7fb8 (ff-only)
+R: .agent/requirements.md；A: docs/architecture.md；M: docs/module-design.md；T: docs/test-plan.md
+JUDGE: 逐条对照工单 16 条验收；行号为提交前工作树
+
+#  | 验收 | 落点（文件:行号） | 结论
+1  | 范围：P 侧电气规格/拓扑/散热/结构预留 | R:581-667（§3.5.1–§3.5.12） | PASS
+2  | 方位 60×120×180、PCB 180×120、调试板 60×120×35、总深 180+35+前伸 | R:593-594；R:293 | PASS
+3  | 55V±1V、最小母线 53.2V 计算、80/100V 器件、禁 60/63V | R:598-604；A:46-48 | PASS
+4  | 输入链 T2A→NTC→MOV→X2→CM→Y→整流桥 | R:606-611；A:29-34 | PASS
+5  | Boost PFC 400V/65kHz、PF≥0.98、Class D、L/C 选型 | R:613-619；A:36-42 | PASS
+6  | LLC 100kHz+SR→55V→buck 200kHz→0–48V、变比/谐振/L/C | R:621-634；A:44-58 | PASS
+7  | 功率器件成行、PFC L/变压器/母线电容/输出 L/C 前后错位、散热器≤壳宽 | R:636-641 | PASS
+8  | 独立铝散热器（CNC）、器件/损耗/热阻 29W/40℃/≤70℃、孔位压紧、不承力 | R:638,648；T:157-170 | PASS
+9  | 后板 60×60 风扇 HA60251V4 向内吹正压+防尘棉；左右鳍片窗；顶底不开；导流板 | R:643-646；R:320 | PASS
+10 | 后板上下 60×60：上块凸台/左 45mm/右 15mm；下块 25mm 凹槽风扇；其余 owner | R:647 | PASS
+11 | 外壳不开 SWD；排针仅在 PCB；首烧/救援；单区+CRC；bootloader 不升级 | R:650-654；R:250 | PASS
+12 | 效率≥88%/≥90%、三段分解、5 电压点损耗、空载<1.5W（PFC 停振） | R:658-659；T:61-75,59 | PASS
+13 | 精度矩阵系统级；输出纹波 50/30；母线纹波 100/150 | R:661；R:314 | PASS
+14 | PCB 外形/安装孔、板间、功率板↔接口板、维修可拆 | R:591-596 | PASS
+15 | 文件规模 ≤400 行/≤8 文件 | diff 5 文档 208 行；含 worklog/KB 7 文件 | PASS
+16 | 自行 commit/push、LOCAL_HEAD=REMOTE_HEAD、sha 证据 | T-0011-p0-sha.txt + 报告 | PASS
+
+[汇总] 16/16 PASS；A/M/T 无 T-0011 待填占位；PFC/LLC/buck 计算已落 A；热预算已落 T §6.2。

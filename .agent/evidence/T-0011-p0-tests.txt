@@ -1,0 +1,11 @@
+KIND: tests
+TASK: T-0011
+AT: 2026-11-18 +08:00
+CMD: PowerShell [IO.File]::ReadAllText(..., UTF8) 关键字/表格/规模自检；git diff --check
+FILES: requirements=1026 architecture=97 module-design=110 test-plan=174 README=109 行
+CHECKS: 48/48 PASS（3 母线/耐压、4 输入链、5 PFC、6 LLC/buck、7 布局、8 热、9 风道、10 后板、11 SWD、12 效率、13 纹波、14 结构）
+MATH: BUS_MIN=53.176V；DUTY_54=89.0%；PFC_L=2.19mH；HOLD=29.91ms；LLC_fr=100.66kHz；BUCK_L=30.55µH；EFF_29W=89.22%；LOSS_90=26.67W
+TABLE_BAD=0 TABS=0 TRAIL=0 PH_T0011=0
+DIFF: 5 文档 178+/30−=208 行（含 worklog/KB 后 7 文件，仍 ≤400 行/≤8 文件）
+GIT_DIFF_CHECK: exit 0
+RESULT: PASS

@@ -113,3 +113,21 @@ KB-LAYER: 3_hardware
 KB-TAGS: mechanical, depth, locating-pin, cavity
 
 调试板贴本体前面时，定位销前伸 15–18mm 进入调试板 35mm 承插腔，不应再把销长加到整机总深。T-0007 旧口径写成 180+35+15–18=230–233，T-0010 修正为壳体 215mm、含香蕉头正面凸出 ≤233mm；做深度链时先算腔内容纳（销+插座+PCB+显示+间隙），不要重复计销长。
+
+## NTC 5D-15/10D-11 的 15/11 是直径，不是冷态阻值
+
+KB-TYPE: hardware
+KB-EVIDENCE: .agent/requirements.md:609（“NTC 冷态 5Ω/10Ω（5D-15/10D-11）”）
+KB-LAYER: 3_hardware
+KB-TAGS: input, ntc, inrush, bom
+
+`5D-15` 表示 25℃ 冷态 5Ω、本体直径约 15mm；`10D-11` 表示 10Ω、约 11mm。不要把型号里的 15/11 当成阻值写成 11–15Ω。选型时按冷态阻值算浪涌、按稳态电流/热态残余阻值算损耗；本机 240W/220V 稳态约 1.4A，二者均可，最终按浪涌实测选。
+
+## 55V 母线的最低器件档是 80V，60/63V 不能用
+
+KB-TYPE: hardware
+KB-EVIDENCE: .agent/requirements.md:602-603（53.18V 最小静态母线、55/80=68.75%、55/60=91.7%）
+KB-LAYER: 3_hardware
+KB-TAGS: bus, derating, buck, capacitor, 55v
+
+55V±1V 母线下 buck/SR/输出电容不能按 60V 或 63V 选：55/60=91.7%，没有浪涌/振铃裕量；最低 80V（68.75%），优先 100V（55%）。母线下限计算要同时加 48/0.95、通路 50mV、纹波调节 0.5V、母线纹波 0.1V、5A 阶跃 2V，得 53.18V，再用 54V 下限校验仅 0.8V 裕量；不要只用 48/0.95=50.5V 就判 55V 够。

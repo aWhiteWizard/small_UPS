@@ -1,0 +1,11 @@
+KIND: g0
+TASK: T-0011
+AT: 2026-11-18 +08:00
+BRANCH: task/T-0011 @ D:\workspace\wt\small-ups\T-0011
+BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f
+REMOTE_AT_START: e4b660c257f00dba0c172c2ff2bfd2cfa8aa7fb8
+FF_ONLY: Updating ba16717..e4b660c (Fast-forward)
+HEAD_AFTER_FF: e4b660c257f00dba0c172c2ff2bfd2cfa8aa7fb8
+CMD: git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain=v1 --untracked-files=all
+STATUS: 开工 HEAD=ticket base，origin/master 已领先；ff-only 到 e4b660c 后工作区干净（仅本单后续改动）
+RESULT: PASS
