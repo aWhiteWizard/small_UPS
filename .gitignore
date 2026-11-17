@@ -9,6 +9,8 @@
 
 # --- 2. 固件构建产物 ---
 build/
+# 本机工具链/SDK 缓存（firmware/tools/bootstrap.ps1 下载，禁止入库）
+.tools/
 *.o
 *.elf
 *.bin

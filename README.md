@@ -76,7 +76,7 @@ git check-ignore -v Hardware/<任意文件>            # 应命中 /Hardware/ �
 ## 6. 当前状态
 
 - T-0001：完成仓库初始化（目录骨架、忽略规则、本文档）。
-- T-0002：计划落地 STM32 工具链、HAL/LL、构建系统与烧写调试链路。
+- T-0002：完成 STM32 工具链/HAL/CMake/OpenOCD/串口环境与最小点灯工程编译验证（占位 STM32G071KB，见 `firmware/README.md`）。
 - T-0015：完成 `docs/` 四份设计骨架（仅标题/表头/待填占位）。
 - T-0016：完成需求第 1/2 部分合并为 `.agent/requirements.md` v0.3（五章 + 完成度表 + 填写规则），删除 `requirements-part2.md`，建立本文档地图。
 - T-0006/T-0007：完成系统级时序（§2.4）与系统级安全/指标/热/成本/待确认/参考对照（§2.5–§2.12）；`test-plan` §1/§2/§3/§5/§6 与 `architecture` §1.1 已填。
