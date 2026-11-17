@@ -30,3 +30,35 @@ KB-TYPE: content
 KB-EVIDENCE: .agent/requirements-part2.md:247-251（每通道 5 点）、:145-168（无 PFC_FAULT；UNDERVOLTAGE=0x04）、:61（4.7k 仅调试板侧）、:32-33（A28/A29 已为 UART）
 KB-CONFLICT: T-0012 验收要求 6 点电压 + 3 点电流、故障码含 PFC_FAULT；T-0005 验收与第 2 部分为每通道 5 点且无 PFC_FAULT。
 KB-TAGS: requirements, calibration, fault-code, salvage
+
+## 需求审计以主仓最新看板为准，worktree 的 tasks.json 可能停在 init
+
+KB-TYPE: system
+KB-EVIDENCE: 主仓 `.agent/board/tasks.json` 100414B，含 T-0004–T-0013；worktree 同文件 18398B，仅 T-0001–T-0003，`git log -- .agent/board/tasks.json` 只有 f4cbc29 init。
+KB-TAGS: board, worktree, baseline
+
+工单 acceptance 的基准可能只存在于主仓工作区的未提交看板；worktree 内跟踪的 tasks.json 可能是初始版本。审计/实现前先比较两处文件大小与 `git log -- <board>`，以主仓看板为准，且不要复制或提交主仓看板到本单。
+
+## 计数审计要区分“寄存器 LSB/内部编码”与“对外设定步进”
+
+KB-TYPE: method
+KB-EVIDENCE: `.agent/requirements-part2.md:203-204`（LSB 1mV/1mA 为内部编码，对外步进 0.01V/0.01A）；`.agent/requirements.md:95`（界面步进 0.01V/0.01A）。
+KB-TAGS: requirements, calibration, step
+
+同一份验收里可能同时要求“LSB ≤1mV”和“步进 0.01V/0.01A”。不要把两者判成冲突：寄存器 LSB 是编码精度，对外步进是界面/命令粒度。文档要分别写明，否则下游会把 1mV 当成 UI 步进或反过来把 0.01V 写进寄存器 LSB。
+
+## 校准 EEPROM 的“次数/温度”若由设备写入，主机 CRC 不能覆盖这两个字段
+
+KB-TYPE: method
+KB-EVIDENCE: `.agent/requirements-part2.md:263,271,280`；T-0005 第 4 条只要求 COMMIT 写 EEPROM 含 CRC/版本/次数/温度，未规定主机如何获知次数/温度。
+KB-TAGS: calibration, crc, eeprom
+
+把次数/温度放进 CRC 覆盖范围会导致主机无法预先计算 CAL_CHECKSUM（次数由设备 +1，温度由设备采样）。要么增加可读回/可写寄存器，要么让 CRC 只覆盖主机已知的点表字段，把次数/温度作为元数据；未定前必须标“待 owner 确认”，不要自行编造编码。
+
+## 取消并联均流要全链路清理，不只改 SHARE/SYNC 针
+
+KB-TYPE: content
+KB-EVIDENCE: `.agent/requirements-part2.md:113-114,142-144,167-168,207`；`.agent/requirements.md:84,130`；T-0006 第 1 条。
+KB-TAGS: requirements, parallel, consistency
+
+取消多 PSU 均流时，容易只改针脚“SHARE/SYNC 预留”，遗漏 PARALLEL_MODE/CURRENT_SHARE_EN 寄存器、OUTPUT_STATUS 的 MASTER/SLAVE/SHARE_ACTIVE 位、IMBALANCE/PARALLEL_FAULT 故障码、3.6 语义和覆盖表。审计要按“针脚→寄存器→状态位→故障码→功能条目→覆盖表”全链路扫一遍，保留编号但标“保留/不产生”比删行更利于兼容。

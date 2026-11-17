@@ -1,0 +1,64 @@
+KIND: acceptance
+TASK: T-0013
+AT: 2026-11-17T23:04+08:00
+BASE: 29470aee04c223175f8f0d7a21f5cef141f623c4 (origin/master)
+SCOPE: .agent/requirements.md（第 1 部分，修订前 135 行）+ .agent/requirements-part2.md（第 2 部分，修订前 320 行）
+BASELINE: T-0005/0006/0007/0009/0010/0011 看板 acceptance；T-0005 看板状态 cancelled，但其 acceptance 仍被 T-0013 指定为基准；T-0012 验收 3 的 D1-D5 一并复核
+JUDGE: 过时/缺失/一致/待确认；下列行号为修订前原文位置
+
+[差异清单（修订前）]
+#  | 文件:行号 + 原文摘录 | 应为 | 来源 | 判定
+1 | requirements.md:13,39 "输出 0.5–48V / 0–5A"；"必须按确认的方向与到位状态插合"；requirements-part2.md:13-17 "64 针 = A 面 32 + B 面 32" | 60（宽）×120（高）×180（深）竖立、PCB 立式 180×120、接插面 60×120 | T-0005#2/T-0007#4/T-0011#2 | 缺失
+2 | requirements-part2.md:13-34 "64 针 = …"；针脚表无竖排/偏左/上下销描述 | 竖排由上到下 A1–A32/B1–B32；金手指竖条偏左（中心距左约 15mm、宽 10–12mm、长 79mm）；上销 Ø5 距上边 10mm、下销 Ø8 距下边 20mm；右侧 4 位拨码 | T-0005#1/#2 | 缺失
+3 | requirements.md:91 "5 个界面键…用于设定输出电压、最大电流"；requirements-part2.md:97-99 "VOUT_SET_COARSE … 1mV" | 设定步进 0.01V/0.01A；寄存器 LSB 1mV/1mA 仅内部编码 | T-0007#5 | 缺失
+4 | requirements-part2.md:247-251,259,266,268 "每通道 5 点，索引 0–4"；"校验 5 点"；"5×(set+meas)" | 电压 6 点 0.5/3.3/5/12/24/48V；电流 3 点 1/2.5/5A；索引 V0–5/I0–2 | T-0005#4/T-0007#5 | 过时
+5 | requirements.md:102 "精度指标由后续指标分单定义" | 0.5–10V 轻载≤0.1%、满载≤0.3%；10–24V 满载≤0.2%；24–48V 满载≤0.1%；未校准±0.4% | T-0007#5 | 缺失
+6 | requirements.md:70 "本体独立完成 220VAC 输入、隔离变换"；requirements-part2.md:145-168 FAULT_CODE 无 PFC_FAULT | 有源 PFC、PF≥0.98、效率≥88%/目标≥90%；FAULT_CODE 含 PFC_FAULT | T-0011#5/#12、T-0007#7、T-0005#3 | 缺失
+7 | requirements.md:35,80,115 "并联/热替换"；"支持多台本体并联…"；requirements-part2.md:107,112-113,135-137,160-161,195 PARALLEL_MODE/CURRENT_SHARE_EN/IMBALANCE/PARALLEL_FAULT/均流 | 取消多 PSU 均流；SHARE/SYNC 仅预留；相关寄存器/位/故障码保留不实现 | T-0006#1 | 过时
+8 | requirements-part2.md:88-89,198 仅有 PROTOCOL_VERSION/FW_VERSION，无升级可用性说明 | 不做版本兼容判定；任何版本组合可经 UART 升级；版本仅显示/记录 | T-0006#3 | 缺失
+9 | requirements-part2.md:32-33,47 "A28 UART_TX / A29 UART_RX" | 保持 UART_TX/UART_RX，B28/B29 备用 | T-0005#1 | 一致
+10 | requirements.md:90 D-02 仅两页显示，无状态灯 | 红绿双色三态状态灯；三态定义待 owner 确认 | T-0009#2/T-0013⑩ | 缺失
+11 | requirements.md:90 D-02 无位数/颜色 | 红色双行 4 位共 8 位数码管 | T-0010#4 | 缺失
+12 | requirements.md:79 P-10 仅 FG 监控 | 后板 60×60 向内吹、左右 180×120 侧面排风 | T-0011#9/T-0007#9 | 缺失
+13 | requirements-part2.md:17 "金手指前伸 10mm（插槽内不外露）" | 金手指竖条约 79mm（插入承插腔） | T-0010#2/T-0005#2 | 过时
+14 | requirements-part2.md:250,266,268 校准表仅点数+版本+CRC，无次数/温度 | EEPROM 含次数/温度；编码/采样点待 owner 确认 | T-0005#4/T-0006#12 | 缺失
+15 | requirements-part2.md:157 "OVP Vout >110% 设定或 >50V" | OVP 取设定值+2V 且绝对上限 50V | T-0006#6 | 过时
+16 | requirements-part2.md:61 "全总线只装一处（默认调试板/主机侧…）" | 4.7k 位置未在验收中确定；标待 owner 确认 | T-0005#5/T-0012 D4 | 待确认
+17 | requirements-part2.md:284-287 CAL BEGIN/POINT/STATUS 命令 | T-0006#12 用 BEGIN/SET/MEAS/COMMIT/READ/ABORT；映射待确认 | T-0006#12 | 待确认
+18 | requirements-part2.md:145-168 无 55V 母线 <50V 码位 | 55V 母线欠压码位归属待确认 | T-0006#8 | 缺失
+19 | requirements-part2.md:168 "0x15–0xFF 保留"，无 PFC_FAULT/POWER_LOST | 新增 PFC_FAULT/POWER_LOST；编号待确认 | T-0005#3/T-0006#8 | 缺失
+
+[一致性矩阵（修订后）]
+# | 需求 | 文档位置 | 状态
+1 | ①尺寸/竖立/PCB 立式 | requirements.md:41；requirements-part2.md:16 | 一致
+2 | ②金手指竖排/偏左/上下销 | requirements-part2.md:17,21,25 | 一致
+3 | ③步进 0.01V/0.01A | requirements.md:95；requirements-part2.md:203-204 | 一致
+4 | ④6 点电压+3 点电流 | requirements.md:86；requirements-part2.md:260-263,270,280 | 一致
+5 | ⑤精度矩阵 | requirements.md:106 | 一致
+6 | ⑥有源 PFC/PF≥0.98/效率 | requirements.md:74；requirements-part2.md:175 | 一致
+7 | ⑦取消多 PSU 均流 | requirements.md:84,130；requirements-part2.md:113-114,142-144,167-168,207 | 一致
+8 | ⑧取消固件版本兼容门禁 | requirements-part2.md:211,301 | 一致
+9 | ⑨A28/A29 UART | requirements-part2.md:38-39,53 | 一致
+10 | ⑩状态灯红绿双色三态 | requirements.md:94 | 待确认
+11 | ⑪红色 8 位数码管 | requirements.md:94 | 一致
+12 | ⑫风扇后板向内吹/侧面排风 | requirements.md:83 | 一致
+13 | ⑬金手指 10mm→79mm | requirements-part2.md:21 | 一致
+14 | ⑭校准 EEPROM 次数/温度/CRC | requirements-part2.md:263,271,280 | 待确认
+15 | ⑮OVP 设定值+2V | requirements-part2.md:157 | 一致
+16 | ⑯4.7k 上拉位置 | requirements-part2.md:49,68 | 待确认
+17 | ⑰CAL 命令名映射 | requirements-part2.md:298 | 待确认
+18 | ⑱55V 母线故障码归属 | requirements-part2.md:179 | 待确认
+19 | ⑲PFC_FAULT/POWER_LOST 编号 | requirements-part2.md:175-176,179 | 待确认
+
+[汇总]
+当前 19 项：一致 13 / 待确认 6 / 缺失 0 / 已过时 0。
+修订前差异清单：一致 1 / 过时 4 / 缺失 12 / 待确认 2。
+已知 12 项：11 一致 + 1 待确认（⑩）；另 7 项为补充发现（⑬-⑲）。
+范围外未产出（不计入矩阵，状态=缺失）：T-0006 控制细节（热调/上电时序/短路耐受）、T-0007 其余指标（动态/容性/EMI/噪音/成本）、T-0009/0010 调试板接口结构细节、T-0011 其余电气/热设计；应由对应分单承接。
+
+[验收 1-5]
+1 PASS：已读两份对象文档；基准取自主仓看板 T-0005/0006/0007/0009/0010/0011。
+2 PASS：12 项已知变更逐条覆盖；每条含文件:行号+原文摘录+应为+来源+判定。
+3 PASS：只改事实性冲突，未改验收口径；6 类不确定项已标“待 owner 确认”并附来源。
+4 PASS：矩阵 19 项，汇总统计见上。
+5 PASS：改动 2 文件 127 行（≤8 文件/≤400 行）；commit/push/SHA 见 T-0013-p0-sha.txt 与最终报告。

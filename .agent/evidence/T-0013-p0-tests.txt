@@ -1,0 +1,13 @@
+KIND: tests
+TASK: T-0013
+AT: 2026-11-17T23:04+08:00
+CMD: PowerShell 7 UTF8 读取 + Markdown 表/针脚/寄存器/关键字校验；git diff --check
+SIZE: requirements.md=139 行；requirements-part2.md=337 行（修订后）
+TABLE: part1/part2 表格管道数一致（bad=0）
+PIN: 1.2 表 32 位 × A/B = 64（1–10=10、11–20=10、21–29=9、30–32=3；每行 A/B 两针）
+REG: 3.1 表 0x00–0x3F 连续 64/64（unique=64，contiguous=True）
+CAL: V 6 点 0.5/3.3/5/12/24/48；I 3 点 1/2.5/5；索引 V0–5/I0–2
+KEY: size=True gold=True step=True cal=True accuracy=True pfc=True no_share=True no_gate=True uart=True lamp=True display=True fan=True pfc_fault=True ovp2v=True cal_meta=True
+DIFF: 2 文件 74 insertions + 53 deletions = 127 行（≤400）；git diff --check exit 0
+PENDING: 6 类待 owner 确认（状态灯三态、校准元数据/CRC、4.7k 位置、CAL 命令名、55V 母线码位、PFC/POWER 编号）
+RESULT: PASS

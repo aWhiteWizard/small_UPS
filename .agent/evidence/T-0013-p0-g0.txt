@@ -1,0 +1,10 @@
+KIND: g0
+TASK: T-0013
+AT: 2026-11-17T23:04+08:00
+BRANCH: task/T-0013 @ D:\workspace\wt\small-ups\T-0013
+BASE: 29470aee04c223175f8f0d7a21f5cef141f623c4 (origin/master)
+CMD: git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain=v1 --untracked-files=all
+STATUS: 开工时 HEAD = remote = 29470ae；工作区干净；本单 worklog 尚未创建
+OBJECT: .agent/requirements.md 135 行；.agent/requirements-part2.md 320 行（均来自 29470ae）
+BASELINE: 主仓 D:\workspace\small-ups\.agent\board\tasks.json 为最新看板（100414B）；worktree 内同文件停在 f4cbc29，仅跟踪用，不作基准
+RESULT: PASS
