@@ -72,6 +72,14 @@ KB-TAGS: requirements, parallel, consistency
 
 取消多 PSU 均流时，容易只改针脚“SHARE/SYNC 预留”，遗漏 PARALLEL_MODE/CURRENT_SHARE_EN 寄存器、OUTPUT_STATUS 的 MASTER/SLAVE/SHARE_ACTIVE 位、IMBALANCE/PARALLEL_FAULT 故障码、3.6 语义和覆盖表。审计要按“针脚→寄存器→状态位→故障码→功能条目→覆盖表”全链路扫一遍，保留编号但标“保留/不产生”比删行更利于兼容。
 
+## 主机侧 EN 延时与本体使能判定只有端点重合时，取上限并留事务裕量
+
+KB-TYPE: method
+KB-EVIDENCE: `.agent/requirements.md:704`（T-0009 主机侧验收 10–20ms，实现取 20ms）；`docs/interface.md:76`（T-0006 本体 S1_CHECK 要求 EN 高 ≥20ms）
+KB-TAGS: enable, timing, interface, d-side, review
+
+跨板时序不能两端各写“在范围内”：T-0009 主机侧 10–20ms 与 T-0006 本体侧 EN 高 ≥20ms 的交集只有 20ms 一个端点。主机必须固定 20ms，且从 EN 上升到写 OUTPUT_ENABLE 之间还要有 I2C 事务时间（>0）才真正超过 20ms；只等到 10–15ms 会被本体判 EN 未稳定。若实现无法保证，应回写本体去抖下限或主机上限，不能靠“应该能过”。
+
 ## 需求并单后必须同步改写 docs 与 KB 的旧路径/章节引用
 
 KB-TYPE: method
