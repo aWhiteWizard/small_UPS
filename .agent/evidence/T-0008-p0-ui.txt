@@ -1,12 +1,14 @@
 KIND: ui
 TASK: T-0008
 AT: 2026-11-18 +08:00
-BEFORE: .agent/evidence/T-0008-p0-ui-before.png；1180×840；54400 B
-  SHA256=BAED3751BB3FDEA1149F095BB590987865639A10CD06015DBFB51EF0F6B7F79D
-  内容：启动态/未连接；串口空、设备信息 —、6 行 V 点空表、按钮禁用、日志提示未发现串口。
+BEFORE: .agent/evidence/T-0008-p0-ui-before.png；1180×790；67721 B
+  SHA256=545D69B170E7C89C5653E0D829DE443E0F8DA00DE8D536C2F1C74C3C17378FDE
+  内容：早期 790 高布局；右侧操作按钮单列，导出 CSV 与提示被裁，表格第 6 行/日志下半部截断；
+  CRC 状态仅显示“READ CRC 校验 PASS”。
 AFTER: .agent/evidence/T-0008-p0-ui-after.png；1180×840；75346 B
   SHA256=492DB7EC19A35A93EBD5A0669827C2839DC4EFF7EF423143BECCAEA7E1F5B32F
-  内容：DEMO 已连接；协议 1.0/固件 0.9.0/SN PSU-DEMO-0001；V 6 点含实测/误差%；COMMIT→READ 日志；
-  CRC 设备=A2DB 期望=A2DB PASS；最大误差 3 mV；CAL BEGIN/COMMIT/READ/ABORT 与导出 CSV 可见。
-NOTE: 新建工具无旧版界面，before=启动空态、after=完成校准态，同尺寸同窗口，用于对照界面填充/联机变化。
+  内容：最终 840 高布局；按钮 2×2、导出 CSV 移至日志栏、6 行表格与提示完整；
+  DEMO 协议 1.0/固件 0.9.0/SN；V 6 点实测/误差%；CRC 设备=A2DB 期望=A2DB PASS；
+  最大误差 3 mV；COMMIT→READ 日志原文可见。
+NOTE: before=同一工具早期实现态，after=修复后最终态；对照点：窗口高度、右栏按钮、导出按钮位置、表格裁切、CRC 汇总。
 RESULT: PASS

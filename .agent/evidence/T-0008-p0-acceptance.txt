@@ -3,7 +3,7 @@ TASK: T-0008
 AT: 2026-11-18 +08:00
 RESULT: 7/7 功能项满足；第 6 项行数超 400 提示线（已留痕）；SHA 见 T-0008-p0-sha.txt
 1 PASS 源码：tools/calib_tool.py（tkinter GUI，仅 pyserial 额外依赖，源码进 git）；README 安装/启动/截图
-  证据：calib_tool.py:1-8,18-20；README.md:9-23；改前/改后截图 T-0008-p0-ui-before.png / T-0008-p0-ui-after.png
+  证据：calib_tool.py:1-8,18-20；README.md:9-23；改前 1180×790 旧布局 / 改后 1180×840 完整布局：T-0008-p0-ui-before.png / T-0008-p0-ui-after.png
 2 PASS 界面：串口下拉+刷新/连接、设备信息、V/I 通道、序号/设定/实测/误差表、6 功能按钮、状态/日志、导出 CSV
   证据：calib_tool.py:239-256,271-273,283-286,313,317,480-527
 3 PASS 流程：连接→INFO→BEGIN（显示设备内部 0.5A/目标+1A 限流）→逐点 SET/MEAS→COMMIT→自动 READ

@@ -3,10 +3,10 @@ TASK: T-0008
 AT: 2026-11-18 +08:00
 BRANCH: task/T-0008 @ D:\workspace\wt\small-ups\T-0008
 BASE: ba16717（开工 HEAD）→ d3353ac（origin/master，ff-only；behind 43）
-HEAD: d3353ac + C1=6e06340（功能/证据）+ C2=9c99c7f（sha/worklog）；C3 为 UI 改前/改后截图补交
-REMOTE: C2=9c99c7f（C3 push 后最终 HEAD 见报告与 T-0008-p0-sha.txt）
+HEAD: d3353ac + C1=6e06340（功能/证据）+ C2=9c99c7f（sha/worklog）+ C3=0ead30d（before/after 补交）；C4 换 before 为早期 790 高布局
+REMOTE: C3=0ead30d（C4 push 后最终 HEAD 见报告与 T-0008-p0-sha.txt）
 CMD: py_compile; --selftest; GUI integration; git status; git diff --check; git diff --name-only -- .agent/requirements.md docs .agent/board/tasks.json
 CHECK: COMPILE OK；selftest PASS；integration 17/17 PASS；requirements/docs/看板 0 改动
 SCALE: tools/calib_tool.py=854 行 + tools/README.md=72 行（合计 926；>400 提示线，<1200 硬上限；工具文件 2 个 + 改前/改后截图 2 个）
 PY: C:\Users\Future_Tech_WorkShop\AppData\Roaming\uv\python\cpython-3.14.6-windows-x86_64-none\python.exe（3.14.6，Tk 8.6，pyserial 3.5）
-RESULT: PASS（C1=6e06340 功能；C2=9c99c7f 证据；C3=UI before/after 补交）
+RESULT: PASS（C1=6e06340 功能；C2=9c99c7f 证据；C3=0ead30d 截图；C4=before 布局替换）

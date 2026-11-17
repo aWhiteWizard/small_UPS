@@ -8,5 +8,5 @@ REMOTE_HEAD: 6e06340b6f51898d6af329fa367f84f248d0f94f refs/heads/master
 LS_REMOTE: 6e06340b6f51898d6af329fa367f84f248d0f94f	refs/heads/master
 PUSH: d3353ac..6e06340  HEAD -> master（git push origin HEAD:refs/heads/master；exit 0）
 VERIFY: LOCAL_HEAD == REMOTE_HEAD == 6e06340b6f51898d6af329fa367f84f248d0f94f
-NOTE: C1 为功能+内容提交；C2=9c99c7f（sha/g0/worklog 记录）已 push；C3 为改前/改后截图补交，最终 HEAD 以 C3 push 后复核为准（报告附 C3）
+NOTE: C1 为功能+内容提交；C2=9c99c7f（sha/worklog）已 push；C3=0ead30d 补交 before/after 截图；C4 将 before 换为早期 790 高布局，最终 HEAD 以 C4 push 后复核为准（报告附 C4）
 RESULT: PASS
