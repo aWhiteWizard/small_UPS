@@ -1,0 +1,12 @@
+KIND: sha
+TASK: T-0008
+AT: 2026-11-18 +08:00
+BASE: ba16717（开工 HEAD）→ d3353ac（origin/master，ff-only）
+COMMIT: 6e06340b6f51898d6af329fa367f84f248d0f94f（C1：工具+README+截图+证据+worklog+KB）
+LOCAL_HEAD: 6e06340b6f51898d6af329fa367f84f248d0f94f（C1 push 后）
+REMOTE_HEAD: 6e06340b6f51898d6af329fa367f84f248d0f94f refs/heads/master
+LS_REMOTE: 6e06340b6f51898d6af329fa367f84f248d0f94f	refs/heads/master
+PUSH: d3353ac..6e06340  HEAD -> master（git push origin HEAD:refs/heads/master；exit 0）
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 6e06340b6f51898d6af329fa367f84f248d0f94f
+NOTE: C1 为功能+内容提交；本文件与 worklog/g0 的 C2 记录提交随后 push，最终 HEAD 以 C2 复核为准（报告附 C2）
+RESULT: PASS
