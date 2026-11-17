@@ -187,3 +187,30 @@ KB-EVIDENCE: `.agent/evidence/T-0018-p0-sha.txt:5-12`（COMMIT=C1、NOTE 随 C2 
 KB-TAGS: git, sha, evidence, self-reference, delivery
 
 P0 sha 文件要写 COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文，但文件内无法写入“包含该文件的最终提交”哈希（自指）。做法：C1 提交内容并 push，C2 写 sha 文件记录 C1 并 push；sha 文件注明 C2 为记录提交、最终 LOCAL=REMOTE=C2 在报告里给。reviewer 核对 C2 只改 evidence/worklog，且 sha 中的 C1 是 C2 的父提交即可；不要为了把 C2 写进文件再无限追加记录提交。
+
+## 连接器“500 次”是机械寿命，不等于热插拔/带电插拔寿命
+
+KB-TYPE: hardware
+KB-EVIDENCE: `.agent/requirements.md:1404-1411`（T-0020 I.1：热插拔循环定义、≥500 次、接触电阻/插拔力/保持力判据）；`docs/interface.md:47`（插座 ≥500 次）
+KB-LAYER: 3_hardware
+KB-TAGS: connector, card-edge, mating-cycles, hot-swap, durability
+
+插座/连接器规格书的“500 Cycles”通常指机械插拔寿命，未区分是否带电/待机。需求若写“热插拔 500 次”，必须定义热插拔状态（输出 OFF、继电器断开、12V/I2C 带电待机）并说明不得用不带电次数替代；同时给接触电阻增量、插拔力/保持力判据。否则供应商按机械寿命交付，系统级热替换次数无法验收。
+
+## “设定值与实测值同屏”在 8 位 2×4 屏上只能按被测量成对落实
+
+KB-TYPE: content
+KB-EVIDENCE: `.agent/requirements.md:1437`（I.2 S-02：同一被测量成对同屏，V/I 可分页）；`:1496`（I.5 #1：现布局仅实测 V/I，无设定/CV/CC/功率）
+KB-LAYER: 1_application
+KB-TAGS: requirements, display, visibility, ui, conflict
+
+8 位 2×4 数码管（每页 2 行×4 位）无法同时显示 V 设定/实测 + I 设定/实测 + 模式 + 功率。把“同屏”写成“V/I 四个数值全同屏”会直接要求换屏/改结构；按“同一被测量的设定/实测成对同屏，V/I 可分页”写，既满足可判定又不越权改 T-0009 布局。若 owner 要四项全同屏，必须走 T-0009/T-0010 变更单。
+
+## O-02“无上位机”必须给服务/标定工具留例外，否则与 USB-C 自相矛盾
+
+KB-TYPE: content
+KB-EVIDENCE: `.agent/requirements.md:90`（O-02 修订：T-0008/USB-C 服务例外）；`:1461-1479`（I.4 定义/裁决/验收）；`:891`（§4.2.6 USB-C 数据/升级）
+KB-LAYER: 1_application
+KB-TAGS: requirements, host-software, usb-c, calibration, scope
+
+绝对化的“无上位机/无 PC 软件”会与调试板 USB-C 升级口、T-0008 标定工具冲突。正确口径是区分“上位机产品功能”（随整机交付、正常使用必需、提供 V/I/开关控制）与“服务/标定工具”（不随整机、不进 BOM、只做校准/读状态/升级）。O-02 必须写明例外，否则下游会以“范围外”为由删掉 USB-C 或把 T-0008 当产品功能。
