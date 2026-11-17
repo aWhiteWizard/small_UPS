@@ -171,3 +171,19 @@ KB-LAYER: 3_hardware
 KB-TAGS: bus, derating, buck, capacitor, 55v
 
 55V±1V 母线下 buck/SR/输出电容不能按 60V 或 63V 选：55/60=91.7%，没有浪涌/振铃裕量；最低 80V（68.75%），优先 100V（55%）。母线下限计算要同时加 48/0.95、通路 50mV、纹波调节 0.5V、母线纹波 0.1V、5A 阶跃 2V，得 53.18V，再用 54V 下限校验仅 0.8V 裕量；不要只用 48/0.95=50.5V 就判 55V 够。
+
+## 输出能力包络要写成矩形+角点，不是恒功率双曲线
+
+KB-TYPE: content
+KB-EVIDENCE: `.agent/requirements.md:1268-1283`（H.2 包络）、`:1316-1324`（H.3 降额）、`:1328-1340`（H.4 OPP）、`:1346-1352`（H.5 自洽）
+KB-TAGS: requirements, output-envelope, derating, opp, consistency
+
+48V×5A=240W 不是无条件承诺：需求要写成 0.5–48V×0–5A 矩形 + 240W 角点，明确“全段 5A”只对保证区成立、0–0.5V 同 5A 上限但不保证连续 5A/指标、保护容差（5.25A/50V）与远端采样针端 242.5W 不算连续能力。环境降额不要引用不存在的曲线：0–40℃ 按 40℃/240W/30min/≤70℃/≤55℃ 判，超 40℃ 只写“降额到热限或 OTP 95℃ 关断”的可判定边界；无独立 OPP 的结论必须带前提（5A 限流/48V/8A OCP/50V OVP）和重评触发，否则后续改限流会静默失效。
+
+## P0 SHA 文件无法包含自身最终提交哈希：内容提交 C1 + 记录提交 C2
+
+KB-TYPE: system
+KB-EVIDENCE: `.agent/evidence/T-0018-p0-sha.txt:5-12`（COMMIT=C1、NOTE 随 C2 落库）；`.agent/worklogs/T-0007.md:32-36`（C6 内容/C7 仅记录）；T-0019 同法
+KB-TAGS: git, sha, evidence, self-reference, delivery
+
+P0 sha 文件要写 COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文，但文件内无法写入“包含该文件的最终提交”哈希（自指）。做法：C1 提交内容并 push，C2 写 sha 文件记录 C1 并 push；sha 文件注明 C2 为记录提交、最终 LOCAL=REMOTE=C2 在报告里给。reviewer 核对 C2 只改 evidence/worklog，且 sha 中的 C1 是 C2 的父提交即可；不要为了把 C2 写进文件再无限追加记录提交。
