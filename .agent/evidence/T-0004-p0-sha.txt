@@ -1,0 +1,11 @@
+KIND: sha
+TASK: T-0004
+AT: 2026-11-17T18:09+08:00
+BRANCH: task/T-0004
+CONTENT_COMMIT: 17821d8b539f3d4cea1e9c89d64223ebf3315ba2
+[1] 内容提交本地/远端对照
+$ git rev-parse HEAD -> 17821d8b539f3d4cea1e9c89d64223ebf3315ba2
+$ git ls-remote origin refs/heads/master -> 17821d8b539f3d4cea1e9c89d64223ebf3315ba2	refs/heads/master
+RESULT: PASS（C1 本地=远端）
+[2] 证据提交
+FINAL_COMMIT: C2（本文件所在提交）；C2 push 后最终 SHA 见报告。

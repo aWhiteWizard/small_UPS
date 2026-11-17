@@ -1,0 +1,50 @@
+KIND: acceptance
+TASK: T-0004
+AT: 2026-11-17T18:09+08:00
+SCOPE: 工单验收 1–4 逐条（含验收 2 的 11 项覆盖）
+RESULT: PASS
+
+[验收 1] 第 1 部分：定位 + 功能清单 + 范围外
+01 PASS 产品定位：数控可调直流电源 PSU、非 UPS、无电池/逆变/续航、项目名历史命名
+   requirements.md:11-25
+02 PASS P 类功能清单：P-01–P-14，逐条编号、每条带来源
+   requirements.md:66-83
+03 PASS D 类功能清单：D-01–D-07，逐条编号、每条带来源
+   requirements.md:85-95
+04 PASS 范围外：无上位机、硬件用立创EDA 本地 Hardware/、仓库只放固件
+   requirements.md:104-114
+
+[验收 2] 11 项必须覆盖
+05 PASS 输出电压 0.5–48V；设定 0–48V；低于 0.5V 不保证 + 原因
+   requirements.md:71、97-102
+06 PASS 电流 0–5A
+   requirements.md:72
+07 PASS I2C 地址 0x30–0x3F、无广播
+   requirements.md:74
+08 PASS 掉电保存 V/I 设定（不存 PT100 阈值）
+   requirements.md:75
+09 PASS EN 使能链路（四条件、单票否决、默认不使能）
+   requirements.md:73、92
+10 PASS ALERT 中断（锁存/读码/CLEAR）
+   requirements.md:76、93
+11 PASS 并联均流
+   requirements.md:80
+12 PASS 热替换支持
+   requirements.md:81
+13 PASS 本体过温两级
+   requirements.md:78
+14 PASS 调试板 PT100 走 Modbus RTU 模块
+   requirements.md:94
+
+[验收 3] 规模与边界
+15 PASS requirements.md 135 行（≤400）；最终交付 7 文件（≤8）
+   T-0004-p0-tests.txt [1]
+16 PASS 只写第 1 部分：无针脚表/寄存器表/指标；详细设计明确留后续分单
+   requirements.md:5、131-135
+
+[验收 4] 交付
+17 PASS C1 17821d8b539f3d4cea1e9c89d64223ebf3315ba2 已 push origin/master，本地=远端
+   T-0004-p0-sha.txt [1]
+18 PASS C2 证据提交后 push，最终 commit 与远端 SHA 见报告
+   T-0004-p0-sha.txt [2]
+RESULT: PASS
