@@ -1,0 +1,20 @@
+KIND: acceptance
+TASK: T-0006
+AT: 2026-11-18 +08:00
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f
+1 范围：仅 P 侧；SHARE/SYNC 仅预留不驱动，0x1F/0x20 读 0/写忽略：PASS（interface §5.2、requirements §2.4.4）
+2 热调：5–20V/s、I 限流 100ms、H_* 热调状态机、OVP 跟踪/UV 屏蔽、无冲击：PASS（interface §3.4、requirements §2.4.2）
+3 升级：无版本门禁、UART 字节流、版本仅显示/记录：PASS（requirements §2.4.3、interface §4.3）
+4 使能链：EN+软使能+短针+无故障；EN 10k/10–50ms；HB 100/500ms：PASS（requirements §2.4.2、interface §3.2）
+5 故障锁存：≤10µs/≤1ms、不自动重试、读码+CLEAR+重新使能；状态机+码表：PASS（interface §3.3）
+6 OVP/OCP/CC/CV：+2V/50V 比较器锁存、≤10µs、CC 进/出滞回：PASS（interface §3.6）
+7 短路/过载：5s、1.2 倍 1min 不损坏、人工恢复：PASS（interface §3.6、test-plan §5.1）
+8 欠压/掉电/PFC：180/150VAC→0x16、PFC<320V→0x15、55V<50V→0x04 UNDERVOLTAGE；禁 buck、不自动输出、防反灌：PASS（interface §3.1/§3.3）
+9 上电：aux→自检→PFC→LLC→READY + 异常分支：PASS（interface §3.1、requirements §2.4.1）
+10 继电器/残压：位置、≤50ms 释放、100ms≤1V、RELAY_STATE/VOUT_ZERO：PASS（interface §3.5）
+11 Bootloader：16–24KB、单区+CRC、失败停 boot、A28/A29、EN 低/停 PFC/LLC：PASS（interface §4）
+12 校准态：六命令、0.5A/+1A、禁普通命令、COMMIT 写 EEPROM：PASS（interface §5.1）
+13 规模：文档 5 文件 +277/−45=322 行；含 worklog/4 P0 共 10 文件 +388/−45=433 行；超 8 文件/400 行提示线（留痕）
+14 交付：C1=3cc6ab1、C2=1770c95、C3=dc75815（最终内容/证据）；C3 本地=远端；C4 为 sha/worklog 记录提交，最终 HEAD 见报告
+SIZE: 文档改动 5 文件/+277−45=322 行；总 10 文件/+388−45=433 行；超提示线理由见报告
+RESULT: PASS（第 13 项超限留痕）

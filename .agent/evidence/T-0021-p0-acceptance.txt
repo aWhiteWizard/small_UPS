@@ -1,0 +1,12 @@
+KIND: acceptance
+TASK: T-0021
+AT: 2026-11-18 +08:00
+1 三份文件固定路径 .agent/docs/{requirements,architecture,modules}.md：PASS（63/67/46 行；H1 见 tests.txt；磁盘真实存在）
+2 分工：requirements 为影需求唯一入口/24 章节索引；architecture 含框图/供电链/接口边界/时序总览 4 骨架；modules 本体 8 + 调试板 6 模块，每模块输入/输出/关键器件/风险四栏：PASS
+3 无编造参数/指标值；未定统一「待填（来源：T-…）」45 处；每份 ≤120 行、三份 176 行 ≤400：PASS（tests.txt）
+4 逐份路径/行数/H1 已报告；磁盘真实存在（非 git 索引）：PASS（tests.txt）
+5 commit+push+SHA：PASS（C1=8267432；LOCAL_HEAD=REMOTE_HEAD=8267432；ls-remote 原文见 T-0021-p0-sha.txt；证据提交 C2 另行 push）
+6 主仓 pull --ff-only：PASS（cb3d9df→8267432，HEAD=8267432；三份文件在 D:\workspace\small-ups 可见 63/67/46 行）
+7 未改 .agent/requirements.md、requirements-part2.md、看板；docs/ 四份骨架并存：PASS（DIFF_EXIT=0；本次仅新增 .agent/docs 三份）
+SIZE: 8 文件 / 262 行新增（3 docs=176、4 P0=49、worklog=37）；未超 8 文件/400 行提示线
+RESULT: PASS / DELIVERED（内容提交 C1；证据提交 C2 见报告）

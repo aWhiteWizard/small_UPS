@@ -1,0 +1,9 @@
+KIND: g0
+TASK: T-0021
+AT: 2026-11-18 +08:00
+BRANCH: task/T-0021 @ D:\workspace\wt\small-ups\T-0021
+BASE: cb3d9dff5d5a69c1354ba84f9ae54c0320cd758b（开工 HEAD）→ b678a7ab7448599764fd4471408eef65afdce186（origin/master，ff-only）
+CMD: git merge --ff-only origin/master; git rev-parse HEAD; git ls-remote origin refs/heads/master; git diff --quiet -- .agent/requirements.md .agent/requirements-part2.md docs/ .agent/board/tasks.json; git status --porcelain=v1 --untracked-files=all
+STATUS: 开工 HEAD=cb3d9df、origin/master=b678a7a（behind 2），已 ff-only；HEAD=REMOTE=b678a7a；DIFF_EXIT=0（requirements/part2/docs/看板无改动）；工作区仅本单 3 份骨架 + worklog 未跟踪
+OBJECT: .agent/docs/requirements.md=63 行、architecture.md=67 行、modules.md=46 行（合计 176；均 ≤120）
+RESULT: PASS
