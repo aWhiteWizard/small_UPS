@@ -1,21 +1,17 @@
 KIND: sha
 TASK: T-0020
-COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68
-LOCAL_HEAD: 65cc739c1bf333cef38e7e583376ff8a7f11ad68
-REMOTE_HEAD: 65cc739c1bf333cef38e7e583376ff8a7f11ad68
+AT: 2026-11-18 +08:00
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f（ticket base）
+UPSTREAM: 49c5029f1b5d5c7e80fdd79df3c3789c2af26a46（开工 origin/master）
+COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68（内容 C1：requirements/README/KB/worklog）
+EVIDENCE_COMMIT: 3dacec19688d61e82a24aaed30b414701dfa8776（证据 C2：P0 四件 + worklog）
+LOCAL_HEAD: 3dacec19688d61e82a24aaed30b414701dfa8776
+REMOTE_HEAD: 3dacec19688d61e82a24aaed30b414701dfa8776 refs/heads/master
 REMOTE: origin git@github.com:aWhiteWizard/small_UPS.git
-BRANCH: refs/heads/master
-
-LS-REMOTE:
-65cc739c1bf333cef38e7e583376ff8a7f11ad68	refs/heads/master
-
-PUSH:
-To github.com:aWhiteWizard/small_UPS.git
-   49c5029..65cc739  HEAD -> master
-
-VERIFY:
-git rev-parse HEAD = 65cc739c1bf333cef38e7e583376ff8a7f11ad68
-git ls-remote origin refs/heads/master = 65cc739c1bf333cef38e7e583376ff8a7f11ad68 refs/heads/master
-LOCAL_HEAD = REMOTE_HEAD (PASS)
-
-NOTE: C1 is the content commit (requirements/README/KB/worklog). This file, the other P0 evidence and the final worklog are in C2 (record commit); C2's SHA is the final LOCAL_HEAD=REMOTE_HEAD and is reported in the delivery report (a file cannot contain the hash of the commit that contains it).
+CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+PUSH_C1: 49c5029..65cc739  HEAD -> master（exit 0）
+PUSH_C2: 65cc739..3dacec1  HEAD -> master（exit 0）
+LS_REMOTE: 3dacec19688d61e82a24aaed30b414701dfa8776	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 3dacec19688d61e82a24aaed30b414701dfa8776
+NOTE: 本文件随记录提交 C3 落库；C3 为记录提交，最终 LOCAL=REMOTE=C3 在报告给出（文件无法包含自身提交哈希）。
+RESULT: PASS
