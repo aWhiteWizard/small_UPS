@@ -6,6 +6,6 @@ STRUCT: REQ_LINES=607 H1=6（含文档标题）CH=5 APPX=5（H2 A–E）TABLE_BA
 DOCS: architecture=67 module-design=103 interface=228 test-plan=83 行；标题数 13/17/6/7，与 T-0016 提交前一致
 README: DOC_MAP=True RULES=True
 ENC: BOM=False TRAILING_WS=0 DIFF_CHECK_EXIT=0
-SIZE: doc=15 文件/1824 行；code=0/0；excluded=21 文件/386 行；total=36/2210（29470ae..本轮 HEAD）
+SIZE: doc=15 文件/1854 行；code=0/0；excluded=21 文件/389 行；total=36/2243（29470ae..本轮 HEAD）
 T0016_DIFF: cb3d9df..b678a7a = 8 文件 601+/429- = 1030 行（非证据；T-0016 内容提交 895f143 已 push）
 RESULT: PASS
