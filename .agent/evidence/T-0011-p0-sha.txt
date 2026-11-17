@@ -1,0 +1,13 @@
+KIND: sha
+TASK: T-0011
+AT: 2026-11-18 +08:00
+BASE: e4b660c257f00dba0c172c2ff2bfd2cfa8aa7fb8 (ff-only)
+COMMIT: fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd
+LOCAL_HEAD: fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd
+REMOTE_HEAD: fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd refs/heads/master
+CMD: git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+PUSH: e4b660c..fd81bbc  HEAD -> master (exit 0)
+LS_REMOTE: fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd True
+NOTE: C1=fd81bbc 为内容+证据提交；C2 仅回填本文件与 worklog。C2 自身 SHA 见报告（自指限制，沿用 T-0007/T-0010 惯例）。
+RESULT: PASS
