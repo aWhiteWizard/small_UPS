@@ -1,0 +1,11 @@
+KIND: tests
+TASK: T-0007
+AT: 2026-11-18 +08:00
+CMD: PowerShell 7 UTF8 ReadAllLines + table/heading/keyword checks; git diff --check; git diff --stat
+LINES: requirements=716 test-plan=132 architecture=72 README=106 worklog=51; P0 evidence=4
+TABLE: 4 docs TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=False
+ANCHORS: R §2.5–§2.12 8/8; test-plan §1/§1.1/§2/§3/§5/§6/§6.1 filled; §4 kept T-0017; architecture §1.1 filled
+KEY: standards 8/8; accuracy 5/5; dynamic 2/2; ripple 3/3; efficiency 3/3; thermal/noise 5/5; cost 3/3; to-confirm 6/6; reference 8/8; T-0007 placeholders=0
+SIZE: c2f67af..C3 8 files / 317+ / 47− = 364 lines (incl 3 evidence + worklog); engine base ba16717 20 files/850 lines (inherited 8 upstream commits)
+SHA: C1=c42f14f; C2=5ffa854; C3=80532a5; final local=remote=80532a5 at C3
+RESULT: PASS
