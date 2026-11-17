@@ -1,0 +1,13 @@
+KIND: sha
+TASK: T-0016
+AT: 2026-11-18T00:05+08:00
+BASE: 29470aee04c223175f8f0d7a21f5cef141f623c4（看板 baseSha）→ cb3d9dff5d5a69c1354ba84f9ae54c0320cd758b（origin/master，ff-only 取得 T-0015 骨架）
+COMMIT: 895f1438ee4e157155a8818c8b663ae111d67895（内容交付提交）
+LOCAL_HEAD: 895f1438ee4e157155a8818c8b663ae111d67895（push 后验证时）
+REMOTE_HEAD: 895f1438ee4e157155a8818c8b663ae111d67895
+CMD: git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+LS_REMOTE: 895f1438ee4e157155a8818c8b663ae111d67895	refs/heads/master
+PUSH: cb3d9df..895f143  HEAD -> master（exit 0）
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 895f1438ee4e157155a8818c8b663ae111d67895
+NOTE: 本 sha 证据以紧随其后的证据提交（C2）落库并 push；C2 的本地 HEAD 与远端 SHA 亦相等，最终 head 见报告与 worklog。
+RESULT: PASS
