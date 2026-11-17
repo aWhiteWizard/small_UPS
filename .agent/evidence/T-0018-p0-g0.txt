@@ -1,0 +1,12 @@
+KIND: g0
+TASK: T-0018
+AT: 2026-11-18 +08:00
+BRANCH: task/T-0018 @ D:\workspace\wt\small-ups\T-0018
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 base）
+UPSTREAM: 017a13beea5cfb9f2d4d4986e5a7428e1e39ef21（origin/master，开工 ff-only）
+CMD: git merge --ff-only origin/master; git status --porcelain=v1 --untracked-files=all; git diff --name-only; git diff --check
+STATUS: 开工工作区干净；Updating ba16717..017a13b（exit 0）；HEAD=017a13b=origin/master；改动仅需求正文/README 状态/KB/worklog/P0，无 docs/ 设计、firmware/、Hardware/ 改动
+SCOPE: .agent/requirements.md（附录 G + header/完成度表/附录 B/C/E）、README.md（§6/§7 状态同步）、.agent/kb/notes.md（2 条）、worklog、P0 4 件
+DIFF: tracked 3 文件 181+/6−（requirements 162+/4−、README 3+/2−、KB 16+/0−）+ 新增 worklog；预计交付 8 文件、<400 行
+CHECK: git diff --check exit 0；表格块 0 列数错；UTF-8 无 BOM、无 Tab、无行尾空白
+RESULT: PASS

@@ -88,6 +88,22 @@ KB-TAGS: docs, requirements, merge, references, single-source
 
 把 requirements 第 1/2 部分并成单文件时，除了搬正文，必须同步做三件事：①在合并文件开头与附录写“来源映射 + 删除原因 + git 历史可追溯”；②把 docs/README 里所有 `R1`/`R2`/`requirements-part2.md` 引用改成新章节号（只改引用，不动骨架标题）；③知识库中指向被删文件的旧证据行要标注为历史，新的证据行改用合并后的文件:行。只删文件不改引用，会让下游把“引用缺口”误判成需求缺失。
 
+## 需求长文追加变更用附录，不重排章节号
+
+KB-TYPE: method
+KB-EVIDENCE: `.agent/requirements.md:1104`（附录 G T-0018）；`:41`（完成度表仅 +2 行）；正文原有章节号未改。
+KB-TAGS: requirements, appendix, change-ticket, numbering
+
+需求正文超过 1000 行、章节号被 `docs/` 多份设计文档引用时，变更单优先在文末追加附录（T-0017 附录 F、T-0018 附录 G），不要插入新的 §3.6/§2.13。这样避免重排后续章节号、同步索引/完成度表/设计引用，也保留变更单正文可追溯；新增需求仍要进完成度表、附录 C 与附录 E.2。
+
+## 故障历史/预设持久化与 P-06/§3.3.7 的存储范围张力
+
+KB-TYPE: content
+KB-EVIDENCE: `.agent/requirements.md:384`（P-06 只保存 V/I，可含阈值）、`:541`（§3.3.7 不保存故障历史）、`:1243-1245`（G.6 冲突表）。
+KB-TAGS: requirements, storage, fault-history, preset
+
+P-06 与 §3.3.7 对“本体存储只放什么”的口径不完全一致：P-06 允许“可含过流/过压阈值”，§3.3.7 只列 V/I 且明确不保存故障历史。新增故障历史/预设/阈值持久化需求前，先裁决“设定区 vs 独立区/介质”和“8 组预设是否仍属 V/I 设定”，否则实现单会各自解释。T-0018 默认：故障历史待 owner、用户阈值不持久化、预设仅 V/I。
+
 ## 安全边界变更必须三处同步：需求项 / 故障码 / T-0006 保护清单
 
 KB-TYPE: method
