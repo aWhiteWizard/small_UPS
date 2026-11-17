@@ -1,0 +1,13 @@
+KIND: g0
+TASK: T-0017
+AT: 2026-11-18 +08:00
+BRANCH: task/T-0017 @ D:\workspace\wt\small-ups\T-0017
+BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f
+REMOTE_AT_START: b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679
+FF_ONLY: Updating ba16717..b47c74f (Fast-forward)
+HEAD_AFTER_FF: b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679
+CONTENT_COMMIT: eca95191c1e4155e52b361d54abd9308115ba4a8 (C1)
+CHECK_START: worktree clean; after edits only 6 content files + 1 worklog
+CMD: git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain=v1 --untracked-files=all; git diff --check
+STATUS: ff-only 后工作区干净；C1 已 push（b47c74f..eca9519）；LOCAL_HEAD=REMOTE_HEAD=eca9519
+RESULT: PASS
