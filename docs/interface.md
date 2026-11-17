@@ -166,7 +166,7 @@ y=120 ┌───────────────────────�
 
 | 状态 | 进入条件 | 动作 | 退出 |
 |---|---|---|---|
-| S0_OFF | 复位/关断完成/故障清除 | 继电器开、PWM 关、软使能 0、DAC=0 | 写 OUTPUT_ENABLE=1 → S1 |
+| S0_OFF | 复位/关断完成/故障清除 | 继电器释放/断开、PWM 关、软使能 0、DAC=0 | 写 OUTPUT_ENABLE=1 → S1 |
 | S1_CHECK | 收到使能命令 | 查 EN 高 ≥20ms、SHORT_PIN=1、无锁存、HB<500ms、CAL 有效/恒等、设定已 COMMIT、PFC/LLC READY | 任一失败 → S0 并回原因；全通过 → S2 |
 | S2_RELAY | 检查通过 | DAC=0、Ilim=0；吸合继电器；等 RELAY_STATE=1 | ≤50ms 未闭合 → S9（RELAY_WELD/INTERNAL）；成功 → S3 |
 | S3_SOFT | 继电器闭合 | buck 使能；V 从 0 按 10V/s 升到目标，I 限流同步升到目标 | 到 target±1% 或 50mV → S4；故障 → S9 |
@@ -174,7 +174,7 @@ y=120 ┌───────────────────────�
 | S6_SHUT | EN 低/软使能 0/短针丢失/心跳丢失/命令关断 | 禁 buck；释放继电器（命令到释放 ≤50ms）；确认 RELAY_STATE=0 | 释放成功 → S7；>50ms/粘连 → S9（RELAY_WELD） |
 | S7_DISCHARGE | 继电器已开 | 针侧泄放；等 VOUT_ZERO=1 | 关断命令起 100ms 内到 1V → S0；>1V → S9（VOUT_NOT_ZERO） |
 | S9_FAULT | 任一锁存故障 | 硬件关门、继电器开、软使能清、ALERT 低 | 源消失 + 读码 + CLEAR + 重新使能 → S0 |
-| S10_UPGRADE | 升级请求 | EN 低、PFC/LLC/BUCK 停、继电器开 | 复位后由 bootloader 接管；完成后回 S0 |
+| S10_UPGRADE | 升级请求 | EN 低、PFC/LLC/BUCK 停、继电器释放/断开 | 复位后由 bootloader 接管；完成后回 S0 |
 
 - 使能链逐周期检查：EN、软使能、短针、无故障、心跳、设定 COMMIT、校准有效；任一失效单票否决。
 - EN 高→低立即关门（≤1ms），低持续 20ms 才锁存 EN_LOST；低→高需稳定 10–50ms（默认 20ms）才允许进入 S1。硬件门不依赖 MCU。
@@ -219,14 +219,14 @@ y=120 ┌───────────────────────�
 |---|---|---|---|
 | H_IDLE | S4_ON 稳定 | 监视新 COMMIT/设定；不改变输出 | 有新目标 → H_PRECHECK |
 | H_PRECHECK | 收到新 V/I | 查使能链/故障/目标范围；算斜率；预置 OVP/OCP 阈值 | 通过 → H_V_RAMP 或 H_I_RAMP；失败 → S6/S9 |
-| H_V_RAMP | ΔV≠0 | 每 1ms 更新 DAC：V += 10V/s×1ms（5–20V/s 可配）；OVP 阈值 = min(50V, V_ramp+2V)；UV 屏蔽 | 到 target±1% → H_SETTLE；故障 → S9 |
+| H_V_RAMP | ΔV≠0 | 每 1ms 更新 DAC：V += 10V/s×1ms（5–20V/s 可配）；OVP 阈值 = min(50V, V_ramp+2V)；屏蔽输出欠压（55V 母线 UV 仍有效） | 到 target±1% → H_SETTLE；故障 → S9 |
 | H_I_RAMP | ΔI≠0 | 增/降限 50mA/ms（5A/100ms）；降限由 CC 环平滑折叠；OCP 阈值过渡窗取 max(旧,新)+5%，窗后切新值 | 到 target±1% → H_SETTLE |
-| H_SETTLE | ramp 完成 | 50ms 稳定窗；V/I 在 ±0.5%；解除 UV 屏蔽 | 稳定 → H_IDLE；新目标 → H_PRECHECK；故障 → S9 |
+| H_SETTLE | ramp 完成 | 50ms 稳定窗；V/I 在 ±0.5%；解除输出欠压屏蔽 | 稳定 → H_IDLE；新目标 → H_PRECHECK；故障 → S9 |
 | H_ABORT | 使能链失效/故障/升级 | 停 ramp，走 S6/S9；不等待 ramp 完成 | 复位后回 S0_OFF |
 
 - V 软变化：默认 10V/s，5–20V/s 可配；0.01V 步进也要按 1ms 节拍爬升，不得跳变。I 限流：增/降限均在 100ms 内平滑到目标；降限由 CC 环折叠输出，OCP 阈值过渡窗取 max(旧,新)+5%，窗后按新阈值保护，避免误触发。
 - OVP 阈值随 V_ramp+2V 跟踪，绝对 50V 不变；升压/降压都不得用旧目标造成误触发。OCP 阈值 = 设定限值 + max(5%, 0.1A)，CC 在阈值以下调节。
-- UV 屏蔽：软启动/热调 ramp 期间及 CC 期间屏蔽 UNDERVOLTAGE；ramp 完成后延时 100ms 再启用。不得因 ramp 误报 OVP/OCP/UV。
+- UV 屏蔽：软启动/热调 ramp 及 CC 期间仅屏蔽输出欠压（Vout<90% 设定）；55V 母线 <50V 的 0x04 路径始终有效；ramp 完成后延时 100ms 恢复输出欠压判定。不得因 ramp 误报 OVP/OCP/UV。
 - 热调期间保护始终有效；进入故障立即按 §3.3 锁存，不等待 ramp 到目标。
 
 ### 3.5 继电器与残压
@@ -313,7 +313,7 @@ y=120 ┌───────────────────────�
 | C2_SET | SET/POINT | 校验索引/量程/递增；暂存 RAM；不写 EEPROM | MEAS → C3；ABORT → C9 |
 | C3_MEAS | MEAS | 写入该点 set/meas；校验严格递增；下一点或完成 | 全部点完成 → C4；点错 → 保持当前点、CAL_STATUS=5（可重写/中止） |
 | C4_READY | 全部点完成 | 等 VERSION/CRC/COMMIT；READ 可读 STATUS/ACTIVE/VERSION | COMMIT → C5；ABORT/30s → C9 |
-| C5_COMMIT | COMMIT | 重算 CRC/版本/点数/温度；写非活动区、回读、切活动区 | 成功 → C6；失败 → C9（旧表不变） |
+| C5_COMMIT | COMMIT | 重算 CRC/版本/点数/次数/温度；写非活动区、回读、切活动区 | 成功 → C6；失败 → C9（旧表不变） |
 | C6_DONE | 提交成功 | CAL_STATUS=2、CAL_ACTIVE=1；输出 OFF；恢复普通命令 | 回 C0 |
 | C9_ABORT | ABORT/超时/故障 | 丢弃 RAM；旧表保留；输出 OFF；清校准限流 | 回 C0 |
 
