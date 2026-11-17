@@ -9,7 +9,7 @@ CONTENT_COMMIT: 29c323d5741fe5dbf19f863dd8c3096961cea802
 4 使能序列：R:692–699 前置（在位/无故障/温度/通信/设定/EN 低）；R:704 EN↑等 20ms（验收 10–20ms 上限）；R:705 V/I+COMMIT+HB+ENABLE；R:706 读回 OUT_ON；R:710–716 关断 ENABLE=0→8ms→EN↓；R:720 100ms 心跳；R:721 EN 复位低（GPIO 上电首步输出低）；R:725–743 时序图：PASS
 5 显示异常：R:614–636 8 位 2×4、≥100Hz/10Hz/2Hz/2 字符每秒；超温 ot、故障 Fxx、通信 E01、PT100 E02、校准 CAL、升级 UP、强制关断 OFF/LOC：PASS
 6 PT100：R:745–762 9600/8N1、地址 1、FC03、500ms、3 次掉线、掉线/超温禁输出+报警、阈值存调试板 A/B+CRC：PASS
-7 规模：内容 4 文件 247 行；含 4 份 P0 证据与 worklog 的 C1..C2 合计 9 文件 / 344 行（≤400 行；内容文件 4≤8）：PASS
-8 交付：C1=29c323d 已 commit/push；sha 文件含 COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文；C1 时 LOCAL=REMOTE=29c323d；C2 证据提交后最终 SHA 见报告：PASS
+7 规模：内容 4 文件 247 行；含 4 份 P0 证据与 worklog 的 C1..C3 合计 9 文件 / 373 行（≤400 行；内容文件 4≤8）：PASS
+8 交付：C1=29c323d（内容）、C2=6f14def（证据）均已 commit/push；sha 文件含 C1/C2 的 COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文；C2 时 LOCAL=REMOTE=6f14def；C3 仅记录提交，最终 SHA 见报告：PASS
 NOTE: EN 20ms 取验收 10–20ms 上限，同时满足本体 S1_CHECK「EN 高 ≥20ms」，理由见 R:704 与 KB；页面切换键/解锁键/阈值默认值为建议口径，已标 §4.3 待 owner，不静默定版。
 RESULT: PASS
