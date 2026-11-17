@@ -1,0 +1,20 @@
+KIND: g0
+TASK: T-0020
+BASELINE: 49c5029f1b5d5c7e80fdd79df3c3789c2af26a46 (origin/master at start; ticket base ba16717 ff-only to 49c5029)
+BRANCH: task/T-0020
+CONTENT_COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68
+
+G0 CHECKS
+- git diff --check -> exit 0
+- markdown tables -> 38 tables, 0 column mismatch
+- O list in §1.6 -> O-01..O-10, 10/10 unique
+- encoding -> UTF-8 no BOM
+- trailing whitespace -> 0; tabs -> 0; conflict markers -> 0
+- required keywords -> 24/24 PASS (热插拔循环/≥500 次/接触电阻/ΔR/插拔力/保持力/同屏/CV/CC/功率/故障/O-02/O-06..O-10/T-0008)
+- T-0007 non-dup -> 0 duplicated signature values in appendix I (0–40℃/1500VAC/600 元/0.1–0.3%/60×120×180/≤1.2kg all absent)
+- sources -> 6/6 external/standard URLs present in I.1
+- files -> 8 total (requirements, README, kb, worklog, 4 P0 evidence); content commit 4 files / 218 insertions / 12 deletions = 230 lines; total including C2 evidence/worklog below 400 lines
+- working tree before C2 -> only T-0020 P0 evidence/worklog changes; no source changes
+
+RESULT: PASS
+NOTE: C2 is the record commit for this G0 file, worklog and P0 evidence; final LOCAL_HEAD=REMOTE_HEAD=C2 is recorded in the delivery report.

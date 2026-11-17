@@ -1,0 +1,21 @@
+KIND: sha
+TASK: T-0020
+COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68
+LOCAL_HEAD: 65cc739c1bf333cef38e7e583376ff8a7f11ad68
+REMOTE_HEAD: 65cc739c1bf333cef38e7e583376ff8a7f11ad68
+REMOTE: origin git@github.com:aWhiteWizard/small_UPS.git
+BRANCH: refs/heads/master
+
+LS-REMOTE:
+65cc739c1bf333cef38e7e583376ff8a7f11ad68	refs/heads/master
+
+PUSH:
+To github.com:aWhiteWizard/small_UPS.git
+   49c5029..65cc739  HEAD -> master
+
+VERIFY:
+git rev-parse HEAD = 65cc739c1bf333cef38e7e583376ff8a7f11ad68
+git ls-remote origin refs/heads/master = 65cc739c1bf333cef38e7e583376ff8a7f11ad68 refs/heads/master
+LOCAL_HEAD = REMOTE_HEAD (PASS)
+
+NOTE: C1 is the content commit (requirements/README/KB/worklog). This file, the other P0 evidence and the final worklog are in C2 (record commit); C2's SHA is the final LOCAL_HEAD=REMOTE_HEAD and is reported in the delivery report (a file cannot contain the hash of the commit that contains it).
