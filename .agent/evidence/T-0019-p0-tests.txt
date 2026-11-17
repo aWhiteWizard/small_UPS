@@ -1,0 +1,14 @@
+KIND: tests
+TASK: T-0019
+AT: 2026-11-18 +08:00
+CMD: PowerShell UTF8 文档检查；git diff 95cd04e..3646bda --check；git diff --name-only -- docs firmware Hardware
+DOC: LINES=1378 APPENDIX_H_START=1260 APPENDIX_H_LINES=119
+TABLE: TABLE_BLOCKS=31 TABLE_BAD=0 HAS_TAB=False TRAILING_WS_LINES=0
+KEYS: MISSING_KEYS=（20/20 命中：包络/240W/48.5V/242.5W/0–0.5V/40℃/70℃/55℃/95℃/23±5℃/50mVpp/0.3%/88%/90%/OPP/8A/0x05/0x08 等）
+DESIGN: DESIGN_TOKENS_IN_H=（µH/µF/mΩ/MOS/ETD/kHz 均 0）
+SCOPE: DOCS_FW_HW_CHANGED=（空）
+DIFF: C1 3 files 149+/10−=159 lines；requirements 130+/8−、README 3+/2−、KB 16+/0−；+worklog 38 +P0 50 = 交付 8 文件约 247 行
+TOTAL: FILES=8 LINES≈247（≤8/≤400）
+CHECK: git diff 95cd04e..3646bda --check exit 0；UTF-8 无 BOM
+XREF: §2.6/2.8/2.9/3.1/3.2/3.3.3/3.4.1/3.5/3.5.7/3.5.11/1.5 与 G.1/G.5/G.6 全部存在
+RESULT: PASS
