@@ -1,0 +1,11 @@
+KIND: acceptance
+TASK: T-0002
+AT: 2026-11-18 +08:00
+1 环境清单：PASS（firmware/README.md §2 列 GCC 15.2.1 / CMSIS+HAL / CMake+Ninja / OpenOCD / PuTTY，每项含安装包、落盘路径、校验命令；版本原文见 tests.txt）
+2 环境可复现：PASS（bootstrap.ps1 固定下载 URL 与 git tag；Windows 安装包/路径见 README §2/§3；复跑与删组件重建均 exit 0）
+3 最小工程：PASS（STM32G071KB 点灯，干净构建出 .elf 664368 B / .bin 1544 B / .hex 4426 B；链接行、Memory、size 原文见 tests.txt）
+4 占位型号：PASS（型号待定，用 STM32G071KB；切换点：链接脚本 MEMORY、startup+设备宏、HAL 配置/系列仓库、引脚时钟，见 README §6）
+5 工具链/SDK 不入库：PASS（.tools 约 1945 MB、build 约 5.1 MB 均被忽略；跟踪文件 140；pack 约 246 KiB；git ls-files 无 .exe/.a/.o/.elf/.bin/.hex）
+6 自行提交：PASS（C1=a312f572c11688a2ab38237d987f195bf70d0bec；LOCAL_HEAD=REMOTE_HEAD=a312f57；ls-remote 原文见 T-0002-p0-sha.txt；证据提交 C2 另行 push）
+SIZE: 13 文件 / 744 行内容（含 worklog）；超 8 文件/400 行提示线，未超 24 文件/1200 行硬上限
+RESULT: PASS

@@ -214,3 +214,21 @@ KB-LAYER: 1_application
 KB-TAGS: requirements, host-software, usb-c, calibration, scope
 
 绝对化的“无上位机/无 PC 软件”会与调试板 USB-C 升级口、T-0008 标定工具冲突。正确口径是区分“上位机产品功能”（随整机交付、正常使用必需、提供 V/I/开关控制）与“服务/标定工具”（不随整机、不进 BOM、只做校准/读状态/升级）。O-02 必须写明例外，否则下游会以“范围外”为由删掉 USB-C 或把 T-0008 当产品功能。
+
+## Windows PowerShell 5.1 无法解析无 BOM 的 UTF-8 中文脚本，且 native stderr 会触发 Stop
+
+KB-TYPE: bug
+KB-EVIDENCE: `powershell -File firmware/tools/bootstrap.ps1` → `At ...bootstrap.ps1:105 char:40 ... Unrecognized token in source text` / `The string is missing the terminator`；脚本改为 ASCII-only 后 exit 0。另 `openocd.exe --version` 把版本写到 stderr，在 `$ErrorActionPreference='Stop'` 下报 `NativeCommandError` 且脚本 exit 1。
+KB-LAYER: 2_system
+KB-TAGS: powershell, utf8, bom, stderr, bootstrap
+
+Windows PowerShell 5.1 按 ANSI 读取无 BOM 的 UTF-8 `.ps1`，中文注释/字符串会被拆成非法 token；要么给脚本加 UTF-8 BOM，要么脚本保持 ASCII-only。调用会写 stderr 的原生工具（OpenOCD、部分 git）时，即使 `2>&1` 也可能抛 `NativeCommandError`，应在该调用周围临时 `$ErrorActionPreference='Continue'`，或 `Start-Process -RedirectStandardError` 捕获，不能让它中断幂等引导脚本。
+
+## STM32 自定义链接脚本的三类新版 ld 警告：RWX / LMA adjusted / nosys
+
+KB-TYPE: method
+KB-EVIDENCE: `firmware/linker/STM32G071KBUx_FLASH.ld:14-19`（PHDRS text/data）与 `:126-135`（._user_heap_stack NOLOAD）；`powershell -File firmware/build.ps1 -Clean` 输出 `warning: psu_minimal has a LOAD segment with RWX permissions`、`section ._user_heap_stack lma 0x8000608 adjusted to 0x8000628`、`_close is not implemented and will always fail`
+KB-LAYER: 1_application
+KB-TAGS: stm32, linker-script, ld, cmake, newlib, nosys
+
+新 binutils 对无 PHDRS 的脚本会报 RWX LOAD 段：给 FLASH 段 `:text`、RAM 段 `:data` 并声明 `PHDRS { text PT_LOAD FLAGS(5); data PT_LOAD FLAGS(6); }` 可消除。把 NOBITS 的 `._user_heap_stack` 也挂到 `:data` 会得到 “LMA adjusted” 警告，应写 `._user_heap_stack (NOLOAD)` 且不指定 phdr。`-specs=nosys.specs` 下 `_close/_lseek/_read/_write is not implemented` 是预期警告，不是链接失败判据；验收看 `Linking C executable`、Memory region 与产物大小。

@@ -1,0 +1,14 @@
+KIND: sha
+TASK: T-0002
+AT: 2026-11-18 +08:00
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f（开工 HEAD）
+UPSTREAM: 94e1d148103d694963a92996d9f12e3404df95fa（ff-only 后基线）
+COMMIT: a312f572c11688a2ab38237d987f195bf70d0bec（内容提交 C1）
+LOCAL_HEAD: a312f572c11688a2ab38237d987f195bf70d0bec
+REMOTE_HEAD: a312f572c11688a2ab38237d987f195bf70d0bec refs/heads/master
+CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+LS_REMOTE: a312f572c11688a2ab38237d987f195bf70d0bec	refs/heads/master
+PUSH: 94e1d14..a312f57  HEAD -> master（exit 0）
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == a312f572c11688a2ab38237d987f195bf70d0bec
+NOTE: 本文件随证据提交 C2 落库；最终 LOCAL=REMOTE=C2 在报告正文给出
+RESULT: PASS

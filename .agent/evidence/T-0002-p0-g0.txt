@@ -1,0 +1,10 @@
+KIND: g0
+TASK: T-0002
+AT: 2026-11-18 +08:00
+BRANCH: task/T-0002 @ D:\workspace\wt\small-ups\T-0002
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f（开工 HEAD）→ 94e1d148103d694963a92996d9f12e3404df95fa（ff-only origin/master）
+CMD: git merge --ff-only origin/master; git rev-parse HEAD; git ls-remote origin refs/heads/master; git diff --quiet HEAD -- .agent/requirements.md docs/ .agent/board/tasks.json; git status --porcelain=v1 --untracked-files=all; git check-ignore -v .tools\... firmware\build\...
+STATUS: ff-only 成功；开工 HEAD=origin/master=94e1d14；工作区仅 .tools/（已被忽略）；FORBIDDEN_DIFF_EXIT=0（需求/docs/看板无改动）
+IGNORE: .gitignore:13:.tools/ → .tools\arm-gcc\bin\arm-none-eabi-gcc.exe；.gitignore:11:build/ → firmware\build\psu_minimal.elf
+OBJECT: 新增 9 个固件配置/源码 + 2 份 README/忽略规则 + worklog；无工具链、SDK、构建产物入库
+RESULT: PASS
