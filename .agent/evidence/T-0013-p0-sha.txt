@@ -1,0 +1,9 @@
+KIND: sha
+TASK: T-0013
+AT: 2026-11-17T23:12+08:00
+BASE: 29470aee04c223175f8f0d7a21f5cef141f623c4 (origin/master before)
+COMMIT_C1: cccf998e101e8a0be57211a57f378acd341d0fc2 docs(T-0013): audit requirements against latest acceptance and fix conflicts
+PUSH_C1: git push origin HEAD:refs/heads/master -> 29470ae..cccf998 HEAD -> master
+LS_REMOTE_C1: cccf998e101e8a0be57211a57f378acd341d0fc2 refs/heads/master
+MATCH_C1: git rev-parse HEAD == git ls-remote -> cccf998e101e8a0be57211a57f378acd341d0fc2 True
+NOTE: C2 为证据提交（本文件 + worklog 更新）；最终 HEAD 与 ls-remote 见最终报告
