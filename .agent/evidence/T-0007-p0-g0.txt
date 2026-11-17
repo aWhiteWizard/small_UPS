@@ -1,0 +1,14 @@
+KIND: g0
+TASK: T-0007
+AT: 2026-11-18 +08:00
+TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
+BASE_REAL: c2f67af19f7c176749a76b3459f4372540f1b90a (ff-only from ticket base; +8 upstream commits T-0006/T-0016/T-0021)
+CONTENT_COMMIT: c42f14f569054d7cb1baf3859cd8e5fba9793dd9
+CHECK_START: worktree clean; ff-only ba16717..c2f67af (exit 0); origin/master=c2f67af
+CHECK_STRUCT: requirements=716 test-plan=132 architecture=72 README=106 worklog=49; TABLE_BAD=0; TRAILING_WS=0; TABS=0; T-0007 placeholders=0; UTF-8 no BOM
+CHECK_ANCHORS: R §2.5–§2.12 headings present; test-plan §1/§1.1/§2/§3/§5/§6/§6.1 filled; §4 kept for T-0017; §5.1 kept for T-0006; architecture §1.1 filled
+CHECK_VALUES: acceptance keyword set all present (198–242/176–264VAC, 1500VAC/1min, 10MΩ@500V, PE 0.1Ω, 55℃, 0–40℃, −20–+70℃, 80%RH, 2000m, 60×120×180, 60×120×35, 230–233mm, 0.1/0.3/0.2/0.1%, ±0.4%, 0.01V/0.01A, 500µs, 1000µF, 50/30mVpp, 100/150mVpp, 88/90%, <1.5W, 50/75℃, 35dB(A), 1.2kg, 600/700, 1500–2000, RT300-MKV, DP6020)
+CHECK_DIFF: c2f67af..c42f14f = 5 files / 258 insertions + 47 deletions = 305 lines (incl worklog; excl evidence/kb) ≤400 lines / ≤8 files
+CHECK_ENGINE_VIEW: ba16717..c42f14f = 17 files / 688 insertions + 103 deletions = 791 lines; inherited upstream 8 commits; under 1200 hard cap, over 400 soft line with reason in report
+CHECK_CMD: git diff --check exit 0; git push origin HEAD:refs/heads/master exit 0 (c2f67af..c42f14f HEAD -> master); LOCAL_HEAD=REMOTE_HEAD=c42f14f
+RESULT: PASS
