@@ -1,0 +1,9 @@
+KIND: sha
+TASK: T-0012
+AT: 2026-11-17T22:45+08:00
+BASELINE: 3d641eb1b11bc7f421606c7500fc0d883bb7cdd9 (origin/master before)
+COMMIT_C1: 2b5dc8f315587795600d7c681a18592b28572b60 docs(T-0012): rescue T-0005 requirements part2 into main repo
+PUSH: git push origin HEAD:refs/heads/master -> 3d641eb..2b5dc8f
+LS_REMOTE: 2b5dc8f315587795600d7c681a18592b28572b60 refs/heads/master
+MATCH: git rev-parse HEAD == git ls-remote -> 2b5dc8f315587795600d7c681a18592b28572b60 True
+NOTE: 本 C2 证据提交随后 push；报告附最终 HEAD 与复核
