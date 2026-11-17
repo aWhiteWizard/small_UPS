@@ -1,0 +1,15 @@
+KIND: tests
+TASK: T-0006
+AT: 2026-11-18 +08:00
+CMD: PowerShell 7 + UTF8 结构校验；git diff --check
+LINES: requirements=606、architecture=67、module-design=103、interface=227、test-plan=83
+TABLE: 5 文件 TABLE_BAD=0
+REFS: docs 中 R § 引用 23/23 命中；requirements 标题 68 个
+FAULT: FAULT_CODE 0x00–0x16 连续 23/23，缺 0；0x0D/0x0E 保留不产生
+STATES: 使能 S0–S10（10）、故障 F0–F4（5）、热调 H_*（6）、Boot B0–B9（7）、校准 C0–C9（8）；表内引用均有定义
+KEY: 29/29 True（OVP +2V/50V/50µs、OCP ≤10µs、EN 10k/10–50ms、HB 100/500ms、AC 180/150、PFC 320、55V 50、继电器 50/100ms、boot 16–24KB、CAL 六命令/0.5A/+1A、并联预留、无版本门禁、短路 5s、1.2 倍）
+PLACEHOLDER: 待填（来源：T-0006）=0
+WHITESPACE: BOM=0、trailing=0、tab=0
+DIFF: 5 文件 +271/−41=312 行；git diff --check exit 0
+SCOPE: requirements diff 仅 §2.4 + 完成度表 + 附录 C；既有阈值/寄存器/故障码未改
+RESULT: PASS
