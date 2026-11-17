@@ -4,7 +4,7 @@ PC 端串口逐点校准工具：连接 PSU 本体 UART（115200 8N1），按通
 人工录入万用表实测值，COMMIT 后自动 READ 回读 CRC 校验，并导出 CSV 留档。
 仅依赖 Python 3 自带的 tkinter 与第三方 `pyserial`；不设 V/I 普通设定、不开关输出。
 
-![界面截图](../.agent/evidence/T-0008-p0-ui.png)
+![界面截图](../.agent/evidence/T-0008-p0-ui-after.png)
 
 ## 安装与启动
 
@@ -69,4 +69,4 @@ INFO                      （可选）设备信息查询
 
 - `tools/calib_tool.py`：GUI、串口、协议、Mock 与 `--selftest` 一体。
 - `tools/README.md`：本文件。
-- 截图：`.agent/evidence/T-0008-p0-ui.png`（1180×840）。
+- 截图：`.agent/evidence/T-0008-p0-ui-before.png`（启动空态）、`T-0008-p0-ui-after.png`（完成校准态），均 1180×840。
