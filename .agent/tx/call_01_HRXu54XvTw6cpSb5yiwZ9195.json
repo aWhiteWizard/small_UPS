@@ -1,0 +1,12 @@
+{
+  "callId": "call_01_HRXu54XvTw6cpSb5yiwZ9195",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"if (Test-Path -LiteralPath 'D:\\\\workspace\\\\small-ups\\\\.agent\\\\worklogs\\\\T-0003.md') { Get-Content -LiteralPath 'D:\\\\workspace\\\\small-ups\\\\.agent\\\\worklogs\\\\T-0003.md' -Raw } else { 'NO WORKLOG' }\",\"description\":\"Read T-0003 worklog if present\"}",
+  "at": "2026-11-16T16:36:50.881Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:36:52.091Z",
+  "preview": "NO WORKLOG\r\n"
+}

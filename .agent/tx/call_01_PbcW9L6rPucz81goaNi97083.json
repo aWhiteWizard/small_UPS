@@ -1,0 +1,12 @@
+{
+  "callId": "call_01_PbcW9L6rPucz81goaNi97083",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"git rev-parse --show-toplevel; git status --porcelain=v1 --branch; Write-Output '--- remotes ---'; git remote -v; Write-Output '--- branch ---'; git branch -a; Write-Output '--- log ---'; git log --oneline -n 10\",\"description\":\"Inspect git repo state, remotes, branches, log\"}",
+  "at": "2026-11-16T16:56:50.875Z",
+  "runId": "run-mwjia1om-263w",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:56:52.251Z",
+  "preview": "--- remotes ---\r\n--- branch ---\r\n--- log ---\r\n[stderr]\nfatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git\n[exit code: 1]"
+}

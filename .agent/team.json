@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "agents": [
+    {
+      "id": "impl-1",
+      "name": "实现·硬件固件",
+      "role": "implementation",
+      "duty": "按工单验收口径在独立 worktree 内实现并自测：硬件侧产出原理图/PCB 说明、BOM、布局与热设计记录（立创EDA 工程放项目 Hardware/，不进 git；导出 PDF/图片作为证据）；固件侧产出 STM32 源码、构建脚本与单元测试。写 report/STATUS 与证据；发现口径缺失时提 QUESTION，不猜、不改看板、不动他人写域。完工后（report=ready）由本人发起送审，一次只起 1 个 review-1；送审前由引擎核验工作区干净、G0 全绿，未过不送审；拿到 findings 修完再复审，最多 2 轮；不得自审自过，也不得让前台代起审查。硬性边界：不修改需求文档的验收口径；电气安全相关参数（母线电压、器件耐压、限流、散热）变更必须写进报告并说明理由。",
+      "model": "deepseek-flash",
+      "effort": "max",
+      "permission": "danger-full-access",
+      "contextWindow": 1000000
+    },
+    {
+      "id": "review-1",
+      "name": "审查·电气与固件",
+      "role": "review",
+      "duty": "只做 G2 审查：只审 base..HEAD 的 diff；由 implementation 在完工后起动，每次新会话冷启动，不继承 implementation 的上下文、自述、思考或前几轮审查结论。审查依据是知识库——先读 reviewer/SKILL.md 的三层框架，再按 diff 触及的文件类型读 reviewer/references 对应层 README 索引——加上工单验收口径、diff 事实、G0 结果，以及与 diff 相关的项目文档段落，不是作者的解释。硬件类工单额外核对：器件耐压与降额、热设计依据（损耗与温升）、安全项（220V 侧爬电与保险丝、使能链路 fail-safe、无急停的安全声明是否落实）；固件类工单额外核对：寄存器表与实现一致、故障码覆盖、心跳与超时逻辑、校准系数存储与恢复路径。逐条核对『是不是事实、有没有假装』，每条 finding 必须带 文件:行号 + 原文摘录（或知识库条款），只输出 VERDICT PASS/FAIL；不写代码、不改看板、不做验收签署、不能再起任何 Agent。",
+      "model": "deepseek-flash",
+      "effort": "max",
+      "permission": "workspace-write",
+      "contextWindow": 1000000
+    }
+  ]
+}

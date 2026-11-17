@@ -1,0 +1,12 @@
+{
+  "callId": "call_01_f82AahS8A1mp3Ly9tw117019",
+  "state": "ok",
+  "tool": "read",
+  "input": "{\"file_path\":\"D:\\\\workspace\\\\small-ups\\\\.agent\\\\tx\\\\call_00_niSTzy72NhSaE8yRVRVN7234.json\"}",
+  "at": "2026-11-16T16:55:42.922Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:55:42.929Z",
+  "preview": "<path>D:\\workspace\\small-ups\\.agent\\tx\\call_00_niSTzy72NhSaE8yRVRVN7234.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"callId\": \"call_00_niSTzy72NhSaE8yRVRVN7234\",\n3:   \"state\": \"ok\",\n4:   \"tool\": \"pwsh\",\n5:   \"input\": \"{\\\"command\\\":\\\"Write-Host '--- .agent tree ---'; Get-ChildItem -Force -Recurse .agent | Select-Object FullName,Length | Format-Table -AutoSize; Write-Host '--- git check ---'; git rev-parse --is-inside-work-tree 2>&1; Write-Host \\\\\\\"exit=$LASTEXITCODE\\\\\\\"; Write-Host '--- parent dirs ---'; Get-ChildItem -Force D:\\\\\\\\workspace | Select-Object Name,LastWriteTime | Format-Tabl"
+}

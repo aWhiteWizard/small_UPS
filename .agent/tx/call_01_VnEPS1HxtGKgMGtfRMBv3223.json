@@ -1,0 +1,12 @@
+{
+  "callId": "call_01_VnEPS1HxtGKgMGtfRMBv3223",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Write-Host '--- file encodings/sizes ---'; Get-ChildItem .agent -File | Select-Object Name,Length; Write-Host '--- git config (global) ---'; git config --global --get user.name; git config --global --get user.email; Write-Host '--- default branch guess ---'; git config --global --get init.defaultBranch; Write-Host '--- remote connectivity ---'; git ls-remote https://github.com/aWhiteWizard/small_UPS 2>&1 | Measure-Object -Line | Select-Object Lines\",\"description\":\"Check git identity and remote refs count\"}",
+  "at": "2026-11-16T16:55:35.588Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:55:38.119Z",
+  "preview": "--- file encodings/sizes ---\n\r\n--- git config (global) ---\naWhiteWizard\nwww.123518341@qq.com\n--- default branch guess ---\n--- remote connectivity ---\nName                  Length\r\n----                  ------\r\napprovals.json           224\r\nmech-draft.md           1613\r\nproject.json             425\r\nrequirements-draft.md   5030\r\nschedule.json            289\r\nteam.json               2417\r\n                            \r\n\r\n\r\n"
+}

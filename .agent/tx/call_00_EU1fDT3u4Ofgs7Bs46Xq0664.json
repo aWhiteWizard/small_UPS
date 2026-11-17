@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_EU1fDT3u4Ofgs7Bs46Xq0664",
+  "state": "ok",
+  "tool": "read",
+  "input": "{\"file_path\":\"D:\\\\workspace\\\\small-ups\\\\.agent\\\\schedule.json\"}",
+  "at": "2026-11-16T16:55:32.012Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:55:32.026Z",
+  "preview": "<path>D:\\workspace\\small-ups\\.agent\\schedule.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"schemaVersion\": 2,\n3:   \"mode\": \"off\",\n4:   \"groups\": [\n5:     {\n6:       \"days\": [\n7:         \"workday\"\n8:       ],\n9:       \"blocks\": [\n10:         {\n11:           \"start\": \"09:00\",\n12:           \"end\": \"12:00\"\n13:         },\n14:         {\n15:           \"start\": \"14:00\",\n16:           \"end\": \"18:00\"\n17:         }\n18:       ]\n19:     }\n20:   ]\n21: }\n\n(End of file - total 21 lines)\n</content>"
+}

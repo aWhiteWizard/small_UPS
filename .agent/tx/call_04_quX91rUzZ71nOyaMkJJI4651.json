@@ -1,0 +1,12 @@
+{
+  "callId": "call_04_quX91rUzZ71nOyaMkJJI4651",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Set-Location 'D:\\\\workspace\\\\small-ups'; Write-Host '--- git rev-parse ---'; git rev-parse --is-inside-work-tree 2>&1; Write-Host '--- git status ---'; git status -sb 2>&1; Write-Host '--- git remote ---'; git remote -v 2>&1; Write-Host '--- workspace siblings ---'; Get-ChildItem -Force -LiteralPath 'D:\\\\workspace' | Select-Object Name,Mode,LastWriteTime | Format-Table -AutoSize; Write-Host '--- docs ---'; Get-ChildItem -Force -Recurse -LiteralPath 'D:\\\\workspace\\\\small-ups\\\\.agent\\\\docs' | Select-Object FullName,Length | Format-Table -AutoSize\",\"description\":\"Check git repo state and workspace siblings\"}",
+  "at": "2026-11-16T16:37:05.204Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:37:07.351Z",
+  "preview": "--- git rev-parse ---\n--- git status ---\n--- git remote ---\n--- workspace siblings ---\n\r\nName                               Mode   LastWriteTime      \r\n----                               ----   -------------      \r\n.agent                             d----- 2026/9/12 16:12:58 \r\n.commit-msg                        d----- 2026/9/14 22:23:30 \r\n.i3-extfix                         d----- 2026/9/14 22:04:39 \r\n.pi                                d----- 2026/8/2 8:36:56   \r\nacl-recovery                       d----- 2026/11/8 8:38:04  \r\nAMCStudio_20260718                 d----- 2026/7/22 22:04:34 \r\ncode   "
+}

@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_jPjrhGZkDZYSKWH0GfMW4421",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Write-Host '--- git status ---'; git status --short 2>&1; Write-Host \\\"exit=$LASTEXITCODE\\\"; Write-Host '--- .git exists ---'; Test-Path .git; Write-Host '--- tracked-work paths ---'; @('firmware','src','Hardware','docs','README.md','.gitignore','.agent/worklogs','.agent/evidence') | ForEach-Object { \\\"{0}={1}\\\" -f $_, (Test-Path $_) }; Write-Host '--- remote heads (count) ---'; $refs = git ls-remote --heads https://github.com/aWhiteWizard/small_UPS 2>&1; \\\"refs=$(@($refs).Count) exit=$LASTEXITCODE\\\"\",\"description\":\"Capture final read-only evidence\"}",
+  "at": "2026-11-16T16:56:00.995Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:56:04.771Z",
+  "preview": "--- git status ---\nexit=128\n--- .git exists ---\nFalse\r\n--- tracked-work paths ---\nfirmware=False\r\nsrc=False\r\nHardware=False\r\ndocs=False\r\nREADME.md=False\r\n.gitignore=False\r\n.agent/worklogs=False\r\n.agent/evidence=False\r\n--- remote heads (count) ---\nrefs=0 exit=0\r\n[stderr]\ngit : fatal: not a git repository (or any of the parent directories): .git\r\n所在位置 行:1 字符: 162\r\n+ ... se); Write-Host '--- git status ---'; git status --short 2>&1; Write- ...\r\n+                                           ~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (fatal: not a gi...ectories): .git:String"
+}

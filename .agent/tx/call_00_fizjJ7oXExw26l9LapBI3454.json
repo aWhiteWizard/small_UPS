@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_fizjJ7oXExw26l9LapBI3454",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Write-Host '--- all non-.agent files ---'; Get-ChildItem -Force -Recurse -File | Where-Object { $_.FullName -notlike '*\\\\.agent\\\\*' } | Select-Object FullName; Write-Host '--- target names ---'; @('firmware','src','Hardware','docs','README.md','.gitignore') | ForEach-Object { \\\"{0}: {1}\\\" -f $_, (Test-Path $_) }; Write-Host '--- remote heads ---'; git ls-remote --heads https://github.com/aWhiteWizard/small_UPS 2>&1; Write-Host \\\"exit=$LASTEXITCODE\\\"; Write-Host '--- github api ---'; try { $r = Invoke-RestMethod -Uri 'https://api.github.com/repos/aWhiteWizard/small_UPS' -Headers @{ 'User-Agent'='dsh-readonly-check' } -TimeoutSec 20; [pscustomobject]@{ full_name=$r.full_name; private=$r.private; default_branch=$r.default_branch; size=$r.size; pushed_at=$r.pushed_at; empty=$r.size -eq 0 } | Format-List } catch { \\\"API-ERR: $($_.Exception.Message)\\\" }\",\"description\":\"Verify missing paths and remote state\"}",
+  "at": "2026-11-16T16:55:02.082Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:55:08.567Z",
+  "preview": "--- all non-.agent files ---\n--- target names ---\nfirmware: False\r\nsrc: False\r\nHardware: False\r\ndocs: False\r\nREADME.md: False\r\n.gitignore: False\r\n--- remote heads ---\nexit=0\n--- github api ---\n\r\n\r\nfull_name      : aWhiteWizard/small_UPS\r\nprivate        : False\r\ndefault_branch : master\r\nsize           : 0\r\npushed_at      : 2026-11-16T13:26:25Z\r\nempty          : True\r\n\r\n\r\n\r\n"
+}

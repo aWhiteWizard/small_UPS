@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_dYeb69OzOPhjlTuikbcw1932",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Write-Host '--- PowerResearch ---'; Get-ChildItem -Force -LiteralPath 'D:\\\\workspace\\\\PowerResearch' -ErrorAction SilentlyContinue | Select-Object Mode,LastWriteTime,Length,Name | Format-Table -AutoSize; Write-Host '--- filename matches RT300/MKV/1000W ---'; Get-ChildItem -Recurse -Force -LiteralPath 'D:\\\\workspace\\\\PowerResearch','D:\\\\workspace\\\\datasheets','D:\\\\workspace\\\\机械图纸' -ErrorAction SilentlyContinue | Where-Object { $_.Name -match 'RT300|MKV|1000W|1000.?W|可调' } | Select-Object FullName,Length | Format-Table -AutoSize\",\"description\":\"Search for reference design materials\",\"timeoutMs\":60000}",
+  "at": "2026-11-16T16:38:24.250Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:38:25.910Z",
+  "preview": "--- PowerResearch ---\n\r\nMode   LastWriteTime       Length Name  \r\n----   -------------       ------ ----  \r\nd----- 2026/11/15 11:02:28        .agent\r\nd--h-- 2026/11/15 11:03:24        .git  \r\nd----- 2026/11/14 17:44:45        docs  \r\n\r\n\r\n--- filename matches RT300/MKV/1000W ---\n"
+}

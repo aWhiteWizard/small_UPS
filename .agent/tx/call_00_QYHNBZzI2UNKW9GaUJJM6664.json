@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_QYHNBZzI2UNKW9GaUJJM6664",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"$ProgressPreference='SilentlyContinue'; $r = Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/aWhiteWizard/small_UPS' -TimeoutSec 30; $c = $r.Content; foreach ($p in @('This repository is empty','Quick setup','repository is empty','<title>(.*?)</title>','\\\"defaultBranch\\\":(.*?),','empty')) { $m = [regex]::Matches($c, $p, 'IgnoreCase'); if ($m.Count -gt 0) { \\\"PATTERN [$p] hits=$($m.Count) first=$($m[0].Value.Substring(0,[Math]::Min(160,$m[0].Value.Length)))\\\" } else { \\\"PATTERN [$p] hits=0\\\" } }\",\"description\":\"Check whether remote repo is empty\",\"timeoutMs\":60000}",
+  "at": "2026-11-16T16:37:43.968Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:37:46.160Z",
+  "preview": "PATTERN [This repository is empty] hits=1 first=This repository is empty\r\nPATTERN [Quick setup] hits=0\r\nPATTERN [repository is empty] hits=1 first=repository is empty\r\nPATTERN [<title>(.*?)</title>] hits=1 first=<title>aWhiteWizard/small_UPS · GitHub</title>\r\nPATTERN [\"defaultBranch\":(.*?),] hits=0\r\nPATTERN [empty] hits=1 first=empty\r\n"
+}

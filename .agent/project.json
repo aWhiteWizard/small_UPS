@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "title": "小型PSU电源",
+  "kind": "code",
+  "category": "product",
+  "lifecycle": "forming",
+  "auto": false,
+  "createdAt": "2026-11-16T13:28:36.601Z",
+  "repos": [
+    {
+      "url": "https://github.com/aWhiteWizard/small_UPS",
+      "defaultBranch": "master",
+      "branches": [
+        "master"
+      ],
+      "verifiedAt": "2026-11-16T13:28:36.599Z"
+    }
+  ]
+}

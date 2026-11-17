@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_sWO6HRg3PxOB8zyQ8RUw8771",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Write-Host '--- worklogs ---'; if (Test-Path .agent\\\\worklogs) { Get-ChildItem .agent\\\\worklogs -Force } else { 'NO worklogs dir' }; Write-Host '--- docs ---'; Get-ChildItem .agent\\\\docs -Force; Write-Host '--- ls-remote ---'; git ls-remote --symref https://github.com/aWhiteWizard/small_UPS 2>&1; Write-Host \\\"exit=$LASTEXITCODE\\\"; Write-Host '--- git version ---'; git --version\",\"description\":\"Check worklogs, docs, remote refs\"}",
+  "at": "2026-11-16T16:54:50.633Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:54:53.925Z",
+  "preview": "--- worklogs ---\nNO worklogs dir\r\n--- docs ---\n--- ls-remote ---\nexit=0\n--- git version ---\ngit version 2.55.0.windows.2\n"
+}

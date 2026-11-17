@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_IzPWymp4DB11STW9Qqqz8822",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Get-ChildItem -Force -Recurse -Depth 2 -LiteralPath 'D:\\\\workspace\\\\PowerResearch\\\\docs' -ErrorAction SilentlyContinue | Select-Object FullName,Length,LastWriteTime | Format-Table -AutoSize; Write-Host '--- filename matches across workspace (depth 4) ---'; Get-ChildItem -Recurse -Depth 4 -Force -LiteralPath 'D:\\\\workspace' -ErrorAction SilentlyContinue | Where-Object { $_.Name -match 'RT300|MKV' } | Select-Object FullName | Format-Table -AutoSize\",\"description\":\"Inspect PowerResearch docs and filenames\",\"timeoutMs\":120000}",
+  "at": "2026-11-16T16:38:29.054Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:38:34.514Z",
+  "preview": "\r\nFullName                                                              Length  LastWriteTime      \r\n--------                                                              ------  -------------      \r\nD:\\workspace\\PowerResearch\\docs\\eez-hardware                                  2026/11/14 17:14:11\r\nD:\\workspace\\PowerResearch\\docs\\INVARIANTS.md                         22109   2026/11/14 17:44:45\r\nD:\\workspace\\PowerResearch\\docs\\eez-hardware\\bb3                              2026/11/14 15:02:14\r\nD:\\workspace\\PowerResearch\\docs\\eez-hardware\\dcp405plus                       2026/11/14 15:02:16\r\nD:\\w"
+}

@@ -1,0 +1,12 @@
+{
+  "callId": "call_01_PsU8dM1lHglFt9WZ475x5509",
+  "state": "ok",
+  "tool": "read",
+  "input": "{\"file_path\":\"D:\\\\workspace\\\\small-ups\\\\.agent\\\\tx\\\\call_00_z0yXDS7rpvovOwZy5YeN2659.json\"}",
+  "at": "2026-11-16T16:55:46.055Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:55:46.066Z",
+  "preview": "<path>D:\\workspace\\small-ups\\.agent\\tx\\call_00_z0yXDS7rpvovOwZy5YeN2659.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"callId\": \"call_00_z0yXDS7rpvovOwZy5YeN2659\",\n3:   \"state\": \"ok\",\n4:   \"tool\": \"read\",\n5:   \"input\": \"{\\\"file_path\\\":\\\"D:\\\\\\\\workspace\\\\\\\\small-ups\\\\\\\\.agent\\\\\\\\project.json\\\"}\",\n6:   \"at\": \"2026-11-16T16:36:53.767Z\",\n7:   \"runId\": \"run-mwjhk6eo-s13e\",\n8:   \"taskId\": \"T-0003\",\n9:   \"projectId\": \"af107705-323c-49b8-bcea-4ff0085261ce\",\n10:   \"endedAt\": \"2026-11-16T16:36:53.780Z\",\n11:   \"preview\": \"<path>D:\\\\workspace\\\\small-ups\\\\.agent\\\\project.json</path>\\n<type>file</type>\\"
+}

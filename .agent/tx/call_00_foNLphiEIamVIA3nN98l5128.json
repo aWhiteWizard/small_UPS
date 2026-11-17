@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_foNLphiEIamVIA3nN98l5128",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Write-Host '--- possible worktrees ---'; Get-ChildItem D:\\\\workspace\\\\wt -Force -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -match 'small|ups|T-0001' } | Select-Object FullName; Get-ChildItem D:\\\\workspace -Force -Directory | Where-Object { $_.Name -match 'small|ups' } | Select-Object FullName; Write-Host '--- worklog evidence dirs ---'; @('.agent\\\\worklogs','.agent\\\\evidence') | ForEach-Object { \\\"{0}: {1}\\\" -f $_, (Test-Path $_) }; Write-Host '--- board T-0001 fields ---'; (Get-Content .agent\\\\board\\\\tasks.json -Raw | ConvertFrom-Json).tasks | Where-Object id -eq 'T-0001' | Select-Object id,status,mode,assignee,stepKey,baseSha,branch,worktree | Format-List\",\"description\":\"Look for worktree and evidence dirs\"}",
+  "at": "2026-11-16T16:55:19.065Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:55:19.982Z",
+  "preview": "--- possible worktrees ---\n\r\n--- worklog evidence dirs ---\n--- board T-0001 fields ---\nFullName              \r\n--------              \r\nD:\\workspace\\small-ups\r\n.agent\\worklogs: False\r\n.agent\\evidence: False\r\n\r\n\r\n[stderr]\nConvertFrom-Json : 传入的对象无效，应为“:”或“}”。 (335): {\r\n  \"schemaVersion\": 1,\r\n  \"projectId\": \"af107705-323c-49b8-bcea-4ff0085261ce\",\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"T-0001\",\r\n      \"title\": \"浠撳簱鍒濆鍖栵細鍥轰欢鐩綍 + Hardware锛堢珛鍒汦DA锛夌洰褰?+ .gitignore 鎺掗櫎纭欢宸ョ▼\",\r\n      \"goal\": \"鍒濆鍖?small_UPS 浠撳簱锛氬缓鍥轰欢涓?Hardware 鐩綍缁撴瀯锛岀敤 .gitignore 鎶?Hardware锛堢珛鍒汦DA 宸ョ▼锛夋帓闄ゅ湪鐗堟湰鎺у埗澶栵紝鍐欐竻椤圭洰绾﹀畾涓?R\r\nEADME銆?,"
+}

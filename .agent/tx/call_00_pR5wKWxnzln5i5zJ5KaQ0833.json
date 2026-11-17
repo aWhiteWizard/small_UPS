@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_pR5wKWxnzln5i5zJ5KaQ0833",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"$env:GIT_TERMINAL_PROMPT='0'; Write-Host '--- all refs ---'; git ls-remote https://github.com/aWhiteWizard/small_UPS 2>&1; Write-Host \\\"exit=$LASTEXITCODE\\\"; Write-Host '--- heads ---'; git ls-remote --heads https://github.com/aWhiteWizard/small_UPS 2>&1; Write-Host \\\"exit=$LASTEXITCODE\\\"; Write-Host '--- HTTP status ---'; try { $r = Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/aWhiteWizard/small_UPS' -TimeoutSec 30; \\\"status=$($r.StatusCode) len=$($r.Content.Length)\\\" } catch { \\\"ERR: $($_.Exception.Message)\\\" }\",\"description\":\"Confirm remote refs and repo existence\",\"timeoutMs\":90000}",
+  "at": "2026-11-16T16:37:24.340Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:37:29.596Z",
+  "preview": "--- all refs ---\nexit=0\n--- heads ---\nexit=0\n--- HTTP status ---\nstatus=200 len=127094\r\n"
+}

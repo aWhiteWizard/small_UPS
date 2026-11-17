@@ -1,0 +1,12 @@
+{
+  "callId": "call_01_MLUoloI5PLRq7fslhXx57068",
+  "state": "ok",
+  "tool": "read",
+  "input": "{\"file_path\":\"D:\\\\workspace\\\\small-ups\\\\.agent\\\\approvals.json\"}",
+  "at": "2026-11-16T16:37:05.184Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:37:05.197Z",
+  "preview": "<path>D:\\workspace\\small-ups\\.agent\\approvals.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"schemaVersion\": 1,\n3:   \"docs\": {},\n4:   \"team\": {\n5:     \"status\": \"approved\",\n6:     \"hash\": \"132609b94a455dc74dfe7d2e4188df5fb80125521d5b4301077cb04723c14213\",\n7:     \"at\": \"2026-11-16T16:35:05.560Z\",\n8:     \"by\": \"human:owner\"\n9:   }\n10: }\n\n(End of file - total 10 lines)\n</content>"
+}

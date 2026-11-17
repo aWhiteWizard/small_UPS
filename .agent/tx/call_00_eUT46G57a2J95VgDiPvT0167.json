@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_eUT46G57a2J95VgDiPvT0167",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Get-ChildItem -Force -LiteralPath 'D:\\\\workspace\\\\small-ups' | Select-Object Mode,LastWriteTime,Length,Name | Format-Table -AutoSize; Write-Host '--- .agent ---'; if (Test-Path -LiteralPath 'D:\\\\workspace\\\\small-ups\\\\.agent') { Get-ChildItem -Force -Recurse -Depth 2 -LiteralPath 'D:\\\\workspace\\\\small-ups\\\\.agent' | Select-Object FullName,Length,LastWriteTime | Format-Table -AutoSize }\",\"description\":\"List workspace and .agent tree\"}",
+  "at": "2026-11-16T16:36:49.415Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:36:50.879Z",
+  "preview": "\r\nMode   LastWriteTime      Length Name  \r\n----   -------------      ------ ----  \r\nd----- 2026/11/17 0:36:49        .agent\r\n\r\n\r\n--- .agent ---\n\r\nFullName                                                               Length LastWriteTime      \r\n--------                                                               ------ -------------      \r\nD:\\workspace\\small-ups\\.agent\\board                                           2026/11/17 0:36:37 \r\nD:\\workspace\\small-ups\\.agent\\docs                                            2026/11/16 21:28:36\r\nD:\\workspace\\small-ups\\.agent\\tx                          "
+}

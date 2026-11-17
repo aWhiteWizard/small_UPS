@@ -1,0 +1,12 @@
+{
+  "callId": "call_02_nXqJqppQl3hH1DvIIAHF5069",
+  "state": "ok",
+  "tool": "read",
+  "input": "{\"file_path\":\"D:\\\\workspace\\\\small-ups\\\\.agent\\\\tx\\\\call_00_gsxKnrP1yL75IN48ylpk4048.json\"}",
+  "at": "2026-11-16T16:55:42.923Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:55:42.931Z",
+  "preview": "<path>D:\\workspace\\small-ups\\.agent\\tx\\call_00_gsxKnrP1yL75IN48ylpk4048.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"callId\": \"call_00_gsxKnrP1yL75IN48ylpk4048\",\n3:   \"state\": \"ok\",\n4:   \"tool\": \"pwsh\",\n5:   \"input\": \"{\\\"command\\\":\\\"Get-Location; Write-Host '--- top level ---'; Get-ChildItem -Force | Select-Object Mode,Length,LastWriteTime,Name | Format-Table -AutoSize\\\",\\\"description\\\":\\\"Inspect workspace top level\\\"}\",\n6:   \"at\": \"2026-11-16T16:54:41.969Z\",\n7:   \"runId\": \"run-mwji7bl6-l9oz\",\n8:   \"taskId\": \"T-0001\",\n9:   \"projectId\": \"af107705-323c-49b8-bcea-4ff0085261ce\",\n10:   \"ended"
+}

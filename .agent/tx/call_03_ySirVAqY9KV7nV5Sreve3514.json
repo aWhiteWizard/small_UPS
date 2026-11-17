@@ -1,0 +1,12 @@
+{
+  "callId": "call_03_ySirVAqY9KV7nV5Sreve3514",
+  "state": "ok",
+  "tool": "read",
+  "input": "{\"file_path\":\"D:\\\\workspace\\\\small-ups\\\\.agent\\\\tx\\\\call_00_eUT46G57a2J95VgDiPvT0167.json\"}",
+  "at": "2026-11-16T16:37:05.187Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:37:05.202Z",
+  "preview": "<path>D:\\workspace\\small-ups\\.agent\\tx\\call_00_eUT46G57a2J95VgDiPvT0167.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"callId\": \"call_00_eUT46G57a2J95VgDiPvT0167\",\n3:   \"state\": \"ok\",\n4:   \"tool\": \"pwsh\",\n5:   \"input\": \"{\\\"command\\\":\\\"Get-ChildItem -Force -LiteralPath 'D:\\\\\\\\workspace\\\\\\\\small-ups' | Select-Object Mode,LastWriteTime,Length,Name | Format-Table -AutoSize; Write-Host '--- .agent ---'; if (Test-Path -LiteralPath 'D:\\\\\\\\workspace\\\\\\\\small-ups\\\\\\\\.agent') { Get-ChildItem -Force -Recurse -Depth 2 -LiteralPath 'D:\\\\\\\\workspace\\\\\\\\small-ups\\\\\\\\.agent' | Select-Object FullName,Lengt"
+}

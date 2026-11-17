@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_niSTzy72NhSaE8yRVRVN7234",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Write-Host '--- .agent tree ---'; Get-ChildItem -Force -Recurse .agent | Select-Object FullName,Length | Format-Table -AutoSize; Write-Host '--- git check ---'; git rev-parse --is-inside-work-tree 2>&1; Write-Host \\\"exit=$LASTEXITCODE\\\"; Write-Host '--- parent dirs ---'; Get-ChildItem -Force D:\\\\workspace | Select-Object Name,LastWriteTime | Format-Table -AutoSize\",\"description\":\"List .agent tree and git status\"}",
+  "at": "2026-11-16T16:54:44.730Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:54:45.726Z",
+  "preview": "--- .agent tree ---\n\r\nFullName                                                               Length\r\n--------                                                               ------\r\nD:\\workspace\\small-ups\\.agent\\board                                          \r\nD:\\workspace\\small-ups\\.agent\\docs                                           \r\nD:\\workspace\\small-ups\\.agent\\tx                                             \r\nD:\\workspace\\small-ups\\.agent\\approvals.json                           224   \r\nD:\\workspace\\small-ups\\.agent\\mech-draft.md                            1613  \r\nD:\\workspace\\small-ups\\.a"
+}

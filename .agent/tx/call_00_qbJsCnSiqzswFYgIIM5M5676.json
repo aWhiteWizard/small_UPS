@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_qbJsCnSiqzswFYgIIM5M5676",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"Get-Location; Write-Output '--- top-level ---'; Get-ChildItem -Force | Select-Object Mode,Length,LastWriteTime,Name | Format-Table -AutoSize\",\"description\":\"Show working directory and top-level entries\"}",
+  "at": "2026-11-16T16:56:50.184Z",
+  "runId": "run-mwjia1om-263w",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:56:50.874Z",
+  "preview": "\r\nPath                  \r\n----                  \r\nD:\\workspace\\small-ups\r\n--- top-level ---\r\n\r\n\r\n\r\nMode   Length LastWriteTime      Name  \r\n----   ------ -------------      ----  \r\nd-----        2026/11/17 0:56:49 .agent\r\n\r\n\r\n"
+}

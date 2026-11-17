@@ -1,0 +1,12 @@
+{
+  "callId": "call_00_M7jOF2XnEjbZMOhSsnjv7504",
+  "state": "ok",
+  "tool": "pwsh",
+  "input": "{\"command\":\"$env:GIT_TERMINAL_PROMPT='0'; git ls-remote --symref https://github.com/aWhiteWizard/small_UPS HEAD 2>&1; Write-Host \\\"exit=$LASTEXITCODE\\\"\",\"description\":\"Read remote HEAD SHA without cloning\",\"timeoutMs\":60000}",
+  "at": "2026-11-16T16:37:16.755Z",
+  "runId": "run-mwjhk6eo-s13e",
+  "taskId": "T-0003",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:37:19.772Z",
+  "preview": "exit=0\n"
+}

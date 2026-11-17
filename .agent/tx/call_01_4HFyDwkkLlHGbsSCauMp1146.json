@@ -1,0 +1,12 @@
+{
+  "callId": "call_01_4HFyDwkkLlHGbsSCauMp1146",
+  "state": "ok",
+  "tool": "glob",
+  "input": "{\"pattern\":\".agent/**/*\"}",
+  "at": "2026-11-16T16:54:42.745Z",
+  "runId": "run-mwji7bl6-l9oz",
+  "taskId": "T-0001",
+  "projectId": "af107705-323c-49b8-bcea-4ff0085261ce",
+  "endedAt": "2026-11-16T16:54:43.082Z",
+  "preview": ".agent\\requirements-draft.md\n.agent\\project.json\n.agent\\mech-draft.md\n.agent\\team.json\n.agent\\approvals.json\n.agent\\schedule.json\n.agent\\tx\\call_00_eUT46G57a2J95VgDiPvT0167.json\n.agent\\tx\\call_01_HRXu54XvTw6cpSb5yiwZ9195.json\n.agent\\tx\\call_00_z0yXDS7rpvovOwZy5YeN2659.json\n.agent\\tx\\call_01_X4Dq7QfOkFTQFMus4G165896.json\n.agent\\tx\\call_02_d0dECe6s5KAfXa9IEYkz1246.json\n.agent\\tx\\call_03_XfgS1ANxHZE7vFjKDaKm8090.json\n.agent\\tx\\call_00_masHUQM1bXRyfnNP2hc89500.json\n.agent\\tx\\call_01_MLUoloI5PLRq7fslhXx57068.json\n.agent\\tx\\call_02_NpEwrMqxKd7RaLN0cH6j2856.json\n.agent\\tx\\call_03_ySirVAqY9KV7nV5Sreve"
+}
