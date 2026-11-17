@@ -18,7 +18,7 @@ C5_FINAL: c3538fd769a95d2bf2defbdc550b5845f3038f46
 12 待确认：R §2.11:333–344，插槽/SN/蜂鸣器/PT100/线材保修/包装丝印 6 项均给默认值并标待 owner：PASS
 13 参考对照：R §2.12:346–362，RT300-MKV 与 DP6020 逐条可借鉴/需改造/不适用：PASS
 14 规模：内容 5 文件/305 行；含 4 份 P0 证据 c2f67af..C5 9 文件/382 行；引擎视角 21 文件/868 行含上游继承（T-0165 提示，不判 FAIL）：PASS
-15 交付：C1..C5 已 push；C5=c3538fd，ls-remote=c3538fd；C6 仅记录提交，最终 LOCAL=REMOTE 见报告：PASS
+15 交付：C1..C6 已 push；C6=b1b0e50，ls-remote=b1b0e50；C7 仅记录提交，最终 LOCAL=REMOTE 见报告：PASS
 NOTE: 工单标题“五点验收”与验收第 8 条“6 点”不一致，按第 8 条 6 点执行（与精度矩阵 6 点一致）。
 NOTE: 验收第 8 条“USB”按调试板 USB-UART 升级口执行；本体无板载 USB。
 NOTE: 1000W 级对照采用公开 DP6020 1200W 开源板；owner 若指定其他机型按 §2.12 同表替换。

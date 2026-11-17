@@ -2,10 +2,10 @@ KIND: tests
 TASK: T-0007
 AT: 2026-11-18 +08:00
 CMD: PowerShell 7 UTF8 ReadAllLines + table/heading/keyword checks; git diff --check; git diff --stat
-LINES: requirements=716 test-plan=132 architecture=72 README=106 worklog=59; P0 evidence=4
+LINES: requirements=716 test-plan=132 architecture=72 README=106 worklog=61; P0 evidence=4
 TABLE: 4 docs TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=False
 ANCHORS: R §2.5–§2.12 8/8; test-plan §1/§1.1/§2/§3/§5/§6/§6.1 filled; §4 kept T-0017; architecture §1.1 filled
 KEY: standards 8/8; accuracy 5/5; dynamic 2/2; ripple 3/3; efficiency 3/3; thermal/noise 5/5; cost 3/3; to-confirm 6/6; reference 8/8; T-0007 placeholders=0
-SIZE: c2f67af..C5 9 files / 335 insertions + 47 deletions = 382 lines (incl 4 P0 evidence + worklog); engine base ba16717 21 files/868 lines (inherited 8 upstream commits)
-SHA: C1=c42f14f; C2=5ffa854; C3=80532a5; C4=8725690; C5=c3538fd; final local=remote=c3538fd at C5; C6 record-only
+SIZE: c2f67af..C6 9 files / 340 insertions + 47 deletions = 387 lines (incl 4 P0 evidence + worklog); engine base ba16717 21 files/873 lines (inherited 8 upstream commits)
+SHA: C1=c42f14f; C2=5ffa854; C3=80532a5; C4=8725690; C5=c3538fd; C6=b1b0e50; final local=remote=b1b0e50 at C6; C7 record-only
 RESULT: PASS
