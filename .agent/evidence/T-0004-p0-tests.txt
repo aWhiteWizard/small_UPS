@@ -7,7 +7,7 @@ RESULT: PASS (fail=0)
 NOTE: 本单为需求文档，无固件/硬件构建物；以结构、关键词、边界检查代替构建测试。
 
 [1] 规模
-LINES=135; BYTES=11,862; LIMIT=400 -> PASS
+LINES=135; BYTES=11,880; LIMIT=400 -> PASS
 最终交付文件=7（requirements + worklog + kb + g0/tests/acceptance/sha）; LIMIT=8 -> PASS
 
 [2] 必需关键词（28/28 PASS）

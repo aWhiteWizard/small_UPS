@@ -45,6 +45,6 @@ RESULT: PASS
 [验收 4] 交付
 17 PASS C1 17821d8b539f3d4cea1e9c89d64223ebf3315ba2 已 push origin/master，本地=远端
    T-0004-p0-sha.txt [1]
-18 PASS C2 证据提交后 push，最终 commit 与远端 SHA 见报告
-   T-0004-p0-sha.txt [2]
+18 PASS C2 c5951ed4798c4b2dd60af291e70754f77db0b91e 证据提交已 push；C3 最终一致性修复 + 证据提交后 push，最终 commit 与远端 SHA 见报告
+   T-0004-p0-sha.txt [2-3]
 RESULT: PASS

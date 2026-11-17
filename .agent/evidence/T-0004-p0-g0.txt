@@ -23,7 +23,7 @@ A .agent/evidence/T-0004-p0-g0.txt
 A .agent/evidence/T-0004-p0-tests.txt
 未改 firmware/、Hardware/、README、.gitignore 或工单验收口径。
 [4] 规模
-- requirements.md：135 行 / 11,862 字节（≤400 行）
+- requirements.md：135 行 / 11,880 字节（≤400 行）
 - C1：5 文件；C2 增 acceptance/sha 证据后 7 文件（≤8）
 - T-0001 上游文件（README/.gitignore/firmware 等）不计入本单改动。
 [5] 校验

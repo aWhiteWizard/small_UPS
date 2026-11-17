@@ -3,7 +3,7 @@
 ## PowerShell 读取无 BOM UTF-8 文档时的默认编码假失败
 
 KB-TYPE: system
-KB-EVIDENCE: `Get-Content .agent/requirements.md -Raw` 读到 7235 字符且中文乱码（`'数控可调直流电源'` 的 `.Contains()` 为 False）；加 `-Encoding UTF8` 后读到 11862 字节原文，同一断言为 True。
+KB-EVIDENCE: `Get-Content .agent/requirements.md -Raw` 读到 7235 字符且中文乱码（`'数控可调直流电源'` 的 `.Contains()` 为 False）；加 `-Encoding UTF8` 后读到 11880 字节原文，同一断言为 True。
 KB-TAGS: powershell, utf8, encoding, validation
 
 校验中文文档必须显式 `-Encoding UTF8`（或 `[IO.File]::ReadAllText(..., UTF8)`）；不要用默认 `Get-Content` 的 `.Contains()` 结果判定缺失，否则会把正常文档误判为 FAIL。
