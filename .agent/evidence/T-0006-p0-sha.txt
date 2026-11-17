@@ -2,14 +2,17 @@ KIND: sha
 TASK: T-0006
 AT: 2026-11-18 +08:00
 BASE: ba16717db86caa3c791e97a6d734501f707aa84f
+UPSTREAM: 2b2fd56（origin/master，含 T-0006 C1–C4 与其他单；本支已 rebase）
 C1: 3cc6ab1a18bf484bd75359bea96d112160a6b2df（内容提交）
 C2: 1770c955b1a4414fdd6301cb6c52a97d4901897f（首轮证据提交）
-COMMIT: dc75815ca1f53fefcb9a41f72bb439198c9b6377（最终内容/证据提交 C3）
-LOCAL_HEAD: dc75815ca1f53fefcb9a41f72bb439198c9b6377
-REMOTE_HEAD: dc75815ca1f53fefcb9a41f72bb439198c9b6377 refs/heads/master
-CMD: git rev-parse HEAD; git push origin HEAD:refs/heads/master; git ls-remote origin refs/heads/master
-PUSH: 1770c95..dc75815 HEAD -> master
-LS_REMOTE: dc75815ca1f53fefcb9a41f72bb439198c9b6377	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == dc75815ca1f53fefcb9a41f72bb439198c9b6377
-NOTE: 本文件随 C4（仅 sha/worklog 记录提交）落库；最终 HEAD=C4 的 git rev-parse/ls-remote 原文见报告。C3 为最终内容/证据提交。
+C3: dc75815ca1f53fefcb9a41f72bb439198c9b6377（55V 码位修复）
+C4: 5c48e08376d225e7ef7b5c31fae863816c52943d（前一轮内容/证据，已并入 master）
+COMMIT: 2b541c80fc8191785b83a4c057a96ea64500bf55（最终内容修复 C5'，rebase 到 2b2fd56）
+LOCAL_HEAD: 2b541c80fc8191785b83a4c057a96ea64500bf55
+REMOTE_HEAD: 2b541c80fc8191785b83a4c057a96ea64500bf55 refs/heads/master
+CMD: git rebase origin/master; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+PUSH: 2b2fd56..2b541c8 HEAD -> master
+LS_REMOTE: 2b541c80fc8191785b83a4c057a96ea64500bf55	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 2b541c80fc8191785b83a4c057a96ea64500bf55
+NOTE: 本文件随 C6'（仅证据/worklog 记录提交）落库；C5' 为最终内容/证据提交；最终 HEAD=C6' 的 git rev-parse/ls-remote 原文见报告。
 RESULT: PASS

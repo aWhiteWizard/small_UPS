@@ -11,6 +11,7 @@ STATES: 使能 S0–S10（10）、故障 F0–F4（5）、热调 H_*（6）、Bo
 KEY: 29/29 True（OVP +2V/50V/50µs、OCP ≤10µs、EN 10k/10–50ms、HB 100/500ms、AC 180/150、PFC 320、55V 50、继电器 50/100ms、boot 16–24KB、CAL 六命令/0.5A/+1A、并联预留、无版本门禁、短路 5s、1.2 倍）
 PLACEHOLDER: 待填（来源：T-0006）=0
 WHITESPACE: BOM=0、trailing=0、tab=0
-DIFF: 文档 5 文件 +277/−45=322 行；总 10 文件 +388/−45=433 行；git diff --check exit 0
+DIFF: T-0006 内容 C1–C4 10 文件 +390/−45=435 行；C5' 复审修复 2 文件 +7/−7；git diff --check exit 0
+HEAD: C5'=2b541c80fc8191785b83a4c057a96ea64500bf55（rebase 到 origin/master 2b2fd56）；C6' 为记录提交
 SCOPE: requirements diff 仅 §2.4 + 完成度表 + 附录 C/E + §3.3.3 的 55V 码位关闭；既有阈值/寄存器/故障码编号未改
 RESULT: PASS
