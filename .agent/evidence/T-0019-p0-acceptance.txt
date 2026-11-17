@@ -5,8 +5,8 @@ AT: 2026-11-18 +08:00
 2 环境降额：PASS。H.3.1：0–40℃/≤80%RH/≤2000m/风扇正常，40℃/240W/30min，内部≤70℃/外壳≤55℃连续满载；H.3.2：>40℃ 允许降额或 OTP 95℃ 关断，判据可判定。（:1303-1324）
 3 过功率保护：PASS。H.4：当前不需要独立 OPP（5A 限流+8A OCP/SCP+50V OVP+95℃ OTP）；重评触发与未来 OPP 触发/用户可见结果已写，无实现。（:1326-1340）
 4 自洽核对：PASS。H.5 7 项：240W vs 48.5V/242.5W、OCP/OVP 容差 252/250W、0.5V/5A vs 0.3%/50mVpp、0–40℃ vs 23±5℃、T-0011 曲线引用、88/90% vs 全段 5A、5A vs 8A；均给建议，不改已定值。（:1342-1356）
-5 变更留痕：PASS。附录 H + 附录 C 行 + 完成度表 + 附录 B/文件头/README §6/§7；H.6 列 requirements/part2（已删，§3→3.3、§5→3.4、§6→A.2）/docs 联动。（:1358-1370；README.md:88,97）
-6 只写需求：PASS。H.7；未改 docs/firmware/Hardware；附录 H 无 µH/µF/mΩ/MOS/ETD/kHz 设计 token；无器件/拓扑/曲线数值。（:1372-1377）
-7 规模：PASS。C1 95cd04e..3646bda 3 文件 149+/10−=159 行；worklog 38 + P0 50 = 88 行；交付 8 文件合计约 247 行，≤8/≤400；无超限。（git diff --numstat、PowerShell ReadAllLines）
-8 交付：PASS（C2 push 后复核）。COMMIT=C1=3646bda1883ae74c42bbec41d0a03c76d87e1c15；LOCAL=REMOTE；原文见 T-0019-p0-sha.txt。
+5 变更留痕：PASS。附录 H + 附录 C 行 + 完成度表 + 附录 B/文件头/README §6/§7；H.6 列 requirements/part2（已删，§3→3.3、§5→3.4、§6→A.2）/docs 联动。（:1358-1371；README.md:88,97）
+6 只写需求：PASS。H.7；未改 docs/firmware/Hardware；附录 H 无 µH/µF/mΩ/MOS/ETD/kHz 设计 token；无器件/拓扑/曲线数值。（:1373-1378）
+7 规模：PASS。C1 95cd04e..3646bda 3 文件 149+/10−=159 行；worklog/P0 合计 ≤100 行；交付 8 文件 <400 行；无超限。（git diff --numstat、PowerShell ReadAllLines）
+8 交付：PASS（C3 push 后复核）。COMMIT=C1=3646bda1883ae74c42bbec41d0a03c76d87e1c15；EVIDENCE=C2=4bd6f5fd2c02bf9c49c4b843bb9eeb815015dcce；最终 LOCAL=REMOTE=C3；原文见 T-0019-p0-sha.txt。
 RESULT: PASS
