@@ -1,0 +1,64 @@
+KIND: tests
+TASK: T-0003
+AT: 2026-11-17T13:15+08:00
+SCOPE: .agent/requirements.md 静态一致性校验（47 项，含寄存器地址重叠）
+COMMAND: & .agent/scripts/check-requirements.ps1
+RESULT: PASS (47/47)
+NOTE: 本单为需求冻结文档，无固件/硬件可构建物；G0/测试以文档结构与跨章节一致性为准。
+
+[1] 校验器输出
+[PASS] 定位：PSU，不是 UPS，历史命名
+[PASS] 输出：0–48V 设定 / 0.5–48V 保证 / 0–5A
+[PASS] 低压原因：最小脉宽 + 跳周期
+[PASS] 常用工作点行 3.3V
+[PASS] 常用工作点行 5V
+[PASS] 常用工作点行 12V
+[PASS] 常用工作点行 24V
+[PASS] 常用工作点行 48V
+[PASS] 五点表含 DVT 实测列
+[PASS] 针脚行 \| 1–10 \| 输出\+ \| 输出\+
+[PASS] 针脚行 \| 11–20 \| 输出− \| 输出−
+[PASS] 针脚行 \| 21 \| 信号地 \| 信号地
+[PASS] 针脚行 \| 22 \| \+12V（本体→调试板） \| \+12V（调试板→本体继电器）
+[PASS] 针脚行 \| 23 \| 短针 \| 短针
+[PASS] 针脚行 \| 24 \| SDA \| SCL
+[PASS] 针脚行 \| 25 \| ALERT \| EN
+[PASS] 针脚行 \| 26 \| SENSE\+ \| SENSE−
+[PASS] 针脚行 \| 27 \| SHARE（预留） \| SYNC（预留）
+[PASS] 针脚行 \| 28 \| 备用 \| 备用
+[PASS] 针脚行 \| 29 \| 备用 \| 备用
+[PASS] 针脚行 \| 30–32 \| GND 护边 \| GND 护边
+[PASS] 针脚：64 针 / 2.54mm / 不做防呆
+[PASS] ALERT：低有效开漏 + 10k + 锁存 + CLEAR + 多机
+[PASS] 继电器：输出级之后、金手指之前、100ms/≤1V
+[PASS] RELAY_STATE / VOUT_ZERO / ≤50ms
+[PASS] 热替换：低于母线 100mV / PMU / 禁止绕过
+[PASS] EEPROM：只存 V/I，不存 PT100
+[PASS] 使能四条件 / EN 10k / 10–50ms
+[PASS] 心跳 100ms/500ms
+[PASS] 按键：上拉/按下低/开关节奏/复位低
+[PASS] 并联：fine-trim ±50mV/1mV + 1mA + ±10% + IMBALANCE
+[PASS] 精度：20mV / ±0.1% / 0.02% / 待确认
+[PASS] 测量链：16 位 ADC/DAC、0.1%、INA282、2mΩ、AUTOCAL
+[PASS] 拓扑/效率：LLC+SR、buck、200kHz、90/92、240W
+[PASS] 纹波：50/30、母线 100/150、20/40dB
+[PASS] 风扇：HA60251V4、60×25、FG、≥50mm
+[PASS] 布局：79×12、Ø5/Ø8、60+30+25≤120
+[PASS] 温度：2 NTC、75/95、PT100 9600/8N1/FC03/±0.5
+[PASS] MCU：STM32G431CBT6 ×2、数控 B 型
+[PASS] 成本：600/700/1500–2000/BOM 两栏
+[PASS] 保护：≤10µs、fail-open、不重合闸、4A T
+[PASS] 尺寸：120×60×180、120×60×35、215、顶丝/磁吸
+[PASS] 参考：RT300-MKV / 1000W / 三类结论
+[PASS] 待确认 7 项
+[PASS] 一致性自检
+[PASS] 无急停声明
+[PASS] 寄存器表无地址重叠
+RESULT: PASS (47/47)
+
+[2] 文档规模
+LINES: 929（[IO.File]::ReadAllLines UTF-8）
+BYTES: 约 65 KB
+
+- 校验器只做结构/关键词/地址重叠检查，不代替 review-1 的逐条事实审查。
+- 实测数据列（五点表）在 DVT 阶段填写，本冻结版不伪造。
