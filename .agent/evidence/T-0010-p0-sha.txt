@@ -1,17 +1,14 @@
 KIND: sha
 TASK: T-0010
-AT: 2026-11-18 +08:00
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); delivery base 319cf8ef008c4d787dedfe97048c92d8d0874d8f
-COMMIT: 3a03a48e90ede3df007e7e090741a50d5e27fc66 (C9 final evidence/record)
-LOCAL_HEAD: 3a03a48e90ede3df007e7e090741a50d5e27fc66
-REMOTE_HEAD: 3a03a48e90ede3df007e7e090741a50d5e27fc66 refs/heads/master
+AT: 2026-11-18 18:07 +08:00 (clean-base rerun)
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); DELIVERY_BASE: fa794efbbaaba3b43013d4e7df0157fb74c284be (clean)
+COMMIT: 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d (C11 delivery/evidence refresh)
+LOCAL_HEAD: 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d
+REMOTE_HEAD: 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d refs/heads/master
 CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-PUSH: e7a811b..3a03a48  HEAD -> master (exit 0)
-LS_REMOTE: 3a03a48e90ede3df007e7e090741a50d5e27fc66	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 3a03a48 True (pre-C10)
-C1_CONTENT: c0259b83b979f579affbc34dc67fa567b9702b64
-C6_CONTENT: 18e011b770f75f775429936853af24877d6e6d4d
-C8_RECORD: 067edba95b5b2e4fa52269fe444f8fc006fdcdc1
-C9_RECORD: 3a03a48e90ede3df007e7e090741a50d5e27fc66
-C10_RECORD: this commit (sha backfill C9); push then final HEAD=C10 (SHA in report)
+PUSH: fa794ef..14e0d2a  HEAD -> master (exit 0)
+LS_REMOTE: 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d True
+CONTENT: C1=c0259b83b979f579affbc34dc67fa567b9702b64; C6=18e011b770f75f775429936853af24877d6e6d4d (already in base)
+RECORD_COMMIT: the sha-backfill commit that contains this file (C12); final HEAD and SHA in report
 RESULT: PASS
