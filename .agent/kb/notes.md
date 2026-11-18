@@ -282,6 +282,15 @@ KB-TAGS: cavity, locating-pin, depth-chain, z-axis, interference
 - 修正：剖面按“前板 2 + 间隙 0.4 + 显示 8 + PCB 1.6 + 插座 5 + 销 18 = 35”排；块放 z=17–27（销插入 10mm、块-PCB 5mm），顶丝孔随块中心 z=22；卡边插入按 5±1（实物槽深 ≥5）。
 - 规则：机械坐标只做 2D x-y 矩形检查不够；块/销/PCB/显示/插座必须逐件列 z 区间并检查插入路径，所有 z 用同一原点（面板前面 z=0，指向本体内）。
 
+## 已并入 master 的工单重派：先判 merge-base，只刷新证据不重做内容
+
+KB-TYPE: method
+KB-EVIDENCE: `git merge-base HEAD origin/master` = 4a12310（本单 C5）；`git log --oneline 4a12310..origin/master` 列出 T-0010…T-0018 等提交；README.md:99 的 T-0019 行由 :91 漂到 :99、文档地图 :110 由 :102 漂移，H 仍在 requirements.md:1277-1396
+KB-LAYER: 1_application
+KB-TAGS: worktree, merge-base, clean-base, evidence, line-number, rerun
+
+重派时不要默认重做需求：先 `git merge-base HEAD origin/master`，若等于本单 HEAD，说明本单提交已在 master，只做 ff-only + 全量复核 + 刷新 P0 行号/SHA；重复提交内容会把上游变更算进本单 diff。上游插行会让旧 evidence 的行号失效（README 91→99、102→110），刷新证据必须重取，不能沿用首轮行号。
+
 ## 电容组“N×C + C_small”必须按并联和核对 ≥ 目标，不能只看单体
 
 KB-TYPE: bug

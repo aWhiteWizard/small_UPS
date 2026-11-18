@@ -1,13 +1,13 @@
 KIND: tests
 TASK: T-0019
-AT: 2026-11-18 +08:00
+AT: 2026-11-18 18:35 +08:00
 CMD: PowerShell UTF8 文档检查；git diff --check；git diff --name-only -- docs firmware Hardware
-DOC: LINES=1523 APPENDIX_H_START=1277 APPENDIX_H_LINES=120（v1.1，T-0020 附录 I 在 H 后）
+DOC: LINES=1524 APPENDIX_H_START=1277 APPENDIX_H_LINES=120（v1.1，T-0020 附录 I 在 H 后）
 TABLE: WHOLE=38 BLOCKS BAD=0；H=5 BLOCKS BAD=0；HAS_TAB=False TRAILING_WS=0
-KEYS: MISSING=（20/20 命中：包络/240W/48.5V/242.5W/0–0.5V/40℃/70℃/55℃/95℃/23±5℃/50mVpp/0.3%/88%/90%/OPP/8A/0x05/0x08/5A/30min）
-DESIGN: H 内 µH/µF/mΩ/MOS/ETD/kHz 均 0
-SCOPE: DOCS_FW_HW_CHANGED=（空）
-DIFF: 首轮 C1 95cd04e..3646bda 3 文件 149+/10−=159；worklog/P0 合计 ≤100 行；交付 8 文件 <400 行
-CHECK: git diff --check exit 0；UTF-8 无 BOM
-XREF: §2.6/2.8/2.9/3.1/3.2/3.3.3/3.4.1/3.5/3.5.7/3.5.11/1.5 与 G.1/G.5/G.6 全部存在
+KEYS: MISSING=0/20（包络/240W/48.5V/242.5W/0–0.5V/40℃/70℃/55℃/95℃/23±5℃/50mVpp/0.3%/88%/90%/OPP/8A/0x05/0x08/5A/30min）
+DESIGN: H.1–H.6 内 µH/µF/mΩ/MOSFET/ETD/kHz 均 0；H.7 仅以“散热器/风扇选型”作排除声明
+CROSS: §2.8:320-336（240W/5A/0.3%/50mVpp/23±5℃/88%/90%）、§2.9:343（40℃/30min/≤70℃/≤55℃）、§3.3.3:494,1132-1138（5.25A/8A/50V）、P-09:400（95℃）与 H 一致
+SCOPE: DOCS_FW_HW_CHANGED=（空；3646bda 仅 requirements/README/KB）
+DIFF: 本轮为 C6 证据提交 + C7 记录提交；T-0019 累计 8 文件；C1 95cd04e..3646bda 3 文件 149+/10−=159 行
+CHECK: git diff --check exit 0；UTF-8 无 BOM；工作区干净
 RESULT: PASS
