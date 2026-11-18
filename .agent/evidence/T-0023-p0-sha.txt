@@ -1,0 +1,14 @@
+KIND: sha
+TASK: T-0023
+AT: 2026-11-18 +08:00
+BASE: d4dc80a483aa1f90f2ccc3c0528ce2804b6c7b6f（origin/master，重派基线）
+CONTENT_COMMIT: e14e17eecb1529b74e00632d1ed994282083b2ce（C1，6 文件/+313/−28，body 末行 Ticket: T-0023）
+TICKET_COMMIT: e14e17eecb1529b74e00632d1ed994282083b2ce（C1）
+EVIDENCE_COMMIT: PENDING-E1（E1 提交后由 C2 回填，避免自指）
+PUSH_C1: d4dc80a..e14e17e  HEAD -> master（exit 0）
+C1_ANCESTOR_OF_HEAD: YES
+LS_REMOTE_HEAD: e14e17eecb1529b74e00632d1ed994282083b2ce refs/heads/master（C1 后实测）
+VERIFY: local == remote == e14e17e（C1 后）
+GIT_LOG: e14e17e task(T-0023): 本地化 HAL/占位 MCU 启动文件与链接脚本
+NOTE: 本文件不写最终 HEAD 的 SHA；E1/C2 的 SHA 见报告正文（自指限制）。
+RESULT: PASS

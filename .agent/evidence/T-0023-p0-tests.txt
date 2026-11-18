@@ -1,0 +1,18 @@
+KIND: tests
+TASK: T-0023
+AT: 2026-11-18 +08:00
+TOOL: arm-none-eabi-gcc.exe (xPack GNU Arm Embedded GCC x86_64) 15.2.1 20251203；cmake 3.31.9；ninja 1.13.2
+CMD: `check-env.ps1`；`build.ps1 -Clean`；`readelf -S/-l`；`objdump -s -j .isr_vector`；`objdump -d --disassemble=Reset_Handler`；`nm -n`；`git check-ignore`；`git ls-files`
+CHECK-ENV: 8/8 True，`CHECK-ENV: PASS`，exit 0
+BUILD: `[8/8] Linking C executable psu_minimal.elf`，exit 0（newlib `_close/_lseek/_read/_write` 为 nosys.specs 预期警告）
+MEM: RAM 1584 B / 36 KB（4.30%）；FLASH 1544 B / 128 KB（1.18%）；text 1524 / data 20 / bss 1572
+ART: `psu_minimal.elf` 665456 B；`psu_minimal.bin` 1544 B；`psu_minimal.hex` 4426 B
+VEC: `.isr_vector` VMA=0x08000000、size=0xbc（188 B = 47 字）；首字 `00 90 00 20`（SP=0x20009000），次字 `75 02 00 08`（Reset=0x08000275）
+DISASM: `mov sp` → `bl SystemInit` → `_sidata→_sdata` 复制循环 → `_sbss.._ebss` 清零 → `bl __libc_init_array` → `bl main`
+LOAD: 2 个 LOAD：`0x08000000 R E`、`0x20000000 Phys 0x080005fc RW`；无 RWX 段
+BIN8: `00 90 00 20 75 02 00 08`
+IGNORE: `.gitignore:16:.tools/`、`.gitignore:14:build/` 均命中；`git ls-files` 中二进制扩展名 = 0
+SIZE: 6 文件 / 341 行（代码与配置 4/245；文档 2/96），≤8 文件/≤400 行
+DIFF: C1 `git show --numstat` = 6 files changed, 313 insertions(+), 28 deletions(-)
+LOG: 完整原始输出见 `.agent/evidence/T-0023-p1-build-final.log` 与 `T-0023-p1-verify.log`
+RESULT: PASS
