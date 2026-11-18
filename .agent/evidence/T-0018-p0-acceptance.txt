@@ -1,6 +1,6 @@
 KIND: acceptance
 TASK: T-0018
-AT: 2026-11-18 +08:00
+AT: 2026-11-18 18:26 +08:00
 1 保护阈值可设性：PASS。G.1：默认 OVP=V_set+2V、OCP=I_set+max(0.05A,5%)；显式范围 OVP +0.5–50V、OCP +0.05–8A；工作点余量约束；触发后输出 OFF/ALERT/显示/不自动恢复；无寄存器地址/编码。
 2 故障可追溯：PASS（保留冲突已标）。G.2：故障标识/全部锁存位、分类计数/总数、最近一次时刻/序次、现场快照；≥16 条、跨上电/换板 ≥10 年、CLEAR 不清；未指定介质/格式；与 §3.3.7/P-06 冲突见 G.6 #1 待 owner。
 3 异常安全态：PASS。G.3：看门狗/异常复位→输出 OFF/继电器断开/PWM 关断/软使能清零；不自动恢复；不丢校准/设定/预设；存储损坏 fail-safe；未指定超时/喂狗位置。
@@ -8,6 +8,6 @@ AT: 2026-11-18 +08:00
 5 能力留口：PASS。G.5：C-01 固件升级、C-02 远端采样补偿（0–0.5V，针端 ≤48.5V）、C-03 校准会话；有/无、边界值、验收方式、现有落点齐全。
 6 可判定验收：PASS。G.1–G.4 均有“能/不能/用户可见/边界”判据；G.5 表格有边界值与验收方式；无仅写“支持”。
 7 只改需求文档/冲突标注：PASS。需求正文只改 .agent/requirements.md 附录 G；无 docs/ 架构/接口设计改动；G.6 4 项均“待 owner 确认”+来源。README 仅 §6/§7 状态同步（v0.9），KB 仅留痕，无设计内容。
-8 规模：PASS。内容提交 8 文件 278+/10−（含 P0/worklog）；本轮只刷新既有 4 件 P0 与 worklog，不增文件；<400 行、≤8 文件，无超限理由。
-9 交付硬要求：PASS。已执行 commit→git push origin HEAD:refs/heads/master→git ls-remote；E1=a1fd255、E2=706f608 推送后均 LOCAL_HEAD=REMOTE_HEAD；COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文见 T-0018-p0-sha.txt，最终记录 E3 的 SHA 与复核见报告正文。
-RESULT: PASS（内容）；交付 SHA 见 T-0018-p0-sha.txt 与报告
+8 规模：PASS。本单内容提交 8 文件 278+/10−（含 P0/worklog）；本轮只刷新既有 4 件 P0 与 worklog，不增文件；<400 行、≤8 文件，无超限理由。
+9 交付硬要求：PASS。clean base=a2a0303（T-0029 收口后 origin/master）；已执行 commit→git push origin HEAD:refs/heads/master→git ls-remote；E4 推送后 LOCAL_HEAD=REMOTE_HEAD=E4，E4 SHA 由 E5 回填；最终 E5 的 SHA 与复核见报告正文（自指限制）。
+RESULT: PASS（内容）；交付 SHA 见 T-0018-p0-sha.txt 与报告正文

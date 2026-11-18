@@ -1,13 +1,13 @@
 KIND: g0
 TASK: T-0018
-AT: 2026-11-18 +08:00
+AT: 2026-11-18 18:26 +08:00
 BRANCH: task/T-0018 @ D:\workspace\wt\small-ups\T-0018
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 base）
-UPSTREAM: 017a13beea5cfb9f2d4d4986e5a7428e1e39ef21（首轮开工 origin/master）
-RESYNC: 95cd04e..25506f8d7cd385ccd69e9725040f49264ac93759（重派时 git merge --ff-only origin/master；T-0018 内容已随 T-0017 收口进入 master）
-CMD: git fetch origin --prune; git merge --ff-only origin/master; git status --porcelain=v1 --untracked-files=all; git diff --check
-STATUS: 重派开工工作区干净；HEAD=origin/master=25506f8；改动仅需求正文/README 状态/KB/worklog/P0，无 docs/ 设计、firmware/、Hardware/ 改动
+BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f（工单 base）
+CLEAN_BASE: a2a03031b721604e831cbfaaa4893a7b60b51392（origin/master，T-0029 收口后重派）
+FF: 0738a555e69dbe7a12206951a21d92a5895c6016..a2a03031b721604e831cbfaaa4893a7b60b51392（git merge --ff-only origin/master，exit 0）
+PRECHECK: HEAD=a2a0303=origin/master；git status --porcelain 空；git diff --check exit 0
+CONTENT_COMMITS: 90b6ed5（附录 G+首轮 P0）、95cd04e，均已在 origin/master；本单内容已在 clean base 树中，不重做
 SCOPE: .agent/requirements.md（附录 G + header/完成度表/附录 B/C/E）、README.md（§6/§7 状态同步）、.agent/kb/notes.md（2 条）、worklog、P0 4 件
-DIFF: 内容提交 90b6ed5+95cd04e 合计 8 文件 278+/10−（含 P0/worklog）；本轮只刷新既有 P0/worklog，不新增文件
-CHECK: git diff --check exit 0；表格块 0 列数错；UTF-8 无 BOM、无 Tab、无行尾空白
+DIFF: 本单内容 8 文件 278+/10−；本轮只刷新 P0/worklog，不改需求口径、不新增文件、无 docs/ 设计改动
+CHECK: git diff --check exit 0；表格块 0 列数错；UTF-8 无 BOM、无 Tab、无行尾空白；附录 G 无 0x 寄存器地址/编码
 RESULT: PASS

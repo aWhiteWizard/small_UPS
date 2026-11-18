@@ -1,8 +1,8 @@
 KIND: tests
 TASK: T-0018
-AT: 2026-11-18 +08:00
+AT: 2026-11-18 18:26 +08:00
 CMD: PowerShell 7 + [IO.File]::ReadAllLines(..., UTF8) 自检；git diff --check
-LINES: .agent/requirements.md 1523 行（v1.1）；附录 G 第 1123–1276 行（154 行）
+LINES: .agent/requirements.md 1524 行（v1.1）；附录 G 第 1123–1276 行（154 行）
 TABLES: 表格块 0 列数不一致（含 G.5 6 列、G.6 5 列）
 ENCODING: UTF-8 无 BOM；无 Tab；无行尾空白
 G: HEX=0（附录 G 无 0x 寄存器地址/编码）；验收判据=4（G.1–G.4）；待 owner 确认命中=6；能力条目=3（C-01–C-03）
