@@ -332,3 +332,12 @@ KB-EVIDENCE: `.agent/evidence/T-0031-p0-tests.txt`（8/8 文件 FAIL=0；23/23 �
 KB-TAGS: docs, validation, utf8, markdown, grep
 
 需求/设计类工单提交前至少跑三项：① `[IO.File]::ReadAllText(..., UTF8)` 读全文并查 BOM/Tab/行尾空白；② 连续表格行按 `|` 计数必须一致（避免改表漏列）；③ 用“旧口径禁用词 + 新验收关键词”双清单 grep，旧词只允许出现在“历史对照/已取代”段落。用默认 `Get-Content` 读中文会误判，见本文件早前的 UTF-8 条目。
+
+## 重派 worktree 未重建：先 ff-only，再按 Ticket/Evidence trailer 补两个收口提交
+
+KB-TYPE: system
+KB-EVIDENCE: `git merge --ff-only origin/master` → `Updating 1d6caec..8469cee`；`git merge-base --is-ancestor 1d6caec origin/master` exit 0；`git log --all --grep='Ticket:'` → a2a0303（T-0017 R1）、`--grep='Evidence:'` → 5968021（T-0017 R0）
+KB-LAYER: 2_system
+KB-TAGS: worktree, clean-base, trailer, evidence, delivery, T-0022
+
+引擎侧 worktree 重建可能未生效（T-0022 重派时 HEAD 仍是旧交付 1d6caec、落后 origin/master 19 个提交）。不要 amend 已并入 master 的提交；先 `git merge --ff-only origin/master`，用 `git merge-base --is-ancestor <content-commit> origin/master` 确认内容已在基线，再补两个仅动 `.agent` 的收口提交：证据提交 body 写 `Evidence: <taskId>`，交付记录提交 body 写 `Ticket: <taskId>`；P0 sha 记录 CONTENT_COMMIT 与 EVIDENCE_COMMIT，Ticket 提交自身 SHA 见报告（自指限制）。证据文件被 `.gitignore` 忽略时用 `git add -f`，只提交 P0 文本，不提交 P1 大日志。

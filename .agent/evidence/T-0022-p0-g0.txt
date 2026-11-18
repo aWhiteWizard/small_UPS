@@ -1,0 +1,15 @@
+KIND: g0
+TASK: T-0022
+AT: 2026-11-18 +08:00（重派复核）
+BRANCH: task/T-0022 @ D:\workspace\wt\small-ups\T-0022
+TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 baseSha，落后 72 提交）
+CLEAN_BASE: 8469ceec87de8c718441dc13324f2ed7fd57f597（重派后 ff-only origin/master 的 HEAD）
+CONTENT_COMMIT: 1d6caeca637ca515e8470b928449cf6ee40c23d2（4 文件/+107/−8，已在 origin/master）
+CMD: git fetch origin; git merge --ff-only origin/master（1d6caec→8469cee）; git rev-parse HEAD; git merge-base --is-ancestor 1d6caec origin/master; git status --porcelain -uall; git check-ignore -v ...
+STATUS: 重派工作区原 HEAD=1d6caec（落后 19 提交），引擎重建未落到本 worktree；人工 ff-only 到 8469cee，工作区干净；本单内容已在 master，未重做
+UPSTREAM: 1d6caec 是 origin/master 祖先（merge-base --is-ancestor exit 0）；其后 19 个他单提交未改 firmware/
+SIZE_OLD_BASE: ba16717..8469cee = 91 files changed, 5196 insertions(+), 244 deletions(-)（含上游他单，非本单）
+SIZE_CONTENT: 1d6caec^..1d6caec = 4 files changed, 107 insertions(+), 8 deletions(-)
+SIZE_RERUN: CLEAN_BASE..HEAD = 仅本单 P0 证据 + worklog + KB（见 p0-sha；无源码改动）
+IGNORE: .gitignore:16:.tools/ → .tools\arm-gcc\bin\arm-none-eabi-gcc.exe；.gitignore:14:build/ → firmware\build\psu_minimal.elf
+RESULT: PASS

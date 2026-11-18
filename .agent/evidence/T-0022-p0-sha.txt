@@ -1,0 +1,14 @@
+KIND: sha
+TASK: T-0022
+AT: 2026-11-18 +08:00
+BASE: ba16717（工单 baseSha，落后 72 提交）/ f9af342（ff-only 后的真实开工基线）
+COMMIT: 1d6caeca637ca515e8470b928449cf6ee40c23d2
+LOCAL_HEAD: 1d6caeca637ca515e8470b928449cf6ee40c23d2
+REMOTE_HEAD: 1d6caeca637ca515e8470b928449cf6ee40c23d2 refs/heads/master
+CMD: git add firmware/README.md firmware/build.ps1 firmware/tools/check-env.ps1 .agent/kb/notes.md; git commit -m "task(T-0022): 复核固件工具链与构建链，补版本校验"; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+LS_REMOTE: 1d6caeca637ca515e8470b928449cf6ee40c23d2	refs/heads/master
+PUSH: f9af342..1d6caec  HEAD -> master（exit 0）
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 1d6caeca637ca515e8470b928449cf6ee40c23d2
+DIFF_REAL: f9af342..HEAD = 4 files / 107 insertions / 8 deletions
+NOTE: .agent/evidence/ 与 .agent/worklogs/ 被 .gitignore 忽略，不随提交入库；完整日志见同目录 P1 文件。
+RESULT: PASS
