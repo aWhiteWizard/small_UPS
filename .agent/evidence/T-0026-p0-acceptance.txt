@@ -1,6 +1,7 @@
 KIND: acceptance
 TASK: T-0026
-AT: 2026-11-18 +08:00
+AT: 2026-11-19 +08:00
+BASE: 0d40e6780bdfd4f7b117996c6f5958177c5fb692（重派基线；内容 C1 d0472ea 已并入）
 1 会话流程：PASS。`tools/calib/session.py:230-329` begin/set/meas/commit/read；`:332-353` abort；
   自测 V6+I3 均完成 BEGIN→SET/MEAS→COMMIT→READ，回读 verified=True。
 2 BEGIN 降限流 + 禁止打断：PASS。`:230-245` 置 V limit_a=0.5（I=目标+1）并在日志声明由设备校准态生效；
@@ -10,10 +11,12 @@ AT: 2026-11-18 +08:00
   （`:300-302`），COMMIT 后 READ 失败只报“已写、未再 ABORT”。fixture 断言 COMMIT 次数=0。
 4 回执日志 + 错误码：PASS。`:123-135` 每条 OK/ERR 原文先落日志；`:84-100` 仅接受 CAL_STATUS 0–7，
   非 0–7 回执按协议错中止；`:15-30` 状态名与需求 §3.3.1 对齐；本地非法输入用 5（点错）、busy 用 1。
-5 规模：PASS。3 文件 / 390 insertions：代码 1/353（session.py），文档 2/37（README +15、KB +22）；
+5 规模：PASS。3 文件 / 391 行（390+/1−）：代码 1/353（session.py），文档 2/38（README +15/−1、KB +22）；
   均 ≤8 文件 / ≤400 行；测试脚本与日志在 evidence，不计阈值。
-6 交付判据：PASS。C1 `d0472ea` 带 `Ticket: T-0026` 已 push 到 origin/master；E1 为证据提交，带
-  `Evidence: T-0026`；工作区 clean；证据不写最终 HEAD SHA，改附 `git log --oneline`（见 p0-sha）。
+6 交付判据：PASS。C1 `d0472ea` 带 `Ticket: T-0026` 已在 origin/master；E1 `57246ab` 带 `Evidence: T-0026`；
+  本轮 E 带 `Evidence: T-0026`、C 带 `Ticket: T-0026`，工作区 clean；证据不写最终 HEAD SHA，
+  只附 `git log --oneline` 本单提交原文（见 p0-sha）。
 RESULT: PASS
-SIZE: 文档 2 文件 / 37 行；代码与配置 1 文件 / 353 行；合计 3 文件 / 390 行。
+SIZE: 文档 2 文件 / 38 行；代码与配置 1 文件 / 353 行；合计 3 文件 / 391 行。
+REWORK: 重派基线已含内容提交，未重做 Python 实现；本轮 diff 仅 P0 证据与 worklog。
 EVIDENCE_EXCLUDED: `.agent/evidence/T-0026-p0-*.txt`、`T-0026-p1-*.{txt,log}`、`.agent/worklogs/T-0026.md`

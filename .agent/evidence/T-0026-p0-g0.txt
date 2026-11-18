@@ -1,13 +1,13 @@
 KIND: g0
 TASK: T-0026
-AT: 2026-11-18 +08:00
-BASE: 6285b4064da66cc84bef36cbea6d7d34482fc403
+AT: 2026-11-19 +08:00
+BASE: 0d40e6780bdfd4f7b117996c6f5958177c5fb692
 BRANCH: task/T-0026
 WORKTREE: D:\workspace\wt\small-ups\T-0026
-G0-1 BASELINE: 开工 HEAD=ba16717，`git merge --ff-only origin/master` → Updating ba16717..6285b40（Fast-forward）；改前工作区 clean。
-G0-2 COMPILE: `compile(tools/calib/session.py)` → COMPILE OK；`from calib.session import CalSession, CHANNELS, cal_crc` → IMPORT OK 6 3。
-G0-3 TEST: `$env:PYTHONPATH="tools"; python -B .agent/evidence/T-0026-p1-selftest.txt` → Ran 5 tests, OK, exit 0。
-G0-4 HYGIENE: `git diff --check` exit 0；无 __pycache__/*.pyc；无工具链二进制、无 Hardware/ 改动。
-G0-5 SIZE: 3 文件 / 390 insertions（代码 1/353，文档 2/37），≤8 文件 / ≤400 行；证据不计入。
-G0-6 E2E: 现场无 PSU/串口硬件，本轮用 fixture 假设备注入 OK/ERR/超时，不冒充真机 e2e。
+G0-1 BASELINE: `git rev-parse HEAD` = task.baseSha = 0d40e67（origin/master）；改前 `git status --porcelain=v1 -uall` 空；内容提交 d0472ea 已是基线祖先（`git merge-base --is-ancestor d0472ea HEAD` exit 0），本单不重做内容。
+G0-2 COMPILE: uv Python 3.14.6：`py_compile.compile("tools/calib/session.py", doraise=True)` → COMPILE OK；`from calib.session import CalSession, CHANNELS, cal_crc` → IMPORT OK（CHANNELS=2，V 6 点 / I 3 点）。
+G0-3 TEST: `$env:PYTHONPATH="tools"; & $py -B .agent/evidence/T-0026-p1-selftest.txt` → `Ran 5 tests in 0.006s` + `OK`，exit 0。
+G0-4 HYGIENE: `git diff --check` exit 0；无 __pycache__/*.pyc；无工具链二进制、无 Hardware/ 改动；未触碰需求/看板。
+G0-5 SIZE: 内容 C1 d0472ea = 3 文件 / 391 行（390+/1−；代码 1/353，文档 2/38），≤8 文件 / ≤400 行；本重派仅刷新证据，P0 不计阈值。
+G0-6 E2E: 现场无 PSU/串口硬件；仅 fixture 假设备注入 OK/ERR/超时，不冒充真机 e2e。
 RESULT: PASS

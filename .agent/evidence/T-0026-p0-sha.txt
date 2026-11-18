@@ -1,14 +1,15 @@
 KIND: sha
 TASK: T-0026
-AT: 2026-11-18 +08:00
-BASE: 6285b4064da66cc84bef36cbea6d7d34482fc403
+AT: 2026-11-19 +08:00
+BASE: 0d40e6780bdfd4f7b117996c6f5958177c5fb692
 C1: d0472ea17140a11bf4cc88cc664a78fb55fb268f
 PUSH: `git push origin HEAD:refs/heads/master` → `6285b40..d0472ea  HEAD -> master`，exit 0
-VERIFY: `git ls-remote origin refs/heads/master` 等于 C1（本地=远端，true；按新口径不写最终 HEAD SHA）
-LOG: `git log --oneline -4`
+LS_REMOTE_C1: d0472ea17140a11bf4cc88cc664a78fb55fb268f
+VERIFY: `git ls-remote origin refs/heads/master` == C1（C1 push 时，true）；`git merge-base --is-ancestor C1 origin/master` exit 0
+C1_ANCESTOR_OF_HEAD: YES
+LOG: `git log --oneline` 本单提交原文
 d0472ea feat(T-0026): 新增校准会话流程与安全中止
-6285b40 docs(T-0025): 修正 KB 证据行号到最终串口层（C3）
-7df4db5 docs(T-0025): 回填 E1 证据 SHA 并最终收口（C2）
-d1f93bd docs(T-0025): 记录 P0 证据与两态 UI 截图（E1）
-TICKET: C1 提交正文末尾含 `Ticket: T-0026`；E1 提交含 `Evidence: T-0026`。
-WORKTREE: E1 提交并 push 后 `git status --porcelain=v1 --untracked-files=all` 为空。
+57246ab docs(T-0026): 记录 P0 证据与离线自测（E1）
+TICKET: C1 提交末尾 `Ticket: T-0026`；E1 提交末尾 `Evidence: T-0026`；本轮 E 末尾 `Evidence: T-0026`、C 末尾 `Ticket: T-0026`。
+EVIDENCE_COMMIT: 待 C 回填（本文件在 E 中提交；C 自身 SHA 只写报告）
+WORKTREE: 收口后 `git status --porcelain=v1 --untracked-files=all` 为空。

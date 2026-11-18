@@ -454,3 +454,12 @@ KB-EVIDENCE: `tools/calib/ui.py:148-152`；T-0027 自测报 `TclError: invalid c
 KB-TAGS: tkinter, pyserial, teardown, callback
 
 根因：`root.destroy()` 先销毁子标签，`SerialPanel.destroy` 里的 `link.disconnect` 又触发 `on_state`，回调去 configure 已销毁的 `status_lbl`。修法：destroy 里先把 `_on_state_cb` 置 None 再 disconnect；T-0027 自测 5/5 PASS。
+
+## py 启动器指向已删除 Python 时改用 uv 托管解释器
+
+KB-TYPE: system
+KB-EVIDENCE: `py -0p` → `-V:3.14 * C:\Users\Future_Tech_WorkShop\AppData\Local\Programs\Python\Python314\python.exe`；`py --version` 报 `Unable to create process using '...Python314\python.exe --version': ???????????`；`C:\Users\Future_Tech_WorkShop\AppData\Roaming\uv\python\cpython-3.14.6-windows-x86_64-none\python.exe -V` → `Python 3.14.6`
+KB-LAYER: 2_system
+KB-TAGS: windows, python, uv, py-launcher, environment, worktree
+
+`py.exe` 仍列出已删除的 Python314 作为默认版本，PATH 也还指着它的 Scripts；此时不要重装或改全局关联，直接用同机 uv 托管的解释器绝对路径跑测试（本单 5/5 PASS）。判断方法：`py -0p` 给的路径 `Test-Path` 为 False，而 uv 路径存在；命令里用绝对路径，避免污染其他工单的 Python 调用。
