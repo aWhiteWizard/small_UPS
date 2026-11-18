@@ -4,19 +4,19 @@ AT: 2026-11-18 +08:00
 BASE: ba16717db86caa3c791e97a6d734501f707aa84f（ticket base）
 UPSTREAM: 49c5029f1b5d5c7e80fdd79df3c3789c2af26a46（首轮开工 origin/master）
 SYNC: 94e1d148103d694963a92996d9f12e3404df95fa..4a12310ed23c155e0f94c38783a3184120f6cc84（重派 git merge --ff-only origin/master，exit 0）
-CONTENT_COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68（内容 C1：requirements/README/KB/worklog）
+COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68（内容 C1：requirements/README/KB/worklog）
 EVIDENCE_COMMIT: 3dacec19688d61e82a24aaed30b414701dfa8776（证据 C2：P0 四件 + worklog）
 PREV_RECORD: 94e1d148103d694963a92996d9f12e3404df95fa（首轮记录 C4，已入 master）
-RECORD_COMMIT: 4a12310ed23c155e0f94c38783a3184120f6cc84（重派同步后 HEAD，已入 master）
-LOCAL_HEAD: 4a12310ed23c155e0f94c38783a3184120f6cc84
-REMOTE_HEAD: 4a12310ed23c155e0f94c38783a3184120f6cc84 refs/heads/master
+RECORD_COMMIT: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22（重派记录 C5：插入深度引用修正 + P0/KB/worklog 刷新）
+LOCAL_HEAD: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22
+REMOTE_HEAD: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22 refs/heads/master
 CMD: git fetch origin --prune; git merge --ff-only origin/master; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
 PUSH_C1: 49c5029..65cc739  HEAD -> master（exit 0）
 PUSH_C2: 65cc739..3dacec1  HEAD -> master（exit 0）
 PUSH_C3: 3dacec1..d605bb2  HEAD -> master（exit 0）
 PUSH_C4: 94e1d14 已在 master（ancestor check exit 0；首轮原文见 C4 报告）
-PUSH_C5: 本提交推送后由 C6 回填
-LS_REMOTE: 4a12310ed23c155e0f94c38783a3184120f6cc84	refs/heads/master
-VERIFY: 同步后 LOCAL_HEAD == REMOTE_HEAD == 4a12310ed23c155e0f94c38783a3184120f6cc84
-NOTE: 本文件随重派记录 C5 落库；C5 推送后 SHA 与最终 C6 见报告正文（自指限制，沿用 T-0018/T-0019 惯例）。
+PUSH_C5: 4a12310..ec6efd4  HEAD -> master（exit 0）
+LS_REMOTE: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22	refs/heads/master
+VERIFY: C5 推送后 LOCAL_HEAD == REMOTE_HEAD == ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22
+NOTE: 本文件随最终记录 C6 落库；C6 推送后 LOCAL=REMOTE，C6 SHA 见报告正文（自指限制，沿用 T-0018/T-0019 惯例）。
 RESULT: PASS

@@ -3,7 +3,7 @@ TASK: T-0020
 BASELINE: ba16717db86caa3c791e97a6d734501f707aa84f（ticket base）；SYNC 94e1d14..4a12310（git merge --ff-only，exit 0）
 BRANCH: task/T-0020
 CONTENT_COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68（C1，4 文件 218+/12−，已入 master）
-REWORK: C5=PENDING_C5（重派：I.1 插入深度引用修正 + P0/KB/worklog 刷新）
+REWORK: C5=ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22（重派：I.1 插入深度引用修正 + P0/KB/worklog 刷新）
 FINAL_RECORD: C6（本文件随 C6 落库；SHA 见报告）
 
 G0 CHECKS
@@ -17,4 +17,5 @@ G0 CHECKS
 - KB evidence -> O-02:91, I.2:1438, I.5#1:1497, §4.2.6:892
 - files -> 8 total（requirements, README, KB, worklog, 4 P0）; content C1 4 files/230 lines
 - scope -> rework before evidence only .agent/requirements.md + .agent/kb/notes.md; no docs/firmware/Hardware changes
+- C5 push -> 4a12310..ec6efd4  HEAD -> master（exit 0）; LOCAL=REMOTE=C5
 RESULT: PASS
