@@ -2,6 +2,13 @@
  * T-0002 最小工程的 HAL 配置：只启用 blinky 所需模块。
  * 依据 STM32Cube G0 v1.4.7 的 stm32g0xx_hal_conf_template.h 裁剪。
  */
+/*
+ * T-0023 占位 STM32G071KB 的最小 HAL 配置。
+ * - 只用 HAL；LL 是 header-only，需要时 include stm32g0xx_ll_*.h，无需改本文件。
+ * - HAL_FLASH 只启用头文件：HAL_Init() 用 __HAL_FLASH_PREFETCH_BUFFER_ENABLE()，
+ *   不编译 stm32g0xx_hal_flash.c。
+ * - 换型号/换板时改：模块开关、HSE/HSI/LSE 值与启动超时（firmware/README.md §6.3 第 4 项）。
+ */
 #ifndef STM32G0xx_HAL_CONF_H
 #define STM32G0xx_HAL_CONF_H
 
@@ -17,6 +24,7 @@ extern "C" {
 #define HAL_RCC_MODULE_ENABLED
 
 /* ########################## Oscillator Values ############################# */
+/* 占位板未接外部晶振；复位默认 HSI 16 MHz。HSE/LSE 值仅供 HAL 库参数使用。 */
 #if !defined(HSE_VALUE)
 #define HSE_VALUE               (8000000UL)
 #endif

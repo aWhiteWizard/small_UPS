@@ -1,15 +1,16 @@
-# firmware/ — STM32 固件与开发环境（T-0022，拆自 T-0002）
+# firmware/ — STM32 固件与开发环境（T-0022 工具链 / T-0023 HAL+占位 MCU）
 
 本目录已落地 STM32 固件开发环境：交叉编译工具链、CMSIS + HAL、CMake/Ninja 构建、
 OpenOCD 烧写调试链路、串口工具，以及一个可编译出 `.elf/.bin/.hex` 的最小点灯工程。
+本单（T-0023）补齐 HAL/LL 集成、仓库内可审阅的启动文件、带注释的链接脚本与 HAL 配置。
 工具链与 SDK 只落在本机 `<repo>/.tools/`，**不入库**（见根 `.gitignore` 的 `.tools/`）。
 
-> 拆单归属（2026-11-18）：T-0022 负责工具链与构建（§1–§4、§7）；T-0023 负责 HAL/占位 MCU；T-0024 负责烧写/串口与从零复现。现有实现由母单 T-0002 落地，T-0022 复核并补版本校验脚本。
+> 拆单归属（2026-11-18）：T-0022 负责工具链与构建（§2–§4 的环境部分）；T-0023 负责 HAL/占位 MCU、启动文件、链接脚本与 HAL 配置（§4–§6）；T-0024 负责烧写/串口与从零复现。现有底座由母单 T-0002 落地。
 
 ## 1. 状态与范围
 
-- 目标 MCU：**型号待定**；本单按占位型号 **STM32G071KB**（Cortex-M0+，128 KiB Flash / 36 KiB SRAM）跑通。
-- 已验证：从零安装脚本可重复执行、CMake 配置、编译、链接、`.bin/.hex` 生成、ELF 检查。
+- 目标 MCU：**型号待定**；本单按占位型号 **STM32G071KBUx**（Cortex-M0+，128 KiB Flash / 36 KiB SRAM，UFQFPN32）跑通。
+- 已验证：HAL/CMSIS 集成、本地启动文件、链接脚本布局断言、CMake 配置、编译、链接、`.bin/.hex` 生成、ELF/向量表检查。
 - **未验证**：真实开发板烧写/点灯。本执行环境没有 ST-Link 与目标板，`flash.ps1` 只做链路与命令落地。
 - 本工程不实现 PSU 控制、I2C、保护逻辑；这些留给后续固件工单。
 
@@ -65,7 +66,8 @@ powershell -ExecutionPolicy Bypass -File firmware/build.ps1 -Clean
 firmware/
 ├── CMakeLists.txt                      # 构建入口（C + ASM）
 ├── cmake/arm-none-eabi-gcc.cmake       # 交叉编译工具链文件
-├── linker/STM32G071KBUx_FLASH.ld       # 占位型号链接脚本（128K/36K）
+├── linker/STM32G071KBUx_FLASH.ld       # 占位型号链接脚本（128K/36K，带布局断言）
+├── startup/startup_stm32g071xx.s       # 本地启动文件（向量表/复位/weak 别名）
 ├── include/stm32g0xx_hal_conf.h        # 最小 HAL 模块集
 ├── src/main.c                          # PA5 1 Hz 翻转
 ├── src/stm32g0xx_it.c                  # SysTick -> HAL_IncTick
@@ -75,6 +77,10 @@ firmware/
 
 构建配置：`-mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -Os -g3`，链接
 `-specs=nano.specs -specs=nosys.specs -Wl,--gc-sections`。
+
+HAL 子集：`stm32g0xx_hal.c` / `hal_cortex.c` / `hal_gpio.c` + CMSIS `system_stm32g0xx.c`；
+LL 头文件随 HAL 包提供（header-only），当前点灯只用 HAL，后续可直接 include
+`stm32g0xx_ll_*.h`，不需要额外 `.c` 或配置开关。
 
 实测输出（2026-11-18，本机）：
 
@@ -95,12 +101,13 @@ Memory region         Used Size  Region Size  %age Used
 
 | 文件 | 大小 | 说明 |
 |---|---|---|
-| `firmware/build/psu_minimal.elf` | 664,368 B | 含调试信息 |
+| `firmware/build/psu_minimal.elf` | 665,456 B | 含调试信息（本地启动文件路径使 ELF 略大） |
 | `firmware/build/psu_minimal.bin` | 1,544 B | 与 FLASH Used Size 一致 |
 | `firmware/build/psu_minimal.hex` | 4,426 B | Intel HEX |
 
 自检：`.bin` 前 8 字节 `00 90 00 20 75 02 00 08`，即初始 SP=`0x20009000`、
-Reset_Handler=`0x08000275`（Thumb 位）；ELF 为 2 个 LOAD 段（R E / RW），无 RWX 段。
+Reset_Handler=`0x08000275`（Thumb 位）；`.isr_vector` 位于 `0x08000000`、大小 `0xbc`（188 B），
+`.text` 从 `0x080000bc` 开始；ELF 为 2 个 LOAD 段（R E / RW），无 RWX 段。
 
 ## 5. 烧写、调试与串口
 
@@ -122,19 +129,51 @@ powershell -ExecutionPolicy Bypass -File firmware/flash.ps1
   当前最小工程**没有初始化 UART**，PuTTY 只是工具链就绪证明，串口输出待后续工单。
 - 本环境无硬件，上述烧写命令未实际执行；OpenOCD 版本与脚本路径已校验。
 
-## 6. 占位型号与切换点（型号待定）
+## 6. 启动文件、链接脚本与占位型号切换点
 
-需求文档尚未冻结 MCU 型号，当前工程用 **STM32G071KB** 占位。换正式型号时按下面 4 处切：
+### 6.1 启动文件与向量表（`firmware/startup/startup_stm32g071xx.s`）
 
-1. **链接脚本**：`firmware/linker/STM32G071KBUx_FLASH.ld` 的 `MEMORY`
-   （FLASH 起始/容量、RAM 起始/容量）。换封装不改容量时也需要改文件名与 `CMakeLists.txt` 引用。
-2. **启动文件 + 设备宏**：`firmware/CMakeLists.txt` 中
-   `startup_stm32g071xx.s` 与 `target_compile_definitions(... STM32G071xx ...)`；
-   `-mcpu` 随内核改（G0= cortex-m0plus，G4= cortex-m4）。
-3. **HAL 配置**：`firmware/include/stm32g0xx_hal_conf.h` 的模块开关与 HSE/HSI/LSE 值；
-   换系列时还要换 `.tools/stm32cube` 的 `cmsis_device_gX` + `stm32gXxx_hal_driver` 仓库与 tag。
-4. **引脚/时钟**：`firmware/src/main.c` 的 LED 引脚（占位 PA5）与时钟初始化；
-   PSU 的 EN/ALERT/I2C 引脚以冻结版针脚表为准，不在此处预造。
+- 本地维护的 CMSIS 模板副本（STM32CubeG0 v1.4.5，Apache-2.0，文件头保留版权），
+  增加中文注释与 `WEAK_DEFAULT` 宏；复位流程、向量表顺序与模板一致。
+- 向量表 `.isr_vector` 位于 FLASH 起始 `0x08000000`（`_svector`，188 B = 47 字）：
+  第 0 字 `_estack=0x20009000`（初始 MSP），第 1 字 `Reset_Handler`（Thumb），
+  之后是 16 个系统向量 + 31 个 IRQ；未实现中断弱别名到 `Default_Handler` 死循环。
+- 复位流程：设 MSP → `SystemInit()` → `.data` 从 `_sidata` 复制到 RAM → `.bss` 清零
+  → `__libc_init_array()` → `main()`。`SysTick_Handler` 由 `src/stm32g0xx_it.c` 强符号覆盖。
+- 从主 Flash 启动（BOOT0 拉低）时 VTOR=0，G0 的 `MEM_MODE=00` 将主 Flash 映射到
+  `0x00000000`，故 CPU 从 0 地址看到的就是 `0x08000000` 处的同一张表；以后加
+  bootloader/改 VTOR 时应显式设为 `0x08000000`。
+
+### 6.2 链接脚本内存布局（`firmware/linker/STM32G071KBUx_FLASH.ld`）
+
+| 区域 | 地址 / 大小 | 说明 |
+|---|---|---|
+| FLASH | 0x08000000 / 128 KiB | `.isr_vector` 固定在最前，后接 `.text/.rodata/.ARM*/.init_array` 与 `.data` 初值 |
+| SRAM | 0x20000000 / 36 KiB | `.data` VMA → `.bss` → 最小堆 0x200 + 栈 0x400 保留区 |
+| `_estack` | 0x20009000 | RAM 顶端、向量表[0]、初始 MSP，向下增长 |
+
+- `_sidata` 是 `.data` 在 FLASH 的 LMA；`_sdata/_edata`、`_sbss/_ebss` 供启动文件使用。
+- 文末 `ASSERT(_svector == ORIGIN(FLASH))` 与 `ASSERT(_estack == ORIGIN(RAM)+LENGTH(RAM))`
+  在链接期锁定向量表位置和初始 MSP；改内存布局若破坏契约会直接链接失败。
+- `.isr_vector`/`.text` 走 `PT_LOAD FLAGS(5)`（R+X），`.data/.bss` 走 `FLAGS(6)`（RW），
+  避免新版 ld 的 RWX 警告。
+
+### 6.3 占位型号与切换点（型号待定）
+
+当前按 **STM32G071KBUx**（Cortex-M0+，128 KiB Flash / 36 KiB SRAM，UFQFPN32）跑通；
+需求尚未冻结 MCU 型号。换正式型号时按下表逐项切换，缺一项会链接失败或跑飞：
+
+| # | 切换点 | 文件 | 要改什么 |
+|---|---|---|---|
+| 1 | 链接脚本 | `firmware/linker/STM32G071KBUx_FLASH.ld` | `MEMORY` 的 FLASH/RAM 起始与容量；可随封装改文件名，并同步 `CMakeLists.txt` 的 `LINKER_SCRIPT` |
+| 2 | 启动文件 | `firmware/startup/startup_stm32g071xx.s` | `.cpu`（G0=cortex-m0plus，G4=cortex-m4）、向量表条目/IRQ 表、复位流程；文件名与 `CMakeLists.txt` 的 `STARTUP` 同步 |
+| 3 | 设备宏/内核 | `firmware/CMakeLists.txt` | `STM32G071xx` → 新系列宏；`-mcpu`/`-mfloat-abi`（G4 带 FPU 时补 `-mfpu`） |
+| 4 | HAL 配置 | `firmware/include/stm32g0xx_hal_conf.h` | 模块开关（当前 CORTEX/FLASH/GPIO/RCC）、HSE/HSI/LSE 值与启动超时；换系列时模板改为 `stm32gXxx_hal_conf.h` |
+| 5 | HAL/CMSIS 包 | `firmware/tools/bootstrap.ps1` | `cmsis_device_g0` / `stm32g0xx_hal_driver` 仓库与 tag；换系列时改为 `cmsis_device_g4` / `stm32g4xx_hal_driver` |
+| 6 | 引脚/时钟 | `firmware/src/main.c`、`firmware/src/stm32g0xx_it.c` | LED 引脚（占位 PA5）与时钟；PSU 的 EN/ALERT/I2C 以冻结针脚表为准 |
+
+> 风险：需求 §4.2.6 提到调试板 USB-C 走 STM32G431 内置 USB FS；若最终选 G431CB，
+> 除上表外还要换 G4 HAL 包、启用 USB 时钟/引脚，并重新核对 Flash/SRAM 容量。
 
 ## 7. 仓库体积与忽略规则
 
@@ -145,14 +184,16 @@ git check-ignore -v firmware\build\psu_minimal.elf
   .gitignore:14:build/    "firmware\\build\\psu_minimal.elf"
 ```
 
-- `.tools/` 实测约 1,945 MB、`firmware/build/` 约 5.1 MB，均在 git 外；跟踪文件 167 个，
-  仓库 pack 约 246 KiB。
+- `.tools/` 实测约 1.9 GB、`firmware/build/` 约 5 MB，均在 git 外；跟踪文件数/仓库体积以
+  `git ls-files | Measure-Object -Line` 与 `git count-objects -vH` 实测为准（T-0022 的
+  167/246 KiB 是母单落地时快照，后续 .agent 证据入库会增加）。
 - 入库只有配置/源码/文档；`git ls-files` 中无 `.exe/.a/.o/.elf/.bin/.hex`。
-- 完整证据见 `.agent/evidence/T-0022-p0-tests.txt` 与 `-p0-g0.txt`（母单历史证据 T-0002-* 仅追溯）。
+- 完整证据见 `.agent/evidence/T-0023-p0-*.txt`（本单）；T-0022/T-0002 证据仅追溯。
 
 ## 8. 已知限制
 
 - 无目标板，未做上板点灯与烧写验证；烧写链路只到工具/脚本/命令层。
+- 启动文件是本地维护副本；升级 CMSIS Device G0 包时需比对模板的向量表/新增 IRQ，不能只改 HAL tag。
 - 时钟保持复位默认 HSI 16 MHz，未配 PLL；HAL 只启用 CORTEX/FLASH/GPIO/RCC 头文件与 3 个 `.c`。
 - 链接期 newlib 会报 `_close/_lseek/_read/_write is not implemented` 警告，这是 `nosys.specs`
   的预期行为（本工程不使用这些系统调用）。

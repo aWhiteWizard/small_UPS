@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-# T-0002 最小工程：STM32G071KB 点灯（占位型号），验证 工具链 + HAL + 链接 + 产物。
+# T-0023 最小工程：STM32G071KB 点灯（占位型号），验证 HAL + 启动文件 + 链接 + 产物。
 project(psu_minimal LANGUAGES C ASM)
 
 set(CMAKE_C_STANDARD 11)
@@ -30,7 +30,9 @@ set(HAL_SOURCES
   ${CUBE}/stm32g0xx_hal_driver/Src/stm32g0xx_hal_gpio.c
 )
 
-set(STARTUP ${CUBE}/cmsis_device_g0/Source/Templates/gcc/startup_stm32g071xx.s)
+# 启动文件用仓库内可审阅的本地副本（向量表/内存布局注释见文件头）；
+# CMSIS 包只提供 device 头、system_stm32g0xx.c 与 HAL 源，不复制整包。
+set(STARTUP ${CMAKE_CURRENT_SOURCE_DIR}/startup/startup_stm32g071xx.s)
 set_source_files_properties(${STARTUP} PROPERTIES
   LANGUAGE ASM
   COMPILE_OPTIONS "-x;assembler-with-cpp")

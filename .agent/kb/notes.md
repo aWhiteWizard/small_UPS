@@ -390,3 +390,14 @@ KB-LAYER: 1_application
 KB-TAGS: worktree, toolchain, junction, gitignore, T-0022
 
 `.tools/` 被 `.gitignore:16` 忽略，worktree 重建或新 clone 后不会出现，但构建脚本只在 `<repo>\.tools` 找工具链；不要重下约 360 MB，复用同机其他 worktree 的 `.tools` 建目录 junction（不入 git）。junction 必须建在仓库根，不是 `firmware\.tools`：check-env 的 `$repo` 是 `firmware\tools\..\..`，build 的 `$repo` 是 `firmware\..`，两者都落到仓库根。`check-env.ps1 -ToolsDir` 可临时指向别处只做校验，`build.ps1` 无此参数。
+
+## 本地化 STM32 启动文件必须同时锁定向量表、链接符号与 CMake 入口
+
+KB-TYPE: method
+KB-EVIDENCE: `firmware/startup/startup_stm32g071xx.s:12`（`_estack` 契约）、`:41`（Reset_Handler）、`:103-105`（`.isr_vector`/`g_pfnVectors`）、`:159`（WEAK_DEFAULT 宏）；`firmware/linker/STM32G071KBUx_FLASH.ld:43-46`（`_svector`）、`:154-155`（两条 ASSERT）；`firmware/CMakeLists.txt:35`（STARTUP 指向本地文件）
+KB-LAYER: 1_application
+KB-TAGS: stm32, startup, linker, vector-table, hal, T-0023
+
+把 CMSIS `startup_stm32g0xx.s` 复制进仓库后，只改 CMake 路径不够：链接脚本必须提供启动文件引用的 `_sidata/_sdata/_edata/_sbss/_ebss/_estack`，且 `.isr_vector` 必须是 FLASH 的第一个输出段，否则向量表地址或 `.data` 初值复制会错。用 `_svector = .;` 加 `ASSERT(_svector == ORIGIN(FLASH))`、`ASSERT(_estack == ORIGIN(RAM)+LENGTH(RAM))` 可把契约变成链接期错误。
+
+验证链：`readelf -S` 看 `.isr_vector` VMA=0x08000000、size=0xbc；`objdump -s -j .isr_vector` 前两字为 `_estack` 与 `Reset_Handler|1`；`objdump -d --disassemble=Reset_Handler` 应看到 `mov sp` → `bl SystemInit` → `.data` 复制 → `.bss` 清零 → `bl main`。复制模板时还要核对 CMSIS Device 包的许可证：G0 v1.4.5 是 Apache-2.0（`LICENSE.md`），不是 BSD-3-Clause。
