@@ -401,3 +401,11 @@ KB-TAGS: stm32, startup, linker, vector-table, hal, T-0023
 把 CMSIS `startup_stm32g0xx.s` 复制进仓库后，只改 CMake 路径不够：链接脚本必须提供启动文件引用的 `_sidata/_sdata/_edata/_sbss/_ebss/_estack`，且 `.isr_vector` 必须是 FLASH 的第一个输出段，否则向量表地址或 `.data` 初值复制会错。用 `_svector = .;` 加 `ASSERT(_svector == ORIGIN(FLASH))`、`ASSERT(_estack == ORIGIN(RAM)+LENGTH(RAM))` 可把契约变成链接期错误。
 
 验证链：`readelf -S` 看 `.isr_vector` VMA=0x08000000、size=0xbc；`objdump -s -j .isr_vector` 前两字为 `_estack` 与 `Reset_Handler|1`；`objdump -d --disassemble=Reset_Handler` 应看到 `mov sp` → `bl SystemInit` → `.data` 复制 → `.bss` 清零 → `bl main`。复制模板时还要核对 CMSIS Device 包的许可证：G0 v1.4.5 是 Apache-2.0（`LICENSE.md`），不是 BSD-3-Clause。
+
+## PowerShell 变量名大小写不敏感：局部 $list 会撞 [switch]$List
+
+KB-TYPE: bug
+KB-EVIDENCE: `firmware/tools/serial.ps1:47` 的 `$list = ...` 在 `-Port COM3` 时抛 `Cannot convert the "none" value ... to type "System.Management.Automation.SwitchParameter"`；改名 `$availableText` 后输出 `SERIAL: port COM3 not present (available: none)`、exit 2
+KB-TAGS: powershell, switch, variable, case-insensitive, serial
+
+`[switch]$List` 参数变量在脚本体内仍是 SwitchParameter 类型；局部 `$list`（大小写不敏感）赋字符串会触发转换异常，报错却指向参数绑定，很难定位。局部变量避开参数名即可。

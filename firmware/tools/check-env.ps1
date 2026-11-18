@@ -1,7 +1,7 @@
 #requires -Version 5.1
 <#
 .SYNOPSIS
-  T-0022 pinned toolchain check: verify every version installed by bootstrap.ps1.
+  T-0022/T-0024 pinned toolchain + flash/serial chain check (no hardware needed).
 .DESCRIPTION
   Read-only. No download, no PATH/registry change, no target hardware required.
   Exit 0 when all pinned versions match; exit 1 with a table of mismatches otherwise.
@@ -69,6 +69,16 @@ Add-Row 'arm-none-eabi-gcc' '15.2.1' (Get-FirstLine (Join-Path $tools 'arm-gcc\b
 Add-Row 'cmake' '3.31.9' (Get-FirstLine (Join-Path $tools 'cmake\bin\cmake.exe') @('--version'))
 Add-Row 'ninja' '1.13.2' (Get-FirstLine (Join-Path $tools 'ninja\ninja.exe') @('--version'))
 Add-Row 'openocd' '0.12.0' (Get-StderrFirstLine (Join-Path $tools 'openocd\bin\openocd.exe') '--version')
+
+$serialApi = ''
+try { $serialApi = [System.IO.Ports.SerialPort].FullName } catch { $serialApi = '' }
+Add-Row 'serial-api' 'System.IO.Ports.SerialPort' $serialApi
+
+$ocdCfg = @(
+  (Join-Path $tools 'openocd\openocd\scripts\interface\stlink.cfg'),
+  (Join-Path $tools 'openocd\openocd\scripts\target\stm32g0x.cfg')
+) | Where-Object { Test-Path $_ } | ForEach-Object { Split-Path $_ -Leaf }
+Add-Row 'openocd-config' 'stlink.cfg' ($ocdCfg -join ' + ')
 
 $puttyExe = Join-Path $tools 'putty\putty.exe'
 $puttyVer = ''

@@ -1,8 +1,7 @@
-# firmware/ — STM32 固件与开发环境（T-0022 工具链 / T-0023 HAL+占位 MCU）
+# firmware/ — STM32 固件与开发环境（T-0022 工具链 / T-0023 HAL+占位 MCU / T-0024 烧写串口与复现）
 
 本目录已落地 STM32 固件开发环境：交叉编译工具链、CMSIS + HAL、CMake/Ninja 构建、
 OpenOCD 烧写调试链路、串口工具，以及一个可编译出 `.elf/.bin/.hex` 的最小点灯工程。
-本单（T-0023）补齐 HAL/LL 集成、仓库内可审阅的启动文件、带注释的链接脚本与 HAL 配置。
 工具链与 SDK 只落在本机 `<repo>/.tools/`，**不入库**（见根 `.gitignore` 的 `.tools/`）。
 
 > 拆单归属（2026-11-18）：T-0022 负责工具链与构建（§2–§4 的环境部分）；T-0023 负责 HAL/占位 MCU、启动文件、链接脚本与 HAL 配置（§4–§6）；T-0024 负责烧写/串口与从零复现。现有底座由母单 T-0002 落地。
@@ -10,9 +9,16 @@ OpenOCD 烧写调试链路、串口工具，以及一个可编译出 `.elf/.bin/
 ## 1. 状态与范围
 
 - 目标 MCU：**型号待定**；本单按占位型号 **STM32G071KBUx**（Cortex-M0+，128 KiB Flash / 36 KiB SRAM，UFQFPN32）跑通。
-- 已验证：HAL/CMSIS 集成、本地启动文件、链接脚本布局断言、CMake 配置、编译、链接、`.bin/.hex` 生成、ELF/向量表检查。
-- **未验证**：真实开发板烧写/点灯。本执行环境没有 ST-Link 与目标板，`flash.ps1` 只做链路与命令落地。
-- 本工程不实现 PSU 控制、I2C、保护逻辑；这些留给后续固件工单。
+- 已验证：HAL/CMSIS 集成、本地启动文件、链接脚本布局断言、CMake 配置、编译、链接、`.bin/.hex` 生成、ELF/向量表检查；OpenOCD 可执行、ST-Link 接口与 `stm32g0x` 目标脚本路径存在；串口枚举/自检脚本可用。
+- **未验证**：真实开发板烧写/点灯/复位。本执行环境没有 ST-Link 与目标板（`usbipd list` 无 ST-Link，COM 端口为 0）；`flash.ps1` 真实运行时在 `Error: open failed` 处明确失败，不会伪装成功。
+- 串口：占位工程**没有初始化 UART**，因此没有目标板输出可读；`serial.ps1` 只完成端口枚举、打开/读取/时间戳与无硬件自检，UART 输出待后续固件工单。
+
+| 验收项 | 状态 | 证据 |
+|---|---|---|
+| 工具链 / 构建 | 已验证 | `check-env.ps1` 10/10、`build.ps1 -Clean` exit 0 |
+| ST-Link/OpenOCD 命令 | 已执行，未接板失败 | OpenOCD 0.12.0 输出 `Error: open failed`（§5.3） |
+| 串口工具 | 自检通过，本机 0 端口 | `serial.ps1 -List` / `-SelfTest`（§5.4） |
+| 上板点灯 / 复位运行 | 未验证（缺硬件） | 需接 ST-Link + STM32G071 后重跑 `flash.ps1` |
 
 ## 2. 环境清单（Windows 10/11 x64）
 
@@ -28,35 +34,69 @@ OpenOCD 烧写调试链路、串口工具，以及一个可编译出 `.elf/.bin/
 | Ninja | 1.13.2 | `ninja-win.zip` → `.tools\ninja\ninja.exe` | `.tools\ninja\ninja.exe --version` |
 | OpenOCD（ST-Link/SWD） | 0.12.0+dev（xPack v0.12.0-7） | `xpack-openocd-0.12.0-7-win32-x64.zip` → `.tools\openocd\` | `.tools\openocd\bin\openocd.exe --version` |
 | PuTTY（串口终端） | 0.85 | `putty.exe`（官方 latest/w64）→ `.tools\putty\putty.exe` | `(Get-Item .tools\putty\putty.exe).VersionInfo.ProductVersion` |
+| 串口读取/枚举 | Windows PowerShell 5.1 内置 `System.IO.Ports` | 仓库脚本 `firmware/tools/serial.ps1`（无需安装） | `powershell -File firmware/tools/serial.ps1 -List` |
 | ST-Link USB 驱动 | STSW-LINK009（真实硬件才需要） | ST 官网安装包，默认 `C:\Program Files (x86)\STMicroelectronics\` | 设备管理器出现 `STMicroelectronics STLink`；无板时不适用 |
 | Git / curl / tar | Windows 自带 curl/tar；Git 需预装 | 系统 `PATH` | `git --version`；`curl.exe --version`；`tar.exe --version` |
 
 说明：
 
-- `arm-none-eabi-g++/gdb/objcopy/size/readelf/nm` 随同一 GCC 包提供，无需单独安装。
-- OpenOCD 脚本目录为 `.tools\openocd\openocd\scripts\`（xPack 包布局），`flash.ps1` 已自动带 `-s`。
-- 本机实测版本行：`arm-none-eabi-gcc.exe (xPack GNU Arm Embedded GCC x86_64) 15.2.1 20251203`。
-- 一键逐项校验（只读，不下载、不连硬件）：`powershell -ExecutionPolicy Bypass -File firmware/tools/check-env.ps1`，exit 0 表示上表固定版本全部命中。
+- `arm-none-eabi-g++/gdb/objcopy/size/readelf/nm` 随同一 GCC 包提供；OpenOCD 脚本目录为
+  `.tools\openocd\openocd\scripts\`（xPack 布局），`flash.ps1` 已自动带 `-s`。
+- 一键逐项校验（只读，不下载、不连硬件）：`powershell -ExecutionPolicy Bypass -File firmware/tools/check-env.ps1`，exit 0 表示上表固定版本及 `System.IO.Ports`、OpenOCD 的 `stlink.cfg`/`stm32g0x.cfg` 全部命中（10/10）。
 
-## 3. 从零复现（命令原文）
+## 3. 从零复现（Windows 10/11 x64）
 
-前置：Windows 10/11 x64、Git，能访问 GitHub；下载约 360 MB，解压后 `.tools/` 约 1.9 GB。
+### 3.1 安装包与路径约定
+
+| 组件 | 安装包 / 获取方式 | 默认路径 | 是否必需 |
+|---|---|---|---|
+| Git for Windows | `Git-2.x-64-bit.exe`（git-scm.com） | `C:\Program Files\Git\cmd\git.exe` | 必需（clone、拉 CMSIS/HAL） |
+| Windows PowerShell | 系统自带 5.1 | `%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe` | 必需 |
+| ARM GCC / CMake / Ninja / OpenOCD / PuTTY | `firmware/tools/bootstrap.ps1` 固定 URL 下载 | `<repo>\.tools\...` | 必需（脚本自动装） |
+| ST-Link USB 驱动 | STSW-LINK009（ST 官网） | `C:\Program Files (x86)\STMicroelectronics\` | 仅真实烧写 |
+| 目标板 | STM32G071KBUx（或后续定版 MCU） + SWD 排针 | — | 仅真实烧写 |
+
+- 下载约 360 MB；`.tools/` 解压后约 1.9 GB；`firmware/build/` 约 5 MB。三者均在 git 外。
+- 不需要 Python、Java、Keil、STM32CubeIDE；不写系统 PATH、不改注册表。
+
+### 3.2 从零命令（复制即可）
 
 ```powershell
-# 在仓库根目录执行
-powershell -ExecutionPolicy Bypass -File firmware/tools/bootstrap.ps1
+git clone https://github.com/aWhiteWizard/small_UPS.git small_UPS
+cd small_UPS
+git checkout master
 
-# 编译
-powershell -ExecutionPolicy Bypass -File firmware/build.ps1
+# 1) 下载并解压固定版本工具链/CMSIS/HAL/OpenOCD/PuTTY 到 .tools\（幂等）
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/tools/bootstrap.ps1
 
-# 需要清空 build/ 时
-powershell -ExecutionPolicy Bypass -File firmware/build.ps1 -Clean
+# 2) 逐项校验（不连硬件）：期望 10/10、CHECK-ENV: PASS、exit 0
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/tools/check-env.ps1
+
+# 3) 编译：期望 [8/8] Linking C executable psu_minimal.elf、exit 0
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/build.ps1 -Clean
+
+# 4) 空跑烧写命令（不需要接板）
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/flash.ps1 -DryRun
 ```
 
-- `bootstrap.ps1` 幂等：已存在的组件跳过；`-Force` 强制重下重装；`-ToolsDir <path>` 改工具根目录。
-- `build.ps1` 只在当前进程内把 `.tools\arm-gcc\bin`、`.tools\cmake\bin`、`.tools\ninja` 前置到 `PATH`。
-- 工具链与 HAL 版本都写死在 `bootstrap.ps1` 的 URL/tag 中；不要用 `latest` 保证可复现。
-- 脚本为 ASCII-only，Windows PowerShell 5.1 可直接解析（无 BOM 的 UTF-8 中文脚本在 5.1 下会乱码报错）。
+真实上板：按 §5.1 接好 ST-Link 与目标板，再执行 `powershell -NoProfile -ExecutionPolicy Bypass -File firmware/flash.ps1`。
+
+### 3.3 环境变量与 PATH
+
+- 不要求系统环境变量：`build.ps1` 仅在子进程前置 `.tools\arm-gcc\bin`、`.tools\cmake\bin`、
+  `.tools\ninja`；`flash.ps1` 用绝对路径调 OpenOCD 并 `-s` 指定脚本目录，无需 `OPENOCD_SCRIPTS`。
+- 自定义工具根：`bootstrap.ps1 -ToolsDir D:\tools\psu` + `check-env.ps1 -ToolsDir ...`；默认 `<repo>\.tools`。
+- 代理：在 bootstrap 窗口设 `HTTP_PROXY`/`HTTPS_PROXY`；首次 clone 后 `.tools/`、`firmware/build/`
+  不存在正常，由脚本生成。
+
+### 3.4 复现判定
+
+1. `check-env.ps1` 最后一行 `CHECK-ENV: PASS` 且 10 行全 `True`。
+2. `build.ps1 -Clean` 最后出现 `[8/8] Linking C executable psu_minimal.elf`，并列出
+   `psu_minimal.elf/.bin/.hex`。
+3. `flash.ps1 -DryRun` 打印 `FLASH: DRYRUN` 与完整 OpenOCD 命令。
+4. 接板后 `flash.ps1` 出现 `** Programming Finished **`、`** Verified OK **`、
+   `** Resetting Target **`，最后 `FLASH: PASS`、exit 0（本机无板，见 §5.3）。
 
 ## 4. 最小工程与构建结果
 
@@ -71,8 +111,11 @@ firmware/
 ├── include/stm32g0xx_hal_conf.h        # 最小 HAL 模块集
 ├── src/main.c                          # PA5 1 Hz 翻转
 ├── src/stm32g0xx_it.c                  # SysTick -> HAL_IncTick
-├── build.ps1 / flash.ps1
-└── tools/bootstrap.ps1
+├── build.ps1 / flash.ps1               # 构建 / 烧写+校验+复位+日志
+└── tools/
+    ├── bootstrap.ps1                   # 固定版本工具链/CMSIS/HAL/OpenOCD/PuTTY
+    ├── check-env.ps1                   # 10 项只读校验（含串口 API/OpenOCD 配置）
+    └── serial.ps1                      # COM 枚举、读取、时间戳日志、自检
 ```
 
 构建配置：`-mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -Os -g3`，链接
@@ -111,23 +154,85 @@ Reset_Handler=`0x08000275`（Thumb 位）；`.isr_vector` 位于 `0x08000000`、
 
 ## 5. 烧写、调试与串口
 
-真实硬件接线：ST-Link 的 SWDIO/SWCLK/GND/3V3 接目标板对应脚，BOOT0 拉低。
+### 5.1 接线与供电
+
+| ST-Link | 目标板（SWD 排针） | 说明 |
+|---|---|---|
+| SWDIO | SWDIO | 必须 |
+| SWCLK | SWCLK | 必须 |
+| GND | GND | **必须共地** |
+| 3V3 | 3V3（参考） | 仅作电平参考；目标板是否由 ST-Link 供电以板子电流为准，禁止反灌 |
+| NRST（可选） | NRST | 复位异常时接；OpenOCD 默认用 SYSRESETREQ |
+
+BOOT0 拉低（从主 Flash 启动）；目标板 3.3 V 电平；上电前确认无短路。SWD 排针只用于首烧/救援（需求 §3.5.10），不要从面板引出。
+
+### 5.2 烧写命令与成功标志
 
 ```powershell
-# 一键烧写（需要先接 ST-Link 与目标板）
-powershell -ExecutionPolicy Bypass -File firmware/flash.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/flash.ps1 -DryRun
 
-# flash.ps1 等价的 OpenOCD 原文
-.\.tools\openocd\bin\openocd.exe -s .\.tools\openocd\openocd\scripts `
-  -f interface/stlink.cfg -f target/stm32g0x.cfg `
-  -c "program firmware/build/psu_minimal.elf verify reset exit"
+# 接板后真实烧写：program + verify + reset + exit
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/flash.ps1
 ```
 
-- 调试：先 `openocd ... -c "gdb_port 3333"`，再 `arm-none-eabi-gdb firmware/build/psu_minimal.elf`，
-  GDB 内 `target extended-remote :3333`。
-- 串口：`.\.tools\putty\putty.exe -serial COM3 -sercfg 115200,8,n,1,X`。
-  当前最小工程**没有初始化 UART**，PuTTY 只是工具链就绪证明，串口输出待后续工单。
-- 本环境无硬件，上述烧写命令未实际执行；OpenOCD 版本与脚本路径已校验。
+`flash.ps1` 等价的 OpenOCD 原文（脚本会自动加引号并写日志）：
+
+```powershell
+.\.tools\openocd\bin\openocd.exe -s .\.tools\openocd\openocd\scripts `
+  -f interface/stlink.cfg -f target/stm32g0x.cfg `
+  -c "program {firmware\build\psu_minimal.elf} verify reset exit"
+```
+
+接板成功时应看到（具体行随 OpenOCD 版本略有差异）：
+`Info : STLINK ...`、`Info : Target voltage: ...`、`Info : [stm32g0x.cfg:...]`、
+`** Programming Started **`、`** Programming Finished **`、`** Verified OK **`、
+`** Resetting Target **`，脚本最后输出 `FLASH: PASS`、exit 0。原始日志在
+`firmware/build/flash-<时间戳>.log`（git 忽略）。
+
+### 5.3 本机实测（无 ST-Link / 无目标板，不能冒充成功）
+
+本执行环境 `usbipd list` 只有触摸板/蓝牙/摄像头，无 ST-Link；`serial.ps1 -List` 为 0 端口。按 §5.2 真实运行 `flash.ps1` 的实际输出（原文，exit 1）：
+
+```text
+xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+Warn : DEPRECATED: auto-selecting transport "swd (dapdirect)". ...
+Error: open failed
+** OpenOCD init failed **
+FLASH: FAIL (no ST-Link probe or target board detected)
+```
+
+结论：命令、OpenOCD、ST-Link 接口与 `stm32g0x` 目标脚本均正确加载；**失败点是 USB 探针未插入**。验收 #1 的「识别到芯片/写入成功/复位运行」必须在接板后重跑并保留日志，本机不能判定通过。
+
+### 5.4 串口工具与占位工程说明
+
+```powershell
+# 枚举 COM（无板时应为 0）
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/tools/serial.ps1 -List
+
+# 读 10 秒，逐行加时间戳并写 firmware/build/serial-*.log
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/tools/serial.ps1 -Port COM3 -Seconds 10
+
+# 发一行再读（例如后续命令协议）
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/tools/serial.ps1 -Port COM3 -Send "ping" -Seconds 3
+
+# 无硬件自检：验证枚举/格式化/退出码，不打开串口
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/tools/serial.ps1 -SelfTest
+```
+
+**占位工程无需串口的理由**：当前 `src/main.c` 只做 PA5 1 Hz 翻转，未初始化 USART；需求中 UART（B28/B29）是后续本体↔调试板协议通道。因此本单不能“读到目标板输出”，只验证 PC 侧工具（枚举、打开、读取、时间戳、日志、无硬件自检），UART 输出待后续固件工单。
+
+### 5.5 GDB 调试
+
+```powershell
+# 终端 A：OpenOCD 常驻（不烧写）
+.\.tools\openocd\bin\openocd.exe -s .\.tools\openocd\openocd\scripts `
+  -f interface/stlink.cfg -f target/stm32g0x.cfg -c "gdb_port 3333"
+
+# 终端 B（当前进程 PATH 加 .tools\arm-gcc\bin）
+arm-none-eabi-gdb firmware\build\psu_minimal.elf
+# (gdb) target extended-remote :3333; monitor reset halt; load; continue
+```
+
 
 ## 6. 启动文件、链接脚本与占位型号切换点
 
@@ -184,15 +289,16 @@ git check-ignore -v firmware\build\psu_minimal.elf
   .gitignore:14:build/    "firmware\\build\\psu_minimal.elf"
 ```
 
-- `.tools/` 实测约 1.9 GB、`firmware/build/` 约 5 MB，均在 git 外；跟踪文件数/仓库体积以
-  `git ls-files | Measure-Object -Line` 与 `git count-objects -vH` 实测为准（T-0022 的
-  167/246 KiB 是母单落地时快照，后续 .agent 证据入库会增加）。
+- `.tools/` 实测约 1.9 GB、`firmware/build/` 约 5 MB（含 `flash-*.log`、`serial-*.log`），均在 git 外；
+  跟踪文件数/仓库体积以 `git ls-files | Measure-Object -Line` 与 `git count-objects -vH` 实测为准
+  （T-0022 的 167/246 KiB 是母单落地时快照，后续 .agent 证据入库会增加）。
 - 入库只有配置/源码/文档；`git ls-files` 中无 `.exe/.a/.o/.elf/.bin/.hex`。
-- 完整证据见 `.agent/evidence/T-0023-p0-*.txt`（本单）；T-0022/T-0002 证据仅追溯。
+- 本单完整证据见 `.agent/evidence/T-0024-p0-*.txt`；`T-0024-p1-*.log` 与串口/烧写运行日志不入库。
 
 ## 8. 已知限制
 
-- 无目标板，未做上板点灯与烧写验证；烧写链路只到工具/脚本/命令层。
+- 本执行环境无 ST-Link、无目标板、无 COM 口：烧写实际停在 `Error: open failed`，**未完成**“识别到芯片/写入成功/复位运行”；串口只验证了 PC 侧工具与自检。需接板后重跑并保留日志。
+- 占位工程未初始化 UART，因此没有目标板串口输出；UART 协议与输出属后续固件工单。
 - 启动文件是本地维护副本；升级 CMSIS Device G0 包时需比对模板的向量表/新增 IRQ，不能只改 HAL tag。
 - 时钟保持复位默认 HSI 16 MHz，未配 PLL；HAL 只启用 CORTEX/FLASH/GPIO/RCC 头文件与 3 个 `.c`。
 - 链接期 newlib 会报 `_close/_lseek/_read/_write is not implemented` 警告，这是 `nosys.specs`
