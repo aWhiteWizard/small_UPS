@@ -1,26 +1,26 @@
 KIND: acceptance
 TASK: T-0011
-AT: 2026-11-18 21:05 +08:00 (G2 fix round 2)
-BASE: 4244d3af861a17848212f4c2b640257bb26744a7 (origin/master; G=339fd2f ancestor)
-R: .agent/requirements.md; A: docs/architecture.md; M: docs/module-design.md; T: docs/test-plan.md
-JUDGE: 16 ticket clauses against current tree; line numbers at current base
+AT: 2026-11-18 22:05 +08:00 (canonical docs refresh after T-0032)
+BASE: 8248e31cf265b498cb17e7091ae934af26fbf52d (origin/master; G=339fd2f/H=4759b5f ancestors)
+RD: .agent/docs/requirements.md; A: .agent/docs/architecture.md; M: .agent/docs/modules.md
+JUDGE: 16 ticket clauses against canonical docs (T-0032 migration); old .agent/requirements.md and docs/* are historical/stubs
 
 #  | 验收 | 落点（文件:行号） | 结论
-1  | 范围：P 侧电气规格/拓扑/散热/结构预留 | R:623-711; A:28-66; M:9-41; T:61-82,165-181 | PASS
-2  | 方位 60×120×180、PCB 180×120、调试板 60×120×35、总深 180+35+前伸 | R:635-636; R:142,896; R:318-319 | PASS
-3  | 55V±1V、最小母线 53.18V 计算、80/100V 器件、禁 60/63V | R:640-646; A:54-58; M:33 | PASS
-4  | 输入链 T2A→船型开关→NTC→MOV→X2→CM→Y→整流桥 | R:648-653; R:690; A:30-35; M:15 | PASS（开关为后板件，与第10条 R:690 对齐）
-5  | Boost PFC 400V/65kHz、PF≥0.98、Class D、L/C 选型 | R:655-661; A:37-43; M:21 | PASS（2.0–2.2mH/270µF/450V/65kHz）
-6  | LLC 100kHz+SR→55V→buck 200kHz→0–48V、变比/谐振/L/C | R:663-676; A:45-59; M:27,33 | PASS
-7  | 功率器件成行、PFC L/变压器/母线电容/输出 L/C 前后错位、散热器≤壳宽 | R:678-683; T:179 | PASS
-8  | 独立铝散热器（CNC）、器件/损耗/热阻 29W/40℃/≤70℃、孔位压紧、不承力 | R:680-683,692; T:165-181 | PASS（29W；Tc=57℃；Tj=67℃）
-9  | 后板 60×60 风扇 HA60251V4 向内吹正压+防尘棉；左右鳍片窗；顶底不开；导流板 | R:685-689; T:162 | PASS（HA60251V4-0000-C99；29→44cm²）
-10 | 后板上下 60×60：上块凸台/左 45mm/右 15mm；下块 25mm 凹槽风扇；其余 owner | R:690-691; R:412; A:88 | PASS（含 T-0031 故障红灯位置/Ø3mm 开孔预留）
-11 | 外壳不开 SWD；排针仅在 PCB；首烧/救援；单区+CRC；bootloader 不升级 | R:694-698; R:271-275 | PASS
-12 | 效率≥88%/≥90%、三段分解、5 电压点损耗、空载<1.5W（PFC 停振） | R:700-705; R:340; A:64; T:59; T:61-82 | PASS（PFC停振1.2W；三段/5点表见 tests）
-13 | 精度矩阵系统级；输出纹波 50/30；母线纹波 100/150 | R:705; R:339; A:50,57; T:40-44 | PASS（输出13.1mVpp；55V≈30mVpp）
-14 | PCB 外形/安装孔、板间、功率板↔接口板、维修可拆 | R:635-638,680-683; M:9-41; A:72-77 | PASS（64P 板对板；维修可拆）
+1  | 范围：P 侧电气规格/拓扑/散热/结构预留 | RD:622-710; A:36-74; M:15-47; A:481-502,585-601 | PASS
+2  | 方位 60×120×180、PCB 180×120、调试板 60×120×35、总深 180+35+前伸 | RD:634; RD:141,317; RD:317-318 | PASS
+3  | 55V±1V、最小母线 53.18V 计算、80/100V 器件、禁 60/63V | RD:639-645; A:62-66; M:35 | PASS
+4  | 输入链 T2A→船型开关→NTC→MOV→X2→CM→Y→整流桥 | RD:647-652; RD:689; A:37-42; M:17-21 | PASS（开关为后板件，与第10条 RD:689 对齐）
+5  | Boost PFC 400V/65kHz、PF≥0.98、Class D、L/C 选型 | RD:654-660; A:44-50; M:23-27 | PASS（2.0–2.2mH/270µF/450V/65kHz）
+6  | LLC 100kHz+SR→55V→buck 200kHz→0–48V、变比/谐振/L/C | RD:662-675; A:52-66; M:29-39 | PASS
+7  | 功率器件成行、PFC L/变压器/母线电容/输出 L/C 前后错位、散热器≤壳宽 | RD:677-682; A:599 | PASS
+8  | 独立铝散热器（CNC）、器件/损耗/热阻 29W/40℃/≤70℃、孔位压紧、不承力 | RD:679-682,691; A:585-601 | PASS（29W；Tc=57℃；Tj=67℃）
+9  | 后板 60×60 风扇 HA60251V4 向内吹正压+防尘棉；左右鳍片窗；顶底不开；导流板 | RD:684-688; A:576-583 | PASS（HA60251V4-0000-C99；29→44cm²）
+10 | 后板上下 60×60：上块凸台/左 45mm/右 15mm；下块 25mm 凹槽风扇；其余 owner | RD:689-690; RD:411; A:95 | PASS（含 T-0031 故障红灯位置/Ø3mm 开孔预留）
+11 | 外壳不开 SWD；排针仅在 PCB；首烧/救援；单区+CRC；bootloader 不升级 | RD:693-697; RD:270-275 | PASS
+12 | 效率≥88%/≥90%、三段分解、5 电压点损耗、空载<1.5W（PFC 停振） | RD:699-704; A:466-502; A:71 | PASS（PFC停振1.2W；三段/5点表见 A:481-502）
+13 | 精度矩阵系统级；输出纹波 50/30；母线纹波 100/150 | RD:704; RD:338; A:455-464; A:57,64 | PASS（输出13.1mVpp；55V≈30mVpp）
+14 | PCB 外形/安装孔、板间、功率板↔接口板、维修可拆 | RD:634-637,679-682; M:15-47; A:75-84 | PASS（64P 板对板；维修可拆）
 15 | 文件规模 ≤400 行/≤8 文件 | C1 5 文档/208 行 + 修正 4 文档/28 行；≤8 文件 | PASS
-16 | 第16条新口径：C1/G 的 commit/trailer/log/ls-remote/clean | C1=fd81bbc 祖先；G=339fd2f（Ticket）push d291a11..339fd2f，LS_REMOTE=339fd2f，G 后 clean；H=第2轮修正提交，final HEAD/remote 在报告 | PASS
+16 | 第16条新口径：C1/G 的 commit/trailer/log/ls-remote/clean | C1=fd81bbc 祖先；G=339fd2f "按 G2 第1轮补齐…（G）"（Ticket）push d291a11..339fd2f，LS_REMOTE=339fd2f，G 后 clean；I=本轮证据刷新，final HEAD/remote 在报告 | PASS
 
-[汇总] 16/16 PASS；A/M/T 无 T-0011 待填；PFC/LLC/buck 计算在 A；热预算/壳温/停振判据在 T；G 的 push/ls-remote/clean 已入 P0，H 为第2轮修正提交。
+[汇总] 16/16 PASS；T-0032 后以 .agent/docs 三件套为准，旧 .agent/requirements.md/docs/* 仅历史/摘要；G 的 push/ls-remote/clean 已入 P0，I 为 canonical 证据刷新提交。

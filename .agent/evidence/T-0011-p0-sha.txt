@@ -1,10 +1,10 @@
 KIND: sha
 TASK: T-0011
-AT: 2026-11-18 21:05 +08:00 (G2 fix round 2)
+AT: 2026-11-18 22:05 +08:00 (canonical docs refresh after T-0032)
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-CLEAN_BASE: 4244d3af861a17848212f4c2b640257bb26744a7 (origin/master at fix start)
-CONTENT_COMMIT: fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd (original C1 docs; ancestor)
-CONTENT_COMMIT_C1: d291a11950d75a0b9c4cd300a925286aeec05e0d (C1, Ticket: T-0011; per G2 round 2)
+CLEAN_BASE: 8248e31cf265b498cb17e7091ae934af26fbf52d (origin/master at fix start)
+CONTENT_COMMIT: d291a11950d75a0b9c4cd300a925286aeec05e0d (C1, Ticket: T-0011; per G2 round 2)
+ORIGINAL_CONTENT_COMMIT: fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd (docs C1; ancestor)
 DELIVERY_COMMIT: d291a11950d75a0b9c4cd300a925286aeec05e0d (F, Ticket: T-0011)
 EVIDENCE_COMMIT: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa (G, Ticket: T-0011; review upper bound)
 EVIDENCE_COMMIT_E1: 43536b8a466eb238a2266e7eb7a45c45ebbb4758 (E1, Evidence: T-0011)
@@ -41,9 +41,10 @@ PUSH_G: d291a11..339fd2f  HEAD -> master (exit 0)
 LS_REMOTE_G: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa	refs/heads/master
 VERIFY_G: LOCAL_HEAD == REMOTE_HEAD == 339fd2f882ade06eb37dfaf2276bc261b57fe1fa True
 STATUS_AFTER_G: `git status --porcelain=v1 -uall` -> empty
+FINAL_CLEAN_AFTER_G: `git status --porcelain=v1 -uall` -> empty
 CHECK_G: `git show --check 339fd2f` exit 0; `git diff d291a119..339fd2f --check` exit 0
-UPSTREAM_ADVANCE: origin/master 4244d3a (T-0017/T-0006 evidence/worklogs); G is ancestor; T-0011 docs untouched
+UPSTREAM_ADVANCE: origin/master 8248e31 (T-0017/T-0018/T-0032); T-0032 moved docs to .agent/docs; G is ancestor
 CMD: git log --oneline 4c2b453..339fd2f; git ls-remote origin refs/heads/master; git status --porcelain=v1 -uall; git show --check 339fd2f
-NOTE: 本轮修正提交 H（Ticket trailer）补 PFC 停振/5 点表并记录 G 的 push/ls-remote/clean；H 的最终 HEAD/remote 原文在交付报告给出（不写自指 SHA）。
-SIZE: content C1 5 docs/208 lines; fix2 4 docs/20 diff lines + P0/worklog; 0 code/config
+NOTE: 本轮 I（Ticket trailer）只刷新 canonical .agent/docs 的 P0 路径/行号，并记录 G 的 push/ls-remote/clean；I 的最终 HEAD/remote 原文在交付报告给出（不写自指 SHA）。
+SIZE: content C1 5 docs/208 lines; evidence-only refresh; 0 product/code/config change
 RESULT: PASS
