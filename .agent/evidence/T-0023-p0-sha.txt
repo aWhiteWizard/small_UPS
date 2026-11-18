@@ -7,9 +7,10 @@ TICKET_COMMIT: e14e17eecb1529b74e00632d1ed994282083b2ce（C1）
 EVIDENCE_COMMIT: 46609823f8c395a0918518396e9d9d22645de698（E1，5 文件/+101，body 末行 Evidence: T-0023）
 PUSH_C1: d4dc80a..e14e17e  HEAD -> master（exit 0）
 PUSH_E1: e14e17e..4660982  HEAD -> master（exit 0）
+PUSH_C2: 4660982..8ffd53e  HEAD -> master（exit 0）
 C1_ANCESTOR_OF_HEAD: YES
-LS_REMOTE_HEAD: 46609823f8c395a0918518396e9d9d22645de698 refs/heads/master（E1 后实测；C2 后最终 HEAD 见报告）
+LS_REMOTE_HEAD: 46609823f8c395a0918518396e9d9d22645de698 refs/heads/master（E1 后实测；C3 后最终 HEAD 见报告）
 VERIFY: local == remote == 4660982（E1 后）
-GIT_LOG: 4660982 docs(T-0023): 记录 P0 证据与工作日志（E1）; e14e17e task(T-0023): 本地化 HAL/占位 MCU 启动文件与链接脚本
-NOTE: C2 自身 SHA 见报告；本文件不写最终 HEAD 的 SHA。
+GIT_LOG: 8ffd53e docs(T-0023): 回填 E1 证据 SHA 并最终收口（C2）; 4660982 docs(T-0023): 记录 P0 证据与工作日志（E1）; e14e17e task(T-0023): 本地化 HAL/占位 MCU 启动文件与链接脚本
+NOTE: C3 自身 SHA 见报告；本文件不写最终 HEAD 的 SHA。
 RESULT: PASS
