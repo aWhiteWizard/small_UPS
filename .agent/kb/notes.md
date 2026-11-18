@@ -409,3 +409,18 @@ KB-EVIDENCE: `firmware/tools/serial.ps1:47` 的 `$list = ...` 在 `-Port COM3` �
 KB-TAGS: powershell, switch, variable, case-insensitive, serial
 
 `[switch]$List` 参数变量在脚本体内仍是 SwitchParameter 类型；局部 `$list`（大小写不敏感）赋字符串会触发转换异常，报错却指向参数绑定，很难定位。局部变量避开参数名即可。
+
+## Windows 下 pyserial 打开失败要按异常原文区分“占用/无设备”
+
+KB-TYPE: method
+KB-EVIDENCE: `tools/calib/serial_link.py:65-72`（关键字分类）、`:105-130`（connect）；`:164-190`（读写异常归拔线）
+KB-TAGS: pyserial, windows, serial, error-message, calibration
+
+`PermissionError(13, '拒绝访问')` / `Access is denied` 是被占用，`FileNotFoundError(2, '找不到')` 是无设备；同一句 `could not open port` 不能只笼统提示。先 busy 再 missing，读写的 `ClearCommError` 归拔线，才能让三种错误文案各有着落。
+
+## 标定工具的 INFO 设备信息命令是工具侧约定，需求 §3.4.5 未定义
+
+KB-TYPE: content
+KB-EVIDENCE: `.agent/requirements.md:610-612`（UART 命令无 INFO）；`tools/calib/device.py:23-24`（按 `OK INFO <协议> <固件> [序列号]` 解析）
+KB-CONFLICT: T-0025 #3 要求读协议/固件/序列号，但需求未给命令与回包；沿用 T-0008 原型 `INFO` 属工具侧假设，固件侧需对齐或出变更单。
+KB-TAGS: calibration, uart, info, protocol-gap, T-0025
