@@ -7,8 +7,8 @@ BRANCH: task/T-0027 ｜ WORKTREE: D:\workspace\wt\small-ups\T-0027
 G0-1 ENV: Python 3.14.6 / pyserial 3.5 / Tk 8.6；仅额外依赖 pyserial
 G0-2 COMPILE: `python -B -m py_compile tools\calib\app.py tools\calib\ui.py tools\calib\__main__.py` → exit 0
 G0-3 TEST: `$env:PYTHONPATH="tools"; python -B .agent/evidence/T-0027-p1-selftest.py` → `RESULT: PASS (5/5)`，exit 0
-G0-4 LAUNCH: `python -m calib`（pythonw）→ 窗口标题 `PSU 标定工具 · T-0027（设备信息 / 五点表 / 状态日志）`，进程正常
+G0-4 LAUNCH: `python -m calib`（pythonw）→ 窗口标题 `PSU 标定工具 · T-0027（设备信息 / 五点表 / 状态日志）`（标题沿用，界面点表实际 V6/I3，见 p0-ui），进程正常
 G0-5 HYGIENE: `git diff --check` exit 0；无 __pycache__/*.pyc；未改 `.agent/requirements.md`、`docs/`、`.agent/board/tasks.json`、`Hardware/`
-G0-6 SIZE: 5 文件 / 399 insertions / 8 deletions；文档 2/22（README +14，KB +8），代码与配置 3/377（app.py 360、__main__.py +8、ui.py +9）
+G0-6 SIZE: 5 文件 / 399 insertions / 8 deletions（按 insertions 399 计，≤400；若按增删合计 407 仅提示，见 T-0165）；文档 2/22（README +14，KB +8），代码与配置 3/377（app.py 360、__main__.py +8、ui.py +9）
 G0-7 E2E: 无真实 PSU/串口，本轮用 fake serial fixture/replay；live e2e 轮数 0，未冒充真机
 RESULT: PASS

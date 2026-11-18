@@ -1,15 +1,74 @@
 KIND: sha
 TASK: T-0027
-AT: 2026-11-19 +08:00
+AT: 2026-11-19 01:52 +08:00
 BASE: 57246ab949535773bcd0d46606df156a42b26f52（origin/master；开工 ba16717 ff-only 到此）
-C1: 584ba12773699c3619fd860020424b41f3c9c3e2
-PUSH: `git push origin HEAD:refs/heads/master` → `57246ab..584ba12  HEAD -> master`，exit 0
-VERIFY: `git ls-remote origin refs/heads/master` = 584ba12773699c3619fd860020424b41f3c9c3e2（本地=远端，true）
-LOG: `git log --oneline -4`
+C1: 584ba12773699c3619fd860020424b41f3c9c3e2（Ticket: T-0027）
+C2: 0d40e6780bdfd4f7b117996c6f5958177c5fb692（Evidence: T-0027）
+C3: 240a79b9905758c7638f8c0f9216fcc734ff0611（Evidence: T-0027；补改前截图）
+HEAD_AT_CAPTURE: 240a79b9905758c7638f8c0f9216fcc734ff0611（C4 补证提交前的 HEAD；本文件不写最终 HEAD SHA）
+LS-REMOTE_BEGIN
+$ git ls-remote origin refs/heads/master
+240a79b9905758c7638f8c0f9216fcc734ff0611	refs/heads/master
+LS-REMOTE_END
+REV-PARSE_BEGIN
+$ git rev-parse HEAD
+240a79b9905758c7638f8c0f9216fcc734ff0611
+REV-PARSE_END
+LOG_BEGIN
+$ git log --oneline -8
+240a79b docs(T-0027): 补交改前/改后运行截图（E2）
+ad98359 docs(T-0026): 回填 E1 证据 SHA 并收口（C1）
+a1664f1 docs(T-0026): 刷新 P0 证据到重派基线（E1）
+0d40e67 docs(T-0027): 记录 P0 证据、自测与运行截图
 584ba12 feat(T-0027): 新增 tkinter 标定完整界面与点表日志
 57246ab docs(T-0026): 记录 P0 证据与离线自测（E1）
 d0472ea feat(T-0026): 新增校准会话流程与安全中止
 6285b40 docs(T-0025): 修正 KB 证据行号到最终串口层（C3）
-TICKET: C1 提交正文末尾含 `Ticket: T-0027`，已存在于 origin/master
-EVIDENCE: 本组证据提交含 `Evidence: T-0027`（C2；C3 补交改前截图并复核）；按新口径不写最终 HEAD 的 SHA
-WORKTREE: C1/C2 push 后 `git status --porcelain=v1 --untracked-files=all` 为空；C3 后复查见报告
+LOG_END
+STATUS_BEGIN
+$ git status --porcelain=v1 --untracked-files=all
+STATUS_END
+STATUS_EXIT=0
+STATUS_LINES=0
+STATUS_NOTE: 以上为 C3 后、本轮补证修改前的原始输出（C4 提交内容会再改变工作区）。
+ANCESTOR_BEGIN
+$ git merge-base --is-ancestor 584ba12 HEAD ; echo $?
+0
+$ git merge-base --is-ancestor 0d40e67 HEAD ; echo $?
+0
+ANCESTOR_END
+MSG-C1_BEGIN
+$ git log -1 --format=%B 584ba12
+feat(T-0027): 新增 tkinter 标定完整界面与点表日志
+
+- app.py 组合 T-0025 串口面板与 T-0026 校准会话：设备信息/通道/点表/BEGIN/SET/MEAS/COMMIT/READ/ABORT
+- 点表序号/设定/实测/误差实时（V 6 点、I 3 点；V 6 行可见可编辑），状态与收发原文日志
+- 失败红色 + ! 日志；串口断开/设备 ERR 自动收口，COMMIT 前不写 EEPROM
+- ui.py 暴露 append/on_state 并在 destroy 前断回调；__main__ 启动完整界面；README 补启动说明
+
+Ticket: T-0027
+MSG-C1_END
+MSG-C2_BEGIN
+$ git log -1 --format=%B 0d40e67
+docs(T-0027): 记录 P0 证据、自测与运行截图
+
+- P0: g0/tests/sha/acceptance/ui + 1320x880 运行截图
+- P1: fake serial 自测脚本与 5/5 日志
+- C1=584ba12 已 push origin/master；证据按新口径不写最终 HEAD SHA，附 git log --oneline
+
+Evidence: T-0027
+MSG-C2_END
+MSG-C3_BEGIN
+$ git log -1 --format=%B 240a79b
+docs(T-0027): 补交改前/改后运行截图（E2）
+
+- 改前：base 57246ab 的 T-0025 串口页（仅串口/设备信息/日志，无通道/点表/校准按钮）
+- 改后：T-0027 完整界面（V/I 通道、6 行点表、BEGIN/MEAS/COMMIT/READ/ABORT、状态日志）
+- 两张均 fake serial 注入、非真机；更新 p0-ui 与验收第 5 条，P0 文本 77 行
+
+Evidence: T-0027
+MSG-C3_END
+TICKET: C1 正文末尾含 `Ticket: T-0027`；C2/C3 正文末尾含 `Evidence: T-0027`
+EVIDENCE: C4 为本轮补证提交（Evidence: T-0027）；按新口径不写最终 HEAD SHA，报告给最终 HEAD
+NOTE: 本文件是 C4 的提交内容；C4 push 后 origin/master 前移，最终 HEAD 见报告正文。
+RESULT: PASS
