@@ -1,14 +1,14 @@
 KIND: acceptance
 TASK: T-0010
-AT: 2026-11-18 19:50 +08:00 (clean-base rerun)
-BASE: b655c21504a60e94c04b106ba0c67551d0b375a6; CONTENT D1=1fae4c038d494b0176f6bcf0707867bbd4d10acd
-1 SCOPE: PASS - R:890/894-939 only D-side interface+structure; R:318 total depth is mechanical; body electrical R 3.3/3.4 not in D1 diff
-2 DIM: PASS - R:896-897 60x120x35, cavity 55x115x33.0, fingers 79mm (y=20.5-99.5) + pins 15-18; interface:32-39 depth chain/insertion 10
-3 IFACE: PASS - R:903-905 2.54mm 2x32=64 vertical, model TBD, slot x=15, right x>=40 DIP keep-out; R:910-912 USB-C data/G431 FS CDC/TVS/CMC/side; R:916-918 4P A/B/GND/+12V PTC; R:922-924 D4 banana 19.0mm >=5A; R:929 enable button; interface:47-53/107-110
+AT: 2026-11-18 20:40 +08:00 (G2 evidence supplement)
+BASE: b655c21504a60e94c04b106ba0c67551d0b375a6; CONTENT 1fae4c038d494b0176f6bcf0707867bbd4d10acd
+1 SCOPE: PASS - R:890/894-939 only D-side interface+structure; R:318 total depth is mechanical; body electrical R 3.3/3.4 not in content diff
+2 DIM: PASS - R:896-897 vertical 60x120x35 panel on 60x120 mating face, cavity 55x115x33.0, fingers 79mm (y=20.5-99.5) + pins 15-18; interface:32-39 depth chain/insertion 10
+3 IFACE: PASS - R:903-905 2.54mm 2x32=64 vertical card-edge, model TBD, slot x=15, right x>=40 DIP keep-out; R:910-912 USB-C data/G431 FS CDC/TVS/CMC/side; R:916-918 4P A/B/GND/+12V PTC; R:922-924 4mm sheathed banana 19.0mm red+/black- >=5A; R:929 enable button; interface:47-53/107-110
 4 KEY/DISP: PASS - R:928-932 5 tact keys no LED >=100k, red dual-row 4x2=8 digit width ~50mm, screen top, L/R/SET below, Up/Down at screen side; interface:67-72
-5 STRUCT: PASS - R:936-939 D5 upper round / D8 slot lower, M3 set screw on D flat, 2xN35 >=21mm from keep-out, flush seam/same finish; interface:55-58/83-84/101
+5 STRUCT: PASS - R:936-939 5mm upper round / 8mm lower slot, M3 set screw on D flat, 2xN35 >=21mm from relay/sampling keep-out x<=30, flush seam/same finish; interface:55-58/83-84/101
 6 LAYOUT: PASS - interface:60-98 coordinate table + ASCII, min gaps 2.0/1.0; USB-C at -X side, not +Z (interface:82)
-7 SIZE: PASS - content 2 files +3/-3 (D1); P0+worklog tracked change in p0-sha; <=8 files / <=400 lines
-8 DELIVERY: PASS - D1 content + E1 evidence pushed; sha backfill C1 and final HEAD in report; COMMIT/LOCAL/REMOTE/ls-remote in p0-sha.txt
+7 SIZE: PASS - delivered b655c21..7d334f0 = 7 files / 107 changed lines (66+/41-); <=8 files / <=400 lines; content 1fae4c0 = 2 files +3/-3
+8 DELIVERY: PASS - CONTENT 1fae4c0 pushed b655c21..1fae4c0; FINAL 7d334f0 pushed 17a831d..7d334f0; LOCAL==REMOTE==7d334f0; LS_REMOTE: 7d334f0280d775cab6c556438199df91b11c582d refs/heads/master
 NOTE: card-edge/display/USB-C/RS485 models TBD in R 4.3; 0.56" screen and magnet keep-out dependencies tracked; no body electrical change.
 RESULT: PASS

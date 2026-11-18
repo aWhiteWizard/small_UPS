@@ -1,17 +1,23 @@
 KIND: sha
 TASK: T-0010
-AT: 2026-11-18 19:55 +08:00 (clean-base rerun)
+AT: 2026-11-18 20:40 +08:00 (G2 evidence supplement, committed)
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
 CLEAN_BASE: b655c21504a60e94c04b106ba0c67551d0b375a6
-CONTENT_COMMIT: D1=1fae4c038d494b0176f6bcf0707867bbd4d10acd (2 files, +3/-3)
-EVIDENCE_COMMIT: E1=17a831d414598e5bf48e86565bfe74d7f303375e (4 files, +42/-27)
-COMMIT: E1=17a831d414598e5bf48e86565bfe74d7f303375e (last commit verified LOCAL==REMOTE before sha backfill)
-LOCAL_HEAD: 17a831d414598e5bf48e86565bfe74d7f303375e
-REMOTE_HEAD: 17a831d414598e5bf48e86565bfe74d7f303375e refs/heads/master
-CMD: git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-PUSH: 1fae4c0..17a831d  HEAD -> master (exit 0)
-LS_REMOTE: 17a831d414598e5bf48e86565bfe74d7f303375e	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 17a831d414598e5bf48e86565bfe74d7f303375e True
-BACKFILL: C1 (this commit) contains only this sha file + worklog; final HEAD==REMOTE in report
-SIZE: D1+E1 = 6 files / +45/-30; with C1 <=7 files / <=100 lines; <=8/400
+CONTENT_COMMIT: 1fae4c038d494b0176f6bcf0707867bbd4d10acd
+CONTENT_DETAIL: 2 files, +3/-3 (requirements:930, interface:67,74)
+PUSH_CONTENT: b655c21..1fae4c0  HEAD -> master (exit 0)
+LS_REMOTE_CONTENT: 1fae4c038d494b0176f6bcf0707867bbd4d10acd refs/heads/master
+EVIDENCE_COMMIT: 17a831d414598e5bf48e86565bfe74d7f303375e
+PUSH_EVIDENCE: 1fae4c0..17a831d  HEAD -> master (exit 0)
+FINAL_EVIDENCE_COMMIT: 7d334f0280d775cab6c556438199df91b11c582d
+BACKFILL: 7d334f0280d775cab6c556438199df91b11c582d
+COMMIT: 7d334f0280d775cab6c556438199df91b11c582d
+FINAL_DETAIL: sha backfill commit; this file + worklog only
+PUSH_FINAL: 17a831d..7d334f0  HEAD -> master (exit 0)
+LOCAL_HEAD: 7d334f0280d775cab6c556438199df91b11c582d
+REMOTE_HEAD: 7d334f0280d775cab6c556438199df91b11c582d refs/heads/master
+LS_REMOTE: 7d334f0280d775cab6c556438199df91b11c582d refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 7d334f0280d775cab6c556438199df91b11c582d True
+CMD: git rev-parse HEAD; git ls-remote origin refs/heads/master
+SIZE_DELIVERED: 7 files / 107 changed lines (66 insertions + 41 deletions) for b655c21..7d334f0; <=8/400
 RESULT: PASS
