@@ -1,16 +1,18 @@
 KIND: sha
 TASK: T-0018
-AT: 2026-11-18 +08:00
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 base）
-CONTENT_COMMIT: 90b6ed58b2f00054ca7f78299ab9aea56b7150d0（附录 G + 首轮 P0；已随 T-0017 收口进入 master）
-PREV_RECORD: 95cd04e992c9a84bea0e7100170df4aebba523f4（首轮 SHA 记录）
-SYNC: 95cd04e..25506f8d7cd385ccd69e9725040f49264ac93759（重派 git merge --ff-only origin/master）
-COMMIT: 706f608b94319fcfd12f422a2dbb40d8c4d59f4a（本轮记录提交 E2；E1=a1fd255b7c9580736b30275267f2ec73caa611a7 为证据提交）
-LOCAL_HEAD: 706f608b94319fcfd12f422a2dbb40d8c4d59f4a
-REMOTE_HEAD: 706f608b94319fcfd12f422a2dbb40d8c4d59f4a refs/heads/master
-CMD: git fetch origin --prune; git merge --ff-only origin/master; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-LS_REMOTE: 706f608b94319fcfd12f422a2dbb40d8c4d59f4a	refs/heads/master
-PUSH: 25506f8..a1fd255  HEAD -> master（exit 0）；a1fd255..706f608  HEAD -> master（exit 0）；最终记录 E3 的 push 复核见报告正文
-VERIFY: E2 推送后 LOCAL_HEAD == REMOTE_HEAD == 706f608b94319fcfd12f422a2dbb40d8c4d59f4a
-NOTE: 本文件随最终记录 E3 落库；E3 SHA 见报告正文（自指限制，沿用 T-0016/T-0017 惯例）；内容提交 90b6ed5，E1 证据提交 a1fd255。
+AT: 2026-11-18 18:30 +08:00
+BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f（工单 base）
+CLEAN_BASE: a2a03031b721604e831cbfaaa4893a7b60b51392（origin/master，T-0029 收口后重派）
+CONTENT_COMMITS: 90b6ed58b2f00054ca7f78299ab9aea56b7150d0（附录 G+首轮 P0）、95cd04e992c9a84bea0e7100170df4aebba523f4，均已在 origin/master
+PREV_RECORD: 0738a555e69dbe7a12206951a21d92a5895c6016（E3 首轮最终记录）
+FF: 0738a55..a2a0303（git merge --ff-only origin/master，exit 0）
+E4_EVIDENCE: 80ab0145cd471fbb62a30b4202032dd95c27f976（本轮 clean-base P0/worklog 提交）
+COMMIT: 80ab0145cd471fbb62a30b4202032dd95c27f976
+LOCAL_HEAD: 80ab0145cd471fbb62a30b4202032dd95c27f976
+REMOTE_HEAD: 80ab0145cd471fbb62a30b4202032dd95c27f976 refs/heads/master
+CMD: git fetch origin --prune; git merge --ff-only origin/master; git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+LS_REMOTE: 80ab0145cd471fbb62a30b4202032dd95c27f976	refs/heads/master
+PUSH: a2a0303..80ab014  HEAD -> master（exit 0）
+VERIFY: E4 push 后 LOCAL_HEAD == REMOTE_HEAD == 80ab0145cd471fbb62a30b4202032dd95c27f976
+NOTE: E5 为最终记录提交（回填本文件），其 SHA 见报告正文（自指限制，沿用 T-0011/T-0017 惯例）。
 RESULT: PASS
