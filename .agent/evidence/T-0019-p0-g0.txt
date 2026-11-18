@@ -1,11 +1,13 @@
 KIND: g0
 TASK: T-0019
-AT: 2026-11-18 18:35 +08:00
+AT: 2026-11-18 +08:00（重派重建复核）
 BRANCH: task/T-0019 @ D:\workspace\wt\small-ups\T-0019
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f（ticket base）
-CLEAN_BASE: 1089d80e81e1d8efea83bc9bde7147e89e1fbd09（本轮开工 origin/master）
-SYNC: 4a12310ed23c155e0f94c38783a3184120f6cc84..1089d80（git merge --ff-only，exit 0；本单 C1–C5 已在该历史内）
-CMD: git fetch origin --prune; git merge --ff-only origin/master; git status --porcelain=v1; git diff --check; git diff --name-only -- docs firmware Hardware
-STATUS: worktree 干净；HEAD=1089d80=origin/master；本轮 diff 仅 P0/worklog/KB；docs/firmware/Hardware 无本单改动
-CHECK: git diff --check exit 0；requirements 1524 行（v1.1，附录 I 在 H 后）；附录 H 1277-1396/120 行；全文件 38 表格块 0 列错；H 5 表格块 0 列错、无 Tab/行尾空白；UTF-8 无 BOM
+TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 baseSha，落后基线）
+CLEAN_BASE: 2bd1f829c6096aa9f364ea376fd13f27174df688（origin/master，重建后 HEAD）
+CONTENT_COMMIT: 3646bda1883ae74c42bbec41d0a03c76d87e1c15（附录 H + README + KB；3 文件/+149/−10；已在 origin/master）
+ANCESTRY: git merge-base --is-ancestor 3646bda HEAD → exit 0；f864595（旧 C7）→ exit 0
+CMD: git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain=v1 -uall; git diff --check; git diff --stat; git show --stat 3646bda
+STATUS: HEAD=2bd1f82=origin/master；工作区干净；开工时 base..HEAD diff=0；重建已生效，无 34 文件/4000 行
+SCOPE: 本轮仅 .agent 证据/worklog/KB；内容提交 3646bda 在基线内；docs/firmware/Hardware 无本单改动
+CHECK: canonical 1734 行；附录 H 1280–1399/120 行；全文件 45 表格块 0 列错；H 5 块 0 列错；UTF-8 无 BOM、无 Tab/行尾空白；H 无设计 token
 RESULT: PASS

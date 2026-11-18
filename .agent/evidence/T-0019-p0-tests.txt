@@ -1,13 +1,12 @@
 KIND: tests
 TASK: T-0019
-AT: 2026-11-18 18:35 +08:00
-CMD: PowerShell UTF8 文档检查；git diff --check；git diff --name-only -- docs firmware Hardware
-DOC: LINES=1524 APPENDIX_H_START=1277 APPENDIX_H_LINES=120（v1.1，T-0020 附录 I 在 H 后）
-TABLE: WHOLE=38 BLOCKS BAD=0；H=5 BLOCKS BAD=0；HAS_TAB=False TRAILING_WS=0
-KEYS: MISSING=0/20（包络/240W/48.5V/242.5W/0–0.5V/40℃/70℃/55℃/95℃/23±5℃/50mVpp/0.3%/88%/90%/OPP/8A/0x05/0x08/5A/30min）
-DESIGN: H.1–H.6 内 µH/µF/mΩ/MOSFET/ETD/kHz 均 0；H.7 仅以“散热器/风扇选型”作排除声明
-CROSS: §2.8:320-336（240W/5A/0.3%/50mVpp/23±5℃/88%/90%）、§2.9:343（40℃/30min/≤70℃/≤55℃）、§3.3.3:494,1132-1138（5.25A/8A/50V）、P-09:400（95℃）与 H 一致
-SCOPE: DOCS_FW_HW_CHANGED=（空；3646bda 仅 requirements/README/KB）
-DIFF: 本轮为 C6 证据提交 + C7 记录提交；T-0019 累计 8 文件；C1 95cd04e..3646bda 3 文件 149+/10−=159 行
-CHECK: git diff --check exit 0；UTF-8 无 BOM；工作区干净
+AT: 2026-11-18 +08:00（重派重建复核）
+CMD: [IO.File]::ReadAllText UTF8；表块列数；关键词/禁用词；git diff --check；git diff --name-only 2bd1f82 -- docs firmware Hardware
+DOC: LINES=1734；APPENDIX_H_START=1280；APPENDIX_H_LINES=120；BOM=False；TAB=0；TRAIL=0
+TABLE: WHOLE=45 BLOCKS BAD=0；H=5 BLOCKS BAD=0
+KEYS: 20/20（0.5–48V/0–5A/240W/48V/5A/0–0.5V/40℃/≤70℃/≤55℃/95℃/23±5℃/50mVpp/0.3%/88%/90%/OPP/8.0A/0x05/0x08/30min/全段 5A）
+DESIGN: 附录 H 全文 µH/µF/mΩ/MOSFET/ETD/kHz = 0
+CROSS: §2.6:304；§2.8:324-339（23±5℃/精度/50mVpp/88%/90%/240W）；§2.9:347（40℃/30min/≤70℃/≤55℃）；P-09:404 与 0x05:502（OTP 95℃）；§3.3.3:1135-1141（OVP 50V/OCP 8A）与 H.3/H.4 一致
+SCOPE: docs/firmware/Hardware 相对 2bd1f82 无改动；3646bda 仅 requirements/README/KB
+CHECK: git diff --check exit 0；工作区干净
 RESULT: PASS

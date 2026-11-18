@@ -1,18 +1,18 @@
 KIND: sha
 TASK: T-0019
-AT: 2026-11-18 18:40 +08:00
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f（ticket base）
-CLEAN_BASE: 1089d80e81e1d8efea83bc9bde7147e89e1fbd09（本轮开工 origin/master）
-SYNC: 4a12310ed23c155e0f94c38783a3184120f6cc84..1089d80（git merge --ff-only，exit 0）
-CONTENT_COMMIT: 3646bda1883ae74c42bbec41d0a03c76d87e1c15（内容 C1：附录 H + README + KB）
-EVIDENCE_COMMIT: 4bd6f5fd2c02bf9c49c4b843bb9eeb815015dcce（首轮证据 C2）
-PREV_RECORD: 49c5029f1b5d5c7e80fdd79df3c3789c2af26a46（C3）/ 82a5fae2847f7bd5289e80954f9a7aad44c7b276（C4）/ 4a12310ed23c155e0f94c38783a3184120f6cc84（C5）
-COMMIT: d2336d096b58c1326998d5aaeab49b582e322953（本轮证据提交 C6）
-LOCAL_HEAD: d2336d096b58c1326998d5aaeab49b582e322953
-REMOTE_HEAD: d2336d096b58c1326998d5aaeab49b582e322953 refs/heads/master
-CMD: git fetch origin --prune; git merge --ff-only origin/master; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-LS_REMOTE: d2336d096b58c1326998d5aaeab49b582e322953	refs/heads/master
-PUSH: 1089d80..d2336d0  HEAD -> master（exit 0）；最终记录 C7 的 push 复核见报告正文
-VERIFY: C6 推送后 LOCAL_HEAD == REMOTE_HEAD == d2336d096b58c1326998d5aaeab49b582e322953
-NOTE: 本文件随最终记录 C7 落库；C7 SHA 见报告正文（自指限制，沿用 T-0016/T-0017/T-0018 惯例）。
+AT: 2026-11-18 +08:00（重派重建复核）
+TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 baseSha，落后基线）
+CLEAN_BASE: 2bd1f829c6096aa9f364ea376fd13f27174df688（origin/master，重建后 HEAD）
+CONTENT_COMMIT: 3646bda1883ae74c42bbec41d0a03c76d87e1c15（3 文件/+149/−10，已入 master；is-ancestor exit 0）
+EVIDENCE_COMMIT: 本次 E1（P0/worklog/KB；SHA 由 T1 回填）
+TICKET_COMMIT: T1（body: Ticket: T-0019；SHA 见报告，自指限制）
+LOCAL_HEAD: 2bd1f829c6096aa9f364ea376fd13f27174df688（开工，E1 前）
+REMOTE_HEAD: 2bd1f829c6096aa9f364ea376fd13f27174df688 refs/heads/master
+CMD: git add -f .agent/evidence/T-0019-p0-*.txt .agent/worklogs/T-0019.md; git add .agent/kb/notes.md; git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+LS_REMOTE: 2bd1f829c6096aa9f364ea376fd13f27174df688 refs/heads/master
+PUSH: E1 push 原文由 T1 回填（目标 `2bd1f82..E1 HEAD -> master`）
+VERIFY: E1 后 LOCAL_HEAD == REMOTE_HEAD == E1；T1 后终验见报告
+DIFF_CLEAN: 2bd1f82..E1 = 6 files changed（仅 .agent 证据/worklog/KB；统计由 T1 回填）
+DIFF_CONTENT: 3646bda^..3646bda = 3 files changed, 149 insertions(+), 10 deletions(-)
+NOTE: P0/worklog 用 git add -f；不提交 P1 大日志；T1 自身 SHA 见报告
 RESULT: PASS
