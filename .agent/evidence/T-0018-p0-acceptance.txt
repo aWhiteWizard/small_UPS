@@ -7,7 +7,7 @@ AT: 2026-11-18 +08:00
 4 参数预设：PASS。G.4：≥8 组，仅 V/I，跨上电/换板保持；输出 OFF 只加载不使能；输出 ON 按 §2.4.2 热切换；保存/覆盖/调用确认；≤3 按键、≤1s；未指定存储组织。
 5 能力留口：PASS。G.5：C-01 固件升级、C-02 远端采样补偿（0–0.5V，针端 ≤48.5V）、C-03 校准会话；有/无、边界值、验收方式、现有落点齐全。
 6 可判定验收：PASS。G.1–G.4 均有“能/不能/用户可见/边界”判据；G.5 表格有边界值与验收方式；无仅写“支持”。
-7 只改需求文档/冲突标注：PASS。正文只改 .agent/requirements.md 附录 G；无 docs/ 架构/接口设计改动；G.6 4 项均“待 owner 确认”+来源。README 仅 §6/§7 状态同步（v0.9），无设计内容。
-8 规模：PASS。tracked 3 文件 181+/6− + worklog/P0；交付 8 文件、<400 行 diff；无超限理由。
-9 交付硬要求：PASS（提交/推送后复核）。COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文见 .agent/evidence/T-0018-p0-sha.txt；报告附 commit 号。
-RESULT: PASS（内容）；交付 SHA 见 T-0018-p0-sha.txt
+7 只改需求文档/冲突标注：PASS。需求正文只改 .agent/requirements.md 附录 G；无 docs/ 架构/接口设计改动；G.6 4 项均“待 owner 确认”+来源。README 仅 §6/§7 状态同步（v0.9），KB 仅留痕，无设计内容。
+8 规模：PASS。内容提交 8 文件 278+/10−（含 P0/worklog）；本轮只刷新既有 4 件 P0 与 worklog，不增文件；<400 行、≤8 文件，无超限理由。
+9 交付硬要求：PASS。已执行 commit→git push origin HEAD:refs/heads/master→git ls-remote 核对；COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文见 T-0018-p0-sha.txt，最终记录提交 SHA 见报告正文。
+RESULT: PASS（内容）；交付 SHA 见 T-0018-p0-sha.txt 与报告
