@@ -227,16 +227,16 @@ P0 sha 文件要写 COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 原文，但文件�
 ## 连接器“500 次”是机械寿命，不等于热插拔/带电插拔寿命
 
 KB-TYPE: hardware
-KB-EVIDENCE: `.agent/requirements.md:1404-1411`（T-0020 I.1：热插拔循环定义、≥500 次、接触电阻/插拔力/保持力判据）；`docs/interface.md:47`（插座 ≥500 次）
+KB-EVIDENCE: `.agent/requirements.md:1405-1418`（T-0020 I.1：热插拔循环定义、≥500 次、接触电阻/插拔力/保持力判据）；`:1416`（插入深度改为引用 §4.4.2 实物槽深）；`:921`（§4.4.2 现行 5±1mm）；`docs/interface.md:47`（插座 ≥500 次）
 KB-LAYER: 3_hardware
 KB-TAGS: connector, card-edge, mating-cycles, hot-swap, durability
 
-插座/连接器规格书的“500 Cycles”通常指机械插拔寿命，未区分是否带电/待机。需求若写“热插拔 500 次”，必须定义热插拔状态（输出 OFF、继电器断开、12V/I2C 带电待机）并说明不得用不带电次数替代；同时给接触电阻增量、插拔力/保持力判据。否则供应商按机械寿命交付，系统级热替换次数无法验收。
+插座/连接器规格书的“500 Cycles”通常指机械插拔寿命，未区分是否带电/待机。需求若写“热插拔 500 次”，必须定义热插拔状态（输出 OFF、继电器断开、12V/I2C 带电待机）并说明不得用不带电次数替代；同时给接触电阻增量、插拔力/保持力判据。否则供应商按机械寿命交付，系统级热替换次数无法验收。插入深度不要在寿命判据里复写：T-0010 已按实物槽深改为 5±1mm，I.1 引用 §4.4.2 即可，复写旧值会造成同文件自相矛盾（I.5 #7）。
 
 ## “设定值与实测值同屏”在 8 位 2×4 屏上只能按被测量成对落实
 
 KB-TYPE: content
-KB-EVIDENCE: `.agent/requirements.md:1437`（I.2 S-02：同一被测量成对同屏，V/I 可分页）；`:1496`（I.5 #1：现布局仅实测 V/I，无设定/CV/CC/功率）
+KB-EVIDENCE: `.agent/requirements.md:1438`（I.2 S-02：同一被测量成对同屏，V/I 可分页）；`:1497`（I.5 #1：现布局仅实测 V/I，无设定/CV/CC/功率）
 KB-LAYER: 1_application
 KB-TAGS: requirements, display, visibility, ui, conflict
 
@@ -245,7 +245,7 @@ KB-TAGS: requirements, display, visibility, ui, conflict
 ## O-02“无上位机”必须给服务/标定工具留例外，否则与 USB-C 自相矛盾
 
 KB-TYPE: content
-KB-EVIDENCE: `.agent/requirements.md:90`（O-02 修订：T-0008/USB-C 服务例外）；`:1461-1479`（I.4 定义/裁决/验收）；`:891`（§4.2.6 USB-C 数据/升级）
+KB-EVIDENCE: `.agent/requirements.md:91`（O-02 修订：T-0008/USB-C 服务例外）；`:1462-1480`（I.4 定义/裁决/验收）；`:892`（§4.2.6 USB-C 数据/升级）
 KB-LAYER: 1_application
 KB-TAGS: requirements, host-software, usb-c, calibration, scope
 

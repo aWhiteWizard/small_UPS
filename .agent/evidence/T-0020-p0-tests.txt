@@ -3,7 +3,7 @@ TASK: T-0020
 RESULT: PASS
 
 == FILE ==
-requirements_lines=1523
+requirements_lines=1524
 bom=False
 trailing_ws=0
 tabs=0
@@ -46,14 +46,20 @@ PASS O-10
 PASS absent-in-appendix 0–40℃
 PASS absent-in-appendix 1500VAC/1min
 PASS absent-in-appendix 600 元/套
-PASS absent-in-appendix 0.1/0.3/0.2/0.1%
+PASS absent-in-appendix 0.1–0.3%
 PASS absent-in-appendix 60×120×180
 PASS absent-in-appendix ≤1.2kg
+
+== INSERTION DEPTH ==
+stale_10pm1_in_appendix_I=0
+i1_references_4_4_2=True
+i5_conflict_7=True
 
 == SOURCES ==
 PASS https://www.icpdf.com/HRS_datasheet/PCN10-64P-2.54DS%2872%29_pdf_39837524/
 PASS http://faq.hirose-gl.com/ex/en/faq_detail.html?id=100570
 PASS http://edac-cn.com/product/4/8/78/1520
+PASS https://www.sis.se/en/produkter/elektronik-2186a349/electromechanical-components-for-electronic-and-telecommunications-equipment/general/iec60512912010/
 PASS https://webstore.iec.ch/en/publication/2326
 PASS https://webstore.iec.ch/en/publication/2365
 PASS https://store.accuristech.com/ashrae/standards/ecia-eia-364-09c?product_id=2585811

@@ -1,20 +1,20 @@
 KIND: g0
 TASK: T-0020
-BASELINE: 49c5029f1b5d5c7e80fdd79df3c3789c2af26a46 (origin/master at start; ticket base ba16717 ff-only to 49c5029)
+BASELINE: ba16717db86caa3c791e97a6d734501f707aa84f（ticket base）；SYNC 94e1d14..4a12310（git merge --ff-only，exit 0）
 BRANCH: task/T-0020
-CONTENT_COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68
+CONTENT_COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68（C1，4 文件 218+/12−，已入 master）
+REWORK: C5=PENDING_C5（重派：I.1 插入深度引用修正 + P0/KB/worklog 刷新）
+FINAL_RECORD: C6（本文件随 C6 落库；SHA 见报告）
 
 G0 CHECKS
 - git diff --check -> exit 0
 - markdown tables -> 38 tables, 0 column mismatch
-- O list in §1.6 -> O-01..O-10, 10/10 unique
-- encoding -> UTF-8 no BOM
-- trailing whitespace -> 0; tabs -> 0; conflict markers -> 0
-- required keywords -> 24/24 PASS (热插拔循环/≥500 次/接触电阻/ΔR/插拔力/保持力/同屏/CV/CC/功率/故障/O-02/O-06..O-10/T-0008)
-- T-0007 non-dup -> 0 duplicated signature values in appendix I (0–40℃/1500VAC/600 元/0.1–0.3%/60×120×180/≤1.2kg all absent)
-- sources -> 6/6 external/standard URLs present in I.1
-- files -> 8 total (requirements, README, kb, worklog, 4 P0 evidence); content commit 4 files / 218 insertions / 12 deletions = 230 lines; total including C2 evidence/worklog below 400 lines
-- working tree before C2 -> only T-0020 P0 evidence/worklog changes; no source changes
-
+- O list §1.6 -> O-01..O-10, 10/10 unique
+- encoding -> UTF-8 no BOM; trailing ws 0; tabs 0; conflict markers 0
+- keywords -> 23/23 PASS
+- T-0007 non-dup -> 0 signature values in appendix I
+- insertion depth -> appendix I "10±1" 0; I.1 references §4.4.2（5±1）; I.5 #7 logged
+- KB evidence -> O-02:91, I.2:1438, I.5#1:1497, §4.2.6:892
+- files -> 8 total（requirements, README, KB, worklog, 4 P0）; content C1 4 files/230 lines
+- scope -> rework before evidence only .agent/requirements.md + .agent/kb/notes.md; no docs/firmware/Hardware changes
 RESULT: PASS
-NOTE: C2 is the evidence commit for this G0 file, worklog and P0 evidence; C3 was an intermediate record commit (sha/worklog); C4 is the final record commit. Final LOCAL_HEAD=REMOTE_HEAD=C4 is recorded in the delivery report.
