@@ -1,11 +1,12 @@
 KIND: g0
 TASK: T-0011
-AT: 2026-11-18 18:12 +08:00 (clean-base rerun)
+AT: 2026-11-18 20:12 +08:00 (clean-base rerun)
 BRANCH: task/T-0011 @ D:\workspace\wt\small-ups\T-0011
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-DELIVERY_BASE: eb6528bb7b9367ea87d4e808be6b498f8acce0a4 (origin/master; ff-only f698a3a->eb6528b; worktree clean)
-CONTENT: C1=fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd; C2=da8eb6268e3a5352bc6b2c33e47425fb042f2e0b; C3=2212cb29ca49efb935bbd83a7b898a5af377a59a; C4=b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679 (already in base; re-verified; C6 only fixes 198->210µF example and refreshes P0)
-SCOPE: P-side only: R §3.5 (3.5.1-3.5.12), A §2.1-§2.5/§3/§4, M §1.1-§1.5, T §3.1/§6.2, README §6/§7; D-side §4.4 and T-0006 timing/registers untouched
-CHECK: R=1524 A=96 M=109 T=181 README=125 lines; TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=0; PH_T0011=0; KEYS=76/76; MATH_BAD=0; git diff --check=0
-SIZE: original C1-C4 7 implementation files/262 changed lines (<=8/<=400); rerun 9 files (3 doc fixes + 4 P0 + worklog + KB) over 8-file soft line, reason in report; <=400 lines
+CLEAN_BASE: 4c2b453861737c945cb9b5656d6be2003884aeb3 (origin/master)
+START: HEAD=4c2b453861737c945cb9b5656d6be2003884aeb3; git status --porcelain empty
+CONTENT: T-0011 commits fd81bbc..e07f27a are ancestors of CLEAN_BASE (`git merge-base --is-ancestor e07f27a HEAD` exit 0); content not duplicated
+SCOPE: P-side only: R §3.5.1-§3.5.12, A §2.1-§2.5/§3/§4, M §1.1-§1.5, T §3.1/§6.2, README §6/§7; D-side §4 and T-0006 timing/registers untouched
+CHECK: R=1607 A=99 M=113 T=181 README=126 lines; TABLE_BAD=0; TABS=0; TRAIL=0; BOM=0; T-0011 placeholders=0; KEY=29/29; MATH=OK; git diff --check=0
+SIZE: content C1 5 docs/208 lines (<=8/<=400); rerun 1 doc (worklog) + 4 P0 evidence (excluded); 0 code/config
 RESULT: PASS

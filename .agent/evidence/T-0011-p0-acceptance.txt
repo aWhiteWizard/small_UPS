@@ -1,25 +1,26 @@
 KIND: acceptance
 TASK: T-0011
-BASE: eb6528bb7b9367ea87d4e808be6b498f8acce0a4 (clean delivery base)
+AT: 2026-11-18 20:12 +08:00 (clean-base rerun)
+BASE: 4c2b453861737c945cb9b5656d6be2003884aeb3
 R: .agent/requirements.md; A: docs/architecture.md; M: docs/module-design.md; T: docs/test-plan.md
-JUDGE: 16 ticket clauses against current tree; line numbers at delivery base
+JUDGE: 16 ticket clauses against current tree; line numbers at clean base
 
 #  | 验收 | 落点（文件:行号） | 结论
-1  | 范围：P 侧电气规格/拓扑/散热/结构预留 | R:617-704; A:29-65; M:11-41; T:61-82,165-181 | PASS
-2  | 方位 60×120×180、PCB 180×120、调试板 60×120×35、总深 180+35+前伸 | R:629; R:313; R:137 | PASS
-3  | 55V±1V、最小母线 53.18V 计算、80/100V 器件、禁 60/63V | R:636-640; A:54-58; M:33 | PASS
-4  | 输入链 T2A→NTC→MOV→X2→CM→Y→整流桥 | R:644-647; A:31-34; M:15 | PASS
-5  | Boost PFC 400V/65kHz、PF≥0.98、Class D、L/C 选型 | R:651-655; A:38-42; M:21 | PASS
-6  | LLC 100kHz+SR→55V→buck 200kHz→0–48V、变比/谐振/L/C | R:660-670; A:47-58; M:27,33 | PASS
-7  | 功率器件成行、PFC L/变压器/母线电容/输出 L/C 前后错位、散热器≤壳宽 | R:674-677; T:179 | PASS
-8  | 独立铝散热器（CNC）、器件/损耗/热阻 29W/40℃/≤70℃、孔位压紧、不承力 | R:674-675,685; T:167-181 | PASS
-9  | 后板 60×60 风扇 HA60251V4 向内吹正压+防尘棉；左右鳍片窗；顶底不开；导流板 | R:681-683; R:340; T:162 | PASS
-10 | 后板上下 60×60：上块凸台/左 45mm/右 15mm；下块 25mm 凹槽风扇；其余 owner | R:684; A:83 | PASS
-11 | 外壳不开 SWD；排针仅在 PCB；首烧/救援；单区+CRC；bootloader 不升级 | R:689-691; R:266-271 | PASS
-12 | 效率≥88%/≥90%、三段分解、5 电压点损耗、空载<1.5W（PFC 停振） | R:695-697; T:61-82 | PASS
-13 | 精度矩阵系统级；输出纹波 50/30；母线纹波 100/150 | R:698; R:334; T:40-44 | PASS
-14 | PCB 外形/安装孔、板间、功率板↔接口板、维修可拆 | R:630-632; R:674-677 | PASS
-15 | 文件规模 ≤400 行/≤8 文件 | 原 C1-C4 7 文件/262 行；本次 9 文件/≤200 行，超 8 文件提示线，理由见报告 | PASS（超限留痕）
-16 | 自行 commit/push、LOCAL_HEAD=REMOTE_HEAD、sha 证据 | C6/C7 提交并 push；sha 证据记录 C6，报告给 C7 | PASS
+1  | 范围：P 侧电气规格/拓扑/散热/结构预留 | R:623-711; A:28-66; M:9-41; T:61-82,165-181 | PASS
+2  | 方位 60×120×180、PCB 180×120、调试板 60×120×35、总深 180+35+前伸 | R:635; R:636 | PASS
+3  | 55V±1V、最小母线 53.18V 计算、80/100V 器件、禁 60/63V | R:640-646; A:54-58; M:33 | PASS
+4  | 输入链 T2A→船型开关→NTC→MOV→X2→CM→Y→整流桥 | R:648-653; A:30-35; M:15 | PASS
+5  | Boost PFC 400V/65kHz、PF≥0.98、Class D、L/C 选型 | R:655-661; A:37-43; M:21 | PASS
+6  | LLC 100kHz+SR→55V→buck 200kHz→0–48V、变比/谐振/L/C | R:663-676; A:45-59; M:27,33 | PASS
+7  | 功率器件成行、PFC L/变压器/母线电容/输出 L/C 前后错位、散热器≤壳宽 | R:678-683; T:179 | PASS
+8  | 独立铝散热器（CNC）、器件/损耗/热阻 29W/40℃/≤70℃、孔位压紧、不承力 | R:680-683,692; T:165-181 | PASS
+9  | 后板 60×60 风扇 HA60251V4 向内吹正压+防尘棉；左右鳍片窗；顶底不开；导流板 | R:685-689; T:162 | PASS
+10 | 后板上下 60×60：上块凸台/左 45mm/右 15mm；下块 25mm 凹槽风扇；其余 owner | R:690; A:84 | PASS
+11 | 外壳不开 SWD；排针仅在 PCB；首烧/救援；单区+CRC；bootloader 不升级 | R:694-698; R:271-275 | PASS
+12 | 效率≥88%/≥90%、三段分解、5 电压点损耗、空载<1.5W（PFC 停振） | R:700-705; T:61-82 | PASS
+13 | 精度矩阵系统级；输出纹波 50/30；母线纹波 100/150 | R:427,705; R:339; T:40-44 | PASS
+14 | PCB 外形/安装孔、板间、功率板↔接口板、维修可拆 | R:635-638 | PASS
+15 | 文件规模 ≤400 行/≤8 文件 | C1 5 文档/208 行；本次仅 worklog 1 文件，P0 不计 | PASS
+16 | 自行 commit/push、LOCAL_HEAD=REMOTE_HEAD、sha 证据 | 证据提交 E1 + 交付记录 F；sha 文件与报告给 SHA | PASS
 
-[汇总] 16/16 PASS；A/M/T 无 T-0011 待填；PFC/LLC/buck 计算在 A；热预算在 T §6.2；C6 仅修 198->210µF 示例并刷新证据。
+[汇总] 16/16 PASS；A/M/T 无 T-0011 待填；PFC/LLC/buck 计算在 A；热预算在 T §6.2；内容 C1-C7 已在 clean base，本次只刷新证据行号/SHA。

@@ -1,13 +1,13 @@
 KIND: tests
 TASK: T-0011
-AT: 2026-11-18 18:12 +08:00 (clean-base rerun)
-BASE: eb6528bb7b9367ea87d4e808be6b498f8acce0a4
-CMD: PowerShell UTF8 keyword/table/size self-check; independent math recompute; git diff --check
-FILES: requirements=1524 architecture=96 module-design=109 test-plan=181 README=125 lines
-CHECKS: 76/76 keyword PASS covering 16 acceptance items (topology, orientation, bus/derating, input/EMI, PFC, LLC/buck, layout, thermal, airflow, rear panel, SWD, efficiency/standby, ripple, structure)
-MATH: BUS_MIN=53.176V; DUTY_54=88.98%; PFC_L=2.190mH; HOLD=29.91ms; PFC_RIPPLE=7.66Vpp; LLC_N=3.623; LLC_FR=100.658kHz; ZR=63.25Ω; BUCK_L=30.545µH; EFF_29W=89.22%; LOSS_90=26.67W; TJ=67.0℃
-CAP_BANK: 4×47µF+22µF=210µF >=200µF; ripple 3.13mV cap +10mV ESR <15mV; step 5A/2V/50µs needs 125µF
-STRUCT: TABLE_BAD=0 TABS=0 TRAIL=0 BOM=0 PH_T0011=0
-DIFF: content C1-C4 already in base; rerun fixes 3 doc lines + refreshes P0/worklog/KB
+AT: 2026-11-18 20:12 +08:00 (clean-base rerun)
+BASE: 4c2b453861737c945cb9b5656d6be2003884aeb3
+CMD: PowerShell UTF-8 keyword/table/size checks; independent math recompute; git diff --check
+FILES: R=1607 A=99 M=113 T=181 README=126 lines
+CHECKS: 29/29 key facts covering 16 acceptance clauses; T-0011 placeholder scan=0
+MATH: BUS_MIN=53.176V; DUTY_54=88.98%; DUTY_56=85.80%; PFC_L=2.191mH; HOLD=29.91ms; PFC_RIPPLE=7.66Vpp; LLC_N=3.623; LLC_FR=100.658kHz; ZR=63.25ohm; BUCK_L=30.545uH; EFF_29W=89.22%; LOSS_90=26.67W; TJ=67.0C
+CAP_BANK: 4x47uF+22uF=210uF >=200uF; 5A/2V/50us step needs 125uF; 55V cap 400uF/100V
+STRUCT: TABLE_BAD=0 TABS=0 TRAIL=0 BOM=0; PH_T0011=0
+DIFF: content C1-C7 already in clean base; rerun refreshes evidence line refs and SHA only
 GIT_DIFF_CHECK: exit 0
 RESULT: PASS
