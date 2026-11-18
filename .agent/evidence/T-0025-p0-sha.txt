@@ -5,10 +5,11 @@ BASE: a8d814809c96a8114b6a6e8680aaeb99f7832d14
 CONTENT_COMMIT: 8a7462da0df3203e9900efcc9a76c8e565ff9130
 PUSH_CONTENT: a8d8148..8a7462d HEAD -> master (exit 0)
 CONTENT_ON_ORIGIN: git ls-remote origin refs/heads/master = 8a7462d (C1 push 时)
-EVIDENCE_COMMIT: (Evidence: T-0025 提交，C2 回填)
-PUSH_EVIDENCE: (C2 回填)
-EVIDENCE_ON_ORIGIN: (C2 回填)
+EVIDENCE_COMMIT: d1f93bd08e07bc96939c6e0089d83f696bedc175
+PUSH_EVIDENCE: 8a7462d..d1f93bd HEAD -> master (exit 0)
+EVIDENCE_ON_ORIGIN: git ls-remote origin refs/heads/master = d1f93bd (E1 push 时)
 TICKET_LOG:
 8a7462d feat(T-0025): 新增标定工具串口层与连接设备页
+d1f93bd docs(T-0025): 记录 P0 证据与两态 UI 截图（E1）
 NOTE: 最终 Ticket 收口提交 SHA 见报告；本文件不记录最终 HEAD SHA。
-WORKTREE: C1 后 `git status --porcelain -uall` = 0 行
+WORKTREE: C1/E1 后 `git status --porcelain -uall` = 0 行；C2 只改本文件
