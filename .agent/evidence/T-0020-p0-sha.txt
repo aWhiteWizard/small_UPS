@@ -1,22 +1,14 @@
 KIND: sha
 TASK: T-0020
-AT: 2026-11-18 +08:00
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f（ticket base）
-UPSTREAM: 49c5029f1b5d5c7e80fdd79df3c3789c2af26a46（首轮开工 origin/master）
-SYNC: 94e1d148103d694963a92996d9f12e3404df95fa..4a12310ed23c155e0f94c38783a3184120f6cc84（重派 git merge --ff-only origin/master，exit 0）
-COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68（内容 C1：requirements/README/KB/worklog）
-EVIDENCE_COMMIT: 3dacec19688d61e82a24aaed30b414701dfa8776（证据 C2：P0 四件 + worklog）
-PREV_RECORD: 94e1d148103d694963a92996d9f12e3404df95fa（首轮记录 C4，已入 master）
-RECORD_COMMIT: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22（重派记录 C5：插入深度引用修正 + P0/KB/worklog 刷新）
-LOCAL_HEAD: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22
-REMOTE_HEAD: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22 refs/heads/master
-CMD: git fetch origin --prune; git merge --ff-only origin/master; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-PUSH_C1: 49c5029..65cc739  HEAD -> master（exit 0）
-PUSH_C2: 65cc739..3dacec1  HEAD -> master（exit 0）
-PUSH_C3: 3dacec1..d605bb2  HEAD -> master（exit 0）
-PUSH_C4: 94e1d14 已在 master（ancestor check exit 0；首轮原文见 C4 报告）
-PUSH_C5: 4a12310..ec6efd4  HEAD -> master（exit 0）
-LS_REMOTE: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22	refs/heads/master
-VERIFY: C5 推送后 LOCAL_HEAD == REMOTE_HEAD == ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22
-NOTE: 本文件随最终记录 C6 落库；C6 推送后 LOCAL=REMOTE，C6 SHA 见报告正文（自指限制，沿用 T-0018/T-0019 惯例）。
+AT: 2026-11-18 18:40 +08:00
+BASE: f86459553cc2998d385d6ab10a2f1759a1ffa4c6（本轮 clean base = origin/master）
+CONTENT: C1=65cc739c1bf333cef38e7e583376ff8a7f11ad68（正文，已入 master）；C5=ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22；C6=b39c14d6295215497f26397ddc92702a065bcda4（已在 master）
+COMMIT: 0c9f67ef2f8f10cc28e0e2073950fa8c441eb3ae（D1：clean-base 复核 + P0 刷新；4 文件 43+/41−）
+LOCAL_HEAD: 0c9f67ef2f8f10cc28e0e2073950fa8c441eb3ae
+REMOTE_HEAD: 0c9f67ef2f8f10cc28e0e2073950fa8c441eb3ae refs/heads/master
+CMD: git rev-parse HEAD; git push origin HEAD:refs/heads/master; git ls-remote origin refs/heads/master
+PUSH: f864595..0c9f67e  HEAD -> master（exit 0）
+LS_REMOTE: 0c9f67ef2f8f10cc28e0e2073950fa8c441eb3ae	refs/heads/master
+VERIFY: D1 推送后 LOCAL_HEAD == REMOTE_HEAD == 0c9f67ef2f8f10cc28e0e2073950fa8c441eb3ae
+NOTE: 本文件随最终记录 D2 落库；D2 只含本文件，推送后 LOCAL=REMOTE=D2，D2 SHA 见报告正文（自指限制，沿用 T-0018/T-0019 惯例）。
 RESULT: PASS
