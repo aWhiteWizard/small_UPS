@@ -2,15 +2,15 @@ KIND: sha
 TASK: T-0018
 AT: 2026-11-18 +08:00
 BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 base）
-CONTENT: 90b6ed58b2f00054ca7f78299ab9aea56b7150d0（附录 G + 首轮 P0；已随 T-0017 收口进入 master）
+CONTENT_COMMIT: 90b6ed58b2f00054ca7f78299ab9aea56b7150d0（附录 G + 首轮 P0；已随 T-0017 收口进入 master）
 PREV_RECORD: 95cd04e992c9a84bea0e7100170df4aebba523f4（首轮 SHA 记录）
 SYNC: 95cd04e..25506f8d7cd385ccd69e9725040f49264ac93759（重派 git merge --ff-only origin/master）
-COMMIT: 90b6ed58b2f00054ca7f78299ab9aea56b7150d0（内容提交）
-LOCAL_HEAD: 25506f8d7cd385ccd69e9725040f49264ac93759
-REMOTE_HEAD: 25506f8d7cd385ccd69e9725040f49264ac93759 refs/heads/master
-CMD: git fetch origin --prune; git merge --ff-only origin/master; git rev-parse HEAD; git ls-remote origin refs/heads/master; git push origin HEAD:refs/heads/master
-LS_REMOTE: 25506f8d7cd385ccd69e9725040f49264ac93759	refs/heads/master
-VERIFY: 重派开工时 LOCAL_HEAD == REMOTE_HEAD == 25506f8d7cd385ccd69e9725040f49264ac93759
-PUSH: 25506f8..本轮证据提交（推送后 LOCAL_HEAD == REMOTE_HEAD；具体 SHA 见下一轮记录）
-NOTE: 按 T-0016/T-0017 两段提交口径，证据文件不写自身提交；本轮证据提交 SHA 见下一轮记录，最终记录提交 SHA 见报告正文。
+COMMIT: a1fd255b7c9580736b30275267f2ec73caa611a7（本轮证据提交 E1）
+LOCAL_HEAD: a1fd255b7c9580736b30275267f2ec73caa611a7
+REMOTE_HEAD: a1fd255b7c9580736b30275267f2ec73caa611a7 refs/heads/master
+CMD: git fetch origin --prune; git merge --ff-only origin/master; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+LS_REMOTE: a1fd255b7c9580736b30275267f2ec73caa611a7	refs/heads/master
+PUSH: 25506f8..a1fd255  HEAD -> master（exit 0）；最终记录提交 E2 的 push 复核见报告正文
+VERIFY: E1 推送后 LOCAL_HEAD == REMOTE_HEAD == a1fd255b7c9580736b30275267f2ec73caa611a7
+NOTE: 本文件随最终记录提交 E2 落库；E2 SHA 见报告正文（自指限制，沿用 T-0016/T-0017 惯例）；E1 为本轮证据提交，内容提交为 90b6ed5。
 RESULT: PASS
