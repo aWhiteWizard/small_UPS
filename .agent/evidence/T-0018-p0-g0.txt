@@ -1,12 +1,13 @@
 KIND: g0
 TASK: T-0018
-AT: 2026-11-18 21:12 +08:00
+AT: 2026-11-18 21:45 +08:00
 BRANCH: task/T-0018 @ D:\workspace\wt\small-ups\T-0018
-BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f（工单 base，历史）
-CLEAN_BASE: 4759b5fc9b67fc343c81998c3c6a2ac7c8d957fd（origin/master，重派重建基线）
+BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f（历史）
+CLEAN_BASE: 4759b5fc9b67fc343c81998c3c6a2ac7c8d957fd（origin/master，重派重建）
 PRECHECK: HEAD=4759b5f=origin/master；git status --porcelain 空；git diff --check exit 0
-CONTENT_COMMITS: 90b6ed5（附录 G+首轮 P0）、95cd04e；git merge-base --is-ancestor 两者 HEAD 均 exit 0，本单内容已在 clean base 树中，不重做
-SCOPE: .agent/requirements.md 附录 G（1126–1279）；README §6/§7、KB、worklog、P0 4 件
-DIFF: 内容提交 8 文件 278+/10−；文档（去证据）4 文件 227+/10−；代码与配置 0 文件 0 行；本轮只刷新 P0/worklog
+CONTENT_COMMITS: 90b6ed5（C1，附录 G+首轮 P0）、95cd04e（C2）；git branch -r --contains 两者均返回 origin/master；git merge-base --is-ancestor 两者 HEAD 均 exit 0
+POST_E7: HEAD=067d735e15ca801e1442dcb4ce43ab52b9215b5f；git status --porcelain 空；git ls-remote origin refs/heads/master=067d735e15ca801e1442dcb4ce43ab52b9215b5f；E7 提交末行 Ticket: T-0018
+SCOPE: .agent/requirements.md 附录 G（1126–1279，正文在基线树 4759b5f/90b6ed5）；README §6/§7、KB、worklog、P0 4 件
+DIFF: 内容提交 8 文件 278+/10−；文档（去证据）4 文件 227+/10−；代码与配置 0 文件 0 行；本轮审查区间仅 P0/worklog
 CHECK: git diff --check exit 0；表格块 0 列数错；UTF-8 无 BOM、无 Tab、无行尾空白；附录 G 无 0x 寄存器地址/编码
 RESULT: PASS

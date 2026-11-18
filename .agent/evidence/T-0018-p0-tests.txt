@@ -1,8 +1,11 @@
 KIND: tests
 TASK: T-0018
-AT: 2026-11-18 21:12 +08:00
-CMD: PowerShell 7 + [IO.File]::ReadAllLines(..., UTF8)；git diff --check；git merge-base --is-ancestor
+AT: 2026-11-18 21:45 +08:00
+CMD: PowerShell 7 + [IO.File]::ReadAllLines(..., UTF8)；git show 4759b5f:.agent/requirements.md；git diff --check
 LINES: .agent/requirements.md 1607 行（v1.2）；附录 G 第 1126–1279 行（154 行）
+BASE_TREE: git show 4759b5f:.agent/requirements.md 行数=1607；^## 附录 G=1126；^## 附录 H=1280
+BODY_IN_BASE: git merge-base --is-ancestor 90b6ed5 4759b5f → exit 0；git show --numstat 90b6ed5 → .agent/requirements.md 162+/4−
+C1_ON_MASTER: git branch -r --contains 90b6ed5 → origin/master（exit 0）
 TABLES: 表格块 0 列数不一致（含 G.5 6 列、G.6 5 列）
 ENCODING: UTF-8 无 BOM；TABS=0；TRAILING_WS=0
 G: HEX=0（附录 G 无 0x 寄存器地址/编码）；验收判据=4（G.1–G.4）；待 owner 确认命中=6；能力条目=3（C-01–C-03）

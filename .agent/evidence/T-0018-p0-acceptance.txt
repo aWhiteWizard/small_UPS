@@ -1,6 +1,6 @@
 KIND: acceptance
 TASK: T-0018
-AT: 2026-11-18 21:12 +08:00
+AT: 2026-11-18 21:45 +08:00
 1 保护阈值可设性：PASS。G.1（1130–1162）：默认 OVP=V_set+2V、OCP=I_set+max(0.05A,5%)；显式范围 OVP +0.5–50V、OCP +0.05–8A；与工作点余量/热调关系、越界拒绝、输出 OFF 才可改；触发后输出 OFF/ALERT/PC 读码/不自动恢复；无寄存器地址/编码。
 2 故障可追溯：PASS。G.2（1164–1190）：故障标识+全部锁存位、分类计数/总数、最近一次时刻/序次、现场快照；≥16 条、跨上电/换板 ≥10 年、CLEAR 不清；未指定介质/格式；与 §3.3.7/P-06 冲突见 G.6#1。
 3 异常安全态：PASS。G.3（1192–1213）：看门狗/异常复位→输出 OFF/继电器断开/PWM 关断/软使能清零；不自动恢复输出；不丢校准/设定/预设；存储半写 fail-safe；未指定超时/喂狗位置。
@@ -9,6 +9,6 @@ AT: 2026-11-18 21:12 +08:00
 6 可判定验收：PASS。G.1–G.4 均有能/不能/边界/用户可见判据；G.5 表格有边界与验收方式；无只写“支持”。
 7 只改需求文档/冲突标注：PASS。需求正文只改 .agent/requirements.md 附录 G+header/完成度表/附录 B/C/E；README 仅状态同步、KB 仅留痕；无 docs/ 架构/接口设计；G.6 4 项均“待 owner 确认”+来源。
 8 规模：PASS。文档 4 文件 237 行（去证据）；代码与配置 0 文件 0 行；证据 4 件另列不计；≤8 文件/≤1500 行。
-9 交付硬要求：PASS。内容 90b6ed5/95cd04e 已在 origin/master；Evidence/Ticket 两个收口提交按新 trailer 口径；工作区干净；commit 号见报告与 p0-sha。
+9 交付硬要求：PASS。C1=90b6ed5 已在 origin/master（git branch -r --contains + is-ancestor）；C1_PUSH 017a13b..90b6ed5、C1_LS_REMOTE 90b6ed5 原文记入 p0-sha；E6=0896701（Evidence）、E7=067d735（Ticket）已 push 并经 ls-remote 复核，E7 后 git status --porcelain 空；最终 E9 的 push/ls-remote 原文见报告正文。
 NOTE: T-0031 附录 J.6 把 PC 工具行协议补丁“归入 T-0018”，与本单“只定要求、不写接口设计”边界冲突；本单未产出接口设计，留 owner/后续接口单裁决。
 RESULT: PASS（9/9）；RISK 1 项见 NOTE

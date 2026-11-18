@@ -1,17 +1,29 @@
 KIND: sha
 TASK: T-0018
-AT: 2026-11-18 21:12 +08:00
+AT: 2026-11-18 21:45 +08:00
 BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f（历史）
 CLEAN_BASE: 4759b5fc9b67fc343c81998c3c6a2ac7c8d957fd（origin/master，重派重建）
-CONTENT_COMMITS: 90b6ed58b2f00054ca7f78299ab9aea56b7150d0（附录 G+首轮 P0）、95cd04e992c9a84bea0e7100170df4aebba523f4；is-ancestor HEAD 均 exit 0
-EVIDENCE_COMMIT: 0896701b2b016ce1e8c0f9231637baa7f967dc03（E6，5 文件 49+/42−，已 push）
-EVIDENCE_PUSH: 4759b5f..0896701 HEAD -> master（exit 0）；LOCAL_HEAD=REMOTE_HEAD=0896701
-PRE_EVIDENCE_HEAD: 4759b5fc9b67fc343c81998c3c6a2ac7c8d957fd；git status --porcelain 空
-CMD: git merge --ff-only origin/master; git add; git commit; git push origin HEAD:refs/heads/master; git ls-remote origin refs/heads/master
+CONTENT_COMMIT: 90b6ed58b2f00054ca7f78299ab9aea56b7150d0（C1：附录 G+首轮 P0，7 文件 259+/6−）
+C2_COMMIT: 95cd04e992c9a84bea0e7100170df4aebba523f4（SHA 证据+worklog，2 文件 19+/4−）
+C1_PUSH: 017a13b..90b6ed5  HEAD -> master（exit 0；worklog:51 原文）
+C1_LS_REMOTE: 90b6ed58b2f00054ca7f78299ab9aea56b7150d0	refs/heads/master（worklog:52 原文）
+C1_ON_MASTER: git branch -r --contains 90b6ed5 → origin/master；git merge-base --is-ancestor 90b6ed5 4759b5f → exit 0
+C2_ON_MASTER: git branch -r --contains 95cd04e → origin/master；git merge-base --is-ancestor 95cd04e 4759b5f → exit 0
+PRIOR_EVIDENCE_COMMIT: 0896701b2b016ce1e8c0f9231637baa7f967dc03（E6，5 文件 49+/42−，末行 Evidence: T-0018）
+PRIOR_TICKET_COMMIT: 067d735e15ca801e1442dcb4ce43ab52b9215b5f（E7，末行 Ticket: T-0018）
+E6_PUSH: 4759b5f..0896701  HEAD -> master（exit 0）
+E6_LS_REMOTE: 0896701b2b016ce1e8c0f9231637baa7f967dc03	refs/heads/master
+E7_PUSH: 0896701..067d735  HEAD -> master（exit 0）
+E7_LS_REMOTE: 067d735e15ca801e1442dcb4ce43ab52b9215b5f	refs/heads/master
+POST_E7_STATUS: git status --porcelain → 空（无输出）
+E6_TRAILER_TAIL: git show -s --format=%B 0896701 末行 = Evidence: T-0018
+E7_TRAILER_TAIL: git show -s --format=%B 067d735e 末行 = Ticket: T-0018
+EVIDENCE_COMMIT: 待回填（E8 提交后由 E9 写入）
+FINAL: E9=Ticket 收口提交；其 SHA、git push 与 git ls-remote 原文见报告正文（自指限制；本文件不写当前 HEAD 的 SHA）
 COMMITS（git log --oneline 本单提交原文）:
-  90b6ed5 docs(T-0018): 能力补齐需求（附录 G：阈值/追溯/安全态/预设/能力留口）
-  95cd04e docs(T-0018): 记录 push 后 SHA 证据并定稿 worklog
-  1089d80 docs(T-0018): 回填 E4 交付 SHA 并收口（E5）
+  067d735 docs(T-0018): 回填 E6 证据 SHA 并 Ticket 收口（E7）
   0896701 docs(T-0018): 重派重建后刷新 P0 证据（E6）
-NOTE: 最终 Ticket 收口提交 E7 的 SHA 见报告正文（自指限制）；本文不写最终 HEAD 的 SHA。
+  1089d80 docs(T-0018): 回填 E4 交付 SHA 并收口（E5）
+  95cd04e docs(T-0018): 记录 push 后 SHA 证据并定稿 worklog
+  90b6ed5 docs(T-0018): 能力补齐需求（附录 G：阈值/追溯/安全态/预设/能力留口）
 RESULT: PASS
