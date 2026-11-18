@@ -1,14 +1,19 @@
 KIND: sha
 TASK: T-0011
-AT: 2026-11-18 18:15 +08:00 (clean-base rerun)
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); DELIVERY_BASE: eb6528bb7b9367ea87d4e808be6b498f8acce0a4 (clean)
-COMMIT: b28c26cee493ebb8a7f4f20a1f2baff7c2e34f62 (C6 delivery/evidence refresh)
-LOCAL_HEAD: b28c26cee493ebb8a7f4f20a1f2baff7c2e34f62
-REMOTE_HEAD: b28c26cee493ebb8a7f4f20a1f2baff7c2e34f62 refs/heads/master
+AT: 2026-11-18 20:18 +08:00 (clean-base rerun, SHA backfill)
+TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
+CLEAN_BASE: 4c2b453861737c945cb9b5656d6be2003884aeb3
+HEAD_AT_START: 4c2b453861737c945cb9b5656d6be2003884aeb3 (== origin/master; worktree clean)
+CONTENT_COMMIT: fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd (C1) .. e07f27a (C7), ancestors of CLEAN_BASE; no content re-commit
+EVIDENCE_COMMIT: 43536b8a466eb238a2266e7eb7a45c45ebbb4758 (E1)
+EVIDENCE_DETAIL: 4 files, +44/-36 (P0 g0/tests/acceptance + worklog); P0 text 70 lines (51 + this sha 19)
+PUSH_EVIDENCE: 4c2b453..43536b8  HEAD -> master (exit 0)
+COMMIT: 43536b8a466eb238a2266e7eb7a45c45ebbb4758
+LOCAL_HEAD: 43536b8a466eb238a2266e7eb7a45c45ebbb4758
+REMOTE_HEAD: 43536b8a466eb238a2266e7eb7a45c45ebbb4758 refs/heads/master
+LS_REMOTE: 43536b8a466eb238a2266e7eb7a45c45ebbb4758 refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 43536b8a466eb238a2266e7eb7a45c45ebbb4758 True
 CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-PUSH: eb6528b..b28c26c  HEAD -> master (exit 0)
-LS_REMOTE: b28c26cee493ebb8a7f4f20a1f2baff7c2e34f62	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == b28c26cee493ebb8a7f4f20a1f2baff7c2e34f62 True
-CONTENT: C1=fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd; C2=da8eb6268e3a5352bc6b2c33e47425fb042f2e0b; C3=2212cb29ca49efb935bbd83a7b898a5af377a59a; C4=b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679 (already in base); C6 fixes 198->210µF and refreshes P0
-RECORD_COMMIT: sha-backfill C7 contains this file; final HEAD and SHA in report
+FINAL_RECORD: backfilled by F (Ticket: T-0011); F SHA and final LOCAL=REMOTE in report (self-reference limitation)
+SIZE_DELIVERED: content C1 5 docs/208 lines; rerun 1 doc (worklog) + 4 P0 evidence (excluded); 0 code/config
 RESULT: PASS
