@@ -2,20 +2,21 @@ KIND: sha
 TASK: T-0006
 AT: 2026-11-18 +08:00
 BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-UPSTREAM: 2b2fd56（origin/master，含 T-0006 C1–C4 与其他单；本支已 rebase）
+UPSTREAM: 1d6caec（origin/master，含 T-0006 C1–C4 与其他单；本支已 rebase）
 C1: 3cc6ab1a18bf484bd75359bea96d112160a6b2df（内容提交）
 C2: 1770c955b1a4414fdd6301cb6c52a97d4901897f（首轮证据提交）
 C3: dc75815ca1f53fefcb9a41f72bb439198c9b6377（55V 码位修复）
 C4: 5c48e08376d225e7ef7b5c31fae863816c52943d（前一轮内容/证据，已并入 master）
 C5: 2b541c80fc8191785b83a4c057a96ea64500bf55（最终内容修复）
 C6: f225c09bcd52bcd24edf7b3b4964c2d616762605（最终证据提交）
-C9: 319cf8ef008c4d787dedfe97048c92d8d0874d8f（上一记录提交）
-COMMIT: 319cf8ef008c4d787dedfe97048c92d8d0874d8f
-LOCAL_HEAD: 319cf8ef008c4d787dedfe97048c92d8d0874d8f
-REMOTE_HEAD: 319cf8ef008c4d787dedfe97048c92d8d0874d8f refs/heads/master
+C9: 319cf8ef008c4d787dedfe97048c92d8d0874d8f（前前记录提交）
+C10: e7a811b509a77018f175a8e66b4a88815d2ab3cf（上一记录提交）
+COMMIT: e7a811b509a77018f175a8e66b4a88815d2ab3cf
+LOCAL_HEAD: e7a811b509a77018f175a8e66b4a88815d2ab3cf
+REMOTE_HEAD: e7a811b509a77018f175a8e66b4a88815d2ab3cf refs/heads/master
 CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-PUSH: 055b7dd..319cf8e HEAD -> master
-LS_REMOTE: 319cf8ef008c4d787dedfe97048c92d8d0874d8f	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 319cf8ef008c4d787dedfe97048c92d8d0874d8f
-NOTE: C10' 为最终记录提交（回填 C9' 与行数），其 SHA 见报告（自指限制，沿用 T-0017 惯例）。
+PUSH: 1d6caec..e7a811b HEAD -> master
+LS_REMOTE: e7a811b509a77018f175a8e66b4a88815d2ab3cf	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == e7a811b509a77018f175a8e66b4a88815d2ab3cf
+NOTE: C11' 为最终记录提交（回填 C10' 与行数），其 SHA 见报告（自指限制，沿用 T-0017 惯例）。
 RESULT: PASS
