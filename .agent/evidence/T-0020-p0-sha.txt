@@ -1,12 +1,15 @@
 KIND: sha
 TASK: T-0020
-AT: 2026-11-18 22:15 +08:00（新引擎重派）
+AT: 2026-11-18 22:18 +08:00（新引擎重派）
 BASE: 7dc52b6f74927e9e7f5bd93f6b4bf2e321792e57（origin/master，重建基线；重建生效）
 CONTENT: C1=65cc739c1bf333cef38e7e583376ff8a7f11ad68；C5=ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22；C6=b39c14d6295215497f26397ddc92702a065bcda4（均 BASE 祖先，已入 master；未重做）
-EVIDENCE: E4=本提交（body `Evidence: T-0020`；6 文件：worklog/KB/4 P0；SHA 由 C1 回填，自指限制）
-DELIVERY: C1=后续 `Ticket: T-0020` 收口提交（回填 E4 SHA 到本文件/worklog；C1 自身 SHA 见报告正文，不写最终 HEAD 自指 SHA）
-CMD: git add -f .agent/evidence/T-0020-p0-*.txt .agent/worklogs/T-0020.md .agent/kb/notes.md; git commit -F <msg-Evidence>; git push origin HEAD:refs/heads/master; git ls-remote origin refs/heads/master
-DIFF: E4 = 6 files（文档 2 + 证据 4）；requirements 正文无改动（已在基线）
+EVIDENCE: E4=a2664ce378fa94412b3d09bf9f92dbf3b862cdc3（body `Evidence: T-0020`；6 文件 77+/57−：worklog/KB/4 P0）
+EVIDENCE_LINE: a2664ce docs(T-0020): 新引擎重建后复核 canonical 并刷新 P0 证据（E4）
+DELIVERY: C1=本提交（body `Ticket: T-0020`，回填 E4 SHA 到本文件/worklog；C1 自身 SHA 见报告正文，不写最终 HEAD 自指 SHA）
+PUSH_E4: 7dc52b6..a2664ce  HEAD -> master（exit 0）
+LOCAL_AT_E4: a2664ce378fa94412b3d09bf9f92dbf3b862cdc3
+REMOTE_AT_E4: a2664ce378fa94412b3d09bf9f92dbf3b862cdc3 refs/heads/master
+VERIFY_E4: LOCAL=REMOTE=E4；`git status --porcelain` 空
+DIFF_E4: 6 files changed, 77 insertions(+), 57 deletions(-)（文档 2 + 证据 4；requirements 正文无改动）
 GIT_LOG: 本单 `git log --oneline` 提交原文见报告正文
-VERIFY: E4 推送后 LOCAL=REMOTE；`git status --porcelain` 空；C1 后终验见报告
 RESULT: PASS
