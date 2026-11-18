@@ -308,3 +308,27 @@ KB-LAYER: 2_system
 KB-TAGS: git, worktree, clean-base, redispatch, sha
 
 T-0029 收口后，旧 worktree 的 HEAD 可能落后 origin/master 十余个提交；不先 ff，按 `origin/master..HEAD` 计算的 diff 会把其他单的改动当成回退（本单重派前引擎记录为 33 文件/3991 行）。重派第一步固定为 `git merge --ff-only origin/master`，并用 `git merge-base --is-ancestor HEAD origin/master` 确认。交付 SHA 证据有自指：先提交内容/证据 C1 并 push，把 C1 写进 `p0-sha.txt` 后提交 C2 并 push；文件记录 C1（当时 LOCAL=REMOTE=C1），C2 的最终 SHA 写入报告，沿用 T-0011/T-0017 惯例。
+
+## T-0031：T-0020 的“面板可见性/PC 工具可选”与后续变更单直接冲突，先判取代关系再改正文
+
+KB-TYPE: content
+KB-EVIDENCE: `.agent/requirements.md:1450`（T-0031 取代 I.2 S-01～S-06）、`.agent/requirements.md:1469-1476`（I.4 PC 工具必需）、`.agent/requirements.md:1583-1592`（T-0009/T-0010/T-0011 验收修订对照）
+KB-TAGS: requirements, conflict, display, pc-tool, change-order
+
+T-0020 附录 I.2/I.4 要求“本地面板可见设定/实测/CV/CC/功率/故障”“PC 工具可选、不交付”。T-0031 又要求“面板只显示实测 V/I”“PC 工具必需”。这类跨单冲突不要只改目标章节（4.2/4.5），必须在同一需求文件里加“取代/历史对照”块，并列出 T-0009/T-0010/T-0011/T-0020 的修订对照；否则 grep 旧条款会把现行需求判成自相矛盾。
+
+## worktree 基点落后 origin/master 时先 ff-only，且本单基准要按实际 HEAD 记录
+
+KB-TYPE: system
+KB-EVIDENCE: `git rev-parse HEAD` 开工 ba16717（T-0021）；`git ls-remote origin refs/heads/master` 1aeb7e2；`git merge --ff-only origin/master` → Updating ba16717..1aeb7e2（88 files）；`git diff --stat` 仅 8 个内容文件
+KB-TAGS: git, worktree, baseline, ff-only
+
+T-0031 的 worktree 起始 HEAD 是本地 master 的 T-0021 提交，而 origin/master 已到 T-0020 收口后的 1aeb7e2（T-0009/T-0010/T-0011 正文已入库）。开工前必须 `git merge --ff-only origin/master`，否则会在旧需求上重写并漏掉 T-0009/T-0010/T-0011 的现行正文；ff 后 diff 只含本单 8 文件，不会把上游 90 个提交算进本单。
+
+## 纯文档变更的自检三件套：UTF-8/表格管道/禁用词
+
+KB-TYPE: method
+KB-EVIDENCE: `.agent/evidence/T-0031-p0-tests.txt`（8/8 文件 FAIL=0；23/23 关键词 PASS；10/10 禁用词 PASS）
+KB-TAGS: docs, validation, utf8, markdown, grep
+
+需求/设计类工单提交前至少跑三项：① `[IO.File]::ReadAllText(..., UTF8)` 读全文并查 BOM/Tab/行尾空白；② 连续表格行按 `|` 计数必须一致（避免改表漏列）；③ 用“旧口径禁用词 + 新验收关键词”双清单 grep，旧词只允许出现在“历史对照/已取代”段落。用默认 `Get-Content` 读中文会误判，见本文件早前的 UTF-8 条目。
