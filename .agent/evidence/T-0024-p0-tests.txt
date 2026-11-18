@@ -1,0 +1,16 @@
+KIND: tests
+TASK: T-0024
+AT: 2026-11-18 +08:00
+TOOLS: OpenOCD 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44); arm-none-eabi-gcc 15.2.1; CMake 3.31.9; Ninja 1.13.2
+CMD: check-env.ps1; build.ps1 -Clean; flash.ps1 -DryRun; flash.ps1; serial.ps1 -List/-SelfTest/-Port COM3; git checks
+CHECK-ENV: 10/10 True, `CHECK-ENV: PASS`, exit 0 (gcc/cmake/ninja/openocd/serial-api/openocd-config/PuTTY/CMSIS/HAL)
+BUILD: `[8/8] Linking C executable psu_minimal.elf`, exit 0; RAM 1584 B/36 KB, FLASH 1544 B/128 KB
+FLASH-DRYRUN: exit 0; prints full OpenOCD command with `interface/stlink.cfg`, `target/stm32g0x.cfg`, `program {...} verify reset exit`
+FLASH-REAL-NOHW: exit 1; `Error: open failed`; `** OpenOCD init failed **`; `FLASH: FAIL (no ST-Link probe or target board detected)`
+FLASH-MARKERS: no `Info : STLINK`, no `Target voltage`, no `** Programming Finished **`, no `** Verified OK **` -> cannot claim chip identified / write / reset
+SERIAL-LIST: `SERIAL-LIST: 0 port(s)`, exit 0
+SERIAL-SELFTEST: `SERIAL-SELFTEST: PASS (formatter/timestamp, 2 lines)`, exit 0
+SERIAL-NOPORT: `SERIAL: port COM3 not present (available: none)`, exit 2
+UART: placeholder `firmware/src/main.c` has no USART init; acceptance #2 allows explaining why no target output
+LOGS: `.agent/evidence/T-0024-p1-check-env.log`, `-build.log`, `-flash-dryrun.log`, `-flash-nohw.log`, `-serial.log`, `-git.log`
+RESULT: chain readiness PASS; on-board flash FAIL (hardware absent)

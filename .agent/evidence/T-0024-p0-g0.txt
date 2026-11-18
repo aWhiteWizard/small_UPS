@@ -1,0 +1,10 @@
+KIND: g0
+TASK: T-0024
+AT: 2026-11-18 +08:00
+BASE: 7c17f7b63c0073ad6f4788bd05de1aa715373f3d (origin/master; ff-only from ba16717)
+STATUS_START: `git status --porcelain -uall` = 0 lines (clean; `.tools` junction created after, gitignored)
+CHECK_ENV: 10/10 True, `CHECK-ENV: PASS`, exit 0
+BUILD: `[8/8] Linking C executable psu_minimal.elf`, exit 0; ELF 665456 / BIN 1544 / HEX 4426 B
+DIFF_CHECK: `git diff --check` exit 0
+GIT_IGNORE: `.tools/` and `build/` hit; tracked `.tools` entries = 0; tracked binary extensions = 0
+RESULT: PASS
