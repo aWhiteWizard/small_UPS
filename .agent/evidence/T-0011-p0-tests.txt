@@ -1,13 +1,19 @@
 KIND: tests
 TASK: T-0011
-AT: 2026-11-18 20:12 +08:00 (clean-base rerun)
+AT: 2026-11-18 20:42 +08:00 (G2 fix round 1)
 BASE: 4c2b453861737c945cb9b5656d6be2003884aeb3
-CMD: PowerShell UTF-8 keyword/table/size checks; independent math recompute; git diff --check
+CMD: PowerShell UTF8 keyword/table/size checks; independent math recompute; git diff --check
 FILES: R=1607 A=99 M=113 T=181 README=126 lines
-CHECKS: 29/29 key facts covering 16 acceptance clauses; T-0011 placeholder scan=0
-MATH: BUS_MIN=53.176V; DUTY_54=88.98%; DUTY_56=85.80%; PFC_L=2.191mH; HOLD=29.91ms; PFC_RIPPLE=7.66Vpp; LLC_N=3.623; LLC_FR=100.658kHz; ZR=63.25ohm; BUCK_L=30.545uH; EFF_29W=89.22%; LOSS_90=26.67W; TJ=67.0C
-CAP_BANK: 4x47uF+22uF=210uF >=200uF; 5A/2V/50us step needs 125uF; 55V cap 400uF/100V
+CHECKS: KEY=76/76 (all 16 clauses); T-0011 placeholder scan=0; TABLE_BAD/TABS/TRAIL/BOM=0
+MATH: BUS_MIN=53.176V; DUTY_54=88.98%; DUTY_56=85.80%; PFC_L=2.191mH; HOLD=29.91ms; LLC_N=3.623; LLC_FR=100.658kHz; ZR=63.25ohm; BUCK_L=30.545uH; EFF_29W=89.22%; LOSS_90=26.67W
+PFC: L=2.0-2.2mH (calc 2.19mH); C=270uF/450V in 220-330uF range; 65kHz; 400V bus ripple 7.66Vpp (100Hz)
+LLC: Np:Ns=28:8 (n=3.5, ideal 3.623); Lr=100uH; Cr=25nF; Lm=600uH; 55V cap 4x100uF=400uF/100V
+BUCK: L=33uH (calc 30.545uH); C=4x47+22=210uF/100V >=200uF; 5A/2V/50us step needs 125uF
+RIPPLE: output 3.13mV cap +10mV ESR = 13.1mVpp <15mV (spec 50/30); 55V bus 7mV cap +23mV ESR = 30mVpp <100 design/150 accept; PFC 400V bus 7.66Vpp
+THERMAL: total 29.0W; heatsink 10.0W; Rth_sa 1.2 + Rth_cs 0.5 -> Tc=57.0C; Tj=+Rth_jc 1.0 -> 67.0C; both <=70C at 40C ambient
+FAN: HA60251V4-0000-C99; effective ~29cm2; 1.5x -> 44cm2 side window; top/bottom closed
+STANDBY: 0.6W flyback +0.3W PFC burst +0.3W control = 1.2W <1.5W (PFC burst)
 STRUCT: TABLE_BAD=0 TABS=0 TRAIL=0 BOM=0; PH_T0011=0
-DIFF: content C1-C7 already in clean base; rerun refreshes evidence line refs and SHA only
+DIFF: content C1-C7 in clean base; fix round edits R:650,690, A:50, T:178 + evidence/worklog
 GIT_DIFF_CHECK: exit 0
 RESULT: PASS

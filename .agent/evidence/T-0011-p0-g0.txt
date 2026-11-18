@@ -1,12 +1,15 @@
 KIND: g0
 TASK: T-0011
-AT: 2026-11-18 20:12 +08:00 (clean-base rerun)
+AT: 2026-11-18 20:42 +08:00 (G2 fix round 1)
 BRANCH: task/T-0011 @ D:\workspace\wt\small-ups\T-0011
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
 CLEAN_BASE: 4c2b453861737c945cb9b5656d6be2003884aeb3 (origin/master)
-START: HEAD=4c2b453861737c945cb9b5656d6be2003884aeb3; git status --porcelain empty
-CONTENT: T-0011 commits fd81bbc..e07f27a are ancestors of CLEAN_BASE (`git merge-base --is-ancestor e07f27a HEAD` exit 0); content not duplicated
+DELIVERY_HEAD: d291a11950d75a0b9c4cd300a925286aeec05e0d (F, == origin/master at fix start)
+TRAILERS: E1=43536b8 `Evidence: T-0011`; F=d291a119 `Ticket: T-0011`; `git log --oneline 4c2b453..d291a119` = E1,F
+CONTENT: C1 fd81bbc..C7 e07f27a are ancestors of CLEAN_BASE (`git merge-base --is-ancestor` exit 0); no content re-commit
+FINAL_CLEAN_AFTER_F: `git status --porcelain=v1 -uall` empty (verified at F before this fix round)
 SCOPE: P-side only: R §3.5.1-§3.5.12, A §2.1-§2.5/§3/§4, M §1.1-§1.5, T §3.1/§6.2, README §6/§7; D-side §4 and T-0006 timing/registers untouched
-CHECK: R=1607 A=99 M=113 T=181 README=126 lines; TABLE_BAD=0; TABS=0; TRAIL=0; BOM=0; T-0011 placeholders=0; KEY=29/29; MATH=OK; git diff --check=0
-SIZE: content C1 5 docs/208 lines (<=8/<=400); rerun 1 doc (worklog) + 4 P0 evidence (excluded); 0 code/config
+CHECK: R=1607 A=99 M=113 T=181 README=126 lines; KEY=76/76; TABLE_BAD=0; TABS=0; TRAIL=0; BOM=0; T-0011 placeholders=0; MATH=OK; git diff --check=0
+FIX: R:650 (switch rear-panel note), R:690 (T-0031 fault-LED opening), A:50 (55V ripple calc), T:178 (case temp Tc=57C); evidence line refs refreshed
+SIZE: content C1 5 docs/208 lines; fix round 3 docs/8 diff lines + worklog; 0 code/config
 RESULT: PASS
