@@ -290,3 +290,12 @@ KB-LAYER: 3_hardware
 KB-TAGS: capacitor-bank, buck, derating, arithmetic, bom
 
 buck 输出电容写成“N×C1 + C2”时，必须先把并联容量相加再对 ≥ 目标值：4×47µF+10µF=198µF 不满足 ≥200µF，应选 4×47µF+22µF=210µF 或 5×47µF=235µF。同步复核并联 ESR、耐压/温度降额与 PCB 面积；审查时把“示例 BOM”当数值条款逐项验算，避免“≥200µF”与示例自相矛盾。
+
+## clean-base 重派先 ff origin/master；SHA 回填分两次提交避免自指
+
+KB-TYPE: method
+KB-EVIDENCE: `git merge --ff-only origin/master` → `Updating 25506f8..e07f27a`（exit 0）；`git diff --shortstat f698a3a..e07f27a` → `37 files changed, 436 insertions(+), 260 deletions(-)`（均属其他单）；`tasks.json` T-0017.diffSize=33 文件/3991 行（重派前）
+KB-LAYER: 2_system
+KB-TAGS: git, worktree, clean-base, redispatch, sha
+
+T-0029 收口后，旧 worktree 的 HEAD 可能落后 origin/master 十余个提交；不先 ff，按 `origin/master..HEAD` 计算的 diff 会把其他单的改动当成回退（本单重派前引擎记录为 33 文件/3991 行）。重派第一步固定为 `git merge --ff-only origin/master`，并用 `git merge-base --is-ancestor HEAD origin/master` 确认。交付 SHA 证据有自指：先提交内容/证据 C1 并 push，把 C1 写进 `p0-sha.txt` 后提交 C2 并 push；文件记录 C1（当时 LOCAL=REMOTE=C1），C2 的最终 SHA 写入报告，沿用 T-0011/T-0017 惯例。
