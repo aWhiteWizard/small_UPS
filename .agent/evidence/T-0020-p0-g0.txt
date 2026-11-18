@@ -1,21 +1,21 @@
 KIND: g0
 TASK: T-0020
-BASE: 7dc52b6f74927e9e7f5bd93f6b4bf2e321792e57（origin/master，2026-11-18 重建基线）
+BASE: 7dc52b6f74927e9e7f5bd93f6b4bf2e321792e57（origin/master，重建基线）
 BRANCH: task/T-0020
-REBUILD: 重建生效：HEAD=origin/master、工作区 0 改动；无旧目录其它工单文件；上轮 34 文件/4000 行未复现
-CANONICAL: .agent/docs/requirements.md（T-0032 迁移后唯一事实源，1734 行）；.agent/requirements.md 仅历史
-CONTENT: C1=65cc739、C5=ec6efd4、C6=b39c14d；`git merge-base --is-ancestor 65cc739 origin/master` / `b39c14d` 均 exit 0
+REBUILD: 生效：HEAD=origin/master、status 0；无其它工单文件；未复现 34 文件/4000 行
+CANONICAL: .agent/docs/requirements.md（T-0032 后唯一事实源，1734 行）；.agent/requirements.md 仅历史
+CONTENT_ANCESTOR: 65cc739 exit 0；ec6efd4 exit 0；b39c14d exit 0（git merge-base --is-ancestor，输出见 p0-tests）
 G0 CHECKS
 - git diff --check -> exit 0
-- git status --porcelain -> 0 lines（提交前）
+- git status --porcelain -> 0 lines（C2 后；C3 后终验见 p0-sha）
 - tables -> 45 tables, 0 column mismatch
 - O list §1.6 -> O-01..O-10, 10/10 unique
 - appendix I -> I.1..I.7, 7/7 present
 - encoding -> UTF-8 no BOM; trailing ws 0; tabs 0; conflict markers 0
-- keywords -> 24/24 PASS
+- keywords -> 26/26 PASS（含 ≤20mΩ/针、增量 ≤10mΩ/针、ΔR≤10mΩ）
 - T-0007 non-dup -> 0 signature values in appendix I
-- T-0031 supersede -> I.2 note:1450 + J.2:1542/J.4:1556；数码管只显示实测 V/I，故障由后板灯/PC 工具
-- insertion depth -> appendix I no stale "10±1"; I.1 references §4.4.2
+- T-0031 supersede -> I.2 note:1450 + J.2:1542/J.4:1556；数码管仅实测 V/I，故障由后板灯/PC 工具
+- insertion depth -> appendix I "10±1"=0；I.1 references §4.4.2；I.5 #7 已登记（5±1mm）
 - sources -> 7/7 URLs present
 - scope -> requirements 正文未改（已在基线）；本轮只改 worklog/KB/evidence
 - files -> 文档 2（worklog/KB）+ 证据 4；无代码/配置；文档 ≤8 文件/≤1500 行

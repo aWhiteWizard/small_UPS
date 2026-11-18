@@ -1,22 +1,25 @@
 KIND: acceptance
 TASK: T-0020
 RESULT: PASS
-BASE: 7dc52b6f74927e9e7f5bd93f6b4bf2e321792e57（origin/master，重建基线；内容 C1/C5/C6 已在基线）
-CANONICAL: .agent/docs/requirements.md（T-0032 迁移后唯一事实源；.agent/requirements.md 仅历史）
-CONTENT_COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68（C1）
-REWORK_COMMIT: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22（C5）
-PREV_RECORD: b39c14d6295215497f26397ddc92702a065bcda4（C6）
-DELIVERY: E4（证据，body Evidence: T-0020）/ C1（Ticket: T-0020 收口，SHA 见报告正文）
+BASE: 7dc52b6f74927e9e7f5bd93f6b4bf2e321792e57（origin/master，重建基线）
+CANONICAL: .agent/docs/requirements.md（T-0032 后唯一事实源）
+CONTENT_COMMIT: 65cc739c1bf333cef38e7e583376ff8a7f11ad68（内容提交；不与 TICKET_COMMIT 混用）
+CONTENT_COMMIT_C5: ec6efd4ae2c37cc1010ef7469fc438eb4c81ae22
+CONTENT_COMMIT_C6: b39c14d6295215497f26397ddc92702a065bcda4
+EVIDENCE_COMMIT: a2664ce378fa94412b3d09bf9f92dbf3b862cdc3（E4）
+TICKET_COMMIT: e187557ec4e15684922cf28e5d21f271a693113c（C1）
+TICKET_COMMIT_2: 560aada752a1cbbff981ac68b6b41876ea5767cb（C2）
+EVIDENCE_COMMIT_2: 本提交（E5）
+FINAL: C3=Ticket 收口提交（body Ticket: T-0020；SHA 由 C3 回填）
 
 | # | 验收口径 | 结论 | 证据/落点 |
 |---|---|---|---|
-| 1 | 插拔寿命：热插拔次数、接触可靠性、次数下限/劣化/插拔力/保持力、来源 | PASS | R 附录 I.1（1404–1432）：热插拔循环定义、≥500 次、≤20mΩ/ΔR≤10mΩ、插入≤20N/拔出3–20N/保持≥30N、EIA-364-09C/IEC 60512 系列 + Hirose/EDAC 来源；插入深度引用 §4.4.2（I.5 #7） |
-| 2 | 显示信息：不借助工具可判定；设定/实测同屏、CV/CC、功率、故障原因；按 T-0031 调整 | PASS | R 附录 I.2（1434–1450）S-01～S-06；T-0031 取代说明（1450）：数码管只显示实测 V/I、故障由本体后板灯指示、故障码/历史由 PC 工具读；J.2（1542–1547）/J.4（1556–1561）。本单只补能力条目，现行口径按 T-0031 |
-| 3 | 范围外：模拟编程、外部监测输出、USB/LAN/GPIB/SCPI、序列/扫描/定时、电池充电逐条入 O 并给理由 | PASS | R §1.6 O-02/O-06～O-10（95、99–103）；理由与边界见附录 I.3（1452–1464） |
-| 4 | 口径例外：PC 标定/配置工具（T-0025～T-0028）属服务工具，不构成上位机产品功能；修订 O-02 | PASS | R O-02（95）；附录 I.4（1466–1483）：“PC 工具（原 T-0008，扩展归 T-0025～T-0028）属服务工具，不构成上位机产品功能；必需”、软件不进 BOM；§4.2.6（866）/§4.5（940）指针 |
-| 5 | 不重复 T-0007 环境/安规/成本/精度，只交叉引用；冲突列清单不改口径 | PASS | R 附录 I.5（1485–1507）：5 项只引用 + 7 项冲突/张力；附录 I 无 6 个 T-0007 签名数值；T-0010 插入深度冲突 #7 已登记 |
-| 6 | 只写需求，不写实现/器件；UI 细节由 T-0009 承载 | PASS | R 附录 I 边界声明（1402）；I.1 只给判据/引用基线；I.2 只给可见性/可判定；布局/器件留 T-0009/T-0010/T-0031，本单不改其文字 |
-| 7 | 文件规模按文档单口径；证据不计入阈值 | PASS | 本轮文档 2 文件（worklog + KB），低于 ≤8 文件/≤1500 行；P0 证据 4 件不计；代码与配置 0 文件/0 行 |
-| 8 | 交付提交带 Ticket: T-0020；证据提交单独带 Evidence: T-0020；Ticket 提交在 origin/master 且工作区干净；报告附 commit 号 | PASS | E4（body `Evidence: T-0020`，证据/worklog/KB）→ push；C1（body `Ticket: T-0020`，回填 E4 SHA）→ push；终验 LOCAL=REMOTE、status 空，commit 号见报告正文 |
-
-NOTE: 状态可见性原“设定/实测同屏”缺口由 T-0031 附录 J.2 取代（面板只显示实测 V/I），不再作为本单未决；I.2 原文保留为历史对照。
+| 1 | 插拔寿命：热插拔次数、接触可靠性、次数下限/劣化/插拔力/保持力、来源 | PASS | R I.1:1404–1432 原文含“≥500 次热插拔循环”“≤20mΩ/针”“增量 ≤10mΩ/针”“插入≤20N/拔出3–20N/保持≥30N”；EIA-364-09C/IEC 60512 + Hirose/EDAC；I.5 #7 引用 §4.4.2 |
+| 2 | 显示信息：不借助工具可判定；设定/实测同屏、CV/CC、功率、故障原因；按 T-0031 调整 | PASS | R I.2:1434–1450 的 S-01～S-06；:1450“T-0031 取代（v1.2）”：面板只显示实测 V/I、故障由后板故障灯、故障码/历史由 PC 工具；J.2:1544–1546/J.4:1558–1561。本单只补能力，现行按 T-0031 |
+| 3 | 范围外：模拟编程、外部监测输出、USB/LAN/GPIB/SCPI、序列/扫描/定时、电池充电逐条入 O 并给理由 | PASS | R §1.6 O-02/O-06～O-10（95、99–103）逐条含理由；I.3:1452–1464 补边界与验收（文档/BOM/命令表不得出现） |
+| 4 | 口径例外：PC 标定/配置工具（T-0025～T-0028）属服务工具，不构成上位机产品功能；修订 O-02 | PASS | R O-02:95 原文“PC 配置/标定工具是必需交付项（软件，不随整机 BOM）”；I.4:1473“PC 工具（原 T-0008，扩展归 T-0025～T-0028）属服务工具，不构成上位机产品功能；必需”；:1475 不进 BOM；§4.2.6:866/§4.5:940 |
+| 5 | 不重复 T-0007 环境/安规/成本/精度，只交叉引用；冲突列清单不改口径 | PASS | R I.5:1485–1507 五项只引用 + 七项冲突（#7 插入深度）；附录 I 无 6 个 T-0007 签名值（p0-tests 6/6 absent） |
+| 6 | 只写需求，不写实现/器件；UI 细节由 T-0009 承载 | PASS | R I:1402 原文“只补‘必须可判定/必须可见’的需求，不写布局、器件、电路、存储与实现”；I.1 只给判据、I.2 只给可见性；布局/器件留 T-0009/T-0010/T-0031 |
+| 7 | 文件规模按文档单口径；证据不计入阈值 | PASS | 本轮文档 2 文件（worklog+KB）<8/1500；证据 4 件不计；代码与配置 0/0；内容提交 65cc739 4 文件 218+/12− |
+| 8 | 交付提交带 Ticket: T-0020；证据提交单独带 Evidence: T-0020；Ticket 提交在 origin/master 且工作区干净；报告附 commit 号 | PASS | CONTENT_COMMIT=65cc739（基线）；E4=a2664ce（Evidence）push `7dc52b6..a2664ce`、ls-remote=a2664ce；C1=e187557（Ticket）push `a2664ce..e187557`、ls-remote=e187557；C2=560aada（Ticket）push `e187557..560aada`、ls-remote=560aada；C2 后 `git status --porcelain`=0、HEAD=origin/master=560aada；C3=本修复轮 Ticket 提交 |
+NOTE: 内容提交与 Ticket 提交分字段命名；状态可见性原“设定/实测同屏”由 T-0031 附录 J.2 取代（面板只显示实测 V/I），不再作为本单未决。
