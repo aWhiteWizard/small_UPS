@@ -1,9 +1,9 @@
 KIND: g0
 TASK: T-0011
-AT: 2026-11-18 22:05 +08:00 (canonical docs refresh after T-0032)
+AT: 2026-11-18 22:50 +08:00 (canonical docs refresh; final closeout)
 BRANCH: task/T-0011 @ D:\workspace\wt\small-ups\T-0011
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-CLEAN_BASE: 8248e31cf265b498cb17e7091ae934af26fbf52d (origin/master; T-0032 canonical migration)
+CLEAN_BASE: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b (origin/master at final closeout; canonical docs unchanged)
 DELIVERY_HEAD: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa (G, Ticket: T-0011; == origin/master at G push)
 TRAILERS: E1=43536b8 `Evidence: T-0011`; F=d291a119 `Ticket: T-0011`; G=339fd2f `Ticket: T-0011`; `git log --oneline 4c2b453..339fd2f` = G,F,E1
 PUSH_G: d291a11..339fd2f  HEAD -> master (exit 0)
@@ -11,8 +11,10 @@ LS_REMOTE_G: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa refs/heads/master
 VERIFY_G: LOCAL_HEAD == REMOTE_HEAD == 339fd2f882ade06eb37dfaf2276bc261b57fe1fa True
 STATUS_AFTER_G: `git status --porcelain=v1 -uall` empty
 FINAL_CLEAN_AFTER_G: `git status --porcelain=v1 -uall` empty
-UPSTREAM_ADVANCE: 339fd2f..8248e31 includes T-0017/T-0018/T-0032; T-0032 moved docs to .agent/docs; G is ancestor
-CURRENT_HEAD_AT_START: 8248e31cf265b498cb17e7091ae934af26fbf52d; `git status --porcelain=v1 -uall` empty
+UPSTREAM_ADVANCE: 339fd2f..ef8cfb1 includes T-0017/T-0018/T-0020/T-0031/T-0032; canonical .agent/docs unchanged (RD=1734/A=644/M=184); G is ancestor
+CURRENT_HEAD_AT_START: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b; `git status --porcelain=v1 -uall` empty
+LS_REMOTE_BASE: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b refs/heads/master
+FINAL_RECORD: J (Ticket: T-0011) closes this round; J SHA and final LOCAL=REMOTE in report
 CONTENT: C1 fd81bbc..C7 e07f27a are ancestors of CLEAN_BASE (`git merge-base --is-ancestor` exit 0); no content re-commit
 SCOPE: P-side only: RD §3.5, A §2.1-§2.5/§3/§4, M §1.1-§1.5, A §10.1-§10.11; D-side §4 and T-0006 timing/registers untouched
 CHECK: RD=1734 A=644 M=184 lines; KEY=76/76; TABLE_BAD=0; TABS=0; TRAIL=0; BOM=0; T-0011 placeholders=0; `git show --check 339fd2f`=0; `git diff d291a119..339fd2f --check`=0

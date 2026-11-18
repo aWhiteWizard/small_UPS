@@ -1,7 +1,7 @@
 KIND: tests
 TASK: T-0011
-AT: 2026-11-18 22:05 +08:00 (canonical docs refresh after T-0032)
-BASE: 8248e31cf265b498cb17e7091ae934af26fbf52d (origin/master; G=339fd2f/H=4759b5f ancestors)
+AT: 2026-11-18 22:50 +08:00 (canonical docs refresh; final closeout)
+BASE: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b (origin/master; G/H/I ancestors)
 CMD: PowerShell UTF8 keyword/table/size checks on canonical docs; math recompute; git show/diff --check
 FILES: RD=1734 A=644 M=184 lines (T-0032 canonical .agent/docs)
 CHECKS: KEY=76/76 (all 16 clauses); T-0011 placeholder scan=0; TABLE_BAD/TABS/TRAIL/BOM=0

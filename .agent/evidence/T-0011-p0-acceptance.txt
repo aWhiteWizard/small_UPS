@@ -1,7 +1,7 @@
 KIND: acceptance
 TASK: T-0011
-AT: 2026-11-18 22:05 +08:00 (canonical docs refresh after T-0032)
-BASE: 8248e31cf265b498cb17e7091ae934af26fbf52d (origin/master; G=339fd2f/H=4759b5f ancestors)
+AT: 2026-11-18 22:50 +08:00 (canonical docs refresh; final closeout)
+BASE: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b (origin/master; G=339fd2f/H=4759b5f/I=2bd1f82 ancestors)
 RD: .agent/docs/requirements.md; A: .agent/docs/architecture.md; M: .agent/docs/modules.md
 JUDGE: 16 ticket clauses against canonical docs (T-0032 migration); old .agent/requirements.md and docs/* are historical/stubs
 
@@ -21,6 +21,6 @@ JUDGE: 16 ticket clauses against canonical docs (T-0032 migration); old .agent/r
 13 | 精度矩阵系统级；输出纹波 50/30；母线纹波 100/150 | RD:704; RD:338; A:455-464; A:57,64 | PASS（输出13.1mVpp；55V≈30mVpp）
 14 | PCB 外形/安装孔、板间、功率板↔接口板、维修可拆 | RD:634-637,679-682; M:15-47; A:75-84 | PASS（64P 板对板；维修可拆）
 15 | 文件规模 ≤400 行/≤8 文件 | C1 5 文档/208 行 + 修正 4 文档/28 行；≤8 文件 | PASS
-16 | 第16条新口径：C1/G 的 commit/trailer/log/ls-remote/clean | C1=fd81bbc 祖先；G=339fd2f "按 G2 第1轮补齐…（G）"（Ticket）push d291a11..339fd2f，LS_REMOTE=339fd2f，G 后 clean；I=本轮证据刷新，final HEAD/remote 在报告 | PASS
+16 | 第16条新口径：C1/G 的 commit/trailer/log/ls-remote/clean | C1=fd81bbc 祖先；G=339fd2f "按 G2 第1轮补齐…（G）"（Ticket）push d291a11..339fd2f，LS_REMOTE=339fd2f，G 后 clean；I=canonical 证据刷新（Ticket）；J=本轮最终收口（Ticket），final HEAD/remote 在报告 | PASS
 
 [汇总] 16/16 PASS；T-0032 后以 .agent/docs 三件套为准，旧 .agent/requirements.md/docs/* 仅历史/摘要；G 的 push/ls-remote/clean 已入 P0，I 为 canonical 证据刷新提交。
