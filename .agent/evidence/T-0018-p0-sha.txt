@@ -4,12 +4,14 @@ AT: 2026-11-18 21:12 +08:00
 BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f（历史）
 CLEAN_BASE: 4759b5fc9b67fc343c81998c3c6a2ac7c8d957fd（origin/master，重派重建）
 CONTENT_COMMITS: 90b6ed58b2f00054ca7f78299ab9aea56b7150d0（附录 G+首轮 P0）、95cd04e992c9a84bea0e7100170df4aebba523f4；is-ancestor HEAD 均 exit 0
-EVIDENCE_COMMIT: 待回填（E6 提交后由 E7 写入）
+EVIDENCE_COMMIT: 0896701b2b016ce1e8c0f9231637baa7f967dc03（E6，5 文件 49+/42−，已 push）
+EVIDENCE_PUSH: 4759b5f..0896701 HEAD -> master（exit 0）；LOCAL_HEAD=REMOTE_HEAD=0896701
 PRE_EVIDENCE_HEAD: 4759b5fc9b67fc343c81998c3c6a2ac7c8d957fd；git status --porcelain 空
 CMD: git merge --ff-only origin/master; git add; git commit; git push origin HEAD:refs/heads/master; git ls-remote origin refs/heads/master
 COMMITS（git log --oneline 本单提交原文）:
   90b6ed5 docs(T-0018): 能力补齐需求（附录 G：阈值/追溯/安全态/预设/能力留口）
   95cd04e docs(T-0018): 记录 push 后 SHA 证据并定稿 worklog
   1089d80 docs(T-0018): 回填 E4 交付 SHA 并收口（E5）
+  0896701 docs(T-0018): 重派重建后刷新 P0 证据（E6）
 NOTE: 最终 Ticket 收口提交 E7 的 SHA 见报告正文（自指限制）；本文不写最终 HEAD 的 SHA。
 RESULT: PASS
