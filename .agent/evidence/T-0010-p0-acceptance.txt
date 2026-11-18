@@ -1,14 +1,14 @@
 KIND: acceptance
 TASK: T-0010
-AT: 2026-11-18 +08:00
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); delivery base 319cf8ef008c4d787dedfe97048c92d8d0874d8f
+AT: 2026-11-18 18:05 +08:00 (clean-base rerun)
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); DELIVERY_BASE: fa794efbbaaba3b43013d4e7df0157fb74c284be (origin/master, clean)
 1 范围：R:906–954 §4.4 only D-side; §3.3/§3.4 body electrical not changed; §2.7:313 total depth 215: PASS
-2 尺寸/方位：R:912–914（60×120×35；腔 55×115×33；销 15–18；金手指 79）；interface:32–41/55–56（z=17–27，销插入 10）：PASS
+2 尺寸/方位：R:912–914（60×120×35；腔 55×115×33；销 15–18；金手指 79）；interface:32–41/55–58（z=17–27，销插入 10）：PASS
 3 接口：R:919–922/924–928/930–934/936–940（2.54 2×32 竖直卡边、型号待实物、槽 x=15 偏左、右侧 x≥40 拨码留空；USB-C 数据/TVS/CMC 左侧；4P A/B/GND/+12V；Ø4 19mm ≥5A；电源键）；interface:47–58/103–109：PASS
 4 按键/显示：R:944–947（48×25 双行 8 位、5×6mm ≥10 万次、屏上、屏下 L/R/SET、屏右侧 Up/Down）；interface:67–72：PASS
 5 结构：R:951–954（Ø5/Ø8 腰形、M3 顶 D 平面、2×N35 距 x≤30 禁布区 ≥21、接缝/配色）；interface:55–58/83–84/100：PASS
 6 面板布局：interface:64–101 坐标表 + ASCII；USB-C 左侧 −X 不朝本体；最小间距已列：PASS
-7 规模：content 6 files 265 lines；+worklog/kb 8 files ~330（≤8/400）；P0 4 files separate；total 12 files ~395 lines <24/1200：PASS
-8 交付：C1=c0259b8 content；C6=18e011b content fix；C8=067edba record；C9=3a03a48 final evidence（push e7a811b..3a03a48）；C10=this sha backfill；HEAD=REMOTE_HEAD final in report：PASS
+7 规模：implementation 7 files / 306 lines（C1+C6，≤8/400）；P0 4 files ~60 lines separate：PASS
+8 交付：C1=c0259b8 content；C6=18e011b fix；DELIVERY_BASE=fa794ef；C11=this evidence refresh；C12=sha backfill；push + ls-remote；final HEAD in report：PASS
 NOTE: 0.40" vs 0.56" screen in R §4.3; magnet ≥20mm depends on T-0011 body keep-out x≤30; card-edge/display/USB-C/RS485 models TBD; surface color follows body.
 RESULT: PASS

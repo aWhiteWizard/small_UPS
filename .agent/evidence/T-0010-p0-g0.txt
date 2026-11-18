@@ -1,10 +1,10 @@
 KIND: g0
 TASK: T-0010
-AT: 2026-11-18 +08:00
+AT: 2026-11-18 18:05 +08:00 (clean-base rerun)
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-DELIVERY_BASE: 319cf8ef008c4d787dedfe97048c92d8d0874d8f (origin/master at re-dispatch); final master e7a811b (ff-only)
-CONTENT_COMMIT: c0259b83b979f579affbc34dc67fa567b9702b64 (C1); C6=18e011b adds 5±1/z=17–27/magnet boss; C8=067edba KB/sha; C9=3a03a48 final evidence
-SCOPE: only D-side R §4.4 + interface §1.2/§5.3 + architecture §1.2/§3/§4 + module-design §2.1 + README; body electrical §3.3/§3.4 untouched; §2.7 only total-depth wording
-CHECK: requirements=1524 interface=339 architecture=96 module-design=109 README=125; TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=0; placeholder=0
-SIZE: content 6 files 265 lines; +worklog/kb 8 files ~330 (<=8/400); P0 4 files ~65 lines separate; total <24/1200 hard cap
+DELIVERY_BASE: fa794efbbaaba3b43013d4e7df0157fb74c284be (origin/master; ff-only e6ff1d1->fa794ef; worktree clean)
+CONTENT: C1=c0259b83b979f579affbc34dc67fa567b9702b64; C6=18e011b770f75f775429936853af24877d6e6d4d (both already in base; re-verified, no content rewrite)
+SCOPE: only D-side R §4.4 + R §2.7 depth wording + interface §1.2/§5.3 + architecture §1.2/§3/§4 + module-design §2.1 + README; body electrical R §3.3/§3.4 untouched (C1 hunks 289/779/812/831/885; C6 hunks 918/950)
+CHECK: requirements=1524 interface=339 architecture=96 module-design=109 README=125; TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=0; KEYS_MISSING=0; diff-check=0
+SIZE: implementation diff C1+C6 = 7 files / 306 changed lines (6 content files 217+/35-; +worklog 52+/2-); <=8 files / <=400 lines; P0 4 files separate
 RESULT: PASS
