@@ -1,14 +1,19 @@
 KIND: sha
 TASK: T-0022
-AT: 2026-11-18 +08:00
-BASE: ba16717（工单 baseSha，落后 72 提交）/ f9af342（ff-only 后的真实开工基线）
-COMMIT: 1d6caeca637ca515e8470b928449cf6ee40c23d2
-LOCAL_HEAD: 1d6caeca637ca515e8470b928449cf6ee40c23d2
-REMOTE_HEAD: 1d6caeca637ca515e8470b928449cf6ee40c23d2 refs/heads/master
-CMD: git add firmware/README.md firmware/build.ps1 firmware/tools/check-env.ps1 .agent/kb/notes.md; git commit -m "task(T-0022): 复核固件工具链与构建链，补版本校验"; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-LS_REMOTE: 1d6caeca637ca515e8470b928449cf6ee40c23d2	refs/heads/master
-PUSH: f9af342..1d6caec  HEAD -> master（exit 0）
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 1d6caeca637ca515e8470b928449cf6ee40c23d2
-DIFF_REAL: f9af342..HEAD = 4 files / 107 insertions / 8 deletions
-NOTE: .agent/evidence/ 与 .agent/worklogs/ 被 .gitignore 忽略，不随提交入库；完整日志见同目录 P1 文件。
+AT: 2026-11-18 +08:00（重派复核）
+TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 baseSha，落后 72 提交）
+CLEAN_BASE: 8469ceec87de8c718441dc13324f2ed7fd57f597（ff-only origin/master 后）
+CONTENT_COMMIT: 1d6caeca637ca515e8470b928449cf6ee40c23d2（4 文件/+107/−8，已在 origin/master）
+EVIDENCE_COMMIT: 8a5eafef30d3cf49300b5595790bdf11a4afb64c（E1：P0 证据/worklog/KB，已 push）
+TICKET_COMMIT: 本记录提交（body: Ticket: T-0022），自身 SHA 见报告（自指限制）
+LOCAL_HEAD: 8a5eafef30d3cf49300b5595790bdf11a4afb64c（E1 push 后、C 提交前）
+REMOTE_HEAD: 8a5eafef30d3cf49300b5595790bdf11a4afb64c refs/heads/master
+CMD: git merge --ff-only origin/master; git add -f .agent/evidence/T-0022-p0-*.txt .agent/worklogs/T-0022.md; git add .agent/kb/notes.md; git commit -m "docs(T-0022): 重派复核并记录 P0 证据（E1）" -m "Evidence: T-0022"; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+LS_REMOTE: 8a5eafef30d3cf49300b5595790bdf11a4afb64c	refs/heads/master
+PUSH: 8469cee..8a5eafe  HEAD -> master（exit 0）
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 8a5eafef30d3cf49300b5595790bdf11a4afb64c（E1）
+DIFF_CONTENT: 1d6caec^..1d6caec = 4 files changed, 107 insertions(+), 8 deletions(-)
+DIFF_CLEAN: 8469cee..8a5eafe = 6 files changed, 110 insertions(+), 1 deletion(-)（仅 .agent 证据/worklog/KB）
+DIFF_OLD_BASE: ba16717..8a5eafe 含 72 个上游提交（91 files / 5196 insertions / 244 deletions），非本单规模
+NOTE: P0 与 worklog 被 .gitignore 忽略，按重派协议 git add -f 单独提交；P1 大日志不入库。C 仅回填本文件与 worklog，SHA 见报告。
 RESULT: PASS
