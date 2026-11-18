@@ -10,7 +10,7 @@ AT: 2026-11-19 +08:00
   证据：`tools/calib/app.py:81-83`（按钮定义）、`:227-351`（BEGIN/SET/MEAS/COMMIT/READ/ABORT 动作与安全收口）。
 4 PASS 状态与日志：收发原文 TX>/RX< 实时滚动；失败状态 `Fail.TLabel` 红色 + `!` 日志；断开时会话收口。
   证据：`tools/calib/serial_link.py:76-77`（毫秒时间戳收发日志）、`tools/calib/ui.py:54-57`（滚动追加）；`tools/calib/app.py:129-160`（状态/失败）、`:162-175`（断线处理）。自测 3/5 注入 ERR 并断言红色。
-5 PASS 报告附运行截图；规模 5 文件 / 399 insertions（文档 2/22；代码与配置 3/377），≤8 文件 / ≤400 行。
-  证据：`.agent/evidence/T-0027-p0-ui-after.png`（1320×880，92727 B，SHA256 983BD22532433DB8A66995D3897035B416D3B509752138385CE7F28716707A02）。
+5 PASS 报告附改前/改后运行截图；规模 5 文件 / 399 insertions（文档 2/22；代码与配置 3/377），≤8 文件 / ≤400 行。
+  证据：`.agent/evidence/T-0027-p0-ui-before.png`（900×580，21554 B，SHA256 80BDCDAC29899B188247EB346A9A239456359F28BB06C5C4DB456644EBA7AF06；base 57246ab 的 T-0025 串口页，无通道/点表/校准按钮）与 `.agent/evidence/T-0027-p0-ui-after.png`（1320×880，92727 B，SHA256 983BD22532433DB8A66995D3897035B416D3B509752138385CE7F28716707A02；完整 T-0027 界面）。
 6 PASS 交付判据：C1=584ba12 带 `Ticket: T-0027` 已 push 到 origin/master；C2 证据提交带 `Evidence: T-0027`；证据不写最终 HEAD SHA，附 `git log --oneline` 本单提交原文（p0-sha）。
 RESULT: PASS

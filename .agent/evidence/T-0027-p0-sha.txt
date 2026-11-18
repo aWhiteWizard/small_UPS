@@ -11,5 +11,5 @@ LOG: `git log --oneline -4`
 d0472ea feat(T-0026): 新增校准会话流程与安全中止
 6285b40 docs(T-0025): 修正 KB 证据行号到最终串口层（C3）
 TICKET: C1 提交正文末尾含 `Ticket: T-0027`，已存在于 origin/master
-EVIDENCE: 本组证据提交含 `Evidence: T-0027`；按新口径不写最终 HEAD 的 SHA
-WORKTREE: C1 push 后 `git status --porcelain=v1 --untracked-files=all` 为空；C2 后复查见报告
+EVIDENCE: 本组证据提交含 `Evidence: T-0027`（C2；C3 补交改前截图并复核）；按新口径不写最终 HEAD 的 SHA
+WORKTREE: C1/C2 push 后 `git status --porcelain=v1 --untracked-files=all` 为空；C3 后复查见报告

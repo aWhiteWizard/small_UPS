@@ -1,10 +1,15 @@
 KIND: ui
 TASK: T-0027
-AT: 2026-11-19 +08:00
-SHOT: .agent/evidence/T-0027-p0-ui-after.png
-SIZE: 1320×880 px, 92727 bytes, SHA256 983BD22532433DB8A66995D3897035B416D3B509752138385CE7F28716707A02
-CONTENT: 已连接 COM9（fake serial）；设备信息 协议 1.0 / 固件 0.9.0 / SN PSU-DEMO-0001；V 通道 6 个校准点全部可见，
-  设定/实测值可编辑，误差实时显示（-2 mV，-0.40%~-0.00%）；状态栏绿色 `CAL READ 回读 CRC 校验 PASS`；
-  日志区含带时间戳的 TX>/RX< 原文；BEGIN/逐点下发/MEAS/COMMIT/READ/ABORT 按钮与限流提示可见。
-NOTE: fake serial 注入（非真机）用于 UI 状态与日志呈现；不冒充 live e2e。
+AT: 2026-11-19 01:38 +08:00
+BEFORE: .agent/evidence/T-0027-p0-ui-before.png
+  SIZE: 900×580 px, 21554 bytes, SHA256 80BDCDAC29899B188247EB346A9A239456359F28BB06C5C4DB456644EBA7AF06
+  CONTENT: base 57246ab 的 T-0025 串口页（改前）；仅串口下拉/刷新/连接、设备信息、收发原文日志；
+  已连接 COM9（fake），显示 协议 1.0 / 固件 0.9.0 / SN PSU-DEMO-0001；无 V/I 通道、校准点表与校准按钮。
+AFTER: .agent/evidence/T-0027-p0-ui-after.png
+  SIZE: 1320×880 px, 92727 bytes, SHA256 983BD22532433DB8A66995D3897035B416D3B509752138385CE7F28716707A02
+  CONTENT: T-0027 完整界面（改后）；在串口/设备信息/日志之外新增 V-I 通道选择、6 行校准点表、
+  设定/实测/误差实时显示；BEGIN/逐点下发/MEAS/COMMIT/READ/ABORT 按钮；状态栏绿色
+  `CAL READ 回读 CRC 校验 PASS`，日志含带时间戳 TX>/RX< 原文。
+NOTE: before 由 base 57246ab 代码 + fake serial 注入生成，after 由 C1 584ba12 代码 + fake serial 生成；
+  两张均非真机，不冒充 live e2e，只用于对照界面改动。
 RESULT: PASS
