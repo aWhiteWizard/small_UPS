@@ -1,0 +1,19 @@
+KIND: acceptance
+TASK: T-0025
+AT: 2026-11-18 +08:00
+1 串口层（枚举/连接/断开/超时/重连，状态可见）：PASS。`tools/calib/serial_link.py:53-59` 错误分类、
+  `:92-112` connect、`:114-123` disconnect、`:125-139` reconnect、`:151-177` send；
+  `tools/calib/ui.py:63-68` 状态灯、`:75-96` 枚举、`:108-139` 连接/断开/重连；两态截图见 p0-ui。
+2 收发原文日志（含时间戳）：PASS。`serial_link.py:76-77` 输出 `[HH:MM:SS.mmm] TX>/RX<`；`:151-177`
+  每次发送、回包、超时/不完整都落日志；`ui.py:53-57` 追加日志区；截图可见 `TX> INFO`、`RX< OK INFO ...`。
+3 设备信息：PASS。`device.py:23-37` 解析 `OK INFO <协议> <固件> [序列号]`；`:19-20` 缺字段显示“未提供”；
+  `:30` ERR、`:35` 格式错均给明确文案；`ui.py:97-106` 失败状态+日志；截图显示 1.0 / 0.9.0 / PSU-DEMO-0001。
+4 错误路径：PASS。占用 `serial_link.py:56-57`；无设备 `:92-98`、`ui.py:92/112`；拔线
+  `serial_link.py:149/163/170`；超时 `:173/177`；离线自测逐项断言，UI 错误态测试通过。
+5 文件规模：PASS。6 文件 / 399 行（文档 1/15 KB + 代码与配置 5/384），≤8 文件 / ≤400 行。
+6 交付判据：PASS。C1 `8a7462d` 带 `Ticket: T-0025` 已 push 到 origin/master；E1 带 `Evidence: T-0025`；
+  最终 Ticket 收口 C2 见报告；工作区 clean。
+RESULT: PASS
+SIZE: 文档 1 文件 / 15 行；代码与配置 5 文件 / 384 行；合计 6 文件 / 399 行。
+EVIDENCE_EXCLUDED: `.agent/evidence/T-0025-p0-*.txt`、`-p0-ui-*.png`、`T-0025-p1-*.{log,txt,ps1}`、
+  `.agent/worklogs/T-0025.md`（不计入阈值）

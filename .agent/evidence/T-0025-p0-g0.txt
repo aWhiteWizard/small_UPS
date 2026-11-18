@@ -1,0 +1,14 @@
+KIND: g0
+TASK: T-0025
+AT: 2026-11-18 +08:00
+BASE: a8d814809c96a8114b6a6e8680aaeb99f7832d14 (origin/master; ff-only from ba16717)
+START_STATUS: `git status --porcelain -uall` = 0 lines (ff-only 后、开发前)
+CONTENT_COMMIT: 8a7462da0df3203e9900efcc9a76c8e565ff9130
+COMMIT_CHECK: `git show --check --oneline HEAD` exit 0
+PY_ENV: Python 3.14.6 / pyserial 3.5 / Tk 8.6
+COMPILE: `python -B -m py_compile tools\calib\__init__.py serial_link.py device.py ui.py __main__.py` exit 0
+SCALE: 6 files / 399 lines = 文档 1/15 (.agent/kb/notes.md) + 代码与配置 5/384
+FORBIDDEN: `git status -- .agent/requirements.md docs .agent/board/tasks.json` = 0 lines（未改需求/设计/看板）
+BINARIES: 新增提交只有 .py 文本；pyserial 走 pip 依赖，未 vendored
+IGNORE: `.agent/evidence/`、`.agent/worklogs/` 由 .gitignore 排除；P0 证据用 `git add -f` 进 Evidence 提交
+RESULT: PASS

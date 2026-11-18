@@ -1,0 +1,14 @@
+KIND: ui
+TASK: T-0025
+AT: 2026-11-18 +08:00
+SHOT-BEFORE: .agent/evidence/T-0025-p0-ui-before.png
+  SIZE: 1374×929 px, 68480 bytes, SHA256 D6F2049C1EFDC32BDF0CCB43C12DFC7863952D9A3E4A2DF7CFD7EF065D92C26D
+  CONTENT: 未连接；串口下拉为空；红色“无可用串口（无设备）：请检查 USB 连接、设备供电与驱动”；
+  设备信息全为“—”；日志“枚举到 0 个串口（无设备）”。
+SHOT-AFTER: .agent/evidence/T-0025-p0-ui-after.png
+  SIZE: 1374×929 px, 101386 bytes, SHA256 5B726C7CDADEC883B306D51CA3837DB38FD3F3E10655023AD2C9C89535B54B3D
+  CONTENT: 已连接 COM9 @ 115200 8N1（绿色状态灯）；设备信息 协议版本 1.0 / 固件版本 0.9.0 /
+  序列号 PSU-DEMO-0001；日志含时间戳 `TX> INFO`、`RX< OK INFO 1.0 0.9.0 PSU-DEMO-0001`；
+  按钮在已连接态显示“断开”，刷新/重连按状态禁用。
+NOTE: 无真机，已连接态由 fake serial 注入；截图证明 UI 状态与收发日志呈现，不冒充真机 e2e。
+RESULT: PASS

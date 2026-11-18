@@ -1,0 +1,19 @@
+KIND: tests
+TASK: T-0025
+AT: 2026-11-18 +08:00
+CMD: `$env:PYTHONPATH="tools"; python -B .agent/evidence/T-0025-p1-selftest.txt`
+SELFTEST: `RESULT: PASS (16 checks, 0 failed)`, exit 0
+COVER: 枚举 / 无设备 / 端口占用 / 端口不存在 / INFO 成功 / 缺字段 / ERR / 格式错 / 超时 / 不完整回包 /
+  拔线读 / 拔线写 / 重连成功 / 重连失败 / 断开后发送拒绝 / UI 正常态 / UI 错误态
+MESSAGES (逐项断言):
+- 占用: `串口 COM3 被占用：请关闭占用该串口的程序后重试（... PermissionError(13, '拒绝访问。')）`
+- 无设备: `未检测到可用串口（无设备）：请检查 USB 线、设备供电与驱动`
+- 拔线: `串口 COM_TEST 已断开（拔线）：读取回包失败；ClearCommError ...`
+- 超时: `等待设备响应超时（0.2s）：命令“INFO”已发出，未收到回包`
+- INFO ERR: `设备信息读取失败：设备不支持 INFO 或当前不可读（ERR 9 unsupported）`
+LOG: `.agent/evidence/T-0025-p1-selftest.log`
+UI-LAUNCH: `py -3 -m calib`（cwd=tools）与 `py -3 -m tools.calib`（repo root）均出现窗口标题
+  `PSU 标定工具 · 串口与设备（T-0025）`，进程可正常创建/关闭
+UI-SHOT: 无设备态 68480 B、已连接态 101386 B，均 1374×929（详见 T-0025-p0-ui.txt）
+NOTE: 无真实 PSU/串口；本轮用 fake serial 注入做 fixture/replay，不冒充真机 e2e
+RESULT: PASS
