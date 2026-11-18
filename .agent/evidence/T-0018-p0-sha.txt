@@ -18,9 +18,13 @@ E7_LS_REMOTE: 067d735e15ca801e1442dcb4ce43ab52b9215b5f	refs/heads/master
 POST_E7_STATUS: git status --porcelain → 空（无输出）
 E6_TRAILER_TAIL: git show -s --format=%B 0896701 末行 = Evidence: T-0018
 E7_TRAILER_TAIL: git show -s --format=%B 067d735e 末行 = Ticket: T-0018
-EVIDENCE_COMMIT: 待回填（E8 提交后由 E9 写入）
-FINAL: E9=Ticket 收口提交；其 SHA、git push 与 git ls-remote 原文见报告正文（自指限制；本文件不写当前 HEAD 的 SHA）
+EVIDENCE_COMMIT: d1d2cf6375e2b684d39820c23316290b2ae1e747（E8，5 文件 44+/21−，末行 Evidence: T-0018）
+E8_PUSH: 067d735..d1d2cf6  HEAD -> master（exit 0）
+E8_LS_REMOTE: d1d2cf6375e2b684d39820c23316290b2ae1e747	refs/heads/master
+POST_E8_STATUS: git status --porcelain → 空（E8 push 后、E9 前）
+FINAL: E9=Ticket 收口提交；其 SHA、git push、git ls-remote 与 E9 后 git status 原文见报告正文（自指限制；本文件不写当前 HEAD 的 SHA）
 COMMITS（git log --oneline 本单提交原文）:
+  d1d2cf6 docs(T-0018): 按 G2 第1轮补齐 SHA/交付证据（E8）
   067d735 docs(T-0018): 回填 E6 证据 SHA 并 Ticket 收口（E7）
   0896701 docs(T-0018): 重派重建后刷新 P0 证据（E6）
   1089d80 docs(T-0018): 回填 E4 交付 SHA 并收口（E5）
