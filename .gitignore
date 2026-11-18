@@ -61,6 +61,7 @@ Desktop.ini
 .agent/worklogs/
 # .agent/evidence/：逐单 P0/P1 证据，时效性强且含截图等大文件，避免每单污染提交历史。
 .agent/evidence/
+# 自检：git check-ignore -v --no-index <路径>；-q 退出 0 表示被忽略（已跟踪文件须加 --no-index 才按规则匹配）。
 
 # 需要继续入库的 .agent 内容（以下不写忽略规则，仅声明边界，勿改成忽略整个 .agent/）：
 #   board/tasks.json、project.json、team.json、schedule.json、approvals.json
