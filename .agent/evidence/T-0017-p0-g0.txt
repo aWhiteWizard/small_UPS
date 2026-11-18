@@ -3,11 +3,11 @@ TASK: T-0017
 AT: 2026-11-18 +08:00
 BRANCH: task/T-0017 @ D:\workspace\wt\small-ups\T-0017
 BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f
-REMOTE_AT_START: b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679
-FF_ONLY: Updating ba16717..b47c74f (Fast-forward)
-HEAD_AFTER_FF: b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679
-CONTENT_COMMIT: eca95191c1e4155e52b361d54abd9308115ba4a8 (C1)
-CHECK_START: worktree clean; after edits only 6 content files + 1 worklog
-CMD: git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain=v1 --untracked-files=all; git diff --check
-STATUS: ff-only 后工作区干净；C1 已 push（b47c74f..eca9519）；LOCAL_HEAD=REMOTE_HEAD=eca9519
+FF_INITIAL: ba16717..b47c74f (Fast-forward)
+CONTENT_COMMITS: eca9519 (C1) .. 017a13b (C4)
+REDISPATCH: 017a13b..f698a3a (ff-only, exit 0)
+HEAD_BEFORE_DELIVERY: f698a3ad4c0e0c14c16f582a4ac16b8c0cb4cf43
+CHECK: 重派后 worktree clean；本单内容已在 origin/master；D1/D2 由本单 commit+push+ls-remote 核对
+CMD: git merge --ff-only; git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain; git diff --check
+STATUS: HEAD=origin/master=f698a3a；未发现阻断
 RESULT: PASS
