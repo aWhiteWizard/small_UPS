@@ -1,0 +1,13 @@
+KIND: g0
+TASK: T-0032
+AT: 2026-11-18 +08:00（G2 R1 修复后，C1 提交后复核）
+BASE: 0dc9ea57d6a8cfd2883d5e72ae773ddcc7edf5fc
+CONTENT_COMMIT/C1: 925233191471404f1a9029a6801874f409f8ab05
+MODE: worktree / danger-full-access / pure-docs
+CHECK 1: HEAD=C1=9252331，已 push；`git ls-remote origin refs/heads/master` 同 SHA
+CHECK 2: C1 后 `git status --porcelain=v1 -uall` 空（工作区干净；evidence/worklog 为 .gitignore 忽略）
+CHECK 3: `git diff --check` exit 0；C1 diff 12 个文件全部 .md，代码与配置 0
+CHECK 4: docs/ 四份摘要页各 7 行；.agent/requirements.md 顶部“已迁移…仅历史”，未删除
+CHECK 5: `git show --stat C1` = 12 files changed, 2602 insertions(+), 914 deletions(-)
+CHECK 6: 无临时文件残留；12 个已跟踪 .md 修改均已入 C1
+RESULT: PASS

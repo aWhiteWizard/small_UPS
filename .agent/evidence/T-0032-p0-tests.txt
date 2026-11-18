@@ -1,0 +1,12 @@
+KIND: tests
+TASK: T-0032
+AT: 2026-11-18 +08:00（C1 提交后）
+CMD: PowerShell ReadAllLines/UTF8 + git show 9252331 + git diff 0dc9ea5..9252331
+LINES: requirements=1734、architecture=644、modules=184；三份合计 2562
+WORDS: 非空白字 88917/30233/7986，合计 127136；CJK 38186/10191/2379，合计 50756
+HEADINGS: 旧需求 143 个 H1–H3 中 141 个原文保留，2 个文件头/填写规则标题按唯一事实源口径重写；新增附录 K/L 6 个标题；旧设计 66 个 H2–H4 中 61 个正文标题有落点，5 个 interface 顶部索引表不迁（§3 表 D 侧两行已迁 §7.7）
+BODY_DIFF: 旧需求正文 vs 新正文 = +21/−19 行，全部为 docs/ 路径改指、附录 C 追加 T-0032 行、BOM 去除；无验收数值/表格/判据改动
+REFS: R § / architecture § / modules § / `.agent/docs/*.md` § 显式交叉引用悬空 0；plain § 按单元格作用域复核无真实悬空
+ENCODING: 三份 UTF-8 无 BOM、无 Tab、无行尾空白；worktree CRLF 由 core.autocrlf=true 产生，blob 为 LF
+SCALE: C1 实提交 12 个 .md（11 正文/说明 + 1 KB），+2602/−914；代码与配置 0；证据/运行期记录不计
+RESULT: PASS

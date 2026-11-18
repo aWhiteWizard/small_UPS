@@ -1,0 +1,17 @@
+KIND: sha
+TASK: T-0032
+AT: 2026-11-18 +08:00（G2 R1 修复后）
+BASE_LOCAL: 0dc9ea57d6a8cfd2883d5e72ae773ddcc7edf5fc
+BASE_REMOTE: 0dc9ea57d6a8cfd2883d5e72ae773ddcc7edf5fc refs/heads/master（C1 前）
+CONTENT_COMMIT/C1: 925233191471404f1a9029a6801874f409f8ab05（body: Ticket: T-0032）
+C1_PUSHED: YES
+PUSH: 0dc9ea5..9252331  HEAD -> master（exit 0）
+LS_REMOTE: 925233191471404f1a9029a6801874f409f8ab05 refs/heads/master（local=remote）
+DIFF_HASH: 8b9ca3513e6fc277d5b49e823681b32655319373（git diff 0dc9ea5..C1 | git hash-object --stdin）
+DIFF_STAT: 12 files changed, 2602 insertions(+), 914 deletions(-)（git show --stat C1）
+WORKTREE: C1 后 `git status --porcelain=v1 -uall` 空；无未跟踪非忽略文件
+GIT_LOG:
+9252331 task(T-0032): 正文归并：需求与设计统一到 .agent/docs 三件套，作为唯一事实源与审查依据
+        Ticket: T-0032
+EVIDENCE_COMMIT: C2（本证据提交；自身 SHA 见最终报告，自指限制）
+STATUS: C1 已 push 且工作区干净；C2 提交后终验

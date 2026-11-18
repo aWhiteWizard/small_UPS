@@ -1,0 +1,14 @@
+KIND: acceptance
+TASK: T-0032
+AT: 2026-11-18 +08:00（G2 R1 修复后）
+BASE: 0dc9ea57d6a8cfd2883d5e72ae773ddcc7edf5fc
+CONTENT_COMMIT/C1: 925233191471404f1a9029a6801874f409f8ab05
+1 唯一事实源：requirements.md:1-21、architecture.md:1-13、modules.md:1-13 均声明三份唯一；docs/ 四份 7 行摘要页；README.md:110-125 同步 → PASS
+2 需求迁移：`.agent/docs/requirements.md` §1 起承接原 §1–§5 + 附录 A–J；章节号/表格/数值保留；`.agent/requirements.md:1` 已标“已迁移…仅历史”，未删除 → PASS
+3 设计迁移：interface §3/§4/§5 → architecture §7/§8/§9；§3 表 D 侧两行 → §7.7；docs/architecture §1–§5 → architecture §1–§5；module-design → modules §1–§2；test-plan → architecture §10.1–§10.11；docs/ 四份摘要页 → PASS
+4 审查口径：三份 + README §7/§8 均写唯一依据、报告「写入文件:章节」、三份之外不认 → PASS
+5 迁移对照：requirements 附录 K.1（逐章/附录）、K.2（逐节）、K.3（7 条冲突）、K.4（摘要页理由）；architecture §11；modules §4 → PASS
+6 不改验收：需求正文仅 21/19 行路径改指+变更记录；PFC 停振措辞按 T-0011 新基线同步；冲突裁决单号见 K.3 → PASS
+7 校验规模：requirements 1734 行/88917 字、architecture 644/30233、modules 184/7986；合计 2562 行/127136 字；C1 实提交 12 个 .md/+2602−914，代码配置 0；超提示线已留痕，owner 豁免 ≤40/7000 → PASS
+8 交付判据：C1=9252331（body `Ticket: T-0032`）已 push 至 origin/master；`git ls-remote origin refs/heads/master`=C1；C1 后 `git status --porcelain -uall` 空；C2 证据提交以 `Evidence: T-0032` 随后落库 → PASS
+RESULT: PASS（1–8）
