@@ -12,6 +12,6 @@ PUSH_E2: 78ac8d1..9eabccb  HEAD -> master（exit 0）；E2 push 后 local == rem
 GIT_LOG: e9be0af docs(T-0022): 修正跟踪文件计数并最终收口（C2）; 565690f docs(T-0022): 回填重派交付 SHA 并收口（C1）; 8a5eafe docs(T-0022): 重派复核并记录 P0 证据（E1）; 1d6caec task(T-0022): 复核固件工具链与构建链，补版本校验
 DIFF_CONTENT: 1d6caec^..1d6caec = 4 files changed, 107 insertions(+), 8 deletions(-)
 DIFF_SESSION: 78ac8d1..HEAD 仅 .agent/evidence/T-0022-* + .agent/worklogs/T-0022.md + .agent/kb/notes.md
-DIFF_OLD_BASE: ba16717..78ac8d1 = 91 files/5196 insertions/244 deletions（含 72 个上游他单提交，非本单；base 过期）
+DIFF_OLD_BASE: ba16717..78ac8d1 = 111 files/7897 insertions/558 deletions（134 提交：本单 4 + 他单 130；本单仅 4 文件/+107/−8，base 过期）
 NOTE: 本轮 E2/C3 的 SHA 见报告（自指限制）；证据提交 E2 单独带 Evidence: T-0022
 RESULT: PASS
