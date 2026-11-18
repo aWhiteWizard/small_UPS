@@ -1,14 +1,14 @@
 KIND: acceptance
 TASK: T-0010
-AT: 2026-11-18 18:05 +08:00 (clean-base rerun)
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); DELIVERY_BASE: fa794efbbaaba3b43013d4e7df0157fb74c284be (origin/master, clean)
-1 范围：R:906–954 §4.4 only D-side; §3.3/§3.4 body electrical not changed; §2.7:313 total depth 215: PASS
-2 尺寸/方位：R:912–914（60×120×35；腔 55×115×33；销 15–18；金手指 79）；interface:32–41/55–58（z=17–27，销插入 10）：PASS
-3 接口：R:919–922/924–928/930–934/936–940（2.54 2×32 竖直卡边、型号待实物、槽 x=15 偏左、右侧 x≥40 拨码留空；USB-C 数据/TVS/CMC 左侧；4P A/B/GND/+12V；Ø4 19mm ≥5A；电源键）；interface:47–58/103–109：PASS
-4 按键/显示：R:944–947（48×25 双行 8 位、5×6mm ≥10 万次、屏上、屏下 L/R/SET、屏右侧 Up/Down）；interface:67–72：PASS
-5 结构：R:951–954（Ø5/Ø8 腰形、M3 顶 D 平面、2×N35 距 x≤30 禁布区 ≥21、接缝/配色）；interface:55–58/83–84/100：PASS
-6 面板布局：interface:64–101 坐标表 + ASCII；USB-C 左侧 −X 不朝本体；最小间距已列：PASS
-7 规模：implementation 7 files / 306 lines（C1+C6，≤8/400）；P0 4 files ~60 lines separate：PASS
-8 交付：C1=c0259b8 content；C6=18e011b fix；DELIVERY_BASE=fa794ef；C11=14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d（evidence refresh，push fa794ef..14e0d2a）；C12=sha backfill；push + ls-remote；final HEAD in report：PASS
-NOTE: 0.40" vs 0.56" screen in R §4.3; magnet ≥20mm depends on T-0011 body keep-out x≤30; card-edge/display/USB-C/RS485 models TBD; surface color follows body.
+AT: 2026-11-18 19:50 +08:00 (clean-base rerun)
+BASE: b655c21504a60e94c04b106ba0c67551d0b375a6; CONTENT D1=1fae4c038d494b0176f6bcf0707867bbd4d10acd
+1 SCOPE: PASS - R:890/894-939 only D-side interface+structure; R:318 total depth is mechanical; body electrical R 3.3/3.4 not in D1 diff
+2 DIM: PASS - R:896-897 60x120x35, cavity 55x115x33.0, fingers 79mm (y=20.5-99.5) + pins 15-18; interface:32-39 depth chain/insertion 10
+3 IFACE: PASS - R:903-905 2.54mm 2x32=64 vertical, model TBD, slot x=15, right x>=40 DIP keep-out; R:910-912 USB-C data/G431 FS CDC/TVS/CMC/side; R:916-918 4P A/B/GND/+12V PTC; R:922-924 D4 banana 19.0mm >=5A; R:929 enable button; interface:47-53/107-110
+4 KEY/DISP: PASS - R:928-932 5 tact keys no LED >=100k, red dual-row 4x2=8 digit width ~50mm, screen top, L/R/SET below, Up/Down at screen side; interface:67-72
+5 STRUCT: PASS - R:936-939 D5 upper round / D8 slot lower, M3 set screw on D flat, 2xN35 >=21mm from keep-out, flush seam/same finish; interface:55-58/83-84/101
+6 LAYOUT: PASS - interface:60-98 coordinate table + ASCII, min gaps 2.0/1.0; USB-C at -X side, not +Z (interface:82)
+7 SIZE: PASS - content 2 files +3/-3 (D1); P0+worklog tracked change in p0-sha; <=8 files / <=400 lines
+8 DELIVERY: PASS - D1 content + E1 evidence pushed; sha backfill C1 and final HEAD in report; COMMIT/LOCAL/REMOTE/ls-remote in p0-sha.txt
+NOTE: card-edge/display/USB-C/RS485 models TBD in R 4.3; 0.56" screen and magnet keep-out dependencies tracked; no body electrical change.
 RESULT: PASS

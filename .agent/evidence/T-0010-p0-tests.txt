@@ -1,12 +1,12 @@
 KIND: tests
 TASK: T-0010
-AT: 2026-11-18 18:05 +08:00 (clean-base rerun)
-BASE: fa794efbbaaba3b43013d4e7df0157fb74c284be
-CMD: PowerShell 7 UTF8/table/whitespace checks; panel rect bounds/overlap; z-chain arithmetic; git diff --check
-LINES: requirements=1524 interface=339 architecture=96 module-design=109 README=125
-TABLE: TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=0
-LAYOUT: RECTS=19 (panel as container); BOUND_BAD=0; UNEXPECTED_OVERLAP=0; allowed display-window nesting and display/window-socket front-back projection overlaps
-ZCHAIN: 2.0+0.4+8.0+1.6+5.0+18.0=35.0; socket 12.0-17.0; display 2.4-10.4; PCB 10.4-12.0; insertion 5.0; block 17.0-27.0; pin 18.0; pin insert 10.0; block-PCB 5.0; set screw z=22.0
-KEYS: 60×120×35 / 55×115×33 / 2×32=64 / 5±1 / Ø4 19.0±0.2 ≥5A / ≥10 万次 / N35 / 9.2×3.6 / A/B/GND/+12V / 48×25 / 2×4 / 左侧面（−X） all present
-DIFF: C1 7 files 248+/29-; C6 7 files 53+/39-; C11 evidence refresh; git diff --check exit 0
+AT: 2026-11-18 19:50 +08:00 (clean-base rerun)
+BASE: b655c21504a60e94c04b106ba0c67551d0b375a6; CONTENT D1=1fae4c038d494b0176f6bcf0707867bbd4d10acd
+CMD: powershell UTF-8/table/whitespace checks; 19-rect bounds/overlap; z-chain; git diff --check; git diff --numstat
+LINES: requirements=1607 interface=349 architecture=99 module-design=113 README=126
+TABLE: TABLE_BAD=0; WS_BAD=0 (no trailing WS/tabs/BOM)
+KEYS: 37 acceptance keywords; KEYS_MISSING=0
+LAYOUT: RECTS=19 (panel as container); BOUND_BAD=0; UNEXPECTED_OVERLAP=0; allowed: display-window nested, display/window-socket front-back projection
+ZCHAIN: 2.0+0.4+8.0+1.6+5.0+18.0=35.0; socket 12.0-17.0; PCB 10.4-12.0; block 17-27; insertion 10; pin insert 10
+DIFF: 2 files +3/-3 (D1); git diff --check exit 0
 RESULT: PASS

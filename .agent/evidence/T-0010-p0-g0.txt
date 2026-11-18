@@ -1,10 +1,13 @@
 KIND: g0
 TASK: T-0010
-AT: 2026-11-18 18:05 +08:00 (clean-base rerun)
+AT: 2026-11-18 19:50 +08:00 (clean-base rerun)
+BRANCH: task/T-0010 @ D:\workspace\wt\small-ups\T-0010
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-DELIVERY_BASE: fa794efbbaaba3b43013d4e7df0157fb74c284be (origin/master; ff-only e6ff1d1->fa794ef; worktree clean)
-CONTENT: C1=c0259b83b979f579affbc34dc67fa567b9702b64; C6=18e011b770f75f775429936853af24877d6e6d4d (both already in base; re-verified, no content rewrite)
-SCOPE: only D-side R §4.4 + R §2.7 depth wording + interface §1.2/§5.3 + architecture §1.2/§3/§4 + module-design §2.1 + README; body electrical R §3.3/§3.4 untouched (C1 hunks 289/779/812/831/885; C6 hunks 918/950)
-CHECK: requirements=1524 interface=339 architecture=96 module-design=109 README=125; TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=0; KEYS_MISSING=0; diff-check=0
-SIZE: implementation diff C1+C6 = 7 files / 306 changed lines (6 content files 217+/35-; +worklog 52+/2-); <=8 files / <=400 lines; P0 4 files separate
+CLEAN_BASE: b655c21504a60e94c04b106ba0c67551d0b375a6 (local HEAD == origin/master at start; status clean)
+PRIOR_CONTENT: C1=c0259b83b979f579affbc34dc67fa567b9702b64; C6=18e011b770f75f775429936853af24877d6e6d4d; both ancestors of CLEAN_BASE (merge-base --is-ancestor exit 0), not rewritten
+REBUILD: old worktree backed up by engine; diff vs CLEAN_BASE = this ticket docs/P0/worklog only, no other-ticket paths
+CONTENT_COMMIT: D1=1fae4c038d494b0176f6bcf0707867bbd4d10acd (2 files, +3/-3; pushed)
+SCOPE: R 4.4.6 display width wording + interface 1.2.3 display/PT100 rows; body electrical R 3.3/3.4 untouched
+CHECK: requirements=1607 interface=349 architecture=99 module-design=113 README=126; TABLE_BAD=0; WS_BAD=0; KEYS_MISSING=0; RECTS=19 BOUND_BAD=0 UNEXPECTED_OVERLAP=0; ZCHAIN_OK; diff-check=0
+SIZE: content 2 files +3/-3; with P0/worklog see p0-sha; <=8 files / <=400 lines
 RESULT: PASS
