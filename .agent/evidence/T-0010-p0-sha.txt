@@ -8,8 +8,9 @@ C3_RECORD: 78c40493d49d09ca34b474efadd922e3d8b9fa29
 C4_RECORD: 90d5bfeeee7f90f891a1b9e6b2ed0960409f2936
 C5_RECORD: e4b660c257f00dba0c172c2ff2bfd2cfa8aa7fb8
 COMMIT: 18e011b770f75f775429936853af24877d6e6d4d (C6 content fix + P0 refresh)
-LOCAL_HEAD: 18e011b770f75f775429936853af24877d6e6d4d
-REMOTE_HEAD: 18e011b770f75f775429936853af24877d6e6d4d refs/heads/master
+C7_RECORD: 4aef6f7465b57eb44ea3fe5fb7f46044dd653951 (evidence backfill C6)
+LOCAL_HEAD: 4aef6f7465b57eb44ea3fe5fb7f46044dd653951
+REMOTE_HEAD: 4aef6f7465b57eb44ea3fe5fb7f46044dd653951 refs/heads/master
 CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
 PUSH_C1: dfcbcc6..c0259b8  HEAD -> master (exit 0)
 PUSH_C2: c0259b8..ebd6f41  HEAD -> master (exit 0)
@@ -17,7 +18,8 @@ PUSH_C3: ebd6f41..78c4049  HEAD -> master (exit 0)
 PUSH_C4: 78c4049..90d5bfe  HEAD -> master (exit 0)
 PUSH_C5: 90d5bfe..e4b660c  HEAD -> master (exit 0)
 PUSH_C6: 319cf8e..18e011b  HEAD -> master (exit 0)
-LS_REMOTE: 18e011b770f75f775429936853af24877d6e6d4d	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 18e011b True
-C7: this commit (sha 回填 C6); push then final HEAD=C7, SHA/ls-remote in report
+PUSH_C7: 18e011b..4aef6f7  HEAD -> master (exit 0)
+LS_REMOTE: 4aef6f7465b57eb44ea3fe5fb7f46044dd653951	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 4aef6f7 True
+C8: this commit (KB note + sha backfill C7); push then final HEAD=C8, SHA/ls-remote in report
 RESULT: PASS

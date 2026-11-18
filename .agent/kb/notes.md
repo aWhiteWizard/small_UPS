@@ -268,3 +268,14 @@ KB-LAYER: 1_application
 KB-TAGS: stm32, linker-script, ld, cmake, newlib, nosys
 
 新 binutils 对无 PHDRS 的脚本会报 RWX LOAD 段：给 FLASH 段 `:text`、RAM 段 `:data` 并声明 `PHDRS { text PT_LOAD FLAGS(5); data PT_LOAD FLAGS(6); }` 可消除。把 NOBITS 的 `._user_heap_stack` 也挂到 `:data` 会得到 “LMA adjusted” 警告，应写 `._user_heap_stack (NOLOAD)` 且不指定 phdr。`-specs=nosys.specs` 下 `_close/_lseek/_read/_write is not implemented` 是预期警告，不是链接失败判据；验收看 `Linking C executable`、Memory region 与产物大小。
+
+## 承插腔深度链与定位块 z 必须按同一坐标系做干涉检查
+
+KB-TYPE: bug
+KB-EVIDENCE: `docs/interface.md:55-56`（修正后块 z=17–27）；`.agent/worklogs/T-0010.md:23`（修正前 z=8–18）
+KB-LAYER: 3_hardware
+KB-TAGS: cavity, locating-pin, depth-chain, z-axis, interference
+
+- 现象：腔深 33mm、销长 15–18mm；定位块若按 z=8–18 放，销尖只到 z=17–20，插入 <10mm，且块与 PCB（z=10.4–12）重叠。金手指插入若按 10mm，会越过 PCB 撞 8mm 显示（z=2.4–10.4）。
+- 修正：剖面按“前板 2 + 间隙 0.4 + 显示 8 + PCB 1.6 + 插座 5 + 销 18 = 35”排；块放 z=17–27（销插入 10mm、块-PCB 5mm），顶丝孔随块中心 z=22；卡边插入按 5±1（实物槽深 ≥5）。
+- 规则：机械坐标只做 2D x-y 矩形检查不够；块/销/PCB/显示/插座必须逐件列 z 区间并检查插入路径，所有 z 用同一原点（面板前面 z=0，指向本体内）。

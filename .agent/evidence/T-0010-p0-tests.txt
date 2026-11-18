@@ -8,5 +8,5 @@ LAYOUT: 18 rects incl panel; 0 out-of-bounds; only display-socket projection ove
 ZCHAIN: 2.0+0.4+8.0+1.6+5.0+18.0=35.0; socket 12.0–17.0, insertion 5.0, socket tip z=12.0 vs display rear 10.4 (PCB 10.4–12.0 between); block 17.0–27.0, pin insertion 10.0, block-PCB gap 5.0; set screw z=22 in block
 KEYS: 60×120×35 / 55×115×33 / 2×32=64 / 5±1 / Ø4 19.0±0.2 ≥5A / ≥10万次 / N35 / 9.2×3.6 / A/B/GND/+12V / 48×25 / 2×4 / 左侧−X all present
 PLACEHOLDER: T-0010 placeholder=0
-DIFF: C1 7 files 248+/29-; C6 2 files 7+/6-; git diff --check exit 0
+DIFF: C1 7 files 248+/29-; C6 2 files 7+/6-; C8 1 file 12+/1-; git diff --check exit 0
 RESULT: PASS
