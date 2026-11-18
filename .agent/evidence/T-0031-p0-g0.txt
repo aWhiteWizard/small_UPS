@@ -1,0 +1,17 @@
+KIND: g0
+TASK: T-0031 / p1 / P1 / impl-1
+WHEN: 2026-11-18 +08:00
+WORKTREE: D:\workspace\wt\small-ups\T-0031 (branch task/T-0031)
+BASE: 5caa55bac9dc291e8e95492824baf0b0354eb57b (= origin/master, fetched)
+REBUILD: T-0031 content commit d66b5bd is an ancestor of BASE; base..HEAD diff = 0 files/0 lines before this round. Old 37 files/4330 lines NOT reproduced.
+G0 RESULTS
+- git rev-parse HEAD -> 5caa55bac9dc291e8e95492824baf0b0354eb57b
+- git rev-parse origin/master -> 5caa55bac9dc291e8e95492824baf0b0354eb57b
+- git merge-base --is-ancestor d66b5bd origin/master -> exit 0 (content already delivered)
+- git status --porcelain=v1 -uall -> empty (before edits)
+- git diff --check -> exit 0 (no output)
+- git diff --name-only 5caa55b..HEAD -> empty (no stray ticket files)
+- code/config diff -> none (doc-only ticket; firmware/, Hardware/, tools/ untouched)
+- remote: git@github.com:aWhiteWizard/small_UPS.git reachable; fetch succeeded
+- delivery protocol: content commit d66b5bd has no Ticket trailer -> this round adds Evidence: T-0031 and Ticket: T-0031 commits (SHA in report)
+VERDICT: PASS

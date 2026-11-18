@@ -361,3 +361,5 @@ KB-EVIDENCE: `git rev-parse HEAD` 与 `git rev-parse origin/master` 均 `7dc52b6
 KB-TAGS: git, delivery, trailer, rework, clean-base, t-0020
 
 重派到已包含本单内容的新基线时，先确认 `git merge-base --is-ancestor <content-commit> origin/master` 与 `git status --porcelain`，再对照当前交付判据：需要的是“带 `Ticket:` 的提交”而非新的正文 diff。此时不要改需求制造伪 diff；按 E=证据提交（body `Evidence:`，P0/worklog/KB）+ C=Ticket 收口（body `Ticket:`，回填 E SHA）两提交交付，C 自身 SHA 只写报告（自指限制）。证据/worklog 虽被 `.gitignore` 命中但仍是已跟踪文件，更新时用 `git add -f`。
+
+- T-0031 复核（2026-11-18）：内容提交 d66b5bd 已是 `origin/master` 祖先，`git diff --stat 5caa55b..HEAD` 为空；旧看板记录的 37 文件/4330 行是重建前残留，重建后未复现。该内容提交无 `Ticket:` trailer，本轮只补 E（P0/worklog）+ C（回填 E SHA）两提交，不动正文。

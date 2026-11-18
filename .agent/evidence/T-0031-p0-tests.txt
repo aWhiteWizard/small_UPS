@@ -1,0 +1,31 @@
+KIND: tests
+TASK: T-0031
+FILES: .agent/docs/requirements.md, .agent/docs/architecture.md, .agent/docs/modules.md, README.md
+WHEN: 2026-11-18 +08:00
+METHOD: [IO.File]::ReadAllLines(path, UTF8), no default Get-Content
+UTF8/WHITESPACE (LINES|BOM|TAB|TRAIL|CONFLICT)
+- .agent/docs/requirements.md|1734|False|0|0|0
+- .agent/docs/architecture.md|644|False|0|0|0
+- .agent/docs/modules.md|184|False|0|0|0
+- README.md|134|False|0|0|0
+MARKDOWN TABLES (TABLES|BAD_PIPE_COUNT)
+- requirements.md|45|0; architecture.md|27|0; modules.md|16|0; README.md|3|0
+KEYWORDS 20/20 PASS (file line)
+- 双行各 4 位、共 8 位、带小数点 1536; 小数点固定在 D2 后 735; D1 后 735
+- 0.00–48.00 397/735; 0.000–5.000 735; 不得扩展为 5 位 1537
+- 只显示输出口实测 V/I 719; ≤100ms 内归零 737; 设定值不清零 737
+- 只做三件事 1551; 上+下同时长按 2.0s 741; 长按 SET 不再触发强制关断 741
+- 后面板故障灯（T-0031 验收 4）690; 出厂默认 80.0°C 860; 0.0–150.0°C 858
+- A/B 双槽 + CRC16 859; PC 配置/标定工具是必需交付项 95
+- T-0030（...OLED/SSD1306 方案）**作废** 1600; 对外 0.01V/0.01A 334
+- PC 工具不得提供 V/I 设定/输出开关 954
+STALE/OLD-WORD AUDIT (all hits are void/historical/internal, no active old rule)
+- OLED 5 hits: 929 void, 1004 change log, 1600/1602 void, README:103 void
+- 5 位 6 hits: 735/1537/1539/1540 error rule, arch:565 "6.5 位" meter, modules:93 risk
+- PC 工具可选 1 hit: 1593 historical I.4; 无上位机 1 hit: 1505 historical conflict
+- 长按 SET 10 hits: all "不触发/不关断" negations (R 720/741/763/823/1553/1554/1586, arch 205/330, modules 100)
+- 温度页 4 hits: 1004/1585 history, arch:330 "无温度页", README:103 void
+- 48.000 5 hits: 445/547 internal 1mV register, 735/1537/1539 error/encoding note; 5.0000 2 hits error examples
+- E02 1 hit: 855 "不显示 E02"
+DIFF: git diff --check -> exit 0
+VERDICT: PASS
