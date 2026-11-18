@@ -8,5 +8,5 @@ AT: 2026-11-18 18:35 +08:00
 5 变更留痕：PASS。附录 H + 完成度表:45 + 附录 B:988 + 附录 C:1011 + 文件头:3 + §2.6:300 + §3.1 P-02/P-03:393-394 + §3.2:420；README §6:99/§7:110；H.6 列 requirements/part2（已删，§3→3.3、§5→3.4、§6→A.2，见附录 D:1029-1032）/docs 联动。（:1375-1389）
 6 只写需求：PASS。H.7；本轮未改 docs/firmware/Hardware；附录 H 无器件/拓扑/曲线数值（H.7 仅作排除声明）。（:1390-1396）
 7 规模：PASS。T-0019 累计 8 文件（requirements/README/KB/4 P0/worklog）；C1 内容 3 文件 159 行；本轮证据+记录提交 <100 行。
-8 交付：PASS。C1=3646bda1883ae74c42bbec41d0a03c76d87e1c15、C2=4bd6f5fd2c02bf9c49c4b843bb9eeb815015dcce、C3=49c5029f1b5d5c7e80fdd79df3c3789c2af26a46、C4=82a5fae2847f7bd5289e80954f9a7aad44c7b276、C5=4a12310ed23c155e0f94c38783a3184120f6cc84 已入 master；本轮 C6 证据提交、C7 记录提交，push 后 LOCAL=REMOTE=C7，原文见 T-0019-p0-sha.txt 与报告正文。
+8 交付：PASS。C1=3646bda1883ae74c42bbec41d0a03c76d87e1c15、C2=4bd6f5fd2c02bf9c49c4b843bb9eeb815015dcce、C3=49c5029f1b5d5c7e80fdd79df3c3789c2af26a46、C4=82a5fae2847f7bd5289e80954f9a7aad44c7b276、C5=4a12310ed23c155e0f94c38783a3184120f6cc84 已入 master；本轮 C6=d2336d096b58c1326998d5aaeab49b582e322953（证据提交）已 push，C7 为最终记录提交；C7 push 后 LOCAL=REMOTE，原文见报告正文，C6 的 LOCAL/REMOTE/ls-remote 原文见 T-0019-p0-sha.txt。
 RESULT: PASS
