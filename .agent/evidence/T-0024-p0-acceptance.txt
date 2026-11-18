@@ -6,7 +6,7 @@ AT: 2026-11-18 +08:00
 3 README 从零复现：PASS。Windows 安装包/默认路径（`README.md:49-60`）、从零命令（`:62-82`）、环境变量与 PATH（`:84-90`）、复现判定（`:92-99`）、接线/烧写/串口/排障（`:157-235`）齐全；本机按该步骤跑通 check-env、build、dry-run、serial 自检。
 4 仓库不出现工具链二进制：PASS。`.tools/` 与 `build/` 均由 `.gitignore:16/.gitignore:14` 命中；`git ls-files` 中 `.exe/.dll/.a/.o/.elf/.bin/.hex/.map` = 0；tracked `.tools` = 0；`git status --porcelain -uall` 仅 5 个本单文本文件；`git count-objects -vH` size-pack 835.34 KiB（改动仅文本）。
 5 文件规模：PASS。5 文件 / 397 行：文档 2 文件/192 行（README 182、KB 10）；代码与配置 3 文件/205 行（flash.ps1 74、check-env.ps1 12、serial.ps1 119）。
-6 交付判据：PASS（提交见 p0-sha）。C1 f531595 带 `Ticket: T-0024` 已 push 到 origin/master；E1 带 `Evidence: T-0024`；最终 Ticket 收口提交 SHA 见报告（证据不写最终 HEAD SHA）；工作区最终 clean。
+6 交付判据：PASS（提交见 p0-sha）。C1 f531595 带 `Ticket: T-0024`、E1 8581fac 带 `Evidence: T-0024`，均已 push 到 origin/master；最终 Ticket 收口提交 SHA 见报告（证据不写最终 HEAD SHA）；工作区最终 clean。
 RESULT: BLOCKED（#1 缺 ST-Link/目标板，其余 5 项 PASS）
 SIZE: 文档 2 文件/192 行；代码与配置 3 文件/205 行；合计 5 文件/397 行。
 EVIDENCE_EXCLUDED: `.agent/evidence/T-0024-p0-*.txt`（本目录 4 个）、`T-0024-p1-*.log`（6 个）、`.agent/worklogs/T-0024.md`；不计规模。

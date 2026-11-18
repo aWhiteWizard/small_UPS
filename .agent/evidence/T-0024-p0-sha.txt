@@ -5,10 +5,11 @@ BASE: 7c17f7b63c0073ad6f4788bd05de1aa715373f3d
 CONTENT_COMMIT: f531595ce18feaf49913173fe79a53ba9ccebf83
 PUSH_CONTENT: 7c17f7b..f531595 HEAD -> master (exit 0)
 CONTENT_ON_ORIGIN: git ls-remote origin refs/heads/master = f531595 (at push time)
-TICKET_LOG_C1:
+EVIDENCE_COMMIT: 8581fac6c8a25bdcad9aaf2a24524e5835ec4b7d
+PUSH_EVIDENCE: f531595..8581fac HEAD -> master (exit 0)
+EVIDENCE_ON_ORIGIN: git ls-remote origin refs/heads/master = 8581fac (at push time)
+TICKET_LOG:
 f531595 task(T-0024): 烧写调试链路、串口工具与从零复现 README
-EVIDENCE_COMMIT: PENDING
-PUSH_EVIDENCE: PENDING
-TICKET_LOG_FINAL:
-(see report; this file does not record the final HEAD SHA)
-WORKTREE: clean after evidence/close commits
+8581fac docs(T-0024): 记录 P0 证据与验收结论（E1）
+NOTE: 最终 Ticket 收口提交 SHA 见报告；本文件不记录最终 HEAD SHA。
+WORKTREE: clean after close commit
