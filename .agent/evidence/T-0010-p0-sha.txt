@@ -2,15 +2,16 @@ KIND: sha
 TASK: T-0010
 AT: 2026-11-18 +08:00
 BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); delivery base 319cf8ef008c4d787dedfe97048c92d8d0874d8f
-COMMIT: 067edba95b5b2e4fa52269fe444f8fc006fdcdc1 (C8 final content/record)
-LOCAL_HEAD: e7a811b509a77018f175a8e66b4a88815d2ab3cf
-REMOTE_HEAD: e7a811b509a77018f175a8e66b4a88815d2ab3cf refs/heads/master
-CMD: git merge --ff-only origin/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-FF: 067edba..e7a811b (Fast-forward, exit 0)
-LS_REMOTE: e7a811b509a77018f175a8e66b4a88815d2ab3cf	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == e7a811b True (pre-C9)
+COMMIT: 3a03a48e90ede3df007e7e090741a50d5e27fc66 (C9 final evidence/record)
+LOCAL_HEAD: 3a03a48e90ede3df007e7e090741a50d5e27fc66
+REMOTE_HEAD: 3a03a48e90ede3df007e7e090741a50d5e27fc66 refs/heads/master
+CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+PUSH: e7a811b..3a03a48  HEAD -> master (exit 0)
+LS_REMOTE: 3a03a48e90ede3df007e7e090741a50d5e27fc66	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 3a03a48 True (pre-C10)
 C1_CONTENT: c0259b83b979f579affbc34dc67fa567b9702b64
 C6_CONTENT: 18e011b770f75f775429936853af24877d6e6d4d
 C8_RECORD: 067edba95b5b2e4fa52269fe444f8fc006fdcdc1
-C9_RECORD: this commit (final evidence+worklog); push e7a811b..C9; final HEAD=REMOTE_HEAD=C9 (SHA in report)
+C9_RECORD: 3a03a48e90ede3df007e7e090741a50d5e27fc66
+C10_RECORD: this commit (sha backfill C9); push then final HEAD=C10 (SHA in report)
 RESULT: PASS
