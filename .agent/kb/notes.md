@@ -363,3 +363,12 @@ KB-TAGS: git, delivery, trailer, rework, clean-base, t-0020
 重派到已包含本单内容的新基线时，先确认 `git merge-base --is-ancestor <content-commit> origin/master` 与 `git status --porcelain`，再对照当前交付判据：需要的是“带 `Ticket:` 的提交”而非新的正文 diff。此时不要改需求制造伪 diff；按 E=证据提交（body `Evidence:`，P0/worklog/KB）+ C=Ticket 收口（body `Ticket:`，回填 E SHA）两提交交付，C 自身 SHA 只写报告（自指限制）。证据/worklog 虽被 `.gitignore` 命中但仍是已跟踪文件，更新时用 `git add -f`。
 
 - T-0031 复核（2026-11-18）：内容提交 d66b5bd 已是 `origin/master` 祖先，`git diff --stat 5caa55b..HEAD` 为空；旧看板记录的 37 文件/4330 行是重建前残留，重建后未复现。该内容提交无 `Ticket:` trailer，本轮只补 E（P0/worklog）+ C（回填 E SHA）两提交，不动正文。
+
+## 交付 SHA 证据字段必须用冒号键，等号/双等号不被预检解析
+
+KB-TYPE: bug
+KB-EVIDENCE: `D:\workspace\ProjectSuperAgent\lib\delivery-sha.js:12` 的 FIELD 正则 `^\s*(?:names)\s*[:：]\s*(SHA)`；本轮 `CONTENT_COMMIT=d66b5bd...` 被预检判 `C1: （无）`、`C1 已 push: NO`，改成 `CONTENT_COMMIT: d66b5bd...` 后可解析出 C1
+KB-LAYER: 2_system
+KB-TAGS: delivery, sha, evidence, parser, trailer
+
+交付 SHA 证据别用 `KEY=VALUE`：预检只认 `KEY: <40hex>`（半角/全角冒号）。必需项：`CONTENT_COMMIT:`（或 `C1:`）、`PUSH_*:` 行含 `exit 0` 或 `HEAD -> master`、`LS_REMOTE_HEAD:`（或 `REMOTE_HEAD:`/`LS_REMOTE_C1:`）；`FINAL_HEAD:` 若写必须与 `LS_REMOTE_HEAD` 相同，`VERIFY: A == B` 可替代 push 成功行，`C1_ANCESTOR_OF_HEAD: YES` 可补祖先自述。`T_COMMIT=T1=...` 双等号会解析失败；证据文件不写自身所在提交 SHA，最终 HEAD 写报告。

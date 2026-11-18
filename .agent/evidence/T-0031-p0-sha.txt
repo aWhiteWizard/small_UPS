@@ -1,19 +1,29 @@
 KIND: sha
 TASK: T-0031
-BASE=5caa55bac9dc291e8e95492824baf0b0354eb57b
-HEAD_AT_START=5caa55bac9dc291e8e95492824baf0b0354eb57b
-ORIGIN_MASTER_BEFORE=5caa55bac9dc291e8e95492824baf0b0354eb57b
-CONTENT_COMMIT=d66b5bd94c09e69af8a211f62c1cbc44ca6c8b88
-CONTENT_ANCESTOR_OF_ORIGIN_MASTER: yes (git merge-base --is-ancestor d66b5bd origin/master -> exit 0)
-E_COMMIT=29f9d8793a636af9bf360a1403452a560802b4d0 (E1, pushed; LOCAL=REMOTE after push)
-T_COMMIT=T1=c024773480274eb4b1b5534efa488e67347de857 (Ticket: T-0031, pushed); final T2 delivery commit SHA in report (self-reference excluded)
-EVIDENCE_COMMIT_TRAILER: Evidence: T-0031
-DELIVERY_COMMIT_TRAILER: Ticket: T-0031
-SCOPE_THIS_ROUND: .agent/evidence/T-0031-* + .agent/worklogs/T-0031.md + .agent/kb/notes.md only (git add -f for ignored paths); no requirements/design/code change
-git log --oneline (originals):
+AT: 2026-11-18 +08:00（G2 第1轮修复）
+BASE: 5caa55bac9dc291e8e95492824baf0b0354eb57b（origin/master，重建前）
+CONTENT_COMMIT: d66b5bd94c09e69af8a211f62c1cbc44ca6c8b88（内容提交：8 文档文件 +290/−181）
+C1_ANCESTOR_OF_HEAD: YES
+PUSH_C1: 1aeb7e2..d66b5bd HEAD -> master（exit 0；上一轮 worklog/备份记录；d66b5bd 现为 origin/master 祖先）
+LS_REMOTE_C1: d66b5bd94c09e69af8a211f62c1cbc44ca6c8b88 refs/heads/master（C1 push 后当时值）
+EVIDENCE_COMMIT: 29f9d8793a636af9bf360a1403452a560802b4d0（E1，body Evidence: T-0031）
+TICKET_COMMIT: c024773480274eb4b1b5534efa488e67347de857（T1，body Ticket: T-0031；历史收口）
+TICKET_COMMIT_2: 4a7b0d275631a23e92b0300129712552f94b1680（T2，body Ticket: T-0031；历史收口）
+TICKET_COMMIT_3: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b（T3，G2 第1轮上界，body Ticket: T-0031）
+FINAL_TICKET_COMMIT: T4=本修复轮交付提交（body Ticket: T-0031；SHA 见报告正文，不写自指 SHA）
+FINAL_HEAD: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b（本轮修复提交前、已 push 的交付上界）
+LS_REMOTE_HEAD: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b refs/heads/master
+PUSH_E1: 5caa55b..29f9d87 HEAD -> master（exit 0）
+PUSH_T1: 29f9d87..c024773 HEAD -> master（exit 0）
+PUSH_T2: c024773..4a7b0d2 HEAD -> master（exit 0）
+PUSH_T3: 4a7b0d2..ef8cfb1 HEAD -> master（exit 0）
+VERIFY: FINAL_HEAD == LS_REMOTE_HEAD == ef8cfb18d235fa2e62ce88b15f27ceb15882f90b（修复提交前实测）
+STATUS_AFTER_T3: git status --porcelain -> 0 lines
+TRAILER_CHECK: T1/T2/T3 的 body 末行均为 Ticket: T-0031；E1 的 body 末行均为 Evidence: T-0031
+GIT_LOG（git log --oneline 原文）:
 29f9d87 docs(T-0031): 重建后复核 v1.2 口径并落 P0 证据（E1）
 c024773 docs(T-0031): 回填 E1 证据 SHA 并按新口径交付收口（T1）
-5caa55b docs(T-0020): 回填 E5 SHA 并按 G2 第1轮收口（C3）
-d66b5bd task(T-0031): 显示回双行数码管并把温度阈值/故障历史迁到 PC 工具
-git ls-remote origin refs/heads/master before E1 push: 5caa55bac9dc291e8e95492824baf0b0354eb57b
-NOTE: final HEAD SHA intentionally not written here (self-reference); post-push LOCAL=REMOTE and commit numbers are in the report.
+4a7b0d2 docs(T-0031): 回填 T1 并修正 P0 行数后交付收口（T2）
+ef8cfb1 docs(T-0031): 修正 P0 行数表述并最终收口（T3）
+NOTE: 证据文件不记录自身所在提交 T4 的 SHA；T4 push 后 LOCAL=REMOTE 与最终 SHA 见报告正文。
+RESULT: PASS
