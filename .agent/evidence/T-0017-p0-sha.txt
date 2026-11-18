@@ -2,13 +2,15 @@ KIND: sha
 TASK: T-0017
 AT: 2026-11-18 +08:00
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-BASE_REAL: b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679
+BASE_REAL: b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679 (ff-only)
 C1_CONTENT: eca95191c1e4155e52b361d54abd9308115ba4a8
-COMMIT: 982119668fa2c32e9020e757f53cf3a2638ee74a
-LOCAL_HEAD: 982119668fa2c32e9020e757f53cf3a2638ee74a
-REMOTE_HEAD: 982119668fa2c32e9020e757f53cf3a2638ee74a
-LS_REMOTE: 982119668fa2c32e9020e757f53cf3a2638ee74a	refs/heads/master
-PUSH: eca9519..9821196  HEAD -> master (exit 0)
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 982119668fa2c32e9020e757f53cf3a2638ee74a
-NOTE: C2 为内容+证据提交；C3 为仅记录提交（本文件回填 C2），C3 自身 SHA 见 worklog/报告；C2 push 后已核对 local=remote。
+C4_CONTENT: 017a13beea5cfb9f2d4d4986e5a7428e1e39ef21
+COMMIT: db904c3fcdb30160f5386e8fb494da791818e378
+LOCAL_HEAD: db904c3fcdb30160f5386e8fb494da791818e378
+REMOTE_HEAD: db904c3fcdb30160f5386e8fb494da791818e378
+LS_REMOTE: db904c3fcdb30160f5386e8fb494da791818e378	refs/heads/master
+PUSH: f698a3a..db904c3  HEAD -> master (exit 0)
+CMD: git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == db904c3fcdb30160f5386e8fb494da791818e378
+NOTE: D1=db904c3 为交付证据提交（内容+证据）；D2 仅回填本文件与 worklog，D2 自身 SHA 见报告（自指限制，沿用 T-0011 惯例）。
 RESULT: PASS
