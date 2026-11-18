@@ -281,3 +281,12 @@ KB-TAGS: cavity, locating-pin, depth-chain, z-axis, interference
 - 现象：腔深 33mm、销长 15–18mm；定位块若按 z=8–18 放，销尖只到 z=17–20，插入 <10mm，且块与 PCB（z=10.4–12）重叠。金手指插入若按 10mm，会越过 PCB 撞 8mm 显示（z=2.4–10.4）。
 - 修正：剖面按“前板 2 + 间隙 0.4 + 显示 8 + PCB 1.6 + 插座 5 + 销 18 = 35”排；块放 z=17–27（销插入 10mm、块-PCB 5mm），顶丝孔随块中心 z=22；卡边插入按 5±1（实物槽深 ≥5）。
 - 规则：机械坐标只做 2D x-y 矩形检查不够；块/销/PCB/显示/插座必须逐件列 z 区间并检查插入路径，所有 z 用同一原点（面板前面 z=0，指向本体内）。
+
+## 电容组“N×C + C_small”必须按并联和核对 ≥ 目标，不能只看单体
+
+KB-TYPE: bug
+KB-EVIDENCE: `.agent/requirements.md:668`（4×47µF+10µF=198µF < ≥200µF，已改 4×47µF+22µF=210µF）；`docs/architecture.md:56`；`docs/module-design.md:33`
+KB-LAYER: 3_hardware
+KB-TAGS: capacitor-bank, buck, derating, arithmetic, bom
+
+buck 输出电容写成“N×C1 + C2”时，必须先把并联容量相加再对 ≥ 目标值：4×47µF+10µF=198µF 不满足 ≥200µF，应选 4×47µF+22µF=210µF 或 5×47µF=235µF。同步复核并联 ESR、耐压/温度降额与 PCB 面积；审查时把“示例 BOM”当数值条款逐项验算，避免“≥200µF”与示例自相矛盾。
