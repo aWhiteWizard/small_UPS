@@ -463,3 +463,27 @@ KB-LAYER: 2_system
 KB-TAGS: windows, python, uv, py-launcher, environment, worktree
 
 `py.exe` 仍列出已删除的 Python314 作为默认版本，PATH 也还指着它的 Scripts；此时不要重装或改全局关联，直接用同机 uv 托管的解释器绝对路径跑测试（本单 5/5 PASS）。判断方法：`py -0p` 给的路径 `Test-Path` 为 False，而 uv 路径存在；命令里用绝对路径，避免污染其他工单的 Python 调用。
+
+## T-0032 归并后的新基线已含正文：返工单先核内容，只补缺的 TOC/证据
+
+KB-TYPE: method
+KB-EVIDENCE: `git rev-parse HEAD`=57d43fa（origin/master）；`.agent/docs/requirements.md` 1740 行/150 个 H1-H3；`.agent/requirements.md` 1609 行且顶部“已迁移，见 .agent/docs/requirements.md”；`git log --all --oneline --grep='T-0032'` → 9252331。
+KB-TAGS: docs, migration, baseline, toc, rework
+
+引擎把 T-0034 重派到 origin/master 57d43fa 后，T-0032 的正文归并已在基线（`/docs/requirements.md` 1740 行，附录 K.1/K.2 有映射）。此时不要再按题面“T-0032 只留索引”重搬正文，否则会把已归并正文重写一遍并制造伪 diff。先核三件事：①新基线 `.agent/docs/requirements.md` 是否已有 `# 1.`–`# 5.` 与附录；②`.agent/requirements.md` 是否已标“已迁移”；③`docs/` 四份是否已是摘要页。缺什么补什么；本单缺的是开头 TOC（46 行），补它即可。
+
+## 给已有长需求补 TOC 时，用逐章子树 hash 证明正文未改
+
+KB-TYPE: method
+KB-EVIDENCE: `verify-toc-body.mjs` → oldBodyHeadings=147、newBodyHeadings=147、hashOk=147、bad=[]、tocRows=46、links=46、badLinks=[]；C1=2d064cb `git diff --stat` = 1 file changed, 57 insertions(+), 1 deletion(-)。
+KB-TAGS: docs, toc, hash, markdown, review
+
+在 1700+ 行需求前插 TOC 时，不要只核对“新增了目录”。做法：以 `# 1.` 为正文起点，解析 H1–H3 并计算含子树的 SHA-256；新文件逐章对照，只允许附录 C 追加变更记录行（PASS_APPEND），其余必须完全一致。TOC 另按 GitHub slug 校验 46 个锚点全部命中；`git diff --check` 必须 exit 0。这样审查能确认 57 行新增里没有夹带正文改写。
+
+## 新基线=origin/master 时 Ticket 提交可直接 fast-forward push
+
+KB-TYPE: system
+KB-EVIDENCE: `git rev-parse HEAD`=57d43fa=`git ls-remote origin refs/heads/master`；C1=2d064cb `git push origin HEAD:refs/heads/master` → `57d43fa..2d064cb HEAD -> master` exit 0；`git ls-remote` 随后 master=2d064cb。
+KB-TAGS: git, delivery, master, fast-forward, worktree
+
+重派把 worktree 重置到 origin/master 后，内容提交 C1（body `Ticket: T-0034`）可直接 push master，不存在旧 base 的非快进问题；C2 证据提交（body `Evidence: T-0034`）再 push 即可。SHA 证据写 C1 的 push/ls-remote/FINAL_HEAD；C2 是 C1 的子提交，自身 SHA 写报告，避免自指。

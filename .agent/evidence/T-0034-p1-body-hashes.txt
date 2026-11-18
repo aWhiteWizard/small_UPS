@@ -1,0 +1,152 @@
+P1: T-0034 正文逐章 SHA-256（baseline 57d43fa .agent/docs/requirements.md vs C1 2d064cb）
+AT: 2026-11-18 +08:00
+NOTE: H1-H3 含子树；PASS_APPEND = 仅附录 C 追加 T-0034 变更记录行的章节。
+
+PASS d2583855bf1963ff -> d2583855bf1963ff  # 1. 定位与范围
+PASS 282c16a7b8320321 -> 282c16a7b8320321  ## 1.1 一句话定位
+PASS de98f37703b8091a -> de98f37703b8091a  ## 1.2 不是 UPS
+PASS 47048d4cb7ef0126 -> 47048d4cb7ef0126  ## 1.3 项目名与历史命名
+PASS 9226ad60b3f5d7f9 -> 9226ad60b3f5d7f9  ## 1.4 系统构成
+PASS 3c0d270bc5f8414b -> 3c0d270bc5f8414b  ## 1.5 使用边界
+PASS 518cb44c514dfbba -> 518cb44c514dfbba  ## 1.6 范围外
+PASS 4f60a4b96033054c -> 4f60a4b96033054c  ## 1.7 编号与来源追溯
+PASS 8a44f05d2214d1c6 -> 8a44f05d2214d1c6  # 2. 系统级
+PASS 7b762cffd85c1549 -> 7b762cffd85c1549  ## 2.1 跨板 64 针金手指接口
+PASS cfac64860fbe9e6b -> cfac64860fbe9e6b  ### 2.1.1 机械与工艺基线
+PASS dff752f07edf33ca -> dff752f07edf33ca  ### 2.1.2 针脚定义（A/B 各 32）
+PASS a35002dae823bb1a -> a35002dae823bb1a  ### 2.1.3 每类针的用途与方向
+PASS 5a6b4f8af876a5e1 -> 5a6b4f8af876a5e1  ### 2.1.4 插拔与短针时序
+PASS 54ae63e47ff86f98 -> 54ae63e47ff86f98  ## 2.2 I2C 电气与协议
+PASS 10d06158d204b9b6 -> 10d06158d204b9b6  ### 2.2.1 电气
+PASS 3154b5f29f41985b -> 3154b5f29f41985b  ### 2.2.2 帧格式与数据编码
+PASS 959233926edc0378 -> 959233926edc0378  ### 2.2.3 地址与多机
+PASS cf45edeb27f36de2 -> cf45edeb27f36de2  ## 2.3 ALERT 规范
+PASS 446d1940af4e8af4 -> 446d1940af4e8af4  ### 2.3.1 电气
+PASS 349ee5ce9b5b4895 -> 349ee5ce9b5b4895  ### 2.3.2 锁存与释放
+PASS cfc70a9c8b97ac15 -> cfc70a9c8b97ac15  ### 2.3.3 关键故障硬件直拉
+PASS 29aa9f3e897f87d8 -> 29aa9f3e897f87d8  ### 2.3.4 多机共线按地址逐读
+PASS b37a086d19d53c19 -> b37a086d19d53c19  ### 2.3.5 时序
+PASS 97987ddfee29e56f -> 97987ddfee29e56f  ## 2.4 上电/掉电/使能/升级时序（定版）
+PASS 57ffa99944d51648 -> 57ffa99944d51648  ### 2.4.1 上电、自检与掉电
+PASS f7e8cb077bb98384 -> f7e8cb077bb98384  ### 2.4.2 使能、心跳与热调
+PASS ac20c76275d2bf03 -> ac20c76275d2bf03  ### 2.4.3 固件升级（Bootloader/IAP）
+PASS 27bfd0d2214d9671 -> 27bfd0d2214d9671  ### 2.4.4 保护动作、耐受与恢复
+PASS 87940f2266cb2677 -> 87940f2266cb2677  ## 2.5 引用标准与合规基线（定版）
+PASS 6a6fd2871e4b0cb9 -> 6a6fd2871e4b0cb9  ## 2.6 环境与安规（定版）
+PASS c3d1ba6344b33152 -> c3d1ba6344b33152  ## 2.7 整机方位、尺寸与机械基线（定版）
+PASS 41eb2e6bab3caef6 -> 41eb2e6bab3caef6  ## 2.8 性能指标与验收口径（定版）
+PASS d63b7ff6de597cc8 -> d63b7ff6de597cc8  ## 2.9 风道、散热、噪音与重量（定版）
+PASS 45b725881e257552 -> 45b725881e257552  ## 2.10 生产、追溯与成本（定版）
+PASS 5d48e2d7f854b057 -> 5d48e2d7f854b057  ## 2.11 系统级待确认清单（owner）
+PASS 919b87f5bf966eaa -> 919b87f5bf966eaa  ## 2.12 参考设计对照（定版）
+PASS 389a4cf22ce91e2c -> 389a4cf22ce91e2c  # 3. 电源本体
+PASS 9c7d44c2be21198c -> 9c7d44c2be21198c  ## 3.1 本体功能清单（P 类）
+PASS e801fad34ed1148c -> e801fad34ed1148c  ### 3.1.1 P-15 急停验收判据（T-0017）
+PASS bd7e0f6c9b7ec180 -> bd7e0f6c9b7ec180  ## 3.2 为什么 0.5V 以下不保证指标
+PASS bb8089f9c9fc817b -> bb8089f9c9fc817b  ## 3.3 I2C 寄存器表（初稿）
+PASS c8c2d0d7144acb3d -> c8c2d0d7144acb3d  ### 3.3.1 寄存器映射
+PASS eaad94596dd66982 -> eaad94596dd66982  ### 3.3.2 OUTPUT_STATUS 位定义
+PASS 9d36e565eb9767f5 -> 9d36e565eb9767f5  ### 3.3.3 FAULT_CODE（8 位，取最高优先级）
+PASS e409a480f75a588e -> e409a480f75a588e  ### 3.3.4 FAULT_FLAGS（32 位，含锁存位）
+PASS 9eb3c4f508bc21ff -> 9eb3c4f508bc21ff  ### 3.3.5 CLEAR
+PASS 67515f06a25dafb5 -> 67515f06a25dafb5  ### 3.3.6 关键寄存器语义
+PASS b9ab461978091a7e -> b9ab461978091a7e  ### 3.3.7 掉电保持边界
+PASS d05bdcf5ceec4cf4 -> d05bdcf5ceec4cf4  ## 3.4 校准数据接口（定版）
+PASS 67a133765d52c67d -> 67a133765d52c67d  ### 3.4.1 数据模型
+PASS 89bf90d2229fad24 -> 89bf90d2229fad24  ### 3.4.2 写入与 COMMIT（I2C）
+PASS 19eda0e928797e26 -> 19eda0e928797e26  ### 3.4.3 校验和与版本
+PASS d95b8a9119f5eb05 -> d95b8a9119f5eb05  ### 3.4.4 运行时插值
+PASS f15a01ff46955be9 -> f15a01ff46955be9  ### 3.4.5 串口下发（UART）
+PASS 90171e504636af2f -> 90171e504636af2f  ### 3.4.6 恢复路径
+PASS 32c62f2dca293adb -> 32c62f2dca293adb  ## 3.5 本体电气规格、功率拓扑与结构热设计（定版）
+PASS 98161ed1ca3c3423 -> 98161ed1ca3c3423  ### 3.5.1 功率拓扑与能量流
+PASS d4efbab4e44d3fd4 -> d4efbab4e44d3fd4  ### 3.5.2 整机方位、板卡与结构预留
+PASS fcbd51c157b42695 -> fcbd51c157b42695  ### 3.5.3 母线电压与器件耐压（定版，附计算）
+PASS 3b712f1f00a0649e -> 3b712f1f00a0649e  ### 3.5.4 输入链路与 EMI/安规
+PASS 3be39357c1fc0db0 -> 3be39357c1fc0db0  ### 3.5.5 有源 PFC（Boost，400V，65kHz）
+PASS 1a8b8c68fdd946da -> 1a8b8c68fdd946da  ### 3.5.6 LLC 半桥 + 同步整流（400V→55V，100kHz）
+PASS e19b0f8eb376ed11 -> e19b0f8eb376ed11  ### 3.5.7 同步 buck（55V→0–48V，200kHz）
+PASS d13921dd1ecba5e1 -> d13921dd1ecba5e1  ### 3.5.8 布局与独立散热器
+PASS 7b0d1a874405ab12 -> 7b0d1a874405ab12  ### 3.5.9 风道、风扇与后板（定版）
+PASS c4a91964e8524aca -> c4a91964e8524aca  ### 3.5.10 SWD 口（定版）
+PASS 62f38731fc60d1ff -> 62f38731fc60d1ff  ### 3.5.11 效率、待机、纹波与精度
+PASS 603a7e3554154e07 -> 603a7e3554154e07  ### 3.5.12 保护、维修与待确认
+PASS 83d68ca2a54f8c5b -> 83d68ca2a54f8c5b  # 4. 电源调试板
+PASS b30b07d9002657c4 -> b30b07d9002657c4  ## 4.1 调试板功能清单（D 类）
+PASS 22cff083a87b04b9 -> 22cff083a87b04b9  ## 4.2 按键交互、显示与主机侧时序（T-0009 定稿）
+PASS 4fa0bc249c3a34c8 -> 4fa0bc249c3a34c8  ### 4.2.1 面板与按键基线
+PASS 0e37fdc5c081c56b -> 0e37fdc5c081c56b  ### 4.2.2 显示内容与异常提示
+PASS 68e057ef16e2e310 -> 68e057ef16e2e310  ### 4.2.3 按键交互与状态机
+PASS d62bbf1d3c35141e -> d62bbf1d3c35141e  ### 4.2.4 主机侧使能、关断与心跳序列
+PASS 66cb07ad050aa3c1 -> 66cb07ad050aa3c1  ### 4.2.5 PT100/RS485 通道与温度阈值
+PASS d5d4257372c917e8 -> d5d4257372c917e8  ### 4.2.6 USB-C 与升级数据透传
+PASS 030ac575a705d3c4 -> 030ac575a705d3c4  ## 4.3 调试板待确认项
+PASS 47dbb8225d1c3b94 -> 47dbb8225d1c3b94  ## 4.4 硬件接口与结构（T-0010 定稿）
+PASS 47d33559937f32b9 -> 47d33559937f32b9  ### 4.4.1 外形、方位与承插腔
+PASS faf97eb7d1000396 -> faf97eb7d1000396  ### 4.4.2 金手指插座
+PASS 87d3ad97eb4575f6 -> 87d3ad97eb4575f6  ### 4.4.3 USB Type-C（数据 only）
+PASS ee8ff9145cb7e48c -> ee8ff9145cb7e48c  ### 4.4.4 RS485/PT100 供电端子
+PASS eb5c923982bda51c -> eb5c923982bda51c  ### 4.4.5 香蕉头
+PASS d0f8e06e344d8072 -> d0f8e06e344d8072  ### 4.4.6 按键与显示
+PASS 5e0931f32d2350f5 -> 5e0931f32d2350f5  ### 4.4.7 定位、顶丝与磁吸
+PASS 1a0e6487f0ccb782 -> 1a0e6487f0ccb782  ## 4.5 PC 工具（USB-C，必需服务工具）
+PASS_APPEND 5db862ecf2b20e87 -> e8b1d2566e4113ef  # 5. 附录
+PASS 0ac025e7a27b5fb4 -> 0ac025e7a27b5fb4  ## 附录 A：验收覆盖对照
+PASS f4a70d54163ec781 -> f4a70d54163ec781  ### A.1 T-0004 验收 2
+PASS 340666c45e03f1c4 -> 340666c45e03f1c4  ### A.2 T-0005 验收 1–5
+PASS 8794ce33b09b0d3c -> 8794ce33b09b0d3c  ## 附录 B：边界声明
+PASS_APPEND c126f5418d19bddf -> 220bb69b8cc9b544  ## 附录 C：变更记录
+PASS f1f217555028a0b3 -> f1f217555028a0b3  ## 附录 D：合并来源、删除说明与历史差异留痕
+PASS c21d3feb445e6ec8 -> c21d3feb445e6ec8  ### D.1 合并来源映射
+PASS 53b88bdc63a064fd -> 53b88bdc63a064fd  ### D.2 删除 `requirements-part2.md` 的原因
+PASS d42bf514cd94c0bb -> d42bf514cd94c0bb  ### D.3 与既有文档的差异（原第 2 部分第 7 节留痕）
+PASS cd3485a114b238c1 -> cd3485a114b238c1  ## 附录 E：初稿边界与待确认清单
+PASS 9ea2c9aaf989df28 -> 9ea2c9aaf989df28  ### E.1 初稿边界
+PASS 4155374efb0d467a -> 4155374efb0d467a  ### E.2 待 owner 确认
+PASS 81304a3a5f5ed6b1 -> 81304a3a5f5ed6b1  ## 附录 F：T-0017 安全与使用边界变更单（v0.8）
+PASS fef36255a35df479 -> fef36255a35df479  ### F.1 裁决摘要
+PASS 0a9f995886ad55b4 -> 0a9f995886ad55b4  ### F.2 逐条落点与联动
+PASS ca1cf03c2784d781 -> ca1cf03c2784d781  ### F.3 与第 2 部分故障语义的联动
+PASS f600888cacff1ab2 -> f600888cacff1ab2  ### F.4 差异留痕（旧表述 → 现行口径）
+PASS 6aaff08fa12eb628 -> 6aaff08fa12eb628  ### F.5 不在本单范围
+PASS 6d2f2baf1f48083f -> 6d2f2baf1f48083f  ## 附录 G：T-0018 能力补齐需求（v0.9）
+PASS d620801c6345dcb0 -> d620801c6345dcb0  ### G.1 保护阈值可设性（OVP/OCP）
+PASS 7eac632677e77916 -> 7eac632677e77916  ### G.2 故障可追溯
+PASS 355261203de8fb4a -> 355261203de8fb4a  ### G.3 异常安全态与看门狗
+PASS 252af842c0deb95f -> 252af842c0deb95f  ### G.4 参数预设
+PASS bb82ad0fb8bea76e -> bb82ad0fb8bea76e  ### G.5 能力留口（能力条目）
+PASS ab4f10d13b976a39 -> ab4f10d13b976a39  ### G.6 与既有条款的冲突与待 owner 确认
+PASS aaab7778f0a04a7e -> aaab7778f0a04a7e  ## 附录 H：T-0019 输出能力包络与环境降额边界变更单（v1.0）
+PASS e69049af07997963 -> e69049af07997963  ### H.1 裁决摘要
+PASS 5dacacecd8769ef5 -> 5dacacecd8769ef5  ### H.2 输出能力包络
+PASS 9a752372bdd90cc0 -> 9a752372bdd90cc0  ### H.3 环境降额边界（可判定）
+PASS c03949b322873377 -> c03949b322873377  ### H.4 过功率保护（OPP）结论
+PASS 3a30742e214cfff4 -> 3a30742e214cfff4  ### H.5 自洽核对（不改已定口径）
+PASS 07e0284407c3b369 -> 07e0284407c3b369  ### H.6 联动位置与变更留痕
+PASS d5b8430575b1e23c -> d5b8430575b1e23c  ### H.7 不写内容（边界声明）
+PASS 1c0b26fe94efeee5 -> 1c0b26fe94efeee5  ## 附录 I：T-0020 对标补缺变更单（v1.1）
+PASS a17af392e39fc45a -> a17af392e39fc45a  ### I.1 插拔寿命与接触可靠性（64 针金手指/卡边插座）
+PASS f4e737efae0f36f0 -> f4e737efae0f36f0  ### I.2 状态可见性（用户不借助工具即可判定）
+PASS e41d163353517e7e -> e41d163353517e7e  ### I.3 范围外清单补全（O-02 修订 + O-06～O-10）
+PASS cc2312bb8e0f609e -> cc2312bb8e0f609e  ### I.4 PC 工具与 USB-C 服务口径（T-0031 修订）
+PASS bb560e36fe2d6129 -> bb560e36fe2d6129  ### I.5 与 T-0007 已定项的交叉引用与冲突清单
+PASS a4fce19670065235 -> a4fce19670065235  ### I.6 验收判据（可判定）
+PASS da4de10963f1ff99 -> da4de10963f1ff99  ### I.7 待确认与默认值（owner/首样）
+PASS f339d0defe8c6732 -> f339d0defe8c6732  ## 附录 J：T-0031 显示/职责/PC 工具变更单（v1.2）
+PASS c015699246009139 -> c015699246009139  ### J.1 显示硬件与格式
+PASS 68b70f6e8d4dc8db -> 68b70f6e8d4dc8db  ### J.2 显示内容
+PASS f80544273ae6ed6a -> f80544273ae6ed6a  ### J.3 调试板职责与交互（修订 T-0009 验收）
+PASS c8c05cb9e9d82f49 -> c8c05cb9e9d82f49  ### J.4 故障指示与 PC 工具（修订 T-0011/T-0010 验收）
+PASS 04751509ee239716 -> 04751509ee239716  ### J.5 温度保护（修订 T-0009/T-0010 验收）
+PASS a84ddd3539c82240 -> a84ddd3539c82240  ### J.6 接口补丁（归入 T-0018，T-0031 追加）
+PASS d84aab10c7f4f8d5 -> d84aab10c7f4f8d5  ### J.7 验收修订对照（T-0009/T-0010/T-0011/T-0020）
+PASS bdbb2252ba5b0941 -> bdbb2252ba5b0941  ### J.8 T-0030 作废声明
+PASS f6e6c9354f6c52f2 -> f6e6c9354f6c52f2  ### J.9 待确认与变更记录
+PASS 07b1b768a101d7e2 -> 07b1b768a101d7e2  ### J.10 看板验收字段同步 handoff（2026-11-18）
+PASS 5325a8b8979646c5 -> 5325a8b8979646c5  ## 附录 K：T-0032 正文归并与迁移对照（v2.0）
+PASS d841de74122afaaa -> d841de74122afaaa  ### K.1 需求正文迁移
+PASS dbd2bd145fe2dd7c -> dbd2bd145fe2dd7c  ### K.2 设计正文迁移
+PASS c8f1ec49ec3a3e4b -> c8f1ec49ec3a3e4b  ### K.3 冲突与裁决（以最新看板验收为准）
+PASS 1522c5beab16125d -> 1522c5beab16125d  ### K.4 `docs/` 四份处置：选“摘要页”
+PASS bbac5055385c0318 -> bbac5055385c0318  ## 附录 L：T-0032 校验与规模（v2.0）
+TOTAL 147 / PASS 147

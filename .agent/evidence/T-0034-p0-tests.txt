@@ -1,0 +1,18 @@
+KIND: tests
+TASK: T-0034
+AT: 2026-11-18 +08:00
+CMD: git show 57d43fa:.agent/docs/requirements.md vs 2d064cb:.agent/docs/requirements.md；H1-H3 子树 SHA-256；TOC 锚点；git diff --check；git diff --stat
+--- 内容校验 ---
+1 基线：.agent/docs/requirements.md 1740 行 / 150 个 H1-H3，已含 T-0032 正文；.agent/requirements.md 1609 行，顶部“已迁移，见 .agent/docs/requirements.md”
+2 C1 后：.agent/docs/requirements.md 1796 行 / 151 个 H1-H3；新增 TOC 46 行（§1–§5 + 附录 A–L）
+3 正文无丢失：从 `# 1.` 起 147 个正文 H1-H3 逐章 SHA-256 147/147 匹配；PASS_APPEND 2（“# 5. 附录”“## 附录 C：变更记录”，仅追加 T-0034 变更记录行）；全量原文见 T-0034-p1-body-hashes.txt
+4 设计/模块：docs/ 四份各 7 行引用页；architecture 644 行；modules 184 行；T-0032 附录 K.1/K.2 映射保留
+5 TOC：46 个锚点全部命中（badLinks=[]）；章节清单见 T-0034-p1-headings.txt
+--- RAW ---
+$ git diff --check 57d43fa..2d064cb
+(no output) [exit 0]
+$ git diff --stat 57d43fa..2d064cb
+1 file changed, 57 insertions(+), 1 deletion(-)
+$ git status --porcelain=v1 -uall（C1 后）
+(no output) [exit 0]
+RESULT: PASS

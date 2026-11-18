@@ -1,0 +1,13 @@
+KIND: acceptance
+TASK: T-0034
+AT: 2026-11-18 +08:00
+1 需求正文整体并入 + 索引改 TOC：PASS（基线已有 T-0032 正文 1740 行；C1 后 1796 行，TOC 46 行/锚点 46/46；正文 147/147 hash 不变）
+2 `.agent/requirements.md` 处理：PASS（1609 行，顶部“已迁移，见 `.agent/docs/requirements.md`”；T-0032 标注，后续只改新文件）
+3 设计与模块并入：PASS（docs/ 四份各 7 行引用页；architecture 644 行；modules 184 行；T-0032 附录 K.2 映射保留）
+4 无丢失对照：PASS（T-0032 附录 K.1/K.2 保留；147/147 hash；P1 全量标题/哈希；未迁移章节=0）
+5 T-0032 返工说明：PASS（新基线 57d43fa 已含 9252331 归并；旧基线 ba16717 才是索引态；本单只补 TOC/验证，不重做正文）
+6 不改验收口径：PASS（147 章 hash 不变；仅附录 C 追加 T-0034 1 行 + TOC/头部说明）
+7 规模：内容文档 1 文件 / +57−1 = 56 行；证据/worklog/KB 另计；远低于 8/1500
+8 交付判据：PASS（C1=2d064cb 已 push 到 origin/master；C2 证据提交随后 push；工作区 clean；C1 body 含 Ticket: T-0034）
+SIZE: 文档 1 文件 / 56 行；代码与配置 0 文件 / 0 行；证据/worklog 路径不计
+RESULT: PASS

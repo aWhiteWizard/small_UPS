@@ -1,0 +1,18 @@
+KIND: sha
+TASK: T-0034
+AT: 2026-11-18 +08:00
+BASE: 57d43fa0ac8dc77e43fd4341fa7c935fb628e187（origin/master）
+CONTENT_COMMIT: 2d064cbabe455a642cff8cb25429484cca35df64（C1，body 含 Ticket: T-0034）
+C1_PUSHED: YES
+PUSH: git push origin HEAD:refs/heads/master -> 57d43fa..2d064cb; exit 0
+LS_REMOTE_C1: 2d064cbabe455a642cff8cb25429484cca35df64	refs/heads/master
+LS_REMOTE_FINAL: 2d064cbabe455a642cff8cb25429484cca35df64	refs/heads/master
+FINAL_HEAD: 2d064cbabe455a642cff8cb25429484cca35df64
+C1_ANCESTOR_OF_HEAD: YES（C1 是 C2 证据提交的父提交）
+LOG: 2d064cb task(T-0034): 需求正文补 TOC 并验证 T-0032 归并未丢失（body 含 Ticket: T-0034）
+RAW_LOG:
+$ git log --oneline -1
+2d064cb task(T-0034): 需求正文补 TOC 并验证 T-0032 归并未丢失
+DIFF: 57d43fa..2d064cb = 1 file changed, 57 insertions(+), 1 deletion(-)（仅 `.agent/docs/requirements.md` TOC/变更记录/头部说明）
+WORKTREE: C1 后 clean；C2 仅含 evidence/worklog/KB，随后 push；C2 后 clean
+RESULT: PASS（C1 已 push 到 origin/master）

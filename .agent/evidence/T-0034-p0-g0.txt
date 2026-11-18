@@ -1,0 +1,10 @@
+KIND: g0
+TASK: T-0034
+AT: 2026-11-18 +08:00
+BRANCH: task/T-0034 @ D:\workspace\wt\small-ups\T-0034
+BASE: 57d43fa0ac8dc77e43fd4341fa7c935fb628e187（origin/master；已含 T-0032 正文归并）
+HEAD: 2d064cbabe455a642cff8cb25429484cca35df64（C1，Ticket 提交）
+CMD: git rev-parse HEAD; Test-Path .agent/gate.json; node verify-toc-body.mjs; git diff --check; git status --porcelain
+STATUS: gate.json 未配置（G0 按“未配置门禁”PASS，ran=0）；基线 .agent/docs/requirements.md 1740 行已含正文；C1 仅补 TOC（46 行）+ 附录 C 1 行 + 头部说明；C1 后工作区 clean
+DOC-CHECK: 正文 147 章 hash 147/147 不变；TOC 46/46 锚点命中；git diff --check=0
+RESULT: PASS
