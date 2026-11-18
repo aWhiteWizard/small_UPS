@@ -8,12 +8,14 @@ C2: 1770c955b1a4414fdd6301cb6c52a97d4901897f（首轮证据提交）
 C3: dc75815ca1f53fefcb9a41f72bb439198c9b6377（55V 码位修复）
 C4: 5c48e08376d225e7ef7b5c31fae863816c52943d（前一轮内容/证据，已并入 master）
 C5: 2b541c80fc8191785b83a4c057a96ea64500bf55（最终内容修复）
-COMMIT: f225c09bcd52bcd24edf7b3b4964c2d616762605（最终证据提交 C6'）
-LOCAL_HEAD: f225c09bcd52bcd24edf7b3b4964c2d616762605
-REMOTE_HEAD: f225c09bcd52bcd24edf7b3b4964c2d616762605 refs/heads/master
-CMD: git rebase origin/master; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-PUSH: 2b541c8..f225c09 HEAD -> master
-LS_REMOTE: f225c09bcd52bcd24edf7b3b4964c2d616762605	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == f225c09bcd52bcd24edf7b3b4964c2d616762605
-NOTE: 本文件随记录提交落库；C6' 为最终证据提交；最终 HEAD 的 git rev-parse/ls-remote 原文见报告。
+C6: f225c09bcd52bcd24edf7b3b4964c2d616762605（最终证据提交）
+C9: 319cf8ef008c4d787dedfe97048c92d8d0874d8f（上一记录提交）
+COMMIT: 319cf8ef008c4d787dedfe97048c92d8d0874d8f
+LOCAL_HEAD: 319cf8ef008c4d787dedfe97048c92d8d0874d8f
+REMOTE_HEAD: 319cf8ef008c4d787dedfe97048c92d8d0874d8f refs/heads/master
+CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+PUSH: 055b7dd..319cf8e HEAD -> master
+LS_REMOTE: 319cf8ef008c4d787dedfe97048c92d8d0874d8f	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 319cf8ef008c4d787dedfe97048c92d8d0874d8f
+NOTE: C10' 为最终记录提交（回填 C9' 与行数），其 SHA 见报告（自指限制，沿用 T-0017 惯例）。
 RESULT: PASS
