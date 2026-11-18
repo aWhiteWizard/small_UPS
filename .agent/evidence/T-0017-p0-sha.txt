@@ -2,14 +2,14 @@ KIND: sha
 TASK: T-0017
 AT: 2026-11-18 +08:00
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-CLEAN_BASE: e07f27ad6f58ee4937553a2aa0fb0c5fc046b5db (origin/master, T-0029 收口后)
+CLEAN_BASE: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa (origin/master)
 CONTENT_COMMITS: eca9519 (C1) .. 017a13b (C4)，均已在 origin/master
-R0_EVIDENCE: 5968021e64ea1791a827cb62dc36eeb079d2a5c8
-COMMIT: 5968021e64ea1791a827cb62dc36eeb079d2a5c8
-LOCAL_HEAD: 5968021e64ea1791a827cb62dc36eeb079d2a5c8
-REMOTE_HEAD: 5968021e64ea1791a827cb62dc36eeb079d2a5c8
-LS_REMOTE: 5968021e64ea1791a827cb62dc36eeb079d2a5c8	refs/heads/master
-PUSH: e07f27a..5968021  HEAD -> master (exit 0)
-VERIFY: push 后 git rev-parse HEAD == git ls-remote origin refs/heads/master == 5968021
-NOTE: R1 为最终记录提交（回填本文件），其 SHA 见报告（自指限制，沿用 T-0011/T-0017 惯例）。
+TICKET_COMMIT: a2a0303（body: Ticket: T-0017；已在 origin/master）
+EVIDENCE_COMMIT: 本轮证据提交 E1（body: Evidence: T-0017；SHA 见 D1 回填）
+E1_LOCAL_HEAD: 待 D1 回填
+E1_REMOTE_HEAD: 待 D1 回填
+LS_REMOTE: 待 D1 回填
+GIT_LOG:
+待 D1 回填本单提交原文
+DELIVERY: 本轮交付提交 D1（body: Ticket: T-0017）SHA 见报告；证据不写最终 HEAD 自指。
 RESULT: PASS
