@@ -1,10 +1,12 @@
 KIND: acceptance
 TASK: T-0022
-AT: 2026-11-18 +08:00（重派复核 @ CLEAN_BASE 8469cee）
-1 工具链清单与版本校验：PASS。firmware/README.md:20-31 列 GCC/CMake/Ninja/OpenOCD/PuTTY/ST-Link 驱动，含固定版本、安装包、落盘路径、校验命令；:38 给一键校验入口；实测 check-env.ps1 8/8 PASS（gcc 15.2.1 / cmake 3.31.9 / ninja 1.13.2 / openocd 0.12.0 / PuTTY 0.85 / CMSIS v5.9.0 / device v1.4.5 / HAL v1.4.7）。
-2 构建系统落地：PASS。firmware/build.ps1:27-29 打印 TOOLCHAIN/CMAKE/NINJA，:33-38 调 CMake+Ninja，:40-41 列产物；firmware/CMakeLists.txt:80-84 生成 .bin/.hex；`powershell -File firmware\build.ps1 -Clean` exit 0，[8/8] Linking、MEM、size、ELF 664368 B / BIN 1544 B 原文见 p0-tests。
-3 .gitignore 覆盖：PASS。.gitignore:14 `build/`、:16 `.tools/`；`git check-ignore -v` 两项均命中；`git ls-files` 无 .exe/.a/.o/.elf/.bin/.hex；173 跟踪文件（含本单 P0/worklog 6 个）、pack 245.56 KiB（p0-tests）；证据文本 4 个 P0 共 6445 B，无二进制。
-4 Windows 安装包与路径：PASS。firmware/README.md:18-31 列固定 xPack zip 名/版本与 `.tools\...` 落盘路径；:42-55 列 bootstrap/build 命令；firmware/tools/bootstrap.ps1:32-43 固定下载 URL 与 CMSIS/HAL tag；不写系统 PATH/注册表。
-5 规模与提交：PASS。内容提交 1d6caec = 4 文件 / +107 / -8 行（≤8 文件 / ≤400 行），已在 origin/master；重派收口另见 p0-sha 的 EVIDENCE_COMMIT 与 TICKET_COMMIT（仅 .agent 记录，无源码改动）。
-SIZE: 内容 4 files / 107 insertions / 8 deletions；重派 CLEAN_BASE..HEAD 仅证据/worklog/KB；旧 base ba16717 另含 72 个上游提交，见 p0-g0。
+AT: 2026-11-18 +08:00（重建后 @ 78ac8d1）
+1 工具链清单与版本校验：PASS。firmware/README.md:20-31 列 GCC/CMake/Ninja/OpenOCD/PuTTY/ST-Link 驱动，含固定版本、安装包、落盘路径、校验命令；:38 一键校验入口；实测 check-env 8/8 PASS（gcc 15.2.1 / cmake 3.31.9 / ninja 1.13.2 / openocd 0.12.0 / PuTTY 0.85 / CMSIS v5.9.0 / device v1.4.5 / HAL v1.4.7）。
+2 构建系统落地：PASS。firmware/build.ps1:27-29 打印工具链版本，:33-38 CMake+Ninja，:40-41 列产物；CMakeLists.txt:80-84 生成 .bin/.hex；`build.ps1 -Clean` exit 0，[8/8] Linking，ELF 664368 B / BIN 1544 B（原文见 p0-tests）。
+3 .gitignore 覆盖：PASS。.gitignore:14 `build/`、:16 `.tools/`；check-ignore 两项命中；git ls-files 无 .exe/.a/.o/.elf/.bin/.hex（0）；187 tracked、pack 835.34 KiB，本单无二进制入库（p0-tests）。
+4 Windows 安装包与路径：PASS。README.md:18-31 固定 xPack zip 名/版本与 `.tools\...` 路径；:42-55 bootstrap/build 命令；tools/bootstrap.ps1:32-43 固定 URL/tag；不写系统 PATH/注册表。
+5 文件规模：PASS。内容提交 1d6caec = 4 文件 / +107 / −8 行（≤8 文件 / ≤400 行），已在 origin/master；本轮仅 .agent 证据，无源码改动。
+6 交付判据：PASS。带 `Ticket: T-0022` 的 C1=565690f、C2=e9be0af 已在 origin/master；开工 status 干净；本轮 E2/C3 见报告。
+SIZE: 文档 2 文件/21 行（README.md 19、kb/notes.md 2）；代码与配置 2 文件/94 行（build.ps1 6、check-env.ps1 88）；合计 4/115（+107/−8）。
+EVIDENCE_EXCLUDED: .agent/evidence/T-0022-p0-*.txt（4 个）、.agent/worklogs/T-0022.md；不计规模。
 RESULT: PASS

@@ -381,3 +381,12 @@ KB-LAYER: 2_system
 KB-TAGS: powershell, dotnet, cwd, temp-experiment, gitignore
 
 在 worktree 内做临时实验、又用 `[IO.File]`/`[System.IO.*]` 读写相对路径时，`Set-Location` 只改 PowerShell 位置，不改 `[Environment]::CurrentDirectory`，相对路径仍落在进程启动目录（工单仓库），会静默改到真实文件。临时实验一律用绝对路径（`Join-Path $t 'x'`），或先 `[Environment]::CurrentDirectory = $t`；发现误改立即 `git restore -- <path>` 并用 `git hash-object` 与 `HEAD:<path>` 对比确认恢复。
+
+## 重建 worktree 后 .tools 不随 checkout 出现，需在仓库根重建 junction
+
+KB-TYPE: method
+KB-EVIDENCE: `firmware\build.ps1:13-14`（`$repo=..`，`$tools=$repo\.tools`）与 `firmware\tools\check-env.ps1:15-16`（`$repo=..\..`）都指向仓库根 `.tools`；重建后直接跑 check-env 报 `missing tools root: D:\workspace\wt\small-ups\T-0022\.tools (run firmware/tools/bootstrap.ps1 first)`；`cmd /c mklink /J <repo>\.tools D:\workspace\wt\small-ups\T-0002\.tools` 后 8/8 PASS、`build.ps1 -Clean` exit 0
+KB-LAYER: 1_application
+KB-TAGS: worktree, toolchain, junction, gitignore, T-0022
+
+`.tools/` 被 `.gitignore:16` 忽略，worktree 重建或新 clone 后不会出现，但构建脚本只在 `<repo>\.tools` 找工具链；不要重下约 360 MB，复用同机其他 worktree 的 `.tools` 建目录 junction（不入 git）。junction 必须建在仓库根，不是 `firmware\.tools`：check-env 的 `$repo` 是 `firmware\tools\..\..`，build 的 `$repo` 是 `firmware\..`，两者都落到仓库根。`check-env.ps1 -ToolsDir` 可临时指向别处只做校验，`build.ps1` 无此参数。

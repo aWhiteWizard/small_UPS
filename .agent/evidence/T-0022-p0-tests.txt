@@ -1,22 +1,18 @@
 KIND: tests
 TASK: T-0022
-AT: 2026-11-18 +08:00（重派复核 @ CLEAN_BASE 8469cee）
-CMD: powershell -File firmware\tools\check-env.ps1; powershell -File firmware\build.ps1 -Clean; arm-none-eabi-size/readelf; git check-ignore; git ls-files; git count-objects
+AT: 2026-11-18 +08:00（重建后 @ 78ac8d1）
+CMD: powershell -File firmware\tools\check-env.ps1; powershell -File firmware\build.ps1 -Clean; arm-none-eabi-readelf; git check-ignore; git ls-files; git count-objects
 TOOL: arm-none-eabi-gcc.exe (xPack GNU Arm Embedded GCC x86_64) 15.2.1 20251203
-TOOL: cmake version 3.31.9；ninja 1.13.2；PuTTY Release 0.85
-TOOL: xPack Open On-Chip Debugger 0.12.0+dev-02228-ge5888bda3-dirty (2025-10-04-22:44)
+TOOL: cmake 3.31.9；ninja 1.13.2；OpenOCD 0.12.0；PuTTY 0.85
 HAL: cmsis_core v5.9.0_20220705 / cmsis_device_g0 v1.4.5 / stm32g0xx_hal_driver v1.4.7
-CHECK-ENV: PASS (8/8，exit 0；脚本 firmware/tools/check-env.ps1)
-BUILD: TOOLCHAIN: arm-none-eabi-gcc.exe (xPack GNU Arm Embedded GCC x86_64) 15.2.1 20251203
-BUILD: CMAKE: cmake version 3.31.9；NINJA: 1.13.2
-BUILD: [8/8] Linking C executable psu_minimal.elf
-MEM: RAM 1584 B / 36 KB (4.30%)；FLASH 1544 B / 128 KB (1.18%)
-SIZE: text 1524  data 20  bss 1572  dec 3116  hex c2c
+CHECK-ENV: PASS（8/8 OK=True，exit 0）
+BUILD: TOOLCHAIN: ... 15.2.1 20251203；[8/8] Linking C executable psu_minimal.elf；exit 0
+MEM: RAM 1584 B/36 KB (4.30%)；FLASH 1544 B/128 KB (1.18%)；text 1524 data 20 bss 1572 dec 3116
 ART: psu_minimal.elf 664368 B；psu_minimal.bin 1544 B（=FLASH used）；psu_minimal.hex 4426 B
-ELF: ELF32 ARM, entry 0x8000275, 2 LOAD segments (R E / RW), flags 0x5000200 soft-float
-VEC: 00 90 00 20 75 02 00 08（初始 SP=0x20009000，Reset_Handler=0x08000275）
-WARN: newlib nosys `_close/_lseek/_read/_write is not implemented`（预期，不阻塞；README §8）；无 RWX 段、无 LMA adjusted 警告
-IGNORE: .gitignore:16:.tools/ 与 .gitignore:14:build/ 均命中；git ls-files 无 .exe/.a/.o/.elf/.bin/.hex
-REPO: 173 tracked files（含本单 P0/worklog 6 个）；pack 245.56 KiB；loose 2.01 MiB（证据提交未 gc）
-LOG: .agent/evidence/T-0022-p1-build-r2.log；T-0022-p1-check-env-r2.log（重派复跑）
+ELF: ELF32 ARM, entry 0x8000275, 2 LOAD（R E / RW）
+VEC: 00 90 00 20 75 02 00 08（SP=0x20009000，Reset=0x08000275）
+WARN: newlib nosys `_close/_lseek/_read/_write is not implemented`（预期；README §8）
+IGNORE: .gitignore:14 `build/`、:16 `.tools/` 均命中；git ls-files 无 .exe/.a/.o/.elf/.bin/.hex（0）
+REPO: 187 tracked（当前基线）；pack 835.34 KiB；T-0022 内容仅文本 4 文件/+107 行
+LOG: .agent/evidence/T-0022-p1-build-rebuild.log（P1，不入库）
 RESULT: PASS

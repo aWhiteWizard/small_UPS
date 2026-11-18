@@ -1,19 +1,15 @@
 KIND: sha
 TASK: T-0022
-AT: 2026-11-18 +08:00（重派复核）
-TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 baseSha，落后 72 提交）
-CLEAN_BASE: 8469ceec87de8c718441dc13324f2ed7fd57f597（ff-only origin/master 后）
-CONTENT_COMMIT: 1d6caeca637ca515e8470b928449cf6ee40c23d2（4 文件/+107/−8，已在 origin/master）
-EVIDENCE_COMMIT: 8a5eafef30d3cf49300b5595790bdf11a4afb64c（E1：P0 证据/worklog/KB，已 push）
-TICKET_COMMIT: C1=565690f77fe5768dd58cfea092597c9fabaf0bde（body: Ticket: T-0022）；C2=本修正提交，自身 SHA 见报告（自指限制）
-LOCAL_HEAD: 8a5eafef30d3cf49300b5595790bdf11a4afb64c（E1 push 后、C 提交前）
-REMOTE_HEAD: 8a5eafef30d3cf49300b5595790bdf11a4afb64c refs/heads/master
-CMD: git merge --ff-only origin/master; git add -f .agent/evidence/T-0022-p0-*.txt .agent/worklogs/T-0022.md; git add .agent/kb/notes.md; git commit -m "docs(T-0022): 重派复核并记录 P0 证据（E1）" -m "Evidence: T-0022"; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-LS_REMOTE: 8a5eafef30d3cf49300b5595790bdf11a4afb64c	refs/heads/master
-PUSH: 8469cee..8a5eafe  HEAD -> master（exit 0）
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 8a5eafef30d3cf49300b5595790bdf11a4afb64c（E1）
+AT: 2026-11-18 +08:00（重建后收口）
+BASE: 78ac8d14bf2ea6bd563bb7649d63bdcbbf8c8c45（origin/master，重建基线）
+CONTENT_COMMIT: 1d6caeca637ca515e8470b928449cf6ee40c23d2（4 文件/+107/−8）
+EVIDENCE_COMMIT: 8a5eafef30d3cf49300b5595790bdf11a4afb64c（E1，body: Evidence: T-0022）
+TICKET_COMMIT: 565690f77fe5768dd58cfea092597c9fabaf0bde（C1）; e9be0af546453e4174b45bd2c9b0afad5335471f（C2，body: Ticket: T-0022）
+LS_REMOTE_HEAD: 78ac8d14bf2ea6bd563bb7649d63bdcbbf8c8c45 refs/heads/master（开工实测）
+VERIFY: 1d6caec/8a5eafe/565690f/e9be0af 均为 78ac8d1 祖先（git merge-base --is-ancestor exit 0）
+GIT_LOG: e9be0af docs(T-0022): 修正跟踪文件计数并最终收口（C2）; 565690f docs(T-0022): 回填重派交付 SHA 并收口（C1）; 8a5eafe docs(T-0022): 重派复核并记录 P0 证据（E1）; 1d6caec task(T-0022): 复核固件工具链与构建链，补版本校验
 DIFF_CONTENT: 1d6caec^..1d6caec = 4 files changed, 107 insertions(+), 8 deletions(-)
-DIFF_CLEAN: 8469cee..8a5eafe = 6 files changed, 110 insertions(+), 1 deletion(-)（仅 .agent 证据/worklog/KB）
-DIFF_OLD_BASE: ba16717..8a5eafe 含 72 个上游提交（91 files / 5196 insertions / 244 deletions），非本单规模
-NOTE: P0 与 worklog 被 .gitignore 忽略，按重派协议 git add -f 单独提交；P1 大日志不入库。C 仅回填本文件与 worklog，SHA 见报告。
+DIFF_SESSION: 78ac8d1..HEAD 仅 .agent/evidence/T-0022-* + .agent/worklogs/T-0022.md + .agent/kb/notes.md
+DIFF_OLD_BASE: ba16717..78ac8d1 = 91 files/5196 insertions/244 deletions（含 72 个上游他单提交，非本单；base 过期）
+NOTE: 本轮 E2/C3 的 SHA 见报告（自指限制）；证据提交 E2 单独带 Evidence: T-0022
 RESULT: PASS

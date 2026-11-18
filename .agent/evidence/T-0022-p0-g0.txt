@@ -1,15 +1,12 @@
 KIND: g0
 TASK: T-0022
-AT: 2026-11-18 +08:00（重派复核）
-BRANCH: task/T-0022 @ D:\workspace\wt\small-ups\T-0022
-TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f（工单 baseSha，落后 72 提交）
-CLEAN_BASE: 8469ceec87de8c718441dc13324f2ed7fd57f597（重派后 ff-only origin/master 的 HEAD）
-CONTENT_COMMIT: 1d6caeca637ca515e8470b928449cf6ee40c23d2（4 文件/+107/−8，已在 origin/master）
-CMD: git fetch origin; git merge --ff-only origin/master（1d6caec→8469cee）; git rev-parse HEAD; git merge-base --is-ancestor 1d6caec origin/master; git status --porcelain -uall; git check-ignore -v ...
-STATUS: 重派工作区原 HEAD=1d6caec（落后 19 提交），引擎重建未落到本 worktree；人工 ff-only 到 8469cee，工作区干净；本单内容已在 master，未重做
-UPSTREAM: 1d6caec 是 origin/master 祖先（merge-base --is-ancestor exit 0）；其后 19 个他单提交未改 firmware/
-SIZE_OLD_BASE: ba16717..8469cee = 91 files changed, 5196 insertions(+), 244 deletions(-)（含上游他单，非本单）
-SIZE_CONTENT: 1d6caec^..1d6caec = 4 files changed, 107 insertions(+), 8 deletions(-)
-SIZE_RERUN: CLEAN_BASE..HEAD = 仅本单 P0 证据 + worklog + KB（见 p0-sha；无源码改动）
-IGNORE: .gitignore:16:.tools/ → .tools\arm-gcc\bin\arm-none-eabi-gcc.exe；.gitignore:14:build/ → firmware\build\psu_minimal.elf
+AT: 2026-11-18 +08:00（重建后复核 r3）
+WORKTREE: D:\workspace\wt\small-ups\T-0022（T-0179 重建已生效；旧目录备份 _backup\T-0022-20261118-151454 保留）
+BASE: 78ac8d14bf2ea6bd563bb7649d63bdcbbf8c8c45（origin/master，重派新基线）
+HEAD: 78ac8d14bf2ea6bd563bb7649d63bdcbbf8c8c45；git status --porcelain -uall = 0 行
+CONTENT: 1d6caeca637ca515e8470b928449cf6ee40c23d2（4 文件/+107/−8，origin/master 祖先）
+HISTORY: 8a5eafef30d3cf49300b5595790bdf11a4afb64c（E1, Evidence: T-0022）、565690f77fe5768dd58cfea092597c9fabaf0bde（C1）、e9be0af546453e4174b45bd2c9b0afad5335471f（C2, Ticket: T-0022），均为 BASE 祖先
+CMD: git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain -uall; git merge-base --is-ancestor <sha> HEAD; git diff --shortstat 78ac8d1..HEAD
+DIFF: 78ac8d1..HEAD = 0（开工干净；本单内容已全部在基线，未重做）
+ENV: 重建后 gitignore 的 .tools/ 不随 checkout 出现；建 junction <repo>\.tools -> T-0002\.tools（不入库、不改 git 跟踪）
 RESULT: PASS
