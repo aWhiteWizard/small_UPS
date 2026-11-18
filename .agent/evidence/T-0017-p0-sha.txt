@@ -5,12 +5,13 @@ TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
 BASE_REAL: b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679 (ff-only)
 C1_CONTENT: eca95191c1e4155e52b361d54abd9308115ba4a8
 C4_CONTENT: 017a13beea5cfb9f2d4d4986e5a7428e1e39ef21
-COMMIT: db904c3fcdb30160f5386e8fb494da791818e378
-LOCAL_HEAD: db904c3fcdb30160f5386e8fb494da791818e378
-REMOTE_HEAD: db904c3fcdb30160f5386e8fb494da791818e378
-LS_REMOTE: db904c3fcdb30160f5386e8fb494da791818e378	refs/heads/master
-PUSH: f698a3a..db904c3  HEAD -> master (exit 0)
-CMD: git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == db904c3fcdb30160f5386e8fb494da791818e378
-NOTE: D1=db904c3 为交付证据提交（内容+证据）；D2 仅回填本文件与 worklog，D2 自身 SHA 见报告（自指限制，沿用 T-0011 惯例）。
+D1_EVIDENCE: db904c3fcdb30160f5386e8fb494da791818e378
+D2_RECORD: b38d866374d513c2808efd9c89ca193ded62bcdc
+COMMIT: b38d866374d513c2808efd9c89ca193ded62bcdc
+LOCAL_HEAD: b38d866374d513c2808efd9c89ca193ded62bcdc
+REMOTE_HEAD: b38d866374d513c2808efd9c89ca193ded62bcdc
+LS_REMOTE: b38d866374d513c2808efd9c89ca193ded62bcdc	refs/heads/master
+PUSH: f698a3a..db904c3 (D1, exit 0); db904c3..b38d866 (D2, exit 0)
+VERIFY: D1/D2 push 后 LOCAL_HEAD == REMOTE_HEAD（D2=b38d866）
+NOTE: D3 为最终记录提交（回填 D2 与行数），其 SHA 见报告（自指限制，沿用 T-0011 惯例）。
 RESULT: PASS

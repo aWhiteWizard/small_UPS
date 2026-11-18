@@ -6,6 +6,6 @@ FILES: requirements=1523 interface=339 test-plan=181 README=117 draft=81 行
 CHECKS: 25/25 PASS（P-15/不经软件/机械方式/人工复位/状态可读；P-09+0x05+IF 三处“仅关断/不切220V/保辅助风扇”；禁电池储能；反灌>0.2A/10µs；禁串联/浮地/多台共地；强制风冷/T-0011#9/T-0007#9；附录F/F.3）
 TABLE_BAD=0 BOM_FILES=0 TRAILING_WS=0
 ACTIVE_NO_ESTOP_REFS=0；ACTIVE_NATURAL_COOLING_REFS=0（仅旧引文）
-DIFF: 内容 7 文件 185+/24−=209 行；P0 4 文件 55 行；合计 11 文件 240+/24−=264 行
+DIFF: 内容 7 文件 185+/24−=209 行；P0 4 文件 58 行；内容区间 11 文件 240+/24−=264 行；记录提交另 5 文件（仅证据/worklog）
 GIT_DIFF_CHECK: exit 0
 RESULT: PASS
