@@ -413,7 +413,7 @@ KB-TAGS: powershell, switch, variable, case-insensitive, serial
 ## Windows 下 pyserial 打开失败要按异常原文区分“占用/无设备”
 
 KB-TYPE: method
-KB-EVIDENCE: `tools/calib/serial_link.py:65-72`（关键字分类）、`:105-130`（connect）；`:164-190`（读写异常归拔线）
+KB-EVIDENCE: `tools/calib/serial_link.py:53-59`（关键字分类）、`:92-112`（connect）；`:151-177`（读写异常/超时归拔线）
 KB-TAGS: pyserial, windows, serial, error-message, calibration
 
 `PermissionError(13, '拒绝访问')` / `Access is denied` 是被占用，`FileNotFoundError(2, '找不到')` 是无设备；同一句 `could not open port` 不能只笼统提示。先 busy 再 missing，读写的 `ClearCommError` 归拔线，才能让三种错误文案各有着落。
