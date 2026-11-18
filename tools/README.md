@@ -1,4 +1,18 @@
-# PSU PC 标定工具（T-0008）
+# PSU PC 标定工具
+
+## 模块化标定工具（T-0025 起；会话流程归 T-0026）
+
+`tools/calib/` 是拆分后的模块；T-0026 的 `session.py` 实现一次一个通道的会话状态机
+（`CAL BEGIN` → 逐点 `SET`/`MEAS` → `COMMIT` → 回读 `READ` → `ABORT`）。
+GUI 归 T-0027、CSV 归 T-0028；本模块不提供普通 V/I 设定或输出开关命令。
+
+- 命令单位：V 用 mV、I 用 mA；设备校准表按需求 §3.4.1 以 0.1mA 编码，回读 CRC 时 ×10 校验。
+- 错误码：设备 `ERR <code> <msg>` 的 code 取 CAL_STATUS 0–7（0 idle/1 busy/2 ok/3 CRC/4 版本/5 点/6 未校准/7 条件）。
+- 安全：`CAL BEGIN` 由设备把 V 限流降到 0.5A、I 降到目标点+1A；会话中普通命令回 busy；
+  超时/设备 ERR/输入非法立即 `ABORT`，仅 `COMMIT` 写 EEPROM。
+- 离线自测：`$env:PYTHONPATH="tools"; py -3 -B .agent/evidence/T-0026-p1-selftest.txt`
+
+## 旧版一体化工具（T-0008）
 
 PC 端串口逐点校准工具：连接 PSU 本体 UART（115200 8N1），按通道下发 6 点电压 / 3 点电流，
 人工录入万用表实测值，COMMIT 后自动 READ 回读 CRC 校验，并导出 CSV 留档。

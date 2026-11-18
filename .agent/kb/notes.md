@@ -424,3 +424,25 @@ KB-TYPE: content
 KB-EVIDENCE: `.agent/requirements.md:610-612`（UART 命令无 INFO）；`tools/calib/device.py:23-24`（按 `OK INFO <协议> <固件> [序列号]` 解析）
 KB-CONFLICT: T-0025 #3 要求读协议/固件/序列号，但需求未给命令与回包；沿用 T-0008 原型 `INFO` 属工具侧假设，固件侧需对齐或出变更单。
 KB-TAGS: calibration, uart, info, protocol-gap, T-0025
+
+## 标定工具 I 通道命令用 mA、校准表 CRC 用 0.1mA，不能混算
+
+KB-TYPE: method
+KB-EVIDENCE: `tools/calib/session.py:78-85`（`raw_scale=10`，I 命令 mA→表 0.1mA）；`.agent/docs/requirements.md:570`（I 用 0.1mA/LSB）
+KB-TAGS: calibration, crc, units, uart
+
+命令按 T-0025 工具协议用 mA（1A=1000），但设备校准表与 READ 回读 CRC 按需求 §3.4.1 以 0.1mA 编码（1A=10000）。直接用 mA 算 CRC 会与设备永远对不上，把回读校验做成假 FAIL；必须只在 CRC 组包时 ×10。
+## 安全中止要区分 COMMIT 前/后，不能一律宣称 EEPROM 未写
+
+KB-TYPE: method
+KB-EVIDENCE: `tools/calib/session.py:141-163`（`was_committed` 分支）；`:295-309`（COMMIT 成功后才置 `committed`）
+KB-TAGS: calibration, abort, eeprom, safety
+
+COMMIT 前失败才发 ABORT 并声明“未写 EEPROM”；COMMIT 成功后 READ/校验失败只能报“已写，需重校/恢复”，不能再发 ABORT 或宣称未写，否则用户会重复提交并误判旧表安全。
+## PowerShell `WriteAllText(path, byte[])` 会把 UTF-8 文本写成数字串
+
+KB-TYPE: bug
+KB-EVIDENCE: `[IO.File]::WriteAllText($p, [Text.Encoding]::UTF8.GetBytes($t))` 后文件首行变 `34 34 34 84 ...`、仅 1 行；应改 `[IO.File]::WriteAllText($p, $t, [Text.UTF8Encoding]::new($false))`
+KB-TAGS: powershell, utf8, file-write, corruption
+
+`WriteAllText` 第二参数是 string；传 byte[] 会调用 `ToString()` 变成空格分隔的十进制字节串，看起来“写成功”但内容全毁。改文本必须传 string + `UTF8Encoding`，或 `Set-Content -Encoding UTF8`。
