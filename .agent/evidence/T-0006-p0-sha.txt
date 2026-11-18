@@ -15,5 +15,5 @@ CMD: git rebase origin/master; git push origin HEAD:refs/heads/master; git rev-p
 PUSH: 2b541c8..f225c09 HEAD -> master
 LS_REMOTE: f225c09bcd52bcd24edf7b3b4964c2d616762605	refs/heads/master
 VERIFY: LOCAL_HEAD == REMOTE_HEAD == f225c09bcd52bcd24edf7b3b4964c2d616762605
-NOTE: 本文件随 C7'（仅 sha/worklog 记录提交）落库；C6' 为最终证据提交；最终 HEAD=C7' 的 git rev-parse/ls-remote 原文见报告。
+NOTE: 本文件随记录提交落库；C6' 为最终证据提交；最终 HEAD 的 git rev-parse/ls-remote 原文见报告。
 RESULT: PASS
