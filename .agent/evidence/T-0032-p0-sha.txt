@@ -13,5 +13,7 @@ WORKTREE: C1 后 `git status --porcelain=v1 -uall` 空；无未跟踪非忽略�
 GIT_LOG:
 9252331 task(T-0032): 正文归并：需求与设计统一到 .agent/docs 三件套，作为唯一事实源与审查依据
         Ticket: T-0032
-EVIDENCE_COMMIT: C2（本证据提交；自身 SHA 见最终报告，自指限制）
-STATUS: C1 已 push 且工作区干净；C2 提交后终验
+EVIDENCE_COMMIT: C2=6eaa3ed9cdd1ab76a3e318f66278b2501d9aa9be（body: Evidence: T-0032；已 push）
+EVIDENCE_PUSH: 9252331..6eaa3ed  HEAD -> master（exit 0）
+FINAL_HEAD: C3（本文件回填 C2 SHA 的收口提交；自身 SHA 见最终报告，自指限制）
+STATUS: C1（Ticket）+ C2（Evidence）均已在 origin/master；C3 提交后终验

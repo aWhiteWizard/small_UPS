@@ -10,5 +10,5 @@ CONTENT_COMMIT/C1: 925233191471404f1a9029a6801874f409f8ab05
 5 迁移对照：requirements 附录 K.1（逐章/附录）、K.2（逐节）、K.3（7 条冲突）、K.4（摘要页理由）；architecture §11；modules §4 → PASS
 6 不改验收：需求正文仅 21/19 行路径改指+变更记录；PFC 停振措辞按 T-0011 新基线同步；冲突裁决单号见 K.3 → PASS
 7 校验规模：requirements 1734 行/88917 字、architecture 644/30233、modules 184/7986；合计 2562 行/127136 字；C1 实提交 12 个 .md/+2602−914，代码配置 0；超提示线已留痕，owner 豁免 ≤40/7000 → PASS
-8 交付判据：C1=9252331（body `Ticket: T-0032`）已 push 至 origin/master；`git ls-remote origin refs/heads/master`=C1；C1 后 `git status --porcelain -uall` 空；C2 证据提交以 `Evidence: T-0032` 随后落库 → PASS
+8 交付判据：C1=9252331（body `Ticket: T-0032`）已 push；C2=6eaa3ed（body `Evidence: T-0032`）已 push；`git ls-remote origin refs/heads/master`=C2；C1/C2 均在 origin/master；工作区 clean；C3 仅回填 C2 SHA（见报告）→ PASS
 RESULT: PASS（1–8）
