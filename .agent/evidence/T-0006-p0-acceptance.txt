@@ -15,6 +15,6 @@ BASE: ba16717db86caa3c791e97a6d734501f707aa84f
 11 Bootloader：16–24KB、单区+CRC、失败停 boot、A28/A29、EN 低/停 PFC/LLC：PASS（interface §4）
 12 校准态：六命令、0.5A/+1A、禁普通命令、COMMIT 写 EEPROM：PASS（interface §5.1）
 13 规模：T-0006 内容 C1–C4 共 10 文件 +390/−45=435 行；C5' 复审修复 2 文件 +7/−7；超 8 文件/400 行提示线（留痕）
-14 交付：C5'=2b541c8 最终内容修复，C6'=f225c09 最终证据提交；C10'=e7a811b、C11'=fa794ef 为 T-0006 记录提交；当前审查头 e9be0af 本地=远端；C12 为最终记录提交（SHA 见报告，自指限制沿用 T-0017 惯例）
+14 交付：C5'=2b541c8 内容、C6'=f225c09 证据；sha.txt 按 T-0014 运行期证据约定不随提交，生成于最终提交后，文件内 COMMIT/LOCAL_HEAD/REMOTE_HEAD/ls-remote 与最终 HEAD 一致（自指问题以运行期文件解决）
 SIZE: T-0006 内容 10 文件/+390−45=435 行；C5' 2 文件/+7−7；C6' 仅证据/worklog
 RESULT: PASS（第 13 项超限留痕）

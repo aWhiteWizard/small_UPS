@@ -6,5 +6,5 @@ BASE: ba16717db86caa3c791e97a6d734501f707aa84f（开工）→ e9be0af（当前 o
 CMD: git rev-parse HEAD; git ls-remote origin refs/heads/master; git status --porcelain=v1 -uall; git diff --check
 STATUS: 开工 HEAD=REMOTE=ba16717、工作区干净；复审修复后仅改 docs/interface、g0、sha、acceptance、tests、worklog，未改 firmware/Hardware/看板
 OBJECT: T-0006 内容 diff 10 文件 +390/−45=435 行（超 400 行提示线，理由见报告）；当前累计（含其他单）requirements=1607、architecture=99、module-design=113、interface=349、test-plan=181
-NOTE: G2 第 1 轮 FAIL 修复后重跑；55V 母线码位定 0x04 UNDERVOLTAGE，结构校验仍全绿
+NOTE: G2 修复后重跑；55V 母线码位定 0x04 UNDERVOLTAGE，结构校验全绿。sha.txt 按 T-0014 约定为运行期证据，不随提交；最终提交后生成并回填最终 HEAD。
 RESULT: PASS
