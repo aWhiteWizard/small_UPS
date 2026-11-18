@@ -1,0 +1,10 @@
+KIND: acceptance
+TASK: T-0014
+AT: 2026-11-18 +08:00（重派 clean-base 复核）
+1 占位 README：PASS。Hardware/README.md:3 本目录存放立创EDA 工程与导出文件；:10 工程/导出不进 git（/Hardware/*）；:11 README 入库，clone 后目录不消失；:17-21 自检命令；git ls-files 已跟踪。
+2 .gitignore：PASS。:6-11 立创EDA 工程忽略 + README 反选，附原因；:28-42 备份/临时兜底；:57-63 .agent/tx、worklogs、evidence 逐条注释排除；:66-69 声明保留 board/tasks.json、project/team/schedule/approvals.json、requirements*.md、mech-draft.md、kb/、docs/。
+3 忽略核对：PASS。git status 干净；git check-ignore 原文见 p0-tests：Hardware/small_ups.epro 命中 :9，Hardware/README.md -q exit 1（未忽略），.agent/tx|worklogs|evidence 命中 :59/:61/:63，保留的 .agent 文件 -q exit 1。
+4 规模：PASS。正文 4 唯一文件 / 112 行（d072d40 4f/80、f9af342 2f/20、8469cee 2f/12）；本轮仅证据/worklog/KB；≤8 文件/≤400 行。
+5 不改需求/看板：PASS。三次正文提交均无 .agent/docs、board、project/team/schedule/approvals 改动；本轮 diff 仅 .agent 证据/worklog/KB；未删除他人规则，冲突现状与建议见报告。
+6 交付：PASS。内容提交 d072d40/f9af342/8469cee 已在 origin/master；E1 为证据提交（body Evidence: T-0014），T1 为 Ticket 交付提交（body Ticket: T-0014，SHA 见报告正文）；T1 后 worktree 干净。
+RESULT: PASS（6/6）

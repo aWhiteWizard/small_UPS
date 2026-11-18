@@ -1,0 +1,46 @@
+KIND: tests
+TASK: T-0014
+AT: 2026-11-18 +08:00
+CMD: git check-ignore / git status / git ls-files / line counts
+--- 1. Hardware 内容忽略（真实探针文件，随后删除）---
+$ Set-Content Hardware/_probe.small_ups.epro; git status --porcelain -uall
+STATUS_WITH_PROBE: （空）
+$ git check-ignore -v --no-index Hardware/_probe.small_ups.epro
+.gitignore:9:/Hardware/*	"Hardware\\_probe.small_ups.epro"
+exit=0
+--- 2. 关键路径逐一 check-ignore -v（exit=0 命中规则）---
+Hardware\small_ups.epro | exit=0 | .gitignore:9:/Hardware/*	"Hardware\\small_ups.epro"
+Hardware\exports\v1\psu.pdf | exit=0 | .gitignore:9:/Hardware/*	"Hardware\\exports\\v1\\psu.pdf"
+Hardware\README.md | exit=0 | .gitignore:11:!/Hardware/README.md	"Hardware\\README.md"
+.agent\tx\call.json | exit=0 | .gitignore:59:.agent/tx/	".agent\\tx\\call.json"
+.agent\worklogs\T-0014.md | exit=0 | .gitignore:61:.agent/worklogs/	".agent\\worklogs\\T-0014.md"
+.agent\evidence\T-0014-p0-g0.txt | exit=0 | .gitignore:63:.agent/evidence/	".agent\\evidence\\T-0014-p0-g0.txt"
+--- 3. 目录/反选语义（-v 命中负向规则也 exit 0，故用 -q）---
+$ git check-ignore -q --no-index Hardware/ ; echo $?
+0
+$ git check-ignore -q --no-index Hardware/README.md ; echo $?
+1
+$ git check-ignore -v --no-index Hardware/README.md   # 负向规则原文
+.gitignore:11:!/Hardware/README.md	"Hardware\\README.md"
+$ git ls-files --error-unmatch Hardware/README.md
+Hardware/README.md
+NOTE: Git 2.55 下 `-v --no-index Hardware/`（目录参数）打印空 pattern 且行号不稳；目录忽略以 -q 与目录内文件路径为准。
+--- 4. 保留的 .agent 内容未被忽略（-q exit 1）---
+.agent/board/tasks.json | exit=1
+.agent/project.json | exit=1
+.agent/team.json | exit=1
+.agent/schedule.json | exit=1
+.agent/approvals.json | exit=1
+.agent/requirements.md | exit=1
+.agent/requirements-draft.md | exit=1
+.agent/mech-draft.md | exit=1
+.agent/kb/notes.md | exit=1
+.agent/docs/requirements.md | exit=1
+--- 5. 规模与历史已跟踪 ---
+GITIGNORE_LINES=69 README_LINES=28
+d072d40 files=4 ins=68 del=12 total=80
+f9af342 files=2 ins=14 del=6 total=20
+8469cee files=2 ins=12 del=0 total=12
+UNIQUE_CONTENT_FILES=4 CHANGED_LINES=112（三提交合计，≤8 文件/≤400 行）
+$ git ls-files -ci --exclude-standard | Measure-Object → Count=150（evidence 88 / tx 41 / worklogs 21；历史已跟踪，未删除）
+RESULT: PASS

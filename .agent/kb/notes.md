@@ -372,3 +372,12 @@ KB-LAYER: 2_system
 KB-TAGS: delivery, sha, evidence, parser, trailer
 
 交付 SHA 证据别用 `KEY=VALUE`：预检只认 `KEY: <40hex>`（半角/全角冒号）。必需项：`CONTENT_COMMIT:`（或 `C1:`）、`PUSH_*:` 行含 `exit 0` 或 `HEAD -> master`、`LS_REMOTE_HEAD:`（或 `REMOTE_HEAD:`/`LS_REMOTE_C1:`）；`FINAL_HEAD:` 若写必须与 `LS_REMOTE_HEAD` 相同，`VERIFY: A == B` 可替代 push 成功行，`C1_ANCESTOR_OF_HEAD: YES` 可补祖先自述。`T_COMMIT=T1=...` 双等号会解析失败；证据文件不写自身所在提交 SHA，最终 HEAD 写报告。
+
+## PowerShell 的 Set-Location 不改变 .NET 相对路径基准，[IO.File] 会写错仓库
+
+KB-TYPE: bug
+KB-EVIDENCE: 在 `Set-Location $env:TEMP\ci-test-...` 后执行 `[IO.File]::ReadAllLines('.gitignore')` / `[IO.File]::WriteAllLines('.gitignore', $lines)`，实际读写的是进程 CWD（工单仓库）的 `.gitignore`；`git status --porcelain` → ` M .gitignore`，`git diff` 显示第 65 行空白被改为 `#`；`git restore -- .gitignore` 后 `git hash-object .gitignore` = `git rev-parse HEAD:.gitignore` = `e1b5ccf48b928f57c56c49e5cd22ab2c5fbbd109`
+KB-LAYER: 2_system
+KB-TAGS: powershell, dotnet, cwd, temp-experiment, gitignore
+
+在 worktree 内做临时实验、又用 `[IO.File]`/`[System.IO.*]` 读写相对路径时，`Set-Location` 只改 PowerShell 位置，不改 `[Environment]::CurrentDirectory`，相对路径仍落在进程启动目录（工单仓库），会静默改到真实文件。临时实验一律用绝对路径（`Join-Path $t 'x'`），或先 `[Environment]::CurrentDirectory = $t`；发现误改立即 `git restore -- <path>` 并用 `git hash-object` 与 `HEAD:<path>` 对比确认恢复。
