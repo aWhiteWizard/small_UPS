@@ -9,8 +9,8 @@ CONTENT_COMMIT_C6: b39c14d6295215497f26397ddc92702a065bcda4
 EVIDENCE_COMMIT: a2664ce378fa94412b3d09bf9f92dbf3b862cdc3（E4）
 TICKET_COMMIT: e187557ec4e15684922cf28e5d21f271a693113c（C1）
 TICKET_COMMIT_2: 560aada752a1cbbff981ac68b6b41876ea5767cb（C2）
-EVIDENCE_COMMIT_2: 本提交（E5）
-FINAL: C3=Ticket 收口提交（body Ticket: T-0020；SHA 由 C3 回填）
+EVIDENCE_COMMIT_2: fa0b4b1cd42d2870a04b06c8dd067f23eb6c557d（E5）
+FINAL: C3=本提交（body Ticket: T-0020；SHA 见报告正文）
 
 | # | 验收口径 | 结论 | 证据/落点 |
 |---|---|---|---|
@@ -21,5 +21,5 @@ FINAL: C3=Ticket 收口提交（body Ticket: T-0020；SHA 由 C3 回填）
 | 5 | 不重复 T-0007 环境/安规/成本/精度，只交叉引用；冲突列清单不改口径 | PASS | R I.5:1485–1507 五项只引用 + 七项冲突（#7 插入深度）；附录 I 无 6 个 T-0007 签名值（p0-tests 6/6 absent） |
 | 6 | 只写需求，不写实现/器件；UI 细节由 T-0009 承载 | PASS | R I:1402 原文“只补‘必须可判定/必须可见’的需求，不写布局、器件、电路、存储与实现”；I.1 只给判据、I.2 只给可见性；布局/器件留 T-0009/T-0010/T-0031 |
 | 7 | 文件规模按文档单口径；证据不计入阈值 | PASS | 本轮文档 2 文件（worklog+KB）<8/1500；证据 4 件不计；代码与配置 0/0；内容提交 65cc739 4 文件 218+/12− |
-| 8 | 交付提交带 Ticket: T-0020；证据提交单独带 Evidence: T-0020；Ticket 提交在 origin/master 且工作区干净；报告附 commit 号 | PASS | CONTENT_COMMIT=65cc739（基线）；E4=a2664ce（Evidence）push `7dc52b6..a2664ce`、ls-remote=a2664ce；C1=e187557（Ticket）push `a2664ce..e187557`、ls-remote=e187557；C2=560aada（Ticket）push `e187557..560aada`、ls-remote=560aada；C2 后 `git status --porcelain`=0、HEAD=origin/master=560aada；C3=本修复轮 Ticket 提交 |
+| 8 | 交付提交带 Ticket: T-0020；证据提交单独带 Evidence: T-0020；Ticket 提交在 origin/master 且工作区干净；报告附 commit 号 | PASS | CONTENT_COMMIT=65cc739（基线）；E4=a2664ce（Evidence）push `7dc52b6..a2664ce`、ls-remote=a2664ce；C1=e187557（Ticket）push `a2664ce..e187557`、ls-remote=e187557；C2=560aada（Ticket）push `e187557..560aada`、ls-remote=560aada；C2 后 `git status --porcelain`=0、HEAD=origin/master=560aada；E5=fa0b4b1（Evidence）push `560aada..fa0b4b1`、ls-remote=fa0b4b1、status=0；C3=本提交（Ticket: T-0020） |
 NOTE: 内容提交与 Ticket 提交分字段命名；状态可见性原“设定/实测同屏”由 T-0031 附录 J.2 取代（面板只显示实测 V/I），不再作为本单未决。

@@ -8,8 +8,8 @@ CONTENT_COMMIT_C6: b39c14d6295215497f26397ddc92702a065bcda4
 EVIDENCE_COMMIT: a2664ce378fa94412b3d09bf9f92dbf3b862cdc3（E4，body Evidence: T-0020；6 文件 77+/57−）
 TICKET_COMMIT: e187557ec4e15684922cf28e5d21f271a693113c（C1，body Ticket: T-0020；2 文件 12+/8−）
 TICKET_COMMIT_2: 560aada752a1cbbff981ac68b6b41876ea5767cb（C2，body Ticket: T-0020；3 文件 7+/5−）
-EVIDENCE_COMMIT_2: 本提交（E5，body Evidence: T-0020；SHA 由 C3 回填）
-TICKET_COMMIT_3: C3=Ticket 收口提交（body Ticket: T-0020；SHA 由 C3 回填）
+EVIDENCE_COMMIT_2: fa0b4b1cd42d2870a04b06c8dd067f23eb6c557d（E5，body Evidence: T-0020；5 文件 81+/83−）
+TICKET_COMMIT_3: C3=本提交（body Ticket: T-0020；SHA 见报告正文，不写最终 HEAD 自指 SHA）
 PUSH_E4: 7dc52b6..a2664ce  HEAD -> master（exit 0）
 LS_REMOTE_E4: a2664ce378fa94412b3d09bf9f92dbf3b862cdc3 refs/heads/master
 PUSH_TICKET: a2664ce..e187557  HEAD -> master（exit 0）
@@ -17,10 +17,14 @@ LS_REMOTE_TICKET: e187557ec4e15684922cf28e5d21f271a693113c refs/heads/master
 PUSH_C2: e187557..560aada  HEAD -> master（exit 0）
 LS_REMOTE_C2: 560aada752a1cbbff981ac68b6b41876ea5767cb refs/heads/master
 STATUS_AFTER_C2: `git status --porcelain` -> 0 lines；HEAD=560aada=origin/master
+PUSH_E5: 560aada..fa0b4b1  HEAD -> master（exit 0）
+LS_REMOTE_E5: fa0b4b1cd42d2870a04b06c8dd067f23eb6c557d refs/heads/master
+STATUS_AFTER_E5: `git status --porcelain` -> 0 lines；HEAD=origin/master=fa0b4b1
 TRAILER_CHECK: `git log -1 --format=%B e187557` 末行 -> Ticket: T-0020
 GIT_LOG（git log --oneline 原文）:
 a2664ce docs(T-0020): 新引擎重建后复核 canonical 并刷新 P0 证据（E4）
 e187557 docs(T-0020): 回填 E4 证据 SHA 并按 Ticket 口径收口（C1）
 560aada docs(T-0020): 修正证据行数表述并最终收口（C2）
+fa0b4b1 docs(T-0020): 按 G2 第1轮补齐 push/status/祖先证据（E5）
 C3=本修复轮 Ticket 提交（body Ticket: T-0020；SHA 见报告正文，不写最终 HEAD 自指 SHA）
 RESULT: PASS
