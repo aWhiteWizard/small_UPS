@@ -1,0 +1,9 @@
+KIND: g0
+TASK: T-0034
+AT: 2026-11-18 +08:00
+BRANCH: task/T-0034 @ D:\workspace\wt\small-ups\T-0034
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f（主仓 tasks.json 的 T-0034.baseSha = 开工 HEAD）
+CMD: git rev-parse HEAD; Test-Path .agent/gate.json; 临时自检脚本（未入库）做 UTF-8/表格/hash/覆盖检查; git diff --check; git status --porcelain=v1 -uall
+STATUS: gate.json 未配置（G0 按“未配置门禁”PASS，ran=0）；HEAD==baseSha；工作区仅本单 9 份文档 M；diff-check=0
+DOC-CHECK: UTF-8 无 BOM / 无 Tab / 无行尾空白 / 表格列数一致 / 需求正文 61 章 hash 61/61（详见 T-0034-p0-tests.txt）
+RESULT: PASS

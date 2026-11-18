@@ -1,0 +1,11 @@
+KIND: tests
+TASK: T-0034
+AT: 2026-11-18 +08:00
+CMD: 临时自检脚本（未入库）：UTF-8/BOM/Tab/行尾空白/表格列数；需求 H1-H3 逐章 SHA-256；git show HEAD:docs/* 标题与表格行落点；TOC 锚点；git diff --check
+1 需求正文迁移：旧 .agent/requirements.md 577 行/50,292B → 新 .agent/docs/requirements.md 746 行/69,230B；旧正文 61 个 H1/H2/H3 标题全部保留，逐章正文 SHA-256 61/61 匹配（仅附录 C 追加 T-0034 一行，按旧正文前缀校验通过）
+2 TOC：30 条（24 条旧章节索引 + 附录 A–E + 附录 F）；30 个锚点全部命中标题（check-toc bad=[]）
+3 新文件标题数：requirements 71；architecture 32；modules 24；行数 746/252/163
+4 docs/ 四份：67/95/56/61 行 → 各 7 行引用页；旧标题 13/17/6/7 个、表头/占位行 15/14/30/27 行全部有落点；未迁移章节=0
+5 结构：9 份文件 UTF-8 无 BOM、无 Tab、无行尾空白、表格列数一致、无未替换占位；git diff --check exit 0
+6 正文差分：仅文件头/填写规则/完成度表按新路径改写 + 附录 C 追加 1 行；§1–§5、附录 A–E 正文原样
+RESULT: PASS

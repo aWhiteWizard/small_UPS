@@ -1,0 +1,13 @@
+KIND: acceptance
+TASK: T-0034
+AT: 2026-11-18 +08:00
+1 需求正文整体并入 + 索引改 TOC：PASS（746 行；旧正文 61 章 hash 61/61；TOC 30 条/锚点全中）
+2 .agent/requirements.md 处理：PASS（选①保留；H1 改“已迁移，仅历史”并在顶部标注正文见 .agent/docs/requirements.md；后续只改新文件）
+3 设计与模块并入：PASS（architecture 252 行/32 标题；modules 163 行/24 标题；docs/ 四份各 7 行引用页；接口/时序/校准进 architecture §6–§9；docs/ 覆盖检查全 PASS）
+4 无丢失对照：PASS（需求附录 F.1 61 行 + F.2 25 行；新文件行数与标题清单见 tests 与 T-0034-p1-headings.txt；未迁移章节=0）
+5 T-0032 返工说明：PASS（F.5：T-0032 提交在 origin/master，但本单 base ba16717 未含；其归档验收只核索引/路径，未核基线正文行数与章节 hash）
+6 不改验收口径：PASS（61 章正文 hash 不变；仅路径归一与附录 C 变更记录 1 行）
+7 规模：10 文件 / +1171−403 = 1574 行（含 KB 1 文件）；超提示线 8/1500，未超硬上限 24/4000；纯文档单
+8 交付判据：PENDING（本单不自行 commit/push；Ticket/Evidence 提交由引擎生成，最终 SHA 见报告）
+SIZE: 文档 10 文件 / 1574 行；代码与配置 0 文件 / 0 行；证据/worklog 路径不计
+RESULT: PASS（#8 待引擎提交）

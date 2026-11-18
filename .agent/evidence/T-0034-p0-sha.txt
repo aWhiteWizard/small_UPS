@@ -1,0 +1,12 @@
+KIND: sha
+TASK: T-0034
+AT: 2026-11-18 +08:00
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f（主仓 T-0034.baseSha）
+HEAD: ba16717db86caa3c791e97a6d734501f707aa84f（开工 HEAD = base；本单未自行 commit，交引擎提交）
+BRANCH: task/T-0034
+STATUS: M README.md; M .agent/requirements.md; M .agent/kb/notes.md; M .agent/docs/requirements.md; M .agent/docs/architecture.md; M .agent/docs/modules.md; M docs/architecture.md; M docs/module-design.md; M docs/interface.md; M docs/test-plan.md
+DIFF: 10 files changed, 1171 insertions(+), 403 deletions(-)
+COMMIT: 交付提交（Ticket: T-0034）与证据提交（Evidence: T-0034）由引擎生成；最终 commit 号见报告
+REMOTE: 本单不 push；带 Ticket: 的提交是否已在 origin/master 由引擎交付门核验
+NOTE: 基线落后 origin/master 156 个提交（T-0032 的 9252331 已在 origin/master，但不在本单 base）；按工单未自行 ff/pull/rebase，见报告 RISK
+RESULT: PASS（工作区就绪，待引擎提交）

@@ -28,23 +28,25 @@ small_UPS/
 ├── .gitignore           # 硬件工程 / 构建产物 / IDE 配置忽略规则
 ├── firmware/            # 固件源码（入库）
 │   └── README.md        # 固件目录说明
-├── docs/                # 设计展开（四份骨架，只填不新建）
-│   ├── architecture.md  # 系统架构
-│   ├── module-design.md # 模块设计
-│   ├── interface.md     # 接口
-│   └── test-plan.md     # 测试计划
+├── docs/                # 设计摘要页（正文已归并至 .agent/docs，不再承载正文）
+│   ├── architecture.md  # → .agent/docs/architecture.md §1–§5
+│   ├── module-design.md # → .agent/docs/modules.md §1–§2
+│   ├── interface.md     # → .agent/docs/architecture.md §6–§9
+│   └── test-plan.md     # → .agent/docs/architecture.md §10
 ├── Hardware/            # 立创EDA 工程与导出（仅本地，整目录不入库）
 │   └── README.md        # 目录说明（随目录一起被忽略）
 └── .agent/              # 流程看板、工作日志与证据（执行器维护）
-    ├── requirements.md  # 需求唯一入口（v0.3，五章）
+    ├── docs/            # 唯一事实源：requirements.md / architecture.md / modules.md
+    ├── requirements.md  # 已迁移，仅历史（见 .agent/docs/requirements.md）
     └── requirements-draft.md  # 历史草稿，仅追溯
 ```
 
 - `firmware/`：STM32 源码、链接脚本、启动文件、构建脚本、单元测试；构建产物不入库。
 - `Hardware/`：立创EDA 工程、自定义库、BOM、原理图/PCB 导出、Gerber、装配图；**只在本地维护**。
-- `docs/`：四份设计文档的既有骨架；后续工单只填对应小节，**不得新建散文档**。硬件审阅导出件（PDF/BOM/图片）作为证据放 `.agent/evidence/` 或工单指定位置，不塞进 `docs/`。
-- `.agent/requirements.md`：需求唯一入口；`requirements-draft.md` 仅历史追溯，不作为执行依据。
-- 约定：新代码进 `firmware/`，新硬件资料进 `Hardware/`，需求只进 `.agent/requirements.md`，设计只进 `docs/` 四份文件。
+- `docs/`：四份设计**摘要页**，只引用 `.agent/docs` 对应章节，不再承载正文；不得在 `docs/` 新增设计内容。硬件审阅导出件（PDF/BOM/图片）作为证据放 `.agent/evidence/` 或工单指定位置，不塞进 `docs/`。
+- `.agent/docs/`：**唯一事实源**——`requirements.md`（需求）、`architecture.md`（架构/接口/时序/升级/测试）、`modules.md`（功能模块设计）。审查/验收只认这三份。
+- `.agent/requirements.md`：已迁移，仅作历史追溯；`requirements-draft.md`、`mech-draft.md` 同样仅历史，不作为审查/执行依据。
+- 约定：新代码进 `firmware/`，新硬件资料进 `Hardware/`，需求只进 `.agent/docs/requirements.md`，架构/接口只进 `.agent/docs/architecture.md`，模块设计只进 `.agent/docs/modules.md`。
 
 ## 4. 硬件图纸为什么不进 git
 
@@ -79,27 +81,32 @@ git check-ignore -v Hardware/<任意文件>            # 应命中 /Hardware/ �
 - T-0002：计划落地 STM32 工具链、HAL/LL、构建系统与烧写调试链路。
 - T-0015：完成 `docs/` 四份设计骨架（仅标题/表头/待填占位）。
 - T-0016：完成需求第 1/2 部分合并为 `.agent/requirements.md` v0.3（五章 + 完成度表 + 填写规则），删除 `requirements-part2.md`，建立本文档地图。
-- 后续：按第 8 节规则填既有文件，不再新建需求/设计散文档。
+- T-0034：正文归并（v2.0）——需求正文整体迁入 `.agent/docs/requirements.md`；`docs/` 四份降为摘要页；`.agent/requirements.md` 标注仅历史；迁移对照与校验见需求附录 F。
+- 后续：按第 8 节规则只改 `.agent/docs` 三份，不再新建需求/设计散文档。
 
 ## 7. 文档地图
 
-> 唯一索引。完成度表（章节 × 状态 × 负责单号）在 `.agent/requirements.md` 开头；状态只用 **已定稿 / 待填写 / 待确认** 三档。
+> 唯一索引。完成度表（章节 × 状态 × 负责单号）在 `.agent/docs/requirements.md` 开头；状态只用 **已定稿 / 待填写 / 待确认** 三档。审查/验收只认前三行三份正文。
 
 | 文档 | 用途 | 负责单号 | 当前状态 |
 |---|---|---|---|
-| `.agent/requirements.md` | 需求唯一入口：定位与范围、系统级、电源本体、电源调试板、附录；含完成度表与填写规则 | T-0004/T-0005 定稿；T-0016 合并；后续变更单 | 已定稿（v0.3） |
-| `docs/architecture.md` | 系统框图、供电链、模块划分、接口边界、时序总览 | 骨架 T-0015；填充 T-0011/T-0006/T-0007/T-0009/T-0010 | 待填 |
-| `docs/module-design.md` | 本体 8 模块 + 调试板 6 模块的四栏设计 | 骨架 T-0015；填充 T-0011/T-0006/T-0009/T-0010 | 待填 |
-| `docs/interface.md` | 针脚/寄存器/时序/升级/其他接口的引用与设计展开 | 骨架 T-0015；填充 T-0010/T-0006/T-0009 | 待填 |
-| `docs/test-plan.md` | 6 点精度、纹波、效率、安全、出厂测试 | 骨架 T-0015；填充 T-0007/T-0011/T-0006/T-0010/T-0017 | 待填 |
+| `.agent/docs/requirements.md` | 需求唯一事实源：§1–§5 + 附录 A–F；含完成度表、填写规则、迁移对照与校验 | T-0004/T-0005 定稿；T-0016 合并；T-0034 归并 | 已定稿（v2.0） |
+| `.agent/docs/architecture.md` | 架构/接口/时序/升级/测试唯一事实源：§1–§12 | T-0034 归并；原 T-0015 骨架 | 骨架（正文待 T-0006/T-0007/T-0009/T-0010/T-0011 填充） |
+| `.agent/docs/modules.md` | 功能模块设计唯一事实源：§1 本体 8 模块、§2 调试板 6 模块、§3–§6 | T-0034 归并；原 T-0015 骨架 | 骨架（待 T-0011/T-0006/T-0009/T-0010 填充） |
+| `docs/architecture.md` | 摘要页 → `.agent/docs/architecture.md` §1–§5 | T-0034 | 引用页（无正文） |
+| `docs/module-design.md` | 摘要页 → `.agent/docs/modules.md` §1–§2 | T-0034 | 引用页（无正文） |
+| `docs/interface.md` | 摘要页 → `.agent/docs/architecture.md` §6–§9 | T-0034 | 引用页（无正文） |
+| `docs/test-plan.md` | 摘要页 → `.agent/docs/architecture.md` §10 | T-0034 | 引用页（无正文） |
+| `.agent/requirements.md` | 已迁移，仅历史追溯 | T-0034 标注 | 历史（不作审查依据） |
+| `.agent/requirements-draft.md` / `.agent/mech-draft.md` | 历史草稿，仅追溯 | 历史 | 历史（不作审查依据） |
 
-- `requirements-part2.md` 已于 T-0016 删除，内容并入 `requirements.md` 第 2/3/5 章；逐节映射与删除原因见 `requirements.md` 附录 D，历史全文可查 git 历史。
-- 文档状态变化时，同步更新本表与 `.agent/requirements.md` 完成度表；两处不得互相矛盾。
+- `requirements-part2.md` 已于 T-0016 删除，内容并入 `.agent/docs/requirements.md` 第 2/3/5 章；逐节映射与删除原因见该文件附录 D，历史全文可查 git 历史。
+- 文档状态变化时，同步更新本表与 `.agent/docs/requirements.md` 完成度表；两处不得互相矛盾。
 
 ## 8. 文档填写规则（后续所有工单必须遵守）
 
-1. **报告必写落点**：每张后续工单的 done 报告必须写明「写入文件:章节」与章节范围（示例：`.agent/requirements.md:3.3.3`、`docs/interface.md:§2`）。禁止新建独立需求/设计文档。
-2. **需求改动**：只改 `.agent/requirements.md` 对应章节，并在附录 C「变更记录」追加一行（日期/单号/改了什么）；不得另起文件，不得把需求复制到 `docs/`。
-3. **设计展开**：设计细节只写 `docs/` 四份骨架的对应小节；需求与设计不得互相复制——需求只写“要什么”，设计只写“怎么做”。
+1. **报告必写落点**：每张后续工单的 done 报告必须写明「写入文件:章节」与章节范围（示例：`.agent/docs/requirements.md:3.3.3`、`.agent/docs/architecture.md:7.2`、`.agent/docs/modules.md:1.6`）。禁止新建独立需求/设计文档。
+2. **需求改动**：只改 `.agent/docs/requirements.md` 对应章节，并在附录 C「变更记录」追加一行（日期/单号/改了什么）；不得另起文件，不得把需求复制到 `docs/`。
+3. **设计展开**：设计细节只写 `.agent/docs/architecture.md`（架构/接口/时序/升级/测试）或 `.agent/docs/modules.md`（功能模块设计）的对应章节；`docs/` 四份自 T-0034 起只是引用页，不再承载正文。需求与设计不得互相复制——需求只写“要什么”，设计只写“怎么做”。
 4. **未成文不预造**：未完成章节写「待填（来源：T-00xx）」；待 owner 拍板的写「待确认（owner）」，不猜默认值。
-5. **状态同步**：文档状态/负责单号变化时，同步更新第 7 节文档地图与 `requirements.md` 完成度表；只改状态，不改历史变更记录。
+5. **状态同步**：文档状态/负责单号变化时，同步更新第 7 节文档地图与 `.agent/docs/requirements.md` 完成度表；只改状态，不改历史变更记录。
