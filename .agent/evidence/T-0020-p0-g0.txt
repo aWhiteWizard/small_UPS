@@ -14,5 +14,5 @@ G0 CHECKS
 - insertion depth -> appendix I "10±1" 0; I.1 references §4.4.2（5±1）; I.5 #7 已登记
 - KB evidence -> O-02:91, I.2:1438, I.5#1:1497, §4.4.2:921
 - scope -> 本轮只改 .agent/evidence + .agent/worklogs；未改 requirements/README/KB
-- files -> 本轮 D1 4 文件 42+/40−（82 行）；D2 仅回填 p0-sha；ticket 提示线 ≤8 文件/≤400 行，未超
+- files -> 本轮唯一文件 5 个；D1 4 文件 43+/41−（84 行），D2/D3 为证据记录；合计 <200 行；ticket 提示线 ≤8 文件/≤400 行，未超
 RESULT: PASS

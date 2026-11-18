@@ -10,5 +10,5 @@ CMD: git rev-parse HEAD; git push origin HEAD:refs/heads/master; git ls-remote o
 PUSH: f864595..0c9f67e  HEAD -> master（exit 0）
 LS_REMOTE: 0c9f67ef2f8f10cc28e0e2073950fa8c441eb3ae	refs/heads/master
 VERIFY: D1 推送后 LOCAL_HEAD == REMOTE_HEAD == 0c9f67ef2f8f10cc28e0e2073950fa8c441eb3ae
-NOTE: 本文件随最终记录 D2 落库；D2 只含本文件，推送后 LOCAL=REMOTE=D2，D2 SHA 见报告正文（自指限制，沿用 T-0018/T-0019 惯例）。
+NOTE: D2=3843bd359d526d8b8096bb92b34e38a3e2847d32（只含本文件）为记录提交；D3 修正证据行数并收口，D3 SHA 见报告正文（自指限制，沿用 T-0018/T-0019 惯例）。
 RESULT: PASS
