@@ -1,16 +1,28 @@
 # PSU PC 标定工具
 
-## 模块化标定工具（T-0025 起；会话流程归 T-0026）
+## 模块化标定工具（T-0025 起；会话 T-0026；GUI T-0027）
 
 `tools/calib/` 是拆分后的模块；T-0026 的 `session.py` 实现一次一个通道的会话状态机
 （`CAL BEGIN` → 逐点 `SET`/`MEAS` → `COMMIT` → 回读 `READ` → `ABORT`）。
-GUI 归 T-0027、CSV 归 T-0028；本模块不提供普通 V/I 设定或输出开关命令。
+GUI 见下节；CSV 归 T-0028；本模块不提供普通 V/I 设定或输出开关命令。
 
 - 命令单位：V 用 mV、I 用 mA；设备校准表按需求 §3.4.1 以 0.1mA 编码，回读 CRC 时 ×10 校验。
 - 错误码：设备 `ERR <code> <msg>` 的 code 取 CAL_STATUS 0–7（0 idle/1 busy/2 ok/3 CRC/4 版本/5 点/6 未校准/7 条件）。
 - 安全：`CAL BEGIN` 由设备把 V 限流降到 0.5A、I 降到目标点+1A；会话中普通命令回 busy；
   超时/设备 ERR/输入非法立即 `ABORT`，仅 `COMMIT` 写 EEPROM。
 - 离线自测：`$env:PYTHONPATH="tools"; py -3 -B .agent/evidence/T-0026-p1-selftest.txt`
+
+## 完整界面（T-0027）
+
+```powershell
+py -3 -m pip install pyserial
+$env:PYTHONPATH="tools"; py -3 -m calib
+```
+
+界面：串口下拉/刷新/连接 + 设备信息；V/I 通道；序号/设定/实测/误差实时表（V 6 点、I 3 点，
+均可见可编辑）；CAL BEGIN、逐点下发、记录实测 MEAS、CAL COMMIT、CAL READ 回读校验、
+CAL ABORT 中止；状态与收发原文日志（失败红色 + `!`）。COMMIT 前不写 EEPROM。
+截图：`.agent/evidence/T-0027-p0-ui-after.png`。
 
 ## 旧版一体化工具（T-0008）
 

@@ -446,3 +446,11 @@ KB-EVIDENCE: `[IO.File]::WriteAllText($p, [Text.Encoding]::UTF8.GetBytes($t))` �
 KB-TAGS: powershell, utf8, file-write, corruption
 
 `WriteAllText` 第二参数是 string；传 byte[] 会调用 `ToString()` 变成空格分隔的十进制字节串，看起来“写成功”但内容全毁。改文本必须传 string + `UTF8Encoding`，或 `Set-Content -Encoding UTF8`。
+
+## tkinter 面板销毁时串口状态回调会碰已销毁控件
+
+KB-TYPE: bug
+KB-EVIDENCE: `tools/calib/ui.py:148-152`；T-0027 自测报 `TclError: invalid command name ".!calibapp.!frame.!label3"`
+KB-TAGS: tkinter, pyserial, teardown, callback
+
+根因：`root.destroy()` 先销毁子标签，`SerialPanel.destroy` 里的 `link.disconnect` 又触发 `on_state`，回调去 configure 已销毁的 `status_lbl`。修法：destroy 里先把 `_on_state_cb` 置 None 再 disconnect；T-0027 自测 5/5 PASS。

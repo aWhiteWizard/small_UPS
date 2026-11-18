@@ -13,10 +13,11 @@ from .serial_link import LinkError, SerialLink, list_ports
 class SerialPanel(ttk.Frame):
     """可独立运行、也可被 T-0027 完整界面嵌入的串口连接面板。"""
 
-    def __init__(self, master, serial_factory=None):
+    def __init__(self, master, serial_factory=None, on_state=None):
         super().__init__(master, padding=8)
         self._ports: list = []
         self._factory = serial_factory
+        self._on_state_cb = on_state
         self.link: SerialLink | None = None
         self._build()
         self.refresh()
@@ -50,6 +51,10 @@ class SerialPanel(ttk.Frame):
         self.log_text = ScrolledText(logf, height=14, state="disabled", font=("Consolas", 9))
         self.log_text.pack(fill="both", expand=True)
 
+    def append(self, line: str) -> None:
+        """供 T-0027 校准页写状态/回执日志。"""
+        self._append(line)
+
     def _append(self, line: str) -> None:
         self.log_text.configure(state="normal")
         self.log_text.insert("end", line + "\n")
@@ -66,6 +71,8 @@ class SerialPanel(ttk.Frame):
         self.refresh_btn.configure(state="disabled" if state.connected else "normal")
         self.port_box.configure(state="disabled" if state.connected else "readonly")
         self.reconnect_btn.configure(state="disabled" if state.connected else "normal")
+        if self._on_state_cb:
+            self._on_state_cb(state)
 
     def _report(self, message: str) -> None:
         self._set_status(message, "LinkBad.TLabel")
@@ -139,6 +146,7 @@ class SerialPanel(ttk.Frame):
         self._read_info()
 
     def destroy(self) -> None:
+        self._on_state_cb = None
         if self.link is not None:
             self.link.disconnect("面板关闭")
         super().destroy()
