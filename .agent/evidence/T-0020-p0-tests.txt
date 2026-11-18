@@ -1,27 +1,33 @@
 KIND: tests
 TASK: T-0020
-AT: 2026-11-18 18:36 +08:00
+AT: 2026-11-18 22:15 +08:00（新引擎重派）
+SCOPE: .agent/docs/requirements.md（canonical，1734 行）；.agent/requirements.md 仅历史，不计
 RESULT: PASS
 
 == FILE ==
-requirements_lines=1524
+requirements_lines=1734
 bom=False
 trailing_ws=0
 tabs=0
 conflict_markers=0
 
 == TABLES ==
-tables=38 bad=0
+tables=45 bad=0
 
 == O LIST (§1.6) ==
 o_ids=O-01..O-10
 o_count=10 o_unique=10
+refs=O-02:95 O-06:99 O-07:100 O-08:101 O-09:102 O-10:103
+
+== APPENDIX I ==
+sections=I.1,I.2,I.3,I.4,I.5,I.6,I.7
+refs=I.1:1404 I.2:1434 I.3:1452 I.4:1466 I.5:1485 I.6:1509 I.7:1519
 
 == ACCEPTANCE KEYWORDS ==
 PASS 热插拔循环
 PASS ≥500 次热插拔循环
 PASS 接触电阻
-PASS 增量 ≤10mΩ/针
+PASS ≤10mΩ/针
 PASS 插入力
 PASS 拔出力
 PASS 保持力
@@ -43,6 +49,12 @@ PASS O-08
 PASS O-09
 PASS O-10
 
+== T-0031 SUPERSEDE / T-0025~28 ==
+i2_note=True (1450)
+digital_only_VI=True (J.2:1544-1546)
+rear_fault_lamp=True (J.4:1558,1561)
+T0025_28_service_tool=True (I.4:1473)
+
 == T-0007 NON-DUP (appendix I) ==
 PASS absent 0–40℃
 PASS absent 1500VAC/1min
@@ -50,11 +62,6 @@ PASS absent 600 元/套
 PASS absent 0.1–0.3%
 PASS absent 60×120×180
 PASS absent ≤1.2kg
-
-== INSERTION DEPTH ==
-stale_10pm1_in_appendix_I=0
-i1_references_4_4_2=True
-i5_conflict_7=True
 
 == SOURCES ==
 PASS https://www.icpdf.com/HRS_datasheet/PCN10-64P-2.54DS%2872%29_pdf_39837524/
@@ -67,6 +74,6 @@ PASS https://store.accuristech.com/ashrae/standards/ecia-eia-364-09c?product_id=
 
 == GIT ==
 diff_check_exit=0
-status_clean=True
+status_clean_before_commit=True
+ancestor_C1_exit=0
 ancestor_C6_exit=0
-ff_only_exit=0

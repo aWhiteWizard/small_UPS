@@ -353,3 +353,11 @@ KB-TAGS: docs-migration, worktree, cherry-pick, rebase, T-0032
 - 恢复后必须移植旧提交的父到新基线的差异：`git diff <old-parent>..<new-base> -- <相关文件>`。T-0032 是 4244d3a..0dc9ea5 的 PFC“burst/跳周期→停振（驱动封锁）”4+4+1+1 处，逐处同步后再做正文差分，避免新基线内容被旧树覆盖。
 - 校验“正文未改”不要只看标题：从基线 `git show <base>:<old>` 与新文件各截取正文，`git diff --no-index --numstat`，逐条确认变更都是路径改指/变更记录/BOM；再按“正文标题 vs 旧索引表”两类分别统计迁移覆盖率（T-0032：需求 141/143 原文 + 2 改写；设计 61/66，5 个 interface 顶部表不迁，但 §3 表 D 侧两行是正文，须单独迁）。
 - 附录自报行数/字数时，统计范围包含附录自身，改数字会再次改变统计；迭代到 `[IO.File]::ReadAllLines`/非空白字计数稳定（T-0032 最终 1734/644/184 行、127136 字）再落证据。
+
+## 重建生效且内容已在 master：重交付只需 E/C 两提交，不为凑 diff 改需求正文
+
+KB-TYPE: method
+KB-EVIDENCE: `git rev-parse HEAD` 与 `git rev-parse origin/master` 均 `7dc52b6f`；`git log --all --grep="Ticket: T-0020"` 为空；`git log -1 --format=%B 65cc739` 仅有标题无 trailer；`git log -1 --format=%B 9252331` 末行为 `Ticket: T-0032`
+KB-TAGS: git, delivery, trailer, rework, clean-base, t-0020
+
+重派到已包含本单内容的新基线时，先确认 `git merge-base --is-ancestor <content-commit> origin/master` 与 `git status --porcelain`，再对照当前交付判据：需要的是“带 `Ticket:` 的提交”而非新的正文 diff。此时不要改需求制造伪 diff；按 E=证据提交（body `Evidence:`，P0/worklog/KB）+ C=Ticket 收口（body `Ticket:`，回填 E SHA）两提交交付，C 自身 SHA 只写报告（自指限制）。证据/worklog 虽被 `.gitignore` 命中但仍是已跟踪文件，更新时用 `git add -f`。
