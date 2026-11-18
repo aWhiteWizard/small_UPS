@@ -8,5 +8,5 @@ AT: 2026-11-18 +08:00
 5 变更留痕：PASS。附录 H + 附录 C 行 + 完成度表 + 附录 B/文件头/README §6/§7；H.6 列 requirements/part2（已删，§3→3.3、§5→3.4、§6→A.2）/docs 联动。（:1375-1389；README.md:91,102）
 6 只写需求：PASS。H.7；未改 docs/firmware/Hardware；附录 H 无 µH/µF/mΩ/MOS/ETD/kHz 设计 token；无器件/拓扑/曲线数值。（:1390-1396）
 7 规模：PASS。C1 95cd04e..3646bda 3 文件 149+/10−=159 行；worklog/P0 合计 ≤100 行；交付 8 文件 <400 行；重派仅刷新证据/worklog，不新增文件。
-8 交付：PASS。首轮 C1=3646bda1883ae74c42bbec41d0a03c76d87e1c15（内容）、C2=4bd6f5fd2c02bf9c49c4b843bb9eeb815015dcce（证据）、C3=49c5029f1b5d5c7e80fdd79df3c3789c2af26a46（记录）已入 master；重派同步 0738a55 后由 C4 记录、C5 最终记录；C4 push 后 LOCAL=REMOTE=C4，C5 SHA 见报告与 sha 原文。
+8 交付：PASS。首轮 C1=3646bda1883ae74c42bbec41d0a03c76d87e1c15（内容）、C2=4bd6f5fd2c02bf9c49c4b843bb9eeb815015dcce（证据）、C3=49c5029f1b5d5c7e80fdd79df3c3789c2af26a46（记录）已入 master；重派 C4=82a5fae2847f7bd5289e80954f9a7aad44c7b276（记录，push 0738a55..82a5fae）已复核 LOCAL=REMOTE；C5 为最终记录，SHA 见报告与 sha 原文。
 RESULT: PASS
