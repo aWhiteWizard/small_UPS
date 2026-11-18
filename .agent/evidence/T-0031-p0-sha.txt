@@ -6,12 +6,13 @@ ORIGIN_MASTER_BEFORE=5caa55bac9dc291e8e95492824baf0b0354eb57b
 CONTENT_COMMIT=d66b5bd94c09e69af8a211f62c1cbc44ca6c8b88
 CONTENT_ANCESTOR_OF_ORIGIN_MASTER: yes (git merge-base --is-ancestor d66b5bd origin/master -> exit 0)
 E_COMMIT=29f9d8793a636af9bf360a1403452a560802b4d0 (E1, pushed; LOCAL=REMOTE after push)
-T_COMMIT=T1 delivery commit with Ticket trailer (SHA in report, self-reference excluded)
+T_COMMIT=T1=c024773480274eb4b1b5534efa488e67347de857 (Ticket: T-0031, pushed); final T2 delivery commit SHA in report (self-reference excluded)
 EVIDENCE_COMMIT_TRAILER: Evidence: T-0031
 DELIVERY_COMMIT_TRAILER: Ticket: T-0031
 SCOPE_THIS_ROUND: .agent/evidence/T-0031-* + .agent/worklogs/T-0031.md + .agent/kb/notes.md only (git add -f for ignored paths); no requirements/design/code change
 git log --oneline (originals):
 29f9d87 docs(T-0031): 重建后复核 v1.2 口径并落 P0 证据（E1）
+c024773 docs(T-0031): 回填 E1 证据 SHA 并按新口径交付收口（T1）
 5caa55b docs(T-0020): 回填 E5 SHA 并按 G2 第1轮收口（C3）
 d66b5bd task(T-0031): 显示回双行数码管并把温度阈值/故障历史迁到 PC 工具
 git ls-remote origin refs/heads/master before E1 push: 5caa55bac9dc291e8e95492824baf0b0354eb57b
