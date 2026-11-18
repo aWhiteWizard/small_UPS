@@ -6,10 +6,13 @@ CONTENT_COMMIT: d072d40a9791d148887ebbdbcb2f7c3a9a81ad2e（Hardware/README + .gi
 CONTENT_COMMIT_2: f9af342f755e842a7ff10006762ee78ddf0ed0b4（忽略验证命令修正；2 文件/+14/−6）
 CONTENT_COMMIT_3: 8469ceec87de8c718441dc13324f2ed7fd57f597（clean-base 补记 Hardware 自检；2 文件/+12/−0）
 CONTENT_ANCESTOR_OF_HEAD: YES（git merge-base --is-ancestor d072d40/f9af342/8469cee HEAD → exit 0）
-EVIDENCE_COMMIT: 本证据提交 E1（body 末行 `Evidence: T-0014`；SHA 由 T1 回填，避免自指）
+EVIDENCE_COMMIT: 941639c4af556f8036f6d265dfd52cc76695f284（E1，body 末行 `Evidence: T-0014`）
+PUSH_E1: f61c303..941639c HEAD -> master（exit 0）
+LS_REMOTE_E1: 941639c4af556f8036f6d265dfd52cc76695f284	refs/heads/master
 TICKET_COMMIT: T1（body 末行 `Ticket: T-0014`；SHA 见报告正文，不写自指）
 CONTENT_UNCHANGED: 本轮不改 .gitignore / Hardware/README 正文；正文提交已在 master
 GIT_LOG（git log --oneline 本单提交原文）:
+941639c docs(T-0014): 重建后复核仓库整理并落 P0 证据（E1）
 8469cee docs(T-0014): clean-base 复核并补记 Hardware 忽略自检
 f9af342 docs(T-0014): 修正忽略验证命令并记录 --no-index 行为（重派交付）
 d072d40 chore(T-0014): Hardware 占位 README 入库，.gitignore 排除影运行期记录
