@@ -17,6 +17,6 @@ ELF: ELF32 ARM, entry 0x8000275, 2 LOAD segments (R E / RW), flags 0x5000200 sof
 VEC: 00 90 00 20 75 02 00 08（初始 SP=0x20009000，Reset_Handler=0x08000275）
 WARN: newlib nosys `_close/_lseek/_read/_write is not implemented`（预期，不阻塞；README §8）；无 RWX 段、无 LMA adjusted 警告
 IGNORE: .gitignore:16:.tools/ 与 .gitignore:14:build/ 均命中；git ls-files 无 .exe/.a/.o/.elf/.bin/.hex
-REPO: 167 tracked files；pack 245.56 KiB；loose 1.98 MiB
+REPO: 173 tracked files（含本单 P0/worklog 6 个）；pack 245.56 KiB；loose 2.01 MiB（证据提交未 gc）
 LOG: .agent/evidence/T-0022-p1-build-r2.log；T-0022-p1-check-env-r2.log（重派复跑）
 RESULT: PASS
