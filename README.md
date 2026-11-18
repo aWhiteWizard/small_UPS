@@ -70,10 +70,18 @@ small_UPS/
 验证命令：
 
 ```bash
-git status --porcelain=v1 --untracked-files=all   # Hardware/ 内除 README 外的文件不应出现
-git check-ignore -v Hardware/<任意工程文件>        # 应命中 /Hardware/* 规则（exit 0）
-git check-ignore -v Hardware/README.md            # 命中 !/Hardware/README.md（负向规则，即不忽略）
-git add -n Hardware/README.md                     # 应输出 add ...，证明 README 可入库
+# Hardware/ 内除 README 外的文件不应出现在 status 中
+git status --porcelain=v1 --untracked-files=all
+
+# 工程文件被 /Hardware/* 忽略：exit 0，输出命中规则
+git check-ignore -v --no-index Hardware/<任意工程文件>
+
+# 已跟踪文件默认不参与 check-ignore（exit 1、无输出）；加 --no-index 才能看到负向规则
+git check-ignore -v --no-index Hardware/README.md   # 输出 !/Hardware/README.md（负向规则，即不忽略）
+git check-ignore -q --no-index Hardware/README.md; echo $?   # 1 = 未忽略
+
+# README 已在库中（clone 后目录存在）
+git ls-files --error-unmatch Hardware/README.md
 ```
 
 ## 6. 当前状态

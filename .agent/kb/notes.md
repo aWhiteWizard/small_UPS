@@ -91,12 +91,12 @@ KB-TAGS: docs, requirements, merge, references, single-source
 ## Git 忽略目录内容但保留 README：用 `Hardware/*` + `!`，不能整目录忽略
 
 KB-TYPE: method
-KB-EVIDENCE: `.gitignore:9-11`（`/Hardware/*`、`!/Hardware/README.md`）；旧规则 `/Hardware/` 下 `git check-ignore -v --no-index Hardware/README.md` → `.gitignore:8:/Hardware/`；改后 `git check-ignore -q Hardware/README.md` → exit 1、`git status` → `?? Hardware/README.md`、`git add -n` → `add 'Hardware/README.md'`
+KB-EVIDENCE: `.gitignore:9-11`（`/Hardware/*`、`!/Hardware/README.md`）；旧规则 `/Hardware/` 下 `git check-ignore -v --no-index Hardware/README.md` → `.gitignore:8:/Hardware/`；改后 `git check-ignore -v --no-index Hardware/README.md` → `.gitignore:11:!/Hardware/README.md`、exit 0（负向命中），`git check-ignore -q --no-index Hardware/README.md` → exit 1（未忽略）
 KB-TAGS: gitignore, hardware, directory, clone, negation
 
 整目录规则（`/Hardware/`）排除后，`!/Hardware/README.md` 无法把文件反选回来（Git 不会进入被排除目录）。要让目录在 clone 后存在且只保留 README，写成 `/Hardware/*` 忽略一层，再 `!/Hardware/README.md` 放行；子目录文件仍被父目录规则覆盖忽略。
 
-验证 `git check-ignore -v` 有坑：命中负向规则时仍打印带 `!` 的行且 exit 0，看起来像“被忽略”；应配合 `git check-ignore -q`（未忽略时 exit 1）、`git status` 的 `??` 或 `git add -n` 判定。
+验证 `git check-ignore -v` 有坑：命中负向规则时仍打印带 `!` 的行且 exit 0，看起来像“被忽略”；应配合 `git check-ignore -q`（未忽略时 exit 1）、`git status` 的 `??` 或 `git add -n` 判定。对已跟踪路径（如已入库的 `Hardware/README.md`），`git check-ignore` 默认跳过：不加 `--no-index` 时 exit 1 且无输出，不能据此判断规则；要按规则匹配必须加 `--no-index`。
 
 ## .gitignore 不会让已跟踪文件停止跟踪，历史运行期记录需 `git rm --cached` 另单清理
 
