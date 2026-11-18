@@ -1,0 +1,17 @@
+KIND: tests
+TASK: T-0027
+AT: 2026-11-19 +08:00
+CMD: `$env:PYTHONPATH="tools"; python -B .agent/evidence/T-0027-p1-selftest.py`
+RESULT: `RESULT: PASS (5/5)`，exit 0；日志 `.agent/evidence/T-0027-p1-selftest.log`
+COVER: 设备信息显示 / V6+I3 点表 / 设定与实测可编辑 / 误差实时 / V6 全流程 / I3 全流程 / 设备 ERR 自动 ABORT 红色失败 / 会话中拒绝切通道 / CAL ABORT
+ASSERT:
+- 设备信息：`INFO` 回包解析为 协议 1.0 / 固件 0.9.0 / SN PSU-DEMO-0001，显示在 SerialPanel。
+- V 通道：6 行全部可见可编辑（满足工单“至少五个可编辑点”）；设定 500/3300/5000/12000/24000/48000 mV；实测 497 时误差 -3、-0.60%。
+- I 通道：3 行可见可编辑；1000/2500/5000 mA；BEGIN 后 I 限流为目标点+1A（设备侧）。
+- V6：BEGIN→6×(SET/MEAS)→COMMIT→READ，CRC PASS；fake 设备 COMMIT 次数=1，日志含 TX>/RX< 原文。
+- I3：BEGIN→3×(SET/MEAS)→COMMIT→READ，CRC PASS。
+- 失败：注入 `ERR 5 point rejected` → 自动 ABORT V，COMMIT 次数=0，状态样式 `Fail.TLabel`、日志含 `!` 与 ERR 原文。
+- 会话中切通道被拒绝并保持原通道；CAL ABORT 后会话清空、未 COMMIT。
+LOG: `.agent/evidence/T-0027-p1-selftest.log`
+NOTE: fake serial 注入，不是真机 live e2e。
+RESULT: PASS

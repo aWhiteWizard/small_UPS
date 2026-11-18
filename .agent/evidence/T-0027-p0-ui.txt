@@ -1,0 +1,10 @@
+KIND: ui
+TASK: T-0027
+AT: 2026-11-19 +08:00
+SHOT: .agent/evidence/T-0027-p0-ui-after.png
+SIZE: 1320×880 px, 92727 bytes, SHA256 983BD22532433DB8A66995D3897035B416D3B509752138385CE7F28716707A02
+CONTENT: 已连接 COM9（fake serial）；设备信息 协议 1.0 / 固件 0.9.0 / SN PSU-DEMO-0001；V 通道 6 个校准点全部可见，
+  设定/实测值可编辑，误差实时显示（-2 mV，-0.40%~-0.00%）；状态栏绿色 `CAL READ 回读 CRC 校验 PASS`；
+  日志区含带时间戳的 TX>/RX< 原文；BEGIN/逐点下发/MEAS/COMMIT/READ/ABORT 按钮与限流提示可见。
+NOTE: fake serial 注入（非真机）用于 UI 状态与日志呈现；不冒充 live e2e。
+RESULT: PASS

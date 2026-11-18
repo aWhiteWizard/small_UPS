@@ -1,0 +1,15 @@
+KIND: sha
+TASK: T-0027
+AT: 2026-11-19 +08:00
+BASE: 57246ab949535773bcd0d46606df156a42b26f52（origin/master；开工 ba16717 ff-only 到此）
+C1: 584ba12773699c3619fd860020424b41f3c9c3e2
+PUSH: `git push origin HEAD:refs/heads/master` → `57246ab..584ba12  HEAD -> master`，exit 0
+VERIFY: `git ls-remote origin refs/heads/master` = 584ba12773699c3619fd860020424b41f3c9c3e2（本地=远端，true）
+LOG: `git log --oneline -4`
+584ba12 feat(T-0027): 新增 tkinter 标定完整界面与点表日志
+57246ab docs(T-0026): 记录 P0 证据与离线自测（E1）
+d0472ea feat(T-0026): 新增校准会话流程与安全中止
+6285b40 docs(T-0025): 修正 KB 证据行号到最终串口层（C3）
+TICKET: C1 提交正文末尾含 `Ticket: T-0027`，已存在于 origin/master
+EVIDENCE: 本组证据提交含 `Evidence: T-0027`；按新口径不写最终 HEAD 的 SHA
+WORKTREE: C1 push 后 `git status --porcelain=v1 --untracked-files=all` 为空；C2 后复查见报告

@@ -1,0 +1,16 @@
+KIND: acceptance
+TASK: T-0027
+AT: 2026-11-19 +08:00
+1 PASS tkinter 界面（仅额外依赖 pyserial）：串口下拉 + 刷新/连接 + 设备信息 + V/I 通道。
+  证据：`tools/calib/ui.py:24-51`（下拉/刷新/连接/设备信息）、`:54-57`（日志追加）；`tools/calib/app.py:50`（嵌入 SerialPanel）、`:64-67`（通道单选）。截图见 p0-ui。
+2 PASS 校准点表：序号 / 设定 / 实测输入框 / 误差实时；点表随通道重建，V 6 行、I 3 行均可见可编辑。
+  证据：`tools/calib/app.py:100-124`（表头/Entry/误差列）、`:146-160`（trace_add 实时误差）；V 6 行满足“≥5 个可编辑点”。
+  DEVIATION：工单写“五个点”，需求 §3.4.1 定版 V 6 点 / I 3 点，T-0026 `CHANNELS` 已按 6/3 实现；本单按需求落地，不擅自改 session 点表/CRC。
+3 PASS 功能按钮：CAL BEGIN / 逐点下发 / CAL COMMIT / CAL READ 回读校验 / CAL ABORT 中止（另加记录实测 MEAS）。
+  证据：`tools/calib/app.py:81-83`（按钮定义）、`:227-351`（BEGIN/SET/MEAS/COMMIT/READ/ABORT 动作与安全收口）。
+4 PASS 状态与日志：收发原文 TX>/RX< 实时滚动；失败状态 `Fail.TLabel` 红色 + `!` 日志；断开时会话收口。
+  证据：`tools/calib/serial_link.py:76-77`（毫秒时间戳收发日志）、`tools/calib/ui.py:54-57`（滚动追加）；`tools/calib/app.py:129-160`（状态/失败）、`:162-175`（断线处理）。自测 3/5 注入 ERR 并断言红色。
+5 PASS 报告附运行截图；规模 5 文件 / 399 insertions（文档 2/22；代码与配置 3/377），≤8 文件 / ≤400 行。
+  证据：`.agent/evidence/T-0027-p0-ui-after.png`（1320×880，92727 B，SHA256 983BD22532433DB8A66995D3897035B416D3B509752138385CE7F28716707A02）。
+6 PASS 交付判据：C1=584ba12 带 `Ticket: T-0027` 已 push 到 origin/master；C2 证据提交带 `Evidence: T-0027`；证据不写最终 HEAD SHA，附 `git log --oneline` 本单提交原文（p0-sha）。
+RESULT: PASS
