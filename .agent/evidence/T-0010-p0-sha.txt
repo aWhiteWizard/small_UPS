@@ -1,14 +1,17 @@
 KIND: sha
 TASK: T-0010
-AT: 2026-11-18 18:07 +08:00 (clean-base rerun)
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); DELIVERY_BASE: fa794efbbaaba3b43013d4e7df0157fb74c284be (clean)
-COMMIT: 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d (C11 delivery/evidence refresh)
-LOCAL_HEAD: 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d
-REMOTE_HEAD: 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d refs/heads/master
-CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-PUSH: fa794ef..14e0d2a  HEAD -> master (exit 0)
-LS_REMOTE: 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 14e0d2a5696c4bdf1d2b33e143a547ca9f2a4c5d True
-CONTENT: C1=c0259b83b979f579affbc34dc67fa567b9702b64; C6=18e011b770f75f775429936853af24877d6e6d4d (already in base)
-RECORD_COMMIT: the sha-backfill commit that contains this file (C12); final HEAD and SHA in report
+AT: 2026-11-18 19:55 +08:00 (clean-base rerun)
+TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
+CLEAN_BASE: b655c21504a60e94c04b106ba0c67551d0b375a6
+CONTENT_COMMIT: D1=1fae4c038d494b0176f6bcf0707867bbd4d10acd (2 files, +3/-3)
+EVIDENCE_COMMIT: E1=17a831d414598e5bf48e86565bfe74d7f303375e (4 files, +42/-27)
+COMMIT: E1=17a831d414598e5bf48e86565bfe74d7f303375e (last commit verified LOCAL==REMOTE before sha backfill)
+LOCAL_HEAD: 17a831d414598e5bf48e86565bfe74d7f303375e
+REMOTE_HEAD: 17a831d414598e5bf48e86565bfe74d7f303375e refs/heads/master
+CMD: git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+PUSH: 1fae4c0..17a831d  HEAD -> master (exit 0)
+LS_REMOTE: 17a831d414598e5bf48e86565bfe74d7f303375e	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == 17a831d414598e5bf48e86565bfe74d7f303375e True
+BACKFILL: C1 (this commit) contains only this sha file + worklog; final HEAD==REMOTE in report
+SIZE: D1+E1 = 6 files / +45/-30; with C1 <=7 files / <=100 lines; <=8/400
 RESULT: PASS
