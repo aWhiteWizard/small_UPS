@@ -1,5 +1,6 @@
 KIND: tests
 TASK: T-0020
+AT: 2026-11-18 18:36 +08:00
 RESULT: PASS
 
 == FILE ==
@@ -12,8 +13,8 @@ conflict_markers=0
 == TABLES ==
 tables=38 bad=0
 
-== O LIST ==
-o_ids=O-01,O-02,O-03,O-04,O-05,O-06,O-07,O-08,O-09,O-10
+== O LIST (§1.6) ==
+o_ids=O-01..O-10
 o_count=10 o_unique=10
 
 == ACCEPTANCE KEYWORDS ==
@@ -42,13 +43,13 @@ PASS O-08
 PASS O-09
 PASS O-10
 
-== T-0007 NON-DUP ==
-PASS absent-in-appendix 0–40℃
-PASS absent-in-appendix 1500VAC/1min
-PASS absent-in-appendix 600 元/套
-PASS absent-in-appendix 0.1–0.3%
-PASS absent-in-appendix 60×120×180
-PASS absent-in-appendix ≤1.2kg
+== T-0007 NON-DUP (appendix I) ==
+PASS absent 0–40℃
+PASS absent 1500VAC/1min
+PASS absent 600 元/套
+PASS absent 0.1–0.3%
+PASS absent 60×120×180
+PASS absent ≤1.2kg
 
 == INSERTION DEPTH ==
 stale_10pm1_in_appendix_I=0
@@ -66,3 +67,6 @@ PASS https://store.accuristech.com/ashrae/standards/ecia-eia-364-09c?product_id=
 
 == GIT ==
 diff_check_exit=0
+status_clean=True
+ancestor_C6_exit=0
+ff_only_exit=0
