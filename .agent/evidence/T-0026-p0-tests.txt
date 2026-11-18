@@ -1,0 +1,16 @@
+KIND: tests
+TASK: T-0026
+AT: 2026-11-18 +08:00
+CMD: `$env:PYTHONPATH="tools"; python -B .agent/evidence/T-0026-p1-selftest.txt`
+RESULT: `Ran 5 tests in 0.001s` + `OK`，exit 0
+COVER: V6 全流程+回读 / I3 限流+CRC / 设备 ERR 自动中止 / 超时+非法输入自动中止 / 会话 busy / 缺 CRC 不判 PASS
+ASSERT:
+- V6/I3：COMMIT 回读 state=2 active=1 verified=True；假设备 COMMIT 次数=1。
+- BEGIN：V limit_a=0.5；I 第 1 点 1000mA 时 limit_a=2.0A（目标点+1A）。
+- 设备 ERR 5：抛 CalibrationAborted(status=5)，已发 `ABORT V`，COMMIT 次数=0，消息含“EEPROM 未写”。
+- 超时：status=None，已发 `ABORT V`，COMMIT 次数=0；非法值 999999 → status=5，同样 ABORT。
+- busy：会话中 `execute("VSET 1 24000")` → CalError code=1，会话仍 active；重复 BEGIN 亦被拒。
+- READ 缺 CRC：`OK 2 1 1` → verified=False，note 含“未回传 CRC”。
+LOG: `.agent/evidence/T-0026-p1-selftest.log`
+NOTE: fake 设备夹具，不是实机；不宣称 live e2e。
+RESULT: PASS

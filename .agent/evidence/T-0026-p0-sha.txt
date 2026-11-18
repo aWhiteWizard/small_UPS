@@ -1,0 +1,14 @@
+KIND: sha
+TASK: T-0026
+AT: 2026-11-18 +08:00
+BASE: 6285b4064da66cc84bef36cbea6d7d34482fc403
+C1: d0472ea17140a11bf4cc88cc664a78fb55fb268f
+PUSH: `git push origin HEAD:refs/heads/master` → `6285b40..d0472ea  HEAD -> master`，exit 0
+VERIFY: `git ls-remote origin refs/heads/master` 等于 C1（本地=远端，true；按新口径不写最终 HEAD SHA）
+LOG: `git log --oneline -4`
+d0472ea feat(T-0026): 新增校准会话流程与安全中止
+6285b40 docs(T-0025): 修正 KB 证据行号到最终串口层（C3）
+7df4db5 docs(T-0025): 回填 E1 证据 SHA 并最终收口（C2）
+d1f93bd docs(T-0025): 记录 P0 证据与两态 UI 截图（E1）
+TICKET: C1 提交正文末尾含 `Ticket: T-0026`；E1 提交含 `Evidence: T-0026`。
+WORKTREE: E1 提交并 push 后 `git status --porcelain=v1 --untracked-files=all` 为空。

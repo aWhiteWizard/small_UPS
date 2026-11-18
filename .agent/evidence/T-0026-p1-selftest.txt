@@ -1,0 +1,122 @@
+"""T-0026 离线测试：假设备注入 OK/ERR/超时/非法输入，覆盖会话与安全中止。"""
+import unittest
+
+from calib.serial_link import ReadTimeout
+from calib.session import (CHANNELS, CalError, CalSession, CalibrationAborted,
+                           cal_crc, crc16_ccitt)
+
+
+class Fake:
+    """最小设备；err_on 命中 MEAS 返回 ERR 5，timeout_on 命中命令抛超时。"""
+
+    def __init__(self, err_on=None, timeout_on=None, read_reply=None):
+        self.err_on, self.timeout_on, self.read_reply = err_on, timeout_on, read_reply
+        self.ch, self.sets, self.meas, self.lines = None, {}, {}, []
+        self.commits, self.version, self.last = 0, 0, None
+
+    def send(self, line):
+        self.lines.append(line)
+        if self.timeout_on and self.timeout_on in line:
+            raise ReadTimeout("fixture timeout: " + line)
+        p = line.split()
+        cmd = p[0].upper()
+        if cmd == "CAL":
+            self.ch = p[2].upper()
+        elif cmd == "SET":
+            self.sets[int(p[2])] = int(p[3])
+        elif cmd == "MEAS":
+            if self.err_on and self.err_on in line:
+                return "ERR 5 point rejected"
+            self.meas[int(p[2])] = int(p[3])
+        elif cmd == "COMMIT":
+            self.commits += 1
+            self.version += 1
+            pts = [(self.sets[i], self.meas[i]) for i in range(len(self.meas))]
+            self.last = (self.ch, self.version, cal_crc(self.ch, self.version, pts))
+        elif cmd == "READ":
+            if self.read_reply:
+                return self.read_reply
+            ch, ver, crc = self.last
+            return f"OK 2 1 {ver} {crc:04X}"
+        elif cmd == "ABORT":
+            self.ch = None
+        return "OK"
+
+
+def session(**kw):
+    fake, logs = Fake(**kw), []
+    return fake, CalSession(fake, logs.append), logs
+
+
+class TestCalSession(unittest.TestCase):
+    def test_happy_path_both_channels_and_readback(self):
+        self.assertEqual(crc16_ccitt(b"123456789"), 0x29B1)
+        for ch in ("V", "I"):
+            fake, s, logs = session()
+            s.execute(f"CAL BEGIN {ch}")
+            self.assertEqual(s.limit_a, 0.5 if ch == "V" else None)
+            for i, p in enumerate(CHANNELS[ch]["points"]):
+                s.execute(f"SET {ch} {i} {p}")
+                if ch == "I":
+                    self.assertAlmostEqual(s.limit_a, p / 1000 + 1)
+                s.execute(f"MEAS {ch} {i} {p - 2}")
+            r = s.execute(f"COMMIT {ch}")
+            self.assertTrue(r.verified)
+            self.assertEqual((r.state, r.active, fake.commits), (2, 1, 1))
+            self.assertTrue(any("回执" in x and "OK" in x for x in logs))
+
+    def test_device_err_auto_aborts_without_commit(self):
+        fake, s, _ = session(err_on="MEAS V 2")
+        s.begin("V")
+        for i in range(2):
+            s.set_point("V", i, CHANNELS["V"]["points"][i])
+            s.meas_point("V", i, CHANNELS["V"]["points"][i])
+        s.set_point("V", 2, CHANNELS["V"]["points"][2])
+        with self.assertRaises(CalibrationAborted) as cm:
+            s.meas_point("V", 2, CHANNELS["V"]["points"][2])
+        self.assertEqual(cm.exception.status, 5)
+        self.assertIn("ABORT V", fake.lines)
+        self.assertIn("EEPROM 未写", str(cm.exception))
+        self.assertEqual(fake.commits, 0)
+
+    def test_timeout_and_invalid_input_auto_abort(self):
+        fake, s, _ = session(timeout_on="SET V 0")
+        s.begin("V")
+        with self.assertRaises(CalibrationAborted) as cm:
+            s.set_point("V", 0, 500)
+        self.assertIsNone(cm.exception.status)
+        self.assertIn("ABORT V", fake.lines)
+        fake2, s2, _ = session()
+        s2.begin("V")
+        with self.assertRaises(CalibrationAborted) as cm2:
+            s2.set_point("V", 0, 999999)
+        self.assertEqual(cm2.exception.status, 5)
+        self.assertIn("ABORT V", fake2.lines)
+        self.assertEqual((fake.commits, fake2.commits), (0, 0))
+
+    def test_busy_execute_blocks_other_commands(self):
+        fake, s, _ = session()
+        s.begin("V")
+        with self.assertRaises(CalError) as cm:
+            s.execute("VSET 1 24000")
+        self.assertEqual(cm.exception.code, 1)
+        self.assertTrue(s.active)
+        with self.assertRaises(CalError):
+            s.begin("I")
+        s.abort()
+        self.assertFalse(s.active)
+        self.assertIn("ABORT V", fake.lines)
+
+    def test_read_without_crc_is_not_verified(self):
+        _, s, _ = session(read_reply="OK 2 1 1")
+        s.begin("V")
+        for i, p in enumerate(CHANNELS["V"]["points"]):
+            s.set_point("V", i, p)
+            s.meas_point("V", i, p)
+        r = s.commit("V")
+        self.assertFalse(r.verified)
+        self.assertIn("未回传 CRC", r.note)
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
