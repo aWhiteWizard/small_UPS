@@ -3,17 +3,17 @@ TASK: T-0031 / p1 / P1 / impl-1（G2 第1轮修复）
 WHEN: 2026-11-18 +08:00
 WORKTREE: D:\workspace\wt\small-ups\T-0031 (branch task/T-0031)
 BASE: 5caa55bac9dc291e8e95492824baf0b0354eb57b（工单 baseSha）
-HEAD_AT_FIX_START: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b (= origin/master)
+START_HEAD: bf1e9a498a43ad01a1eddd7d1497683ca8024050（修复开工时 origin/master）
+UPSTREAM_BETWEEN_ROUNDS: ef8cfb1..bf1e9a4 = T-0011 Ticket commit（5 个 .agent 文件），非 T-0031 改动，不计本单规模
 REBUILD: content commit d66b5bd is an ancestor of BASE; old 37 files/4330 lines NOT reproduced.
 G0 RESULTS
-- git rev-parse HEAD -> ef8cfb18d235fa2e62ce88b15f27ceb15882f90b
-- git ls-remote origin refs/heads/master -> ef8cfb18d235fa2e62ce88b15f27ceb15882f90b
-- git status --porcelain=v1 -uall -> empty (at fix start)
-- git merge-base --is-ancestor d66b5bd HEAD -> exit 0 (content already delivered and pushed)
+- git rev-parse HEAD -> bf1e9a4（fix start）; git ls-remote -> bf1e9a4
+- git status --porcelain=v1 -uall -> empty (fix start)
+- git merge-base --is-ancestor d66b5bd HEAD -> exit 0 (content delivered and pushed)
 - git diff --check 5caa55b..HEAD -> exit 0
-- scope 5caa55b..HEAD -> 6 .agent files (evidence/worklog/KB), 0 content/design/code files
-- code/config diff -> none (doc-only ticket; firmware/, Hardware/, tools/ untouched)
-- remote reachable; fetch succeeded
-- G2 fix: p0-sha rewritten with colon fields (CONTENT_COMMIT/FINAL_HEAD/LS_REMOTE_HEAD/PUSH/VERIFY); acceptance 8 corrected to PARTIAL with J.10 handoff; tests re-run on 8/8 content files
-- delivery: previous E1/T1–T3 pushed; this fix adds E2 (Evidence) + T4 (Ticket) commits (SHA in report)
+- T-0031 scope: bf1e9a4..E2 = 6 .agent files; bf1e9a4..T4 = 7 files（requirements J.10 + 证据/worklog/KB），0 code/config
+- code/config diff -> none（doc-only；firmware/, Hardware/, tools/ untouched）
+- remote reachable; fetch/push succeeded
+- G2 fix: p0-sha 改冒号字段（CONTENT_COMMIT/FINAL_HEAD/LS_REMOTE_HEAD/PUSH/VERIFY）；验收 8 改 PARTIAL + J.10 handoff；tests 复跑 8/8 内容文件
+- delivery: E2=e40b2e0 pushed（bf1e9a4..e40b2e0）；T4 Ticket 提交 SHA 见报告
 VERDICT: PASS

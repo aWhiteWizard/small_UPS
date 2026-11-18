@@ -1,7 +1,9 @@
 KIND: sha
 TASK: T-0031
 AT: 2026-11-18 +08:00（G2 第1轮修复）
-BASE: 5caa55bac9dc291e8e95492824baf0b0354eb57b（origin/master，重建前）
+BASE: 5caa55bac9dc291e8e95492824baf0b0354eb57b（工单 baseSha）
+START_HEAD: bf1e9a498a43ad01a1eddd7d1497683ca8024050（修复开工时 origin/master）
+UPSTREAM_BETWEEN_ROUNDS: bf1e9a4 = T-0011 Ticket commit（5 个 .agent 文件；非 T-0031，排除本单规模）
 CONTENT_COMMIT: d66b5bd94c09e69af8a211f62c1cbc44ca6c8b88（内容提交：8 文档文件 +290/−181）
 C1_ANCESTOR_OF_HEAD: YES
 PUSH_C1: 1aeb7e2..d66b5bd HEAD -> master（exit 0；上一轮 worklog/备份记录；d66b5bd 现为 origin/master 祖先）
@@ -10,17 +12,21 @@ EVIDENCE_COMMIT: 29f9d8793a636af9bf360a1403452a560802b4d0（E1，body Evidence: 
 TICKET_COMMIT: c024773480274eb4b1b5534efa488e67347de857（T1，body Ticket: T-0031；历史收口）
 TICKET_COMMIT_2: 4a7b0d275631a23e92b0300129712552f94b1680（T2，body Ticket: T-0031；历史收口）
 TICKET_COMMIT_3: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b（T3，G2 第1轮上界，body Ticket: T-0031）
+EVIDENCE_COMMIT_2: e40b2e045d341d3d5d21e74e1a56c89f1ff6ed42（E2，body Evidence: T-0031；本轮修复证据）
 FINAL_TICKET_COMMIT: T4=本修复轮交付提交（body Ticket: T-0031；SHA 见报告正文，不写自指 SHA）
-FINAL_HEAD: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b（本轮修复提交前、已 push 的交付上界）
-LS_REMOTE_HEAD: ef8cfb18d235fa2e62ce88b15f27ceb15882f90b refs/heads/master
+FINAL_HEAD: e40b2e045d341d3d5d21e74e1a56c89f1ff6ed42（E2 push 后实测；T4 交付提交见报告）
+LS_REMOTE_HEAD: e40b2e045d341d3d5d21e74e1a56c89f1ff6ed42 refs/heads/master
 PUSH_E1: 5caa55b..29f9d87 HEAD -> master（exit 0）
 PUSH_T1: 29f9d87..c024773 HEAD -> master（exit 0）
 PUSH_T2: c024773..4a7b0d2 HEAD -> master（exit 0）
 PUSH_T3: 4a7b0d2..ef8cfb1 HEAD -> master（exit 0）
-VERIFY: FINAL_HEAD == LS_REMOTE_HEAD == ef8cfb18d235fa2e62ce88b15f27ceb15882f90b（修复提交前实测）
-STATUS_AFTER_T3: git status --porcelain -> 0 lines
-TRAILER_CHECK: T1/T2/T3 的 body 末行均为 Ticket: T-0031；E1 的 body 末行均为 Evidence: T-0031
+PUSH_E2: bf1e9a4..e40b2e0 HEAD -> master（exit 0）
+VERIFY: FINAL_HEAD == LS_REMOTE_HEAD == e40b2e045d341d3d5d21e74e1a56c89f1ff6ed42（E2 push 后实测）
+STATUS_AFTER_E2: 1 modified file (.agent/docs/requirements.md, J.10 pending T4)；T4 后 0 lines
+TRAILER_CHECK: E1/E2 body 末行 Evidence: T-0031；T1/T2/T3 body 末行 Ticket: T-0031
 GIT_LOG（git log --oneline 原文）:
+e40b2e0 docs(T-0031): 按 G2 第1轮重写 SHA 证据并修正验收 8 口径（E2）
+bf1e9a4 docs(T-0011): 最终 Ticket 收口并刷新 canonical 基线（J）
 29f9d87 docs(T-0031): 重建后复核 v1.2 口径并落 P0 证据（E1）
 c024773 docs(T-0031): 回填 E1 证据 SHA 并按新口径交付收口（T1）
 4a7b0d2 docs(T-0031): 回填 T1 并修正 P0 行数后交付收口（T2）
