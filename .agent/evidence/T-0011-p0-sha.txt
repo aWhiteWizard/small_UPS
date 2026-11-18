@@ -1,17 +1,19 @@
 KIND: sha
 TASK: T-0011
 AT: 2026-11-18 +08:00
-BASE: e4b660c257f00dba0c172c2ff2bfd2cfa8aa7fb8 (ff-only)
+BASE: e4b660c257f00dba0c172c2ff2bfd2cfa8aa7fb8 (ff-only; ticket base ba16717)
 C1_CONTENT: fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd
-C2_RECORD: da8eb6268e3a5352bc6b2c33e47425fb042f2e0b
-COMMIT: 2212cb29ca49efb935bbd83a7b898a5af377a59a
-LOCAL_HEAD: 2212cb29ca49efb935bbd83a7b898a5af377a59a
-REMOTE_HEAD: 2212cb29ca49efb935bbd83a7b898a5af377a59a refs/heads/master
-CMD: git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+C2_EVIDENCE: da8eb6268e3a5352bc6b2c33e47425fb042f2e0b
+C3_FIX: 2212cb29ca49efb935bbd83a7b898a5af377a59a
+COMMIT: b47c74f997d1e7f7ac8b16f182c2dcb7b2ebe679 (C4 T-0011 内容/收口；最终 C5 见下)
 PUSH_C1: e4b660c..fd81bbc  HEAD -> master (exit 0)
 PUSH_C2: fd81bbc..da8eb62  HEAD -> master (exit 0)
 PUSH_C3: da8eb62..2212cb2  HEAD -> master (exit 0)
-LS_REMOTE: 2212cb29ca49efb935bbd83a7b898a5af377a59a	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 2212cb29ca49efb935bbd83a7b898a5af377a59a True
-NOTE: C3=2212cb2 为内容/修正终版；C4 仅回填本文件与 worklog。C4 自身 SHA 见报告（自指限制，沿用 T-0007/T-0010 惯例）。
+C4_IN_REMOTE: git merge-base --is-ancestor b47c74f origin/master -> exit 0
+LOCAL_HEAD: 067edba95b5b2e4fa52269fe444f8fc006fdcdc1 (C5 写入前；ff-only 对齐)
+REMOTE_HEAD: 067edba95b5b2e4fa52269fe444f8fc006fdcdc1 refs/heads/master
+LS_REMOTE: 067edba95b5b2e4fa52269fe444f8fc006fdcdc1	refs/heads/master
+VERIFY_PRE_C5: LOCAL_HEAD == REMOTE_HEAD == 067edba True
+C5_RECORD: this commit（仅回填 sha/worklog）；push 后最终 LOCAL_HEAD=REMOTE_HEAD=C5，C5 SHA 见报告
+CMD: git commit; git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
 RESULT: PASS
