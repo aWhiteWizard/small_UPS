@@ -1,15 +1,14 @@
 KIND: acceptance
 TASK: T-0010
 AT: 2026-11-18 +08:00
-BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); real base dfcbcc631573b599bc6ed933492518fddcb203dc (ff-only)
-CONTENT_COMMIT: c0259b83b979f579affbc34dc67fa567b9702b64
-1 范围：R:787–834 §4.4 只写 D 侧接口/结构；§3.3/§3.4 本体电气未改；§2.7:293 仅修机械总深：PASS
-2 尺寸/方位：R:793–795（60×120×35 竖立、腔 55×115×33、销 15–18、金手指 79）；interface:28–41：PASS
-3 接口：R:800–820（2.54 2×32 竖直卡边、型号待实物、槽 x=15 偏左、右侧 x=40–57.5 拨码留空；USB-C 数据/TVS/CMC 左侧；4P A/B/GND/+12V；Ø4 19mm ≥5A；电源键）；interface:43–58/103–109：PASS
-4 按键/显示：R:824–827（48×25 8 位屏、5×6mm ≥10 万次、屏上、屏下 L/R/SET、屏右侧 Up/Down）；interface:64–84：PASS
-5 结构：R:831–834（Ø5 圆孔/Ø8×12 腰形、M3 顶 D 平面、2×N35 距本体禁布区 ≥21、接缝/配色）；interface:55–58：PASS
-6 面板布局：interface:64–101 坐标表+ASCII（屏/5 键/香蕉头/PT100 端子/USB-C/按钮/磁吸/定位），USB-C 左侧 −X 不朝本体：PASS
-7 规模：C1 7 files 248+/29-=277（≤400 行、≤8 文件）；P0 证据 4 文件另计：PASS
-8 交付：C1=c0259b8 已 commit/push，local=remote=c0259b8；C2/C3 证据后续提交，最终 SHA 见报告：PASS
-NOTE: 0.40" 屏与 0.56" 冲突已记 R §4.3；磁吸 ≥20mm 依赖 T-0011 本体禁布区 x≤30；卡边/屏/USB-C/RS485 型号待实物。
+BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); delivery base 319cf8ef008c4d787dedfe97048c92d8d0874d8f
+1 范围：R:906–954 §4.4 only D-side; §3.3/§3.4 body electrical not changed; §2.7:313 total depth 215: PASS
+2 尺寸/方位：R:912–914（60×120×35；腔 55×115×33；销 15–18；金手指 79）；interface:32–41/55–56（z=17–27，销插入 10）：PASS
+3 接口：R:919–922/924–928/930–934/936–940（2.54 2×32 竖直卡边、型号待实物、槽 x=15 偏左、右侧 x≥40 拨码留空；USB-C 数据/TVS/CMC 左侧；4P A/B/GND/+12V；Ø4 19mm ≥5A；电源键）；interface:47–58/103–109：PASS
+4 按键/显示：R:944–947（48×25 双行 8 位、5×6mm ≥10 万次、屏上、屏下 L/R/SET、屏右侧 Up/Down）；interface:67–72：PASS
+5 结构：R:951–954（Ø5/Ø8 腰形、M3 顶 D 平面、2×N35 距 x≤30 禁布区 ≥21、接缝/配色）；interface:55–58/83–84/100：PASS
+6 面板布局：interface:64–101 坐标表 + ASCII；USB-C 左侧 −X 不朝本体；最小间距已列：PASS
+7 规模：content 6 files 252 lines；+worklog 7/290（≤8/400）；P0 4 files separate；total 11 files ~350 lines <24/1200：PASS
+8 交付：C1=c0259b8 content；C6 content fix；C7 evidence backfill；push + ls-remote final see report：PASS
+NOTE: 0.40" vs 0.56" screen in R §4.3; magnet ≥20mm depends on T-0011 body keep-out x≤30; card-edge/display/USB-C/RS485 models TBD; surface color follows body.
 RESULT: PASS

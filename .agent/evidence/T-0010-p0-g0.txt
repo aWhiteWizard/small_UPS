@@ -2,10 +2,9 @@ KIND: g0
 TASK: T-0010
 AT: 2026-11-18 +08:00
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-BASE_REAL: dfcbcc631573b599bc6ed933492518fddcb203dc (ff-only origin/master; +9 upstream)
-CONTENT_COMMIT: c0259b83b979f579affbc34dc67fa567b9702b64
-CHECK_START: 开工工作区干净；git merge --ff-only ba16717..dfcbcc6 exit 0；origin/master=dfcbcc6
-CHECK_SCOPE: 只写 D 侧接口/结构（R §4.4、interface §1.2/§5.3、architecture §1.2/§3/§4、module-design §2.1、README、KB）；未改本体电气 §3.3/§3.4；§2.7 仅修机械总深口径
-CHECK_STRUCT: requirements=943 interface=337 architecture=74 module-design=107 README=108 kb=115；TABLE_BAD=0；TRAILING_WS=0；TABS=0；BOM=False
-CHECK_DIFF: C1 7 files 248+/29-=277 lines (<=400/<=8)；P0 证据另计
+DELIVERY_BASE: 319cf8ef008c4d787dedfe97048c92d8d0874d8f (origin/master at re-dispatch; local C5 e4b660c ff-only to it)
+CONTENT_COMMIT: c0259b83b979f579affbc34dc67fa567b9702b64 (C1); C6 adds 5±1/z=17–27/magnet boss
+SCOPE: only D-side R §4.4 + interface §1.2/§5.3 + architecture §1.2/§3/§4 + module-design §2.1 + README; body electrical §3.3/§3.4 untouched; §2.7 only total-depth wording
+CHECK: requirements=1523 interface=339 architecture=96 module-design=109 README=117; TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=0; placeholder=0
+SIZE: content 6 files 217+/35-=252 lines; +worklog 7 files/290 lines (<=8/400); P0 4 files ~60 lines separate; total 11 files ~350 lines <24/1200 hard cap
 RESULT: PASS
