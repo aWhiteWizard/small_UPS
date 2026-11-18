@@ -8,5 +8,5 @@ AT: 2026-11-18 +08:00（重派重建复核）
 5 变更留痕：PASS。附录 H（1280–1399）+ 完成度表:46 + 附录 B:987-989 + 附录 C:1013 + 文件头:5 + §2.6:304 + §3.1 P-02/P-03:397-398 + §3.2:425；H.6 列 requirements/part2（已删）/docs 联动；README:101/114。
 6 只写需求：PASS。H.7（1393–1398）；docs/firmware/Hardware 无本单改动；附录 H 无器件/拓扑/曲线数值；H.4 不含 OPP 实现。
 7 规模：PASS。内容提交 3646bda = 文档 3 文件/159 行；代码与配置 0 文件/0 行；本轮仅证据/worklog/KB，证据不计阈值；≤8 文件/≤1500 行。
-8 交付：PASS。C1=3646bda 已入 master（is-ancestor exit 0）；E1=本次证据提交（SHA 由 T1 回填，body: Evidence: T-0019）；T1 为 Ticket 交付记录提交（body: Ticket: T-0019），自身 SHA 见报告；worktree 干净。
+8 交付：PASS。C1=3646bda 已入 master（is-ancestor exit 0）；E1=6d9c8d5862cd561bc17bc3828e3b97972fcba156（Evidence）已 push；T1 为 Ticket 交付记录提交（body: Ticket: T-0019），自身 SHA 见报告；worktree 干净。
 RESULT: PASS（8/8）
