@@ -1,15 +1,27 @@
 KIND: sha
 TASK: T-0011
-AT: 2026-11-18 20:44 +08:00 (G2 fix round 1)
+AT: 2026-11-18 21:05 +08:00 (G2 fix round 2)
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
-CLEAN_BASE: 4c2b453861737c945cb9b5656d6be2003884aeb3
+CLEAN_BASE: 4244d3af861a17848212f4c2b640257bb26744a7 (origin/master at fix start)
+CONTENT_COMMIT: fd81bbcb2d32c7b8f8fd48f8ca0db4935e4aa4fd (original C1 docs; ancestor)
+CONTENT_COMMIT_C1: d291a11950d75a0b9c4cd300a925286aeec05e0d (C1, Ticket: T-0011; per G2 round 2)
 DELIVERY_COMMIT: d291a11950d75a0b9c4cd300a925286aeec05e0d (F, Ticket: T-0011)
-EVIDENCE_COMMIT: 43536b8a466eb238a2266e7eb7a45c45ebbb4758 (E1, Evidence: T-0011)
-DELIVERY_RANGE: 4c2b453..d291a119
-LOG_ONELINE:
+EVIDENCE_COMMIT: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa (G, Ticket: T-0011; review upper bound)
+EVIDENCE_COMMIT_E1: 43536b8a466eb238a2266e7eb7a45c45ebbb4758 (E1, Evidence: T-0011)
+LOG_ONELINE_4c2b453_339fd2f:
+339fd2f docs(T-0011): 按 G2 第1轮补齐 P0 证据与后板/纹波/壳温子项（G）
 d291a11 docs(T-0011): 回填 clean-base 交付 SHA 并收口（F）
 43536b8 docs(T-0011): clean-base 重派刷新 P0 证据与 worklog（E1）
 LOG_FULL:
+339fd2f882ade06eb37dfaf2276bc261b57fe1fa
+docs(T-0011): 按 G2 第1轮补齐 P0 证据与后板/纹波/壳温子项（G）
+- 行2 D侧尺寸引用；行4 船型开关对齐；行10 T-0031 故障灯位置/Ø3mm 开孔
+- 行13 恢复输出/55V 纹波核算；行14 板对板/维修；行16 改新口径
+- A:50 55V 纹波；T:178 壳温 Tc=57℃；R:650/690 后板注记
+- P0 94 行；3 文档/8 diff 行 + 证据/worklog；0 代码/配置
+
+Ticket: T-0011
+
 d291a11950d75a0b9c4cd300a925286aeec05e0d
 docs(T-0011): 回填 clean-base 交付 SHA 并收口（F）
 - E1=43536b8 证据提交已 push；sha 文件记录 E1/远端原文
@@ -25,10 +37,13 @@ docs(T-0011): clean-base 重派刷新 P0 证据与 worklog（E1）
 - 本次仅 worklog 1 个文档，0 代码/配置
 
 Evidence: T-0011
-LS_REMOTE_F: d291a11950d75a0b9c4cd300a925286aeec05e0d	refs/heads/master
-VERIFY_F: LOCAL_HEAD == REMOTE_HEAD == d291a11950d75a0b9c4cd300a925286aeec05e0d True
-STATUS_AFTER_F: git status --porcelain=v1 -uall -> empty
-CMD: git log --oneline 4c2b453..d291a119; git ls-remote origin refs/heads/master; git status --porcelain=v1 -uall
-NOTE: 本轮修正提交（Ticket trailer）只动 P0 证据 + 本轮正文补证；最终 HEAD/remote 与 EQUAL 原文在交付报告给出，不再写自指 SHA。
-SIZE: content C1 5 docs/208 lines; fix round 3 docs/8 diff lines + evidence/worklog; 0 code/config
+PUSH_G: d291a11..339fd2f  HEAD -> master (exit 0)
+LS_REMOTE_G: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa	refs/heads/master
+VERIFY_G: LOCAL_HEAD == REMOTE_HEAD == 339fd2f882ade06eb37dfaf2276bc261b57fe1fa True
+STATUS_AFTER_G: `git status --porcelain=v1 -uall` -> empty
+CHECK_G: `git show --check 339fd2f` exit 0; `git diff d291a119..339fd2f --check` exit 0
+UPSTREAM_ADVANCE: origin/master 4244d3a (T-0017/T-0006 evidence/worklogs); G is ancestor; T-0011 docs untouched
+CMD: git log --oneline 4c2b453..339fd2f; git ls-remote origin refs/heads/master; git status --porcelain=v1 -uall; git show --check 339fd2f
+NOTE: 本轮修正提交 H（Ticket trailer）补 PFC 停振/5 点表并记录 G 的 push/ls-remote/clean；H 的最终 HEAD/remote 原文在交付报告给出（不写自指 SHA）。
+SIZE: content C1 5 docs/208 lines; fix2 4 docs/20 diff lines + P0/worklog; 0 code/config
 RESULT: PASS

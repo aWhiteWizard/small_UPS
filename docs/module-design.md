@@ -36,7 +36,7 @@
 
 | 输入 | 输出 | 关键器件 | 风险 |
 |---|---|---|---|
-| 整流后高压母线 250–420V | 12V（调试板/风扇/继电器）、5V/3.3V（MCU/采样） | 隔离 flyback、12V PTC/ORing、5V/3.3V LDO/DCDC、PFC burst 控制 | 待机 >1.5W、PFC burst 过冲、12V 短路、辅助绕组爬电、风扇/继电器浪涌 |
+| 整流后高压母线 250–420V | 12V（调试板/风扇/继电器）、5V/3.3V（MCU/采样） | 隔离 flyback、12V PTC/ORing、5V/3.3V LDO/DCDC、PFC 停振控制 | 待机 >1.5W、PFC 停振/母线过冲、12V 短路、辅助绕组爬电、风扇/继电器浪涌 |
 
 > 本体损耗/热阻预算见 `docs/test-plan.md` §6.2；布局、散热器、风道、后板与 SWD 见 `requirements.md` §3.5.8–§3.5.10；供电链计算见 `docs/architecture.md` §2.1–§2.5。
 

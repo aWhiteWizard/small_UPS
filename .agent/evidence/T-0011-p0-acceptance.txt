@@ -1,9 +1,9 @@
 KIND: acceptance
 TASK: T-0011
-AT: 2026-11-18 20:42 +08:00 (G2 fix round 1)
-BASE: 4c2b453861737c945cb9b5656d6be2003884aeb3
+AT: 2026-11-18 21:05 +08:00 (G2 fix round 2)
+BASE: 4244d3af861a17848212f4c2b640257bb26744a7 (origin/master; G=339fd2f ancestor)
 R: .agent/requirements.md; A: docs/architecture.md; M: docs/module-design.md; T: docs/test-plan.md
-JUDGE: 16 ticket clauses against current tree; line numbers at clean base
+JUDGE: 16 ticket clauses against current tree; line numbers at current base
 
 #  | 验收 | 落点（文件:行号） | 结论
 1  | 范围：P 侧电气规格/拓扑/散热/结构预留 | R:623-711; A:28-66; M:9-41; T:61-82,165-181 | PASS
@@ -17,10 +17,10 @@ JUDGE: 16 ticket clauses against current tree; line numbers at clean base
 9  | 后板 60×60 风扇 HA60251V4 向内吹正压+防尘棉；左右鳍片窗；顶底不开；导流板 | R:685-689; T:162 | PASS（HA60251V4-0000-C99；29→44cm²）
 10 | 后板上下 60×60：上块凸台/左 45mm/右 15mm；下块 25mm 凹槽风扇；其余 owner | R:690-691; R:412; A:88 | PASS（含 T-0031 故障红灯位置/Ø3mm 开孔预留）
 11 | 外壳不开 SWD；排针仅在 PCB；首烧/救援；单区+CRC；bootloader 不升级 | R:694-698; R:271-275 | PASS
-12 | 效率≥88%/≥90%、三段分解、5 电压点损耗、空载<1.5W（PFC 停振） | R:700-705; T:61-82 | PASS（待机 1.2W）
+12 | 效率≥88%/≥90%、三段分解、5 电压点损耗、空载<1.5W（PFC 停振） | R:700-705; R:340; A:64; T:59; T:61-82 | PASS（PFC停振1.2W；三段/5点表见 tests）
 13 | 精度矩阵系统级；输出纹波 50/30；母线纹波 100/150 | R:705; R:339; A:50,57; T:40-44 | PASS（输出13.1mVpp；55V≈30mVpp）
 14 | PCB 外形/安装孔、板间、功率板↔接口板、维修可拆 | R:635-638,680-683; M:9-41; A:72-77 | PASS（64P 板对板；维修可拆）
-15 | 文件规模 ≤400 行/≤8 文件 | C1 5 文档/208 行；本次修正 3 文档/8 行；≤8 文件 | PASS
-16 | 第16条新口径：Ticket/Evidence trailer、git log、F 远端、最终 clean | E1=43536b8（Evidence）、F=d291a119（Ticket）已 push；sha 记录 log/ls-remote/F 后 clean；最终修正提交见报告 | PASS
+15 | 文件规模 ≤400 行/≤8 文件 | C1 5 文档/208 行 + 修正 4 文档/28 行；≤8 文件 | PASS
+16 | 第16条新口径：C1/G 的 commit/trailer/log/ls-remote/clean | C1=fd81bbc 祖先；G=339fd2f（Ticket）push d291a11..339fd2f，LS_REMOTE=339fd2f，G 后 clean；H=第2轮修正提交，final HEAD/remote 在报告 | PASS
 
-[汇总] 16/16 PASS；A/M/T 无 T-0011 待填；PFC/LLC/buck 计算在 A；热预算/壳温在 T §6.2；内容 C1-C7 已在 clean base，本轮按审查逐条补证。
+[汇总] 16/16 PASS；A/M/T 无 T-0011 待填；PFC/LLC/buck 计算在 A；热预算/壳温/停振判据在 T；G 的 push/ls-remote/clean 已入 P0，H 为第2轮修正提交。
