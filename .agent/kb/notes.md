@@ -341,3 +341,15 @@ KB-LAYER: 2_system
 KB-TAGS: worktree, clean-base, trailer, evidence, delivery, T-0022
 
 引擎侧 worktree 重建可能未生效（T-0022 重派时 HEAD 仍是旧交付 1d6caec、落后 origin/master 19 个提交）。不要 amend 已并入 master 的提交；先 `git merge --ff-only origin/master`，用 `git merge-base --is-ancestor <content-commit> origin/master` 确认内容已在基线，再补两个仅动 `.agent` 的收口提交：证据提交 body 写 `Evidence: <taskId>`，交付记录提交 body 写 `Ticket: <taskId>`；P0 sha 记录 CONTENT_COMMIT 与 EVIDENCE_COMMIT，Ticket 提交自身 SHA 见报告（自指限制）。证据文件被 `.gitignore` 忽略时用 `git add -f`，只提交 P0 文本，不提交 P1 大日志。
+
+## 重派丢交付提交：从备份 worktree/分支 cherry-pick -n 恢复，再移植上游 diff
+
+KB-TYPE: method
+KB-EVIDENCE: `git log --all --oneline --grep='T-0032'` → da8f3e1（父 4244d3a，`git merge-base --is-ancestor da8f3e1 origin/master` exit 1）；`git cherry-pick -n da8f3e1`；`.agent/docs/requirements.md:1613-1734`（迁移对照/规模）；`.agent/docs/architecture.md:327`（补齐 interface §3 表 D 侧两行）
+KB-LAYER: 1_application
+KB-TAGS: docs-migration, worktree, cherry-pick, rebase, T-0032
+
+- 重派重建工作区时，旧目录可能仍有上一轮完整树和未并入 master 的交付提交（T-0032 的 da8f3e1 在 `task/T-0032-bak-*` 分支，备份目录 `_backup\<task>-*` 也有旧 worklog/P0）。先读备份 worklog，用 `git log --all --grep=<task>` + `git branch -a --contains <sha>` 找到旧提交，确认它不是 origin/master 祖先，再 `git cherry-pick -n <sha>` 恢复树内容；冲突的摘要页/旧文档用 `git checkout --theirs` 后 `git add`，最后 `git cherry-pick --quit`/`git reset` 只留工作区、不产生提交。
+- 恢复后必须移植旧提交的父到新基线的差异：`git diff <old-parent>..<new-base> -- <相关文件>`。T-0032 是 4244d3a..0dc9ea5 的 PFC“burst/跳周期→停振（驱动封锁）”4+4+1+1 处，逐处同步后再做正文差分，避免新基线内容被旧树覆盖。
+- 校验“正文未改”不要只看标题：从基线 `git show <base>:<old>` 与新文件各截取正文，`git diff --no-index --numstat`，逐条确认变更都是路径改指/变更记录/BOM；再按“正文标题 vs 旧索引表”两类分别统计迁移覆盖率（T-0032：需求 141/143 原文 + 2 改写；设计 61/66，5 个 interface 顶部表不迁，但 §3 表 D 侧两行是正文，须单独迁）。
+- 附录自报行数/字数时，统计范围包含附录自身，改数字会再次改变统计；迭代到 `[IO.File]::ReadAllLines`/非空白字计数稳定（T-0032 最终 1734/644/184 行、127136 字）再落证据。
