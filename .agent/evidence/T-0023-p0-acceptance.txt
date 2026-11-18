@@ -6,7 +6,7 @@ AT: 2026-11-18 +08:00
 3 启动文件/链接脚本可读带注释：PASS。`firmware/startup/startup_stm32g071xx.s:1-199`（向量表 :103-157、复位流程 :41-101、弱别名 :159-199）；`firmware/linker/STM32G071KBUx_FLASH.ld:1-25`（内存/布局/向量表说明）、`:43-47`（`.isr_vector`/`_svector`）、`:154-155`（两条 ASSERT）；实测向量表 0x08000000、188 B，初始 MSP 0x20009000。
 4 SDK/库二进制不入库：PASS。`firmware/tools/bootstrap.ps1:32-43` 固定 URL/tag 获取工具链与 CMSIS/HAL；`.gitignore:14,16` 排除 build/.tools；`git check-ignore` 两项命中，`git ls-files` 二进制 0 个；本地启动文件为 Apache-2.0 源码且文件头注明来源/许可。
 5 文件规模 ≤8 文件/≤400 行：PASS。C1 整单 6 文件/341 行：代码与配置 4 文件/245 行（startup 199、linker 32、CMake 6、HAL conf 8）；文档 2 文件/96 行（README 83、KB 13）。
-6 交付判据：PASS（C1 已满足，C2 收口）。C1=e14e17eecb1529b74e00632d1ed994282083b2ce 带 `Ticket: T-0023`，已在 origin/master；C1 后工作区干净。E1 证据提交与最终 C2 见报告正文；证据不写最终 HEAD SHA。
+6 交付判据：PASS。C1=e14e17eecb1529b74e00632d1ed994282083b2ce 带 `Ticket: T-0023`、E1=46609823f8c395a0918518396e9d9d22645de698 带 `Evidence: T-0023`，均已在 origin/master；C2 为 Ticket 收口（自身 SHA 见报告），提交后工作区干净。证据不写最终 HEAD SHA。
 SIZE: 文档 2 文件/96 行；代码与配置 4 文件/245 行；合计 6 文件/341 行。
 EVIDENCE_EXCLUDED: `.agent/evidence/T-0023-p0-*.txt`（本目录 4 个 P0）、`T-0023-p1-*.log`（3 个 P1）、`.agent/worklogs/T-0023.md`；不计规模。
 RESULT: PASS
