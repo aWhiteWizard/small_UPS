@@ -2,24 +2,15 @@ KIND: sha
 TASK: T-0010
 AT: 2026-11-18 +08:00
 BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); delivery base 319cf8ef008c4d787dedfe97048c92d8d0874d8f
+COMMIT: 067edba95b5b2e4fa52269fe444f8fc006fdcdc1 (C8 final content/record)
+LOCAL_HEAD: e7a811b509a77018f175a8e66b4a88815d2ab3cf
+REMOTE_HEAD: e7a811b509a77018f175a8e66b4a88815d2ab3cf refs/heads/master
+CMD: git merge --ff-only origin/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
+FF: 067edba..e7a811b (Fast-forward, exit 0)
+LS_REMOTE: e7a811b509a77018f175a8e66b4a88815d2ab3cf	refs/heads/master
+VERIFY: LOCAL_HEAD == REMOTE_HEAD == e7a811b True (pre-C9)
 C1_CONTENT: c0259b83b979f579affbc34dc67fa567b9702b64
-C2_EVIDENCE: ebd6f4162fd5cc30127b53bd28a8af3d38de275c
-C3_RECORD: 78c40493d49d09ca34b474efadd922e3d8b9fa29
-C4_RECORD: 90d5bfeeee7f90f891a1b9e6b2ed0960409f2936
-C5_RECORD: e4b660c257f00dba0c172c2ff2bfd2cfa8aa7fb8
-COMMIT: 18e011b770f75f775429936853af24877d6e6d4d (C6 content fix + P0 refresh)
-C7_RECORD: 4aef6f7465b57eb44ea3fe5fb7f46044dd653951 (evidence backfill C6)
-LOCAL_HEAD: 4aef6f7465b57eb44ea3fe5fb7f46044dd653951
-REMOTE_HEAD: 4aef6f7465b57eb44ea3fe5fb7f46044dd653951 refs/heads/master
-CMD: git push origin HEAD:refs/heads/master; git rev-parse HEAD; git ls-remote origin refs/heads/master
-PUSH_C1: dfcbcc6..c0259b8  HEAD -> master (exit 0)
-PUSH_C2: c0259b8..ebd6f41  HEAD -> master (exit 0)
-PUSH_C3: ebd6f41..78c4049  HEAD -> master (exit 0)
-PUSH_C4: 78c4049..90d5bfe  HEAD -> master (exit 0)
-PUSH_C5: 90d5bfe..e4b660c  HEAD -> master (exit 0)
-PUSH_C6: 319cf8e..18e011b  HEAD -> master (exit 0)
-PUSH_C7: 18e011b..4aef6f7  HEAD -> master (exit 0)
-LS_REMOTE: 4aef6f7465b57eb44ea3fe5fb7f46044dd653951	refs/heads/master
-VERIFY: LOCAL_HEAD == REMOTE_HEAD == 4aef6f7 True
-C8: this commit (KB note + sha backfill C7); push then final HEAD=C8, SHA/ls-remote in report
+C6_CONTENT: 18e011b770f75f775429936853af24877d6e6d4d
+C8_RECORD: 067edba95b5b2e4fa52269fe444f8fc006fdcdc1
+C9_RECORD: this commit (final evidence+worklog); push e7a811b..C9; final HEAD=REMOTE_HEAD=C9 (SHA in report)
 RESULT: PASS

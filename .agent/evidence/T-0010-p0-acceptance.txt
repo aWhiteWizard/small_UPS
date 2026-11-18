@@ -8,7 +8,7 @@ BASE: ba16717db86caa3c791e97a6d734501f707aa84f (ticket); delivery base 319cf8ef0
 4 按键/显示：R:944–947（48×25 双行 8 位、5×6mm ≥10 万次、屏上、屏下 L/R/SET、屏右侧 Up/Down）；interface:67–72：PASS
 5 结构：R:951–954（Ø5/Ø8 腰形、M3 顶 D 平面、2×N35 距 x≤30 禁布区 ≥21、接缝/配色）；interface:55–58/83–84/100：PASS
 6 面板布局：interface:64–101 坐标表 + ASCII；USB-C 左侧 −X 不朝本体；最小间距已列：PASS
-7 规模：content 6 files 265 lines；+worklog 7/303（≤8/400）；P0 4 files separate；total 11 files ~365 lines <24/1200：PASS
-8 交付：C1=c0259b8 content；C6=18e011b content fix；C7=4aef6f7 evidence；C8=this KB+sha；push + ls-remote final see report：PASS
+7 规模：content 6 files 265 lines；+worklog/kb 8 files ~330（≤8/400）；P0 4 files separate；total 12 files ~395 lines <24/1200：PASS
+8 交付：C1=c0259b8 content；C6=18e011b content fix；C8=067edba record；HEAD=e7a811b=origin/master（ff-only）；C9=this record + push；final SHA in report：PASS
 NOTE: 0.40" vs 0.56" screen in R §4.3; magnet ≥20mm depends on T-0011 body keep-out x≤30; card-edge/display/USB-C/RS485 models TBD; surface color follows body.
 RESULT: PASS

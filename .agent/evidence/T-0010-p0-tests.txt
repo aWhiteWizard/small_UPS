@@ -2,11 +2,11 @@ KIND: tests
 TASK: T-0010
 AT: 2026-11-18 +08:00
 CMD: PowerShell 7 UTF8 + table/whitespace checks; 2D rect bounds/overlap; z-chain arithmetic; git diff --check
-LINES: requirements=1523 interface=339 architecture=96 module-design=109 README=117
+LINES: requirements=1524 interface=339 architecture=96 module-design=109 README=125
 TABLE: TABLE_BAD=0; TRAILING_WS=0; TABS=0; BOM=0
-LAYOUT: 18 rects incl panel; 0 out-of-bounds; only display-socket projection overlap (front/back separated, allowed); all other non-panel pairs disjoint
+LAYOUT: 19 rects (panel as container); 0 out-of-bounds; only display-window nesting and display/window-socket front-back projection overlaps allowed; all other pairs disjoint
 ZCHAIN: 2.0+0.4+8.0+1.6+5.0+18.0=35.0; socket 12.0–17.0, insertion 5.0, socket tip z=12.0 vs display rear 10.4 (PCB 10.4–12.0 between); block 17.0–27.0, pin insertion 10.0, block-PCB gap 5.0; set screw z=22 in block
 KEYS: 60×120×35 / 55×115×33 / 2×32=64 / 5±1 / Ø4 19.0±0.2 ≥5A / ≥10万次 / N35 / 9.2×3.6 / A/B/GND/+12V / 48×25 / 2×4 / 左侧−X all present
 PLACEHOLDER: T-0010 placeholder=0
-DIFF: C1 7 files 248+/29-; C6 2 files 7+/6-; C8 1 file 12+/1-; git diff --check exit 0
+DIFF: C1 7 files 248+/29-; C6 7 files 53+/39-; C8 6 files 29+/12-; C9 this record; git diff --check exit 0
 RESULT: PASS
