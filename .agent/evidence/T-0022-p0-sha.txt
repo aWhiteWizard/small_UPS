@@ -5,8 +5,10 @@ BASE: 78ac8d14bf2ea6bd563bb7649d63bdcbbf8c8c45（origin/master，重建基线）
 CONTENT_COMMIT: 1d6caeca637ca515e8470b928449cf6ee40c23d2（4 文件/+107/−8）
 EVIDENCE_COMMIT: 8a5eafef30d3cf49300b5595790bdf11a4afb64c（E1，body: Evidence: T-0022）
 TICKET_COMMIT: 565690f77fe5768dd58cfea092597c9fabaf0bde（C1）; e9be0af546453e4174b45bd2c9b0afad5335471f（C2，body: Ticket: T-0022）
+E2_COMMIT: 9eabccb99bb173cb8cda69ee02ffba356a1d90e4（本轮证据提交，body: Evidence: T-0022）
 LS_REMOTE_HEAD: 78ac8d14bf2ea6bd563bb7649d63bdcbbf8c8c45 refs/heads/master（开工实测）
 VERIFY: 1d6caec/8a5eafe/565690f/e9be0af 均为 78ac8d1 祖先（git merge-base --is-ancestor exit 0）
+PUSH_E2: 78ac8d1..9eabccb  HEAD -> master（exit 0）；E2 push 后 local == remote == 9eabccb
 GIT_LOG: e9be0af docs(T-0022): 修正跟踪文件计数并最终收口（C2）; 565690f docs(T-0022): 回填重派交付 SHA 并收口（C1）; 8a5eafe docs(T-0022): 重派复核并记录 P0 证据（E1）; 1d6caec task(T-0022): 复核固件工具链与构建链，补版本校验
 DIFF_CONTENT: 1d6caec^..1d6caec = 4 files changed, 107 insertions(+), 8 deletions(-)
 DIFF_SESSION: 78ac8d1..HEAD 仅 .agent/evidence/T-0022-* + .agent/worklogs/T-0022.md + .agent/kb/notes.md
