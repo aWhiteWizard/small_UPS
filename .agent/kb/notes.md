@@ -172,6 +172,8 @@ KB-TAGS: baseSha, diff, size, worktree, delivery
 
 worktree 的 baseSha 必须是本单真实开工点（`git merge --ff-only origin/master` 后的 HEAD），并与审查上界配套计算 diff；从上游继承的 T-0013/T-0015 变更、以及本单之后叠加的 T-0006/T-0021 提交都不应计入本单规模。引擎按旧 baseSha 判超限时，先核对 ff 记录与 `git merge-base`，用真实区间留痕后再交付，不要为凑规模拆单或把上游文件重做成自己的 diff。
 
+补充（T-0022，2026-11-18）：拆单子单也会继承母单旧 baseSha。T-0022 的 baseSha=ba16717，但母单 T-0002 已取消，其内容提交 a312f57/d3353ac 已在 origin/master；开工 `git merge --ff-only origin/master` 后真实基线为 f9af342，旧 base 区间 `ba16717..f9af342` 为 87 文件/4856 insertions/215 deletions（含 72 个上游提交），而本单真实区间 `f9af342..HEAD` 仅 3 个固件文件/约 105 行（另加本 KB 条）。拆单后先对账 origin/master，不要按旧 baseSha 重做母单文件。
+
 ## 60mm 面宽上 0.56" 双行数码管与屏侧上/下键不可兼得
 
 KB-TYPE: hardware

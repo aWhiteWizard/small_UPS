@@ -1,8 +1,10 @@
-# firmware/ — STM32 固件与开发环境（T-0002）
+# firmware/ — STM32 固件与开发环境（T-0022，拆自 T-0002）
 
 本目录已落地 STM32 固件开发环境：交叉编译工具链、CMSIS + HAL、CMake/Ninja 构建、
 OpenOCD 烧写调试链路、串口工具，以及一个可编译出 `.elf/.bin/.hex` 的最小点灯工程。
 工具链与 SDK 只落在本机 `<repo>/.tools/`，**不入库**（见根 `.gitignore` 的 `.tools/`）。
+
+> 拆单归属（2026-11-18）：T-0022 负责工具链与构建（§1–§4、§7）；T-0023 负责 HAL/占位 MCU；T-0024 负责烧写/串口与从零复现。现有实现由母单 T-0002 落地，T-0022 复核并补版本校验脚本。
 
 ## 1. 状态与范围
 
@@ -33,6 +35,7 @@ OpenOCD 烧写调试链路、串口工具，以及一个可编译出 `.elf/.bin/
 - `arm-none-eabi-g++/gdb/objcopy/size/readelf/nm` 随同一 GCC 包提供，无需单独安装。
 - OpenOCD 脚本目录为 `.tools\openocd\openocd\scripts\`（xPack 包布局），`flash.ps1` 已自动带 `-s`。
 - 本机实测版本行：`arm-none-eabi-gcc.exe (xPack GNU Arm Embedded GCC x86_64) 15.2.1 20251203`。
+- 一键逐项校验（只读，不下载、不连硬件）：`powershell -ExecutionPolicy Bypass -File firmware/tools/check-env.ps1`，exit 0 表示上表固定版本全部命中。
 
 ## 3. 从零复现（命令原文）
 
@@ -76,7 +79,9 @@ firmware/
 实测输出（2026-11-18，本机）：
 
 ```text
-arm-none-eabi-gcc.exe (xPack GNU Arm Embedded GCC x86_64) 15.2.1 20251203
+TOOLCHAIN: arm-none-eabi-gcc.exe (xPack GNU Arm Embedded GCC x86_64) 15.2.1 20251203
+CMAKE:     cmake version 3.31.9
+NINJA:     1.13.2
 ...
 [8/8] Linking C executable psu_minimal.elf
 Memory region         Used Size  Region Size  %age Used
@@ -119,7 +124,7 @@ powershell -ExecutionPolicy Bypass -File firmware/flash.ps1
 
 ## 6. 占位型号与切换点（型号待定）
 
-需求文档尚未冻结 MCU 型号，本单用 **STM32G071KB** 占位。换正式型号时按下面 4 处切：
+需求文档尚未冻结 MCU 型号，当前工程用 **STM32G071KB** 占位。换正式型号时按下面 4 处切：
 
 1. **链接脚本**：`firmware/linker/STM32G071KBUx_FLASH.ld` 的 `MEMORY`
    （FLASH 起始/容量、RAM 起始/容量）。换封装不改容量时也需要改文件名与 `CMakeLists.txt` 引用。
@@ -135,15 +140,15 @@ powershell -ExecutionPolicy Bypass -File firmware/flash.ps1
 
 ```text
 git check-ignore -v .tools\arm-gcc\bin\arm-none-eabi-gcc.exe
-  .gitignore:13:.tools/   ".tools\\arm-gcc\\bin\\arm-none-eabi-gcc.exe"
+  .gitignore:16:.tools/   ".tools\\arm-gcc\\bin\\arm-none-eabi-gcc.exe"
 git check-ignore -v firmware\build\psu_minimal.elf
-  .gitignore:11:build/    "firmware\\build\\psu_minimal.elf"
+  .gitignore:14:build/    "firmware\\build\\psu_minimal.elf"
 ```
 
-- `.tools/` 实测约 1,945 MB、`firmware/build/` 约 5.1 MB，均在 git 外；跟踪文件 140 个，
+- `.tools/` 实测约 1,945 MB、`firmware/build/` 约 5.1 MB，均在 git 外；跟踪文件 167 个，
   仓库 pack 约 246 KiB。
 - 入库只有配置/源码/文档；`git ls-files` 中无 `.exe/.a/.o/.elf/.bin/.hex`。
-- 完整证据见 `.agent/evidence/T-0002-p0-tests.txt` 与 `-p0-g0.txt`。
+- 完整证据见 `.agent/evidence/T-0022-p0-tests.txt` 与 `-p0-g0.txt`（母单历史证据 T-0002-* 仅追溯）。
 
 ## 8. 已知限制
 

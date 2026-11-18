@@ -1,7 +1,7 @@
 #requires -Version 5.1
 <#
 .SYNOPSIS
-  Build the T-0002 minimal firmware (run firmware/tools/bootstrap.ps1 first).
+  Build the minimal firmware (T-0022; inherited from T-0002). Run bootstrap first.
 .EXAMPLE
   powershell -ExecutionPolicy Bypass -File firmware/build.ps1
   powershell -ExecutionPolicy Bypass -File firmware/build.ps1 -Clean
@@ -23,6 +23,10 @@ foreach ($exe in @(
 }
 
 $env:PATH = "$tools\arm-gcc\bin;$tools\cmake\bin;$tools\ninja;$env:PATH"
+
+Write-Output ("TOOLCHAIN: " + (& arm-none-eabi-gcc --version | Select-Object -First 1))
+Write-Output ("CMAKE:     " + (& cmake --version | Select-Object -First 1))
+Write-Output ("NINJA:     " + (& ninja --version))
 
 if ($Clean -and (Test-Path $build)) { Remove-Item -Recurse -Force $build }
 
