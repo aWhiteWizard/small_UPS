@@ -2,7 +2,7 @@ KIND: tests
 TASK: T-0017
 AT: 2026-11-18 +08:00
 BASE: 339fd2f (origin/master)
-CMD: PowerShell UTF8 自检 + git diff --check + git show --numstat eca9519
+CMD: PowerShell UTF8 自检 + git diff --check + git show --numstat eca9519 + git branch -r --contains eca9519
 FILES: requirements=1607 interface=349 test-plan=181 draft=81 行
 LINEREF: 30/30 PASS（P-15/§3.1.1/§2.6/§1.5；P-09/0x05/IF 0x05；P-08/0x0C；串联浮地；P-10/§2.9；附录F）
 KEY: requirements/interface/test-plan 的 ACTIVE_NATURAL_COOLING_REFS=0、ACTIVE_NO_ESTOP_REFS=0、ACTIVE_OTP_220V_REFS=0；draft 顶部有历史标注，旧句仅作追溯
@@ -10,5 +10,6 @@ HITS: “自然散热/无急停/切整机 220V”仅出现在“作废/旧/草�
 TABLE_BAD=0 BOM_FILES=0 TRAILING_WS=0 TAB_LINES=0
 DIFF_CHECK: exit 0
 SCALE: 历史内容 6 文件/157 行（eca9519: 133+/24−，全 .md）；代码与配置 0/0；P0 4 文件不计
-GIT: merge-base --is-ancestor 017a13b/a2a0303 HEAD = 0；HEAD=origin/master=339fd2f（编辑前）
+GIT: C1=eca95191c1e4155e52b361d54abd9308115ba4a8 在 origin/master（branch -r --contains → origin/master；merge-base exit 0）；D1=22df501=origin/master；D1 后 `git status --porcelain` 空
+FINAL: HEAD=22df501；git diff --check exit 0；工作区 clean
 RESULT: PASS

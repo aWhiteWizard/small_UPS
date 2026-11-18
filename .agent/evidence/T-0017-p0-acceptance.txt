@@ -13,6 +13,6 @@ RERUN: 内容提交 eca9519..017a13b 已在 origin/master；本轮仅复核并�
 5  | 风扇口径：强制风冷定版，废止“自然散热”，对齐 T-0011#9/T-0007#9 | R:346（§2.9）、R:688（§3.5.9）、R:406（P-10）；T:95；D:6/30/32；T-0011-p0-acceptance:17（#9）、T-0007-p0-acceptance:15（#9） | PASS
 6  | 以变更单追加、列第 2 部分故障语义联动、不改历史验收口径 | R:1012（附录 C 追加）、R:1075-1124（附录 F）、R:1094-1099（F.2）、R:1105-1109（F.3）、R:1113-1119（F.4）；T:84-98；eca9519 删除行仅旧安全/风扇表述，无历史阈值改动 | PASS
 7  | 文件规模按文档单口径；证据不计 | 历史内容 6 文件/157 行（eca9519: 133+/24−，全 .md）；代码与配置 0/0；P0 4 文件不计；本轮仅证据/worklog | PASS
-8  | 交付/证据 trailer 与 SHA | a2a0303（Ticket: T-0017）已在 origin/master；本轮 E1（Evidence: T-0017）与 D1（Ticket: T-0017）见 p0-sha 与报告；D1 后工作区 clean | PASS
+8  | 交付/证据 trailer 与 SHA | C1=eca95191c1e4155e52b361d54abd9308115ba4a8（已在 origin/master）；D1=22df501c1dd295b4b118348e96c68a1e722d928e（Ticket: T-0017，已 push，HEAD=origin/master）；E2（Evidence: T-0017）见报告；D1 后 status 空 | PASS
 
 [汇总] 8/8 PASS；旧“无急停/自然散热/二级切整机 220V”仅以“作废/旧/草稿/历史”引文保留。

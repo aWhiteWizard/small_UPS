@@ -6,9 +6,11 @@ BASE_TICKET: ba16717db86caa3c791e97a6d734501f707aa84f
 CLEAN_BASE: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa (origin/master, T-0011 G 后重建)
 LS_REMOTE: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa	refs/heads/master
 PRECHECK: git status --porcelain 空；git diff --check exit 0；HEAD=339fd2f=origin/master
+C1_ON_ORIGIN: git branch -r --contains eca9519 → origin/master；git merge-base --is-ancestor eca9519 origin/master → exit 0
+FINAL_CHECK: D1=22df501；HEAD=origin/master=22df501；git status --porcelain → 空；git diff --check → exit 0
 ANCESTRY: git merge-base --is-ancestor 017a13b HEAD → 0；a2a0303 HEAD → 0
 CONTENT_COMMITS: eca9519 (C1) .. 017a13b (C4)，均已在 origin/master
 RERUN: 重建 worktree 后只刷新 P0 证据/worklog，不改需求口径，不重复内容提交
-CMD: git rev-parse HEAD; git rev-parse origin/master; git ls-remote origin refs/heads/master; git status --porcelain; git diff --check; git merge-base --is-ancestor 017a13b HEAD
-STATUS: 干净基线上无阻断
+CMD: git rev-parse HEAD; git rev-parse origin/master; git ls-remote origin refs/heads/master; git status --porcelain; git diff --check; git branch -r --contains eca9519
+STATUS: 干净基线上无阻断；D1 收口后工作区 clean
 RESULT: PASS

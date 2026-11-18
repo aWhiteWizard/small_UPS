@@ -3,22 +3,27 @@ TASK: T-0017
 AT: 2026-11-18 +08:00
 TICKET_BASE: ba16717db86caa3c791e97a6d734501f707aa84f
 CLEAN_BASE: 339fd2f882ade06eb37dfaf2276bc261b57fe1fa (origin/master)
-CONTENT_COMMITS: eca9519 (C1) .. 017a13b (C4)，均已在 origin/master
-TICKET_COMMIT: a2a0303（body: Ticket: T-0017；已在 origin/master）
-EVIDENCE_COMMIT: f3e53531168bd7b6f02e3f8ec137a12f132bcd86（body: Evidence: T-0017）
-E1_LOCAL_HEAD: f3e53531168bd7b6f02e3f8ec137a12f132bcd86
-E1_REMOTE_HEAD: f3e53531168bd7b6f02e3f8ec137a12f132bcd86
-LS_REMOTE: f3e53531168bd7b6f02e3f8ec137a12f132bcd86	refs/heads/master
+CONTENT_COMMIT: eca95191c1e4155e52b361d54abd9308115ba4a8
+CONTENT_RANGE: eca9519 (C1) .. 017a13b (C4)，均已在 origin/master
+C1_ON_ORIGIN: git branch -r --contains eca9519 → origin/master；git merge-base --is-ancestor eca9519 origin/master → exit 0
+C1_CONTAINS: origin/HEAD -> origin/master
+C1_CONTAINS: origin/master
+PUSH_C1_VERIFY: eca9519 已在 origin/master（branch -r --contains → origin/master；merge-base → exit 0）
+C1_ANCESTOR_OF_HEAD: YES
+TICKET_COMMIT: a2a0303（body: Ticket: T-0017；339fd2f 的祖先）
+E1: f3e53531168bd7b6f02e3f8ec137a12f132bcd86（body: Evidence: T-0017）
+D1: 22df501c1dd295b4b118348e96c68a1e722d928e（body: Ticket: T-0017；已 push）
+PUSH: 339fd2f..f3e5353 HEAD -> master (exit 0)
+PUSH: f3e5353..22df501 HEAD -> master (exit 0)
+LS_REMOTE_HEAD: 22df501c1dd295b4b118348e96c68a1e722d928e	refs/heads/master
+VERIFY: at D1, git rev-parse HEAD == git ls-remote origin refs/heads/master == 22df501
 GIT_LOG:
-f3e5353 docs(T-0017): clean-base 339fd2f 复核并刷新 P0 证据（E1）
-a2a0303 docs(T-0017): 回填 clean-base 交付 SHA 并收口（R1）
-5968021 docs(T-0017): clean-base 复核并刷新 P0 证据（R0）
-25506f8 docs(T-0017): 回填 C6 SHA、修正 P0 行数并收口（C7）
-b38d866 docs(T-0017): 回填 C5 SHA 并收口交付（C6）
-db904c3 docs(T-0017): 重派后刷新 P0 证据并对齐最终树（C5）
-017a13b docs(T-0017): 修正规模数字并定稿记录
-546d7f2 docs(T-0017): 回填 C2 SHA 并定稿记录
-9821196 docs(T-0017): 记录 P0 证据与 worklog，核对 SHA
 eca9519 docs(T-0017): 裁决安全与使用边界（急停/OTP/反灌/浮地/风扇）
-DELIVERY: 本轮交付提交 D1（body: Ticket: T-0017）SHA 见报告；证据不写最终 HEAD 自指。
+017a13b docs(T-0017): 修正规模数字并定稿记录
+a2a0303 docs(T-0017): 回填 clean-base 交付 SHA 并收口（R1）
+f3e5353 docs(T-0017): clean-base 339fd2f 复核并刷新 P0 证据（E1）
+22df501 docs(T-0017): 回填 E1 SHA 并收口（D1）
+EVIDENCE_COMMIT: 本轮证据提交 E2（body: Evidence: T-0017；SHA 见报告）
+DELIVERY: 本轮交付提交 D2（body: Ticket: T-0017）SHA 见报告；证据只记录 C1/D1，不写最终 HEAD 自指。
+NOTE: LS_REMOTE_HEAD/D1 是证据落库前最后一次交付提交；最终 D2 的 HEAD 与 ls-remote 对照见报告。
 RESULT: PASS
