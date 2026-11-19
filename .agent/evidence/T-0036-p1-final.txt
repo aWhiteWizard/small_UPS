@@ -1,0 +1,47 @@
+T-0036 final verification (P1; C3 record commit source)
+AT: 2026-11-19 +08:00（G2 第 1 轮修复）
+--- LOG ---
+$ git log --oneline -4
+be28427 docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
+683db12 task(T-0036): 非受控拔出（带电拔）工况补强——继电器断弧、针长分级、锁存与防误拔
+8566822 docs(T-0034): 记录 T-0034 验证 P0 证据与 worklog
+2d064cb task(T-0034): 需求正文补 TOC 并验证 T-0032 归并未丢失
+--- C1 TRAILER ---
+$ git log -1 --format=%B C1
+task(T-0036): 非受控拔出（带电拔）工况补强——继电器断弧、针长分级、锁存与防误拔
+
+Ticket: T-0036
+--- C2 TRAILER ---
+$ git log -1 --format=%B C2
+docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
+
+Evidence: T-0036
+--- REMOTE ---
+$ git ls-remote origin refs/heads/master
+be284275e88c053fcdf1930d0ac11039df7c74ea	refs/heads/master
+$ git rev-parse HEAD
+be284275e88c053fcdf1930d0ac11039df7c74ea
+--- CLEAN ---
+$ git status --porcelain=v1 -uall
+(no output)
+--- C1 DIFF ---
+$ git show --stat --oneline C1
+683db12 task(T-0036): 非受控拔出（带电拔）工况补强——继电器断弧、针长分级、锁存与防误拔
+ .agent/docs/architecture.md |  43 ++++++--
+ .agent/docs/modules.md      |  16 +--
+ .agent/docs/requirements.md | 241 ++++++++++++++++++++++++++++++++++++++------
+ 3 files changed, 254 insertions(+), 46 deletions(-)
+--- C2 DIFF ---
+$ git show --stat --oneline C2
+be28427 docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
+ .agent/evidence/T-0036-p0-acceptance.txt | 13 +++++++++++
+ .agent/evidence/T-0036-p0-g0.txt         | 11 +++++++++
+ .agent/evidence/T-0036-p0-sha.txt        | 25 +++++++++++++++++++++
+ .agent/evidence/T-0036-p0-tests.txt      | 38 ++++++++++++++++++++++++++++++++
+ .agent/kb/notes.md                       | 13 +++++++++++
+ .agent/worklogs/T-0036.md                | 34 ++++++++++++++++++++++++++++
+ 6 files changed, 134 insertions(+)
+--- ANCESTOR ---
+$ git merge-base --is-ancestor C1 origin/master
+(exit 0)
+NOTE: C3 is the record commit containing this file; final HEAD=C3 and origin/master=C3 after push. This file records the pre-C3 state, so C3 SHA is in the final report.

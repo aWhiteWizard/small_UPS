@@ -8,18 +8,28 @@ PUSH: git push origin HEAD:refs/heads/master -> 8566822..683db12; exit 0
 LS_REMOTE_C1: 683db120c5447d2305de47e43738cd989a726a4d	refs/heads/master
 HEAD_AT_P0: 683db120c5447d2305de47e43738cd989a726a4d
 ORIGIN_MASTER_AT_P0: 683db120c5447d2305de47e43738cd989a726a4d
-EVIDENCE_COMMIT: C2（本文件所在证据提交，body 含 Evidence: T-0036；C2 SHA 见最终报告，避免自指）
+EVIDENCE_COMMIT: be284275e88c053fcdf1930d0ac11039df7c74ea（C2，body 含 Evidence: T-0036）
+C2_PUSHED: YES
+PUSH_C2: git push origin HEAD:refs/heads/master -> 683db12..be28427; exit 0
+LS_REMOTE_C2: be284275e88c053fcdf1930d0ac11039df7c74ea	refs/heads/master
+FINAL_RECORD_COMMIT: C3（本文件所在记录提交，body 含 Evidence: T-0036；C3 SHA 见最终报告，避免自指）
 C1_ANCESTOR_OF_ORIGIN: YES
-WORKTREE_AFTER_C1: clean（`git status --porcelain` 空）；C2 只新增 evidence/worklog/KB
+WORKTREE_AFTER_C1: clean（`git status --porcelain` 空）；C2 只新增 evidence/worklog/KB；C2 后 clean
 RAW_LOG:
-$ git log --oneline -3
+$ git log --oneline -4
+be28427 docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
 683db12 task(T-0036): 非受控拔出（带电拔）工况补强——继电器断弧、针长分级、锁存与防误拔
 8566822 docs(T-0034): 记录 T-0034 验证 P0 证据与 worklog
 2d064cb task(T-0034): 需求正文补 TOC 并验证 T-0032 归并未丢失
-RAW_TRAILER:
+RAW_TRAILER_C1:
 $ git log -1 --format=%B C1
 task(T-0036): 非受控拔出（带电拔）工况补强——继电器断弧、针长分级、锁存与防误拔
 
 Ticket: T-0036
-NOTE: C1 已 push 到 origin/master；C2 为证据提交，push 后须复核 `git ls-remote` = C2、`git status --porcelain` 空，并把 C2 SHA 写入最终报告。
-RESULT: PASS（C1）；C2 待提交
+RAW_TRAILER_C2:
+$ git log -1 --format=%B C2
+docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
+
+Evidence: T-0036
+NOTE: C1/C2 均已 push 到 origin/master；C2 后 `git status --porcelain` 空；C3 为记录提交，push 后最终 HEAD=C3、origin/master=C3、clean 见 P1 `T-0036-p1-final.txt`。
+RESULT: PASS（C1/C2）；C3 记录提交待 push
