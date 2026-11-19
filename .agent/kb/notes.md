@@ -487,3 +487,16 @@ KB-EVIDENCE: `git rev-parse HEAD`=57d43fa=`git ls-remote origin refs/heads/maste
 KB-TAGS: git, delivery, master, fast-forward, worktree
 
 重派把 worktree 重置到 origin/master 后，内容提交 C1（body `Ticket: T-0034`）可直接 push master，不存在旧 base 的非快进问题；C2 证据提交（body `Evidence: T-0034`）再 push 即可。SHA 证据写 C1 的 push/ls-remote/FINAL_HEAD；C2 是 C1 的子提交，自身 SHA 写报告，避免自指。
+
+## T-0036：热替换与热插拔术语收口（输出 OFF 循环不再叫热插拔）
+
+KB-TYPE: method
+KB-EVIDENCE: `.agent/docs/requirements.md:1496`（I.1 热替换循环定义）、`.agent/docs/requirements.md:1838`（M.1 术语表）、`.agent/docs/requirements.md:202`（§2.1.1 针长分级）
+KB-LAYER: 1_application
+KB-TAGS: docs, terminology, hot-swap, hot-replacement, pin-grading
+
+I.1 旧表把“220VAC/12V 保持、输出 OFF、继电器断开”的 500 次循环称为“热插拔循环”，与本项目“热插拔=带电拔插、产品不支持”的定义冲突，也让输出使能状态下的误拔（非受控拔出）失去独立口径。收口规则：
+- 热替换 = 有流程的更换：输出 OFF、RELAY_STATE=0、VOUT_ZERO=1、EN 低、无锁存故障；500 次寿命按“热替换循环”计。
+- 热插拔 = 带电插拔，含输出使能/带载；产品不支持，但必须安全承受误操作。
+- 输出使能状态下的拔出 = 非受控拔出，单独定义/验收（N=20、48V/5A、ΔR≤20% 且 ≤10mΩ/针），不得写成“热插拔寿命”。
+- 正常拔出也会置 SHORT_PIN_LOST；测试定义要写“读码+CLEAR 后无残留”，不能要求插入后从未出现 0x09。

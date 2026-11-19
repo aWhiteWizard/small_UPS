@@ -1,0 +1,38 @@
+KIND: tests
+TASK: T-0036
+AT: 2026-11-19 +08:00（G2 第 1 轮修复）
+CMD: git show --stat C1; git diff --stat 8566822..C1; git log -1 --format=%B C1; git ls-remote; [IO.File]::ReadAllLines(UTF8) 锚点/表格/编码校验; git diff --check
+--- C1 ---
+C1=683db120c5447d2305de47e43738cd989a726a4d
+$ git show --stat --oneline C1
+683db12 task(T-0036): 非受控拔出（带电拔）工况补强——继电器断弧、针长分级、锁存与防误拔
+ .agent/docs/architecture.md |  43 ++++++--
+ .agent/docs/modules.md      |  16 +--
+ .agent/docs/requirements.md | 241 ++++++++++++++++++++++++++++++++++++++------
+ 3 files changed, 254 insertions(+), 46 deletions(-)
+$ git log -1 --format=%B C1
+task(T-0036): 非受控拔出（带电拔）工况补强——继电器断弧、针长分级、锁存与防误拔
+
+Ticket: T-0036
+--- PUSH ---
+$ git push origin HEAD:refs/heads/master
+8566822..683db12  HEAD -> master（exit 0）
+$ git ls-remote origin refs/heads/master
+683db120c5447d2305de47e43738cd989a726a4d	refs/heads/master
+--- WORKTREE AFTER C1 ---
+$ git status --porcelain=v1 -uall
+(no output; clean)
+--- STRUCTURE (C1 tree) ---
+requirements HEADINGS=168 LINKS=47 DUP=0 BADLINKS=0 TABLES=54 BADROWS=0 BOM=False WS=0 TAB=0 CONFLICT=0
+architecture HEADINGS=58 LINKS=0 DUP=0 BADLINKS=0 TABLES=27 BADROWS=0 BOM=False WS=0 TAB=0 CONFLICT=0
+modules HEADINGS=22 LINKS=0 DUP=0 BADLINKS=0 TABLES=16 BADROWS=0 BOM=False WS=0 TAB=0 CONFLICT=0
+--- CONTENT ---
+M.1–M.10 headings=True; §3.3.8=True; architecture §9.5=True; modules T-0036 row=True
+N=20 => 4; ≤20% 且 ≤10mΩ/针 => 3; t3−t0 ≤50ms => 3; ≥100 次 @48V/5A => 2; SMBJ58A => 2
+d=5±1mm => 1; s=2.0±0.1 => 1; ≥50N => 9; 3–20N => 8; 禁止带电插拔 => 3
+非易失拔出锁存 => 9; 两副本 => 9; 校准区 => 11; 设定区 => 11
+--- DIFF CHECK ---
+$ git diff --check 8566822..C1
+(no output) [exit 0]
+SCOPE: 内容 3 文件 / +254−46；KB/evidence/worklog 在 C2，不混入 content diff
+RESULT: PASS

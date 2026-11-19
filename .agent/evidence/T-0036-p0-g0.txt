@@ -1,0 +1,11 @@
+KIND: g0
+TASK: T-0036
+AT: 2026-11-19 +08:00（G2 第 1 轮修复）
+BRANCH: task/T-0036 @ D:\workspace\wt\small-ups\T-0036
+BASE: 8566822cc796a477bc894af9a396e75f11f582d3
+CONTENT_COMMIT: 683db120c5447d2305de47e43738cd989a726a4d（C1，body 含 Ticket: T-0036）
+CMD: git rev-parse HEAD; Test-Path .agent/gate.json; git diff --stat 8566822..C1; git show --stat C1; git diff --check 8566822..C1; git status --porcelain（C1 后）
+STATUS: gate.json 未配置（G0 按“未配置门禁”PASS，ran=0）；C1 仅改 3 个 .agent/docs/*.md；代码/配置 0 文件；C1 后工作区 clean
+DOC-CHECK: requirements 1979 行/168 标题/47 链接/54 表；architecture 667 行/58 标题/27 表；modules 186 行/22 标题/16 表；BADLINKS=0/BADROWS=0；BOM=False/WS=0/TAB=0/CONFLICT=0；git diff --check 8566822..C1 exit 0
+SCOPE: 内容文档 3 文件 / 300 changed lines（+254/−46）；代码与配置 0 文件 / 0 行；证据/worklog/KB 在 C2 证据提交，不计内容阈值
+RESULT: PASS
