@@ -12,11 +12,16 @@ EVIDENCE_COMMIT: be284275e88c053fcdf1930d0ac11039df7c74ea（C2，body 含 Eviden
 C2_PUSHED: YES
 PUSH_C2: git push origin HEAD:refs/heads/master -> 683db12..be28427; exit 0
 LS_REMOTE_C2: be284275e88c053fcdf1930d0ac11039df7c74ea	refs/heads/master
-FINAL_RECORD_COMMIT: C3（本文件所在记录提交，body 含 Evidence: T-0036；C3 SHA 见最终报告，避免自指）
+C3_RECORD_COMMIT: 8509ec60fd328f9ca3d6210e80cccdf1fe03cb22（C3，body 含 Evidence: T-0036，已 push）
+C3_PUSHED: YES
+PUSH_C3: git push origin HEAD:refs/heads/master -> be28427..8509ec6; exit 0
+LS_REMOTE_C3: 8509ec60fd328f9ca3d6210e80cccdf1fe03cb22	refs/heads/master
+FINAL_RECORD_COMMIT: C4（本文件所在记录提交，body 含 Evidence: T-0036；C4 SHA 见最终报告，避免自指）
 C1_ANCESTOR_OF_ORIGIN: YES
-WORKTREE_AFTER_C1: clean（`git status --porcelain` 空）；C2 只新增 evidence/worklog/KB；C2 后 clean
+WORKTREE_AFTER_C3: clean（`git status --porcelain` 空）；C1 后 / C2 后 / C3 后均 clean
 RAW_LOG:
-$ git log --oneline -4
+$ git log --oneline -5
+8509ec6 docs(T-0036): 收口 C1/C2 SHA 与最终 clean 证据
 be28427 docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
 683db12 task(T-0036): 非受控拔出（带电拔）工况补强——继电器断弧、针长分级、锁存与防误拔
 8566822 docs(T-0034): 记录 T-0034 验证 P0 证据与 worklog
@@ -31,5 +36,10 @@ $ git log -1 --format=%B C2
 docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
 
 Evidence: T-0036
-NOTE: C1/C2 均已 push 到 origin/master；C2 后 `git status --porcelain` 空；C3 为记录提交，push 后最终 HEAD=C3、origin/master=C3、clean 见 P1 `T-0036-p1-final.txt`。
-RESULT: PASS（C1/C2）；C3 记录提交待 push
+RAW_TRAILER_C3:
+$ git log -1 --format=%B C3
+docs(T-0036): 收口 C1/C2 SHA 与最终 clean 证据
+
+Evidence: T-0036
+NOTE: C1/C2/C3 均已 push 到 origin/master；C3 后 `git status --porcelain` 空；C4 为记录提交，push 后最终 HEAD=C4、origin/master=C4、clean 见 P1 `T-0036-p1-final.txt` 与最终报告。
+RESULT: PASS（C1/C2/C3）；C4 记录提交待 push

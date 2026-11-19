@@ -1,7 +1,8 @@
-T-0036 final verification (P1; C3 record commit source)
+T-0036 final verification (P1; C4 record commit source)
 AT: 2026-11-19 +08:00（G2 第 1 轮修复）
 --- LOG ---
-$ git log --oneline -4
+$ git log --oneline -5
+8509ec6 docs(T-0036): 收口 C1/C2 SHA 与最终 clean 证据
 be28427 docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
 683db12 task(T-0036): 非受控拔出（带电拔）工况补强——继电器断弧、针长分级、锁存与防误拔
 8566822 docs(T-0034): 记录 T-0034 验证 P0 证据与 worklog
@@ -16,11 +17,16 @@ $ git log -1 --format=%B C2
 docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
 
 Evidence: T-0036
+--- C3 TRAILER ---
+$ git log -1 --format=%B C3
+docs(T-0036): 收口 C1/C2 SHA 与最终 clean 证据
+
+Evidence: T-0036
 --- REMOTE ---
 $ git ls-remote origin refs/heads/master
-be284275e88c053fcdf1930d0ac11039df7c74ea	refs/heads/master
+8509ec60fd328f9ca3d6210e80cccdf1fe03cb22	refs/heads/master
 $ git rev-parse HEAD
-be284275e88c053fcdf1930d0ac11039df7c74ea
+8509ec60fd328f9ca3d6210e80cccdf1fe03cb22
 --- CLEAN ---
 $ git status --porcelain=v1 -uall
 (no output)
@@ -41,7 +47,17 @@ be28427 docs(T-0036): 记录 G2 第 1 轮 P0 证据与 worklog
  .agent/kb/notes.md                       | 13 +++++++++++
  .agent/worklogs/T-0036.md                | 34 ++++++++++++++++++++++++++++
  6 files changed, 134 insertions(+)
+--- C3 DIFF ---
+$ git show --stat --oneline C3
+8509ec6 docs(T-0036): 收口 C1/C2 SHA 与最终 clean 证据
+ .agent/evidence/T-0036-p0-acceptance.txt |  6 ++--
+ .agent/evidence/T-0036-p0-sha.txt        | 22 +++++++++++----
+ .agent/evidence/T-0036-p1-final.txt      | 47 ++++++++++++++++++++++++++++++++
+ .agent/worklogs/T-0036.md                | 19 +++++++------
+ 4 files changed, 77 insertions(+), 17 deletions(-)
 --- ANCESTOR ---
 $ git merge-base --is-ancestor C1 origin/master
 (exit 0)
-NOTE: C3 is the record commit containing this file; final HEAD=C3 and origin/master=C3 after push. This file records the pre-C3 state, so C3 SHA is in the final report.
+$ git merge-base --is-ancestor C2 origin/master
+(exit 0)
+NOTE: C4 is the record commit containing this file; final HEAD=C4 and origin/master=C4 after push. This file records the pre-C4 state, so C4 SHA is in the final report.
