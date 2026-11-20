@@ -500,3 +500,22 @@ I.1 旧表把“220VAC/12V 保持、输出 OFF、继电器断开”的 500 次�
 - 热插拔 = 带电插拔，含输出使能/带载；产品不支持，但必须安全承受误操作。
 - 输出使能状态下的拔出 = 非受控拔出，单独定义/验收（N=20、48V/5A、ΔR≤20% 且 ≤10mΩ/针），不得写成“热插拔寿命”。
 - 正常拔出也会置 SHORT_PIN_LOST；测试定义要写“读码+CLEAR 后无残留”，不能要求插入后从未出现 0x09。
+
+## PFC 母线 <320V 保护与待机 311V 的冲突要按 PFC_EN 门控
+
+KB-TYPE: hardware
+KB-EVIDENCE: .agent/docs/requirements.md:721（<320V 报 PFC_FAULT）与 .agent/docs/requirements.md:783（待机 PFC 停振、母线约 311V）；.agent/docs/architecture.md:878
+KB-LAYER: 3_hardware
+KB-TAGS: pfc, standby, uv, protection, conflict, t-0037
+KB-CONFLICT: R §3.5.3 vs R §3.5.11
+
+待机时 PFC 停振，400V 母线跌到整流峰值约 311V，低于 320V 的 PFC_FAULT 阈值。若照字面判 UV，每次待机都会锁存 PFC_FAULT，无法重新使能。架构必须写明：<320V 只在 PFC_EN=1 且软启动完成后判；PFC_EN=0/待机屏蔽 UV，并把这个门控标成待 owner 确认。
+
+## 文档 merge 先 dry-run：有 CONFLICT 时不要 --write
+
+KB-TYPE: method
+KB-EVIDENCE: `node "D:\workspace\ProjectSuperAgent\lib\docs-paths.js" merge --project "D:\workspace\wt\small-ups\T-0037"` → requirements 12 条 CONFLICT、architecture/modules 无 MERGED；未 --write
+KB-LAYER: 1_application
+KB-TAGS: docs, merge, conflict, worktree, t-0037
+
+`docs-paths.js merge --write` 只追加不同 hash 的新章节，遇到同标题不同内容会报 CONFLICT 但不覆盖；如果直接 --write，可能把历史 `.agent/requirements.md` 的旧章节追加进现行需求。正确做法是先 dry-run，看 CONFLICT 数量与 MERGED 章节，确认只追加需要的章节再 --write；本单只改 `.agent/docs/architecture.md`，因此未执行写入。
