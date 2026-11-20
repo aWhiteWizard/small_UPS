@@ -1,0 +1,39 @@
+KIND: g0
+TASK: T-0040
+DATE: 2026-11-21 (UTC+8)
+WORKTREE: D:\workspace\wt\small-ups\T-0040
+BASE_HEAD: 44b699bd192e443e9b88f25c8ad3dbe8d256921a
+CONTENT_COMMIT: a43db5e62bb018b9327debe8b4ad179786e3b802
+G0_STATUS: PASS
+P0_GATES:
+1) base / remote before C1
+$ git rev-parse HEAD -> 44b699bd192e443e9b88f25c8ad3dbe8d256921a
+$ git ls-remote origin refs/heads/master -> 44b699bd192e443e9b88f25c8ad3dbe8d256921a
+=> fast-forward base; no merge/rebase/ff pulled by worker
+2) content diff
+$ git diff --name-only 44b699b..HEAD -- .agent/docs
+.agent/docs/architecture.md
+$ git diff --stat 44b699b..HEAD -- .agent/docs
+ .agent/docs/architecture.md | 190 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 190 insertions(+)
+3) whitespace
+$ git diff --check 44b699b..HEAD
+exit 0
+4) requirements body unchanged
+BASE:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+HEAD:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+WORK:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+5) encoding / tables
+BOM=True (preserved); TABS=0; TRAILING=0
+TABLES=53; BAD_ROWS=0
+6) scope
+no .c/.h/.py/.ps1/.json/.yaml/.toml/KiCad files changed
+7) pushes
+a) C1: 44b699b..a09e6cd  HEAD -> master  (PUSH_EXIT=0)
+b) C3: a09e6cd..5bb31ef  HEAD -> master  (PUSH_EXIT=0)
+c) C3b: 5bb31ef..a43db5e HEAD -> master  (PUSH_EXIT=0)
+LS_REMOTE: a43db5e62bb018b9327debe8b4ad179786e3b802 refs/heads/master
+NOTES:
+- C1=架构④ R1 返修；C3=T-0036 短针 s=2.0 对齐；C3b=恢复 BOM；C4=本证据提交。
+- 第 1 轮旧 C1=469e86c / C2=0957970 保留在 task/T-0040-bak-T-0040-20261120-204200。
+- worklog/evidence 被 .gitignore 忽略，C4 用 git add -f 提交。

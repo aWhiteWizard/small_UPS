@@ -546,3 +546,30 @@ KB-LAYER: 1_application
 KB-TAGS: worktree,g0,firmware,docs-only,junction
 
 新建/重置 worktree 不带 `.tools`（gitignored）。纯文档单不跑固件也会被 G0 的 check-env/build 卡住；不要为文档单去 bootstrap/下载工具链，按同机已有 worktree 的 `.tools` 建 junction（本单 -> `T-0002\.tools`），再跑 check-env/build 均 exit 0。证据里注明 junction 是 ignored 环境准备、不计交付 diff。
+
+## 单板化不能只改架构：R §3.5.2 的“两块 PCB”必须走需求变更单
+
+KB-TYPE: method
+KB-EVIDENCE: .agent/docs/architecture.md:557-568（T-0040 差异收口）；.agent/docs/requirements.md:722-726（R §3.5.2 两块 PCB + 64P 板对板）；.agent/docs/architecture.md:394（§6.4 单板结论）
+KB-LAYER: 1_application
+KB-TAGS: board-level, single-board, requirements-change, t-0040
+
+owner 已定“单板 4 层”时，架构可以按单板展开，但不能静默改 R 正文；必须在架构里列差异、在报告写 DEVIATION/RISK，并开需求变更单删除“功率板+接口板/64P 板对板/拔板对板”旧句。否则审查会拿 R §3.5.2 判架构与需求冲突。
+
+## 一次/二次共用一块铝散热器会桥接加强绝缘
+
+KB-TYPE: hardware
+KB-EVIDENCE: .agent/docs/requirements.md:767-771（R §3.5.8 共用独立铝散热器）；.agent/docs/architecture.md:520（T-0040 要求分体或加强绝缘垫）
+KB-LAYER: 3_hardware
+KB-TAGS: heatsink, isolation, creepage, safety, t-0040
+
+PFC/LLC 原边 MOS 与 SR/buck 同在单板上时，若共用一个未分体的导电散热器，一次—二次加强绝缘被散热器短路；必须一次/二次散热器分体（≥6mm 间隙/≥8mm 爬电）或器件对散热器加满足加强绝缘的绝缘垫并单点接 PE，且复算 Rth 仍 ≤1.2℃/W。
+
+## “金手指前伸 10mm”与“定位销 18mm”是两条前伸，不能互相替代
+
+KB-TYPE: hardware
+KB-EVIDENCE: .agent/docs/architecture.md:433-437（T-0040 主板前缘/定位销表）；.agent/docs/architecture.md:541-542（短针 s=2.0/插入顺序）；.agent/docs/requirements.md:999-1004（R §4.4.2 插入 5±1/短针擦拭 ≥2）；.agent/docs/requirements.md:248-253（R §2.1.4 长针→功率→短针）
+KB-LAYER: 3_hardware
+KB-TAGS: card-edge, locating-pin, insertion, short-pin, t-0040
+
+金手指前伸 10mm（插入 5、外露 5）与定位销前伸 15–18mm（取 18）是两条不同 x/y 列的前伸；销先入 8mm，短针按 T-0036 s=2.0mm（长 12.0/功率 10.0/短 8.0）且擦拭 ≥2mm，才能保持“长针组→功率针→短针”的顺序。结构图必须分别标 10/5/18，不能把 10 当销长，也不能把 18 当金手指前伸。
