@@ -28,6 +28,7 @@ PASS R:A22出12V                A22 仍为 +12V 输出
 PASS R:B22继电器                 B22 仍专用于继电器线圈+短针回路
 PASS R:B28/B29备用               B28/B29 保留备用
 PASS R:看板goal作废              看板 goal 旧草案作废
+PASS R:表后裁决                  T-0042 口径裁决（§2.1.2 表后）
 PASS R:峰值窗口                   1.5A/10s 峰值窗口
 PASS R:A21/B21峰值分担            A21/B21 双针并联分担（每针 ≤0.75A）
 PASS A:独立隔离flyback            独立隔离 flyback
