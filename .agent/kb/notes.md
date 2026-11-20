@@ -573,3 +573,13 @@ KB-LAYER: 3_hardware
 KB-TAGS: card-edge, locating-pin, insertion, short-pin, t-0040
 
 金手指前伸 10mm（插入 5、外露 5）与定位销前伸 15–18mm（取 18）是两条不同 x/y 列的前伸；销先入 8mm，短针按 T-0036 s=2.0mm（长 12.0/功率 10.0/短 8.0）且擦拭 ≥2mm，才能保持“长针组→功率针→短针”的顺序。结构图必须分别标 10/5/18，不能把 10 当销长，也不能把 18 当金手指前伸。
+
+## 通用 edit 工具改写带 BOM 的 architecture.md 会丢 BOM
+
+KB-TYPE: system
+KB-EVIDENCE: `git show a43db5e --stat`（T-0040 保留 architecture.md 的 UTF-8 BOM）；T-0046 编辑后 `[IO.File]::ReadAllBytes` 首字节 35,32,229（无 BOM），用 `UTF8Encoding($true)` 回写后为 239,187,191
+KB-LAYER: 2_system
+KB-TAGS: utf8-bom, architecture, edit-tool, t-0046, t-0040
+
+`.agent/docs/architecture.md` 约定保留 UTF-8 BOM（EF BB BF，T-0040 提交 a43db5e）。用通用 edit 工具改写该文件会整体重写为无 BOM，文件内容仍正确但破坏 BOM 约定、也可能影响按 BOM 识别的审查脚本。改完必须用 `[IO.File]::ReadAllBytes` 检查前 3 字节；若丢失，用 `[IO.File]::WriteAllText($p,$t,[Text.UTF8Encoding]::new($true))` 回写恢复，并复查 `bom=239,187,191`。
+
