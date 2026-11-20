@@ -1,0 +1,20 @@
+KIND: g0
+TICKET: T-0042
+BASE_SHA: a0d208dcd3ba4cecd8155d4bef84cea8f8928a37
+HEAD_AT_START: a0d208dcd3ba4cecd8155d4bef84cea8f8928a37
+BRANCH: task/T-0042
+WORKTREE: D:\workspace\wt\small-ups\T-0042
+STATUS_AT_START: clean (git status --porcelain=v1 -uall 空)
+REWORK: G2 R1 FAIL 返修；引擎已把基线与 worktree 重建到 a0d208d（含 T-0036/T-0037），旧成果在 backup 分支 828f141。
+
+G0_RESULT: PASS
+- baseSha 对照：`git rev-parse HEAD` = a0d208d = 看板 T-0042 baseSha；C1 为其直接子提交 00b1205。
+- 工作区：返修开工 `git status --porcelain=v1 -uall` 空；C1 后 clean。
+- 纯文档：改动仅 .agent/docs/*.md，无代码/配置。
+- `git diff --check`：无输出，exit 0。
+- UTF-8/BOM：三份均 UTF-8 无 BOM；行尾空白 0 处。
+- 旧 docs/ 四份：均 7 行摘要页，无历史正文需 merge；node 不在 PATH，未运行 docs-paths.js。
+- 针脚表：`git diff -U0` 无 `| 22 |`/`| 23 |`/`| 28 |`/`| 29 |` 增删行。
+- 文件规模：文档 3 文件 / 141 insertions / 36 deletions；代码与配置 0 文件 / 0 行。
+- 文件行数：requirements 2061、architecture 909、modules 186。
+- 返修落点：requirements 附录 N（看板 goal 旧草案作废、A21/B21 峰值分担、15W 峰值窗口、82%/3W 取严）；architecture §2.7 + §2.5/§2.6/§10.4/§10.11/§11.5/§12.5。

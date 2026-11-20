@@ -519,3 +519,21 @@ KB-LAYER: 1_application
 KB-TAGS: docs, merge, conflict, worktree, t-0037
 
 `docs-paths.js merge --write` 只追加不同 hash 的新章节，遇到同标题不同内容会报 CONFLICT 但不覆盖；如果直接 --write，可能把历史 `.agent/requirements.md` 的旧章节追加进现行需求。正确做法是先 dry-run，看 CONFLICT 数量与 MERGED 章节，确认只追加需要的章节再 --write；本单只改 `.agent/docs/architecture.md`，因此未执行写入。
+
+## 12V 1A/1.5A 与 1.2A ORing 必须写成两级限流
+
+KB-TYPE: hardware
+KB-EVIDENCE: .agent/docs/requirements.md:2005
+KB-LAYER: 3_hardware
+KB-TAGS: 12V,ORing,限流,热插拔,待机
+
+验收同时要求持续 1A、峰值 1.5A/10s 和出口 ORing 1.2A；若把 1.2A 当硬限流，1.5A 峰值无法通过。落文时应写成“1.2A 持续限流 + 1.5A/10s 峰值窗口放行后回落 1.2A”，并把 15W/1.25A 效率点放在 10s 峰值窗口内测量；效率 ≥82% 与损耗 ≤3W 取严（≤3W/≥83.3%），3W 计入 32W 热预算。
+
+## 返修/重派到新基线后先查附录字母与章节号占用
+
+KB-TYPE: system
+KB-EVIDENCE: .agent/docs/requirements.md:1997（附录 N）；.agent/docs/architecture.md:171（§2.7）
+KB-LAYER: 2_system
+KB-TAGS: rework, baseline, appendix, architecture, t-0042
+
+T-0042 重派到 a0d208d 后，T-0036 已占用需求附录 M、T-0037 已占用 architecture §2.6；若直接照旧稿写“附录 M / §2.6”会覆盖他单。返修开工先 grep 目标章节/附录字母占用，再决定新字母/新小节号；旧 worktree 成果可从看板 `worktreeRebuild.oldBranch` 找到，但不要拼接旧 worktree。

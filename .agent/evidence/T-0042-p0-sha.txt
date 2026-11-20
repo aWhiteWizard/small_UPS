@@ -1,0 +1,28 @@
+KIND: sha
+TICKET: T-0042
+BASE_SHA: a0d208dcd3ba4cecd8155d4bef84cea8f8928a37
+CONTENT_COMMIT: 00b12055f0071cf2cf8a28855d0547140570a63c
+EVIDENCE_COMMIT: 见最终报告（本文件为证据提交内容，SHA 不能自指）
+REMOTE_HEAD_AFTER_C1: 00b12055f0071cf2cf8a28855d0547140570a63c
+BRANCH: task/T-0042
+WORKTREE: D:\workspace\wt\small-ups\T-0042
+
+== pre-push local ==
+00b12055f0071cf2cf8a28855d0547140570a63c
+== pre-push remote ==
+a0d208dcd3ba4cecd8155d4bef84cea8f8928a37  refs/heads/master
+== push ==
+To github.com:aWhiteWizard/small_UPS.git
+   a0d208d..00b1205  HEAD -> master
+== push_exit ==
+0
+== post-push ls-remote ==
+00b12055f0071cf2cf8a28855d0547140570a63c  refs/heads/master
+== ancestry ==
+git merge-base --is-ancestor a0d208d 00b1205 → exit 0
+== C1 body 尾 ==
+Ticket: T-0042
+== C1 diff ==
+3 files changed, 141 insertions(+), 36 deletions(-)
+
+注：C1 已 fast-forward push 到 origin/master（a0d208d..00b1205），远端=本地=C1；C2 为证据提交，其 SHA 与最终 push/ls-remote 见最终报告（不能在本文件内自指）。

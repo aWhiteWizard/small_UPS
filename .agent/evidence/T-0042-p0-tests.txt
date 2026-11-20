@@ -1,0 +1,44 @@
+KIND: tests
+TICKET: T-0042
+COMMAND: pwsh -Command "Get-Content .agent/docs/*.md -Raw -Encoding utf8; <Contains checks>"
+SCOPE: 验收 1–6 的字符串/数值落点；针脚表未动；返修 advisory 项的落点
+RESULT: FAIL_COUNT=0
+
+PASS R:12V ±5%                12V±5%
+PASS R:持续1A/峰值1.5A/10s        持续 1A、峰值 1.5A/10s
+PASS R:ORing 1.2A             ORing/eFuse **持续限流 1.2A**
+PASS R:4路并联4A                 4 路并联到 4A
+PASS R:短路保护                   短路保护
+PASS R:热插拔限流                  热插拔浪涌限流
+PASS R:纹波100mVpp              纹波 ≤100mVpp
+PASS R:压降0.30V                ≤0.30V@1A
+PASS R:HV 250–420V            250–420V
+PASS R:不经55V/400V             不经 55V/400V 母线
+PASS R:100Hz ±10–15V          100Hz 纹波（±10–15V）
+PASS R:22µF/450V              22µF/450V
+PASS R:次级地=信号地                12V 次级地=信号地
+PASS R:星型单点汇合                 星型单点汇合
+PASS R:20mΩ / 20mV / 0.02W    20mΩ / 20mV / 0.02W
+PASS R:B28后续变更                B28 并联列为后续变更
+PASS R:待机口径                   本体空载、12V 不带载、不含调试板
+PASS R:15W/82%/3W             反激效率 ≥82%、损耗 ≤3W
+PASS R:32W                    整机 32W
+PASS R:D refs                 D-16/D-17/D-18/D-20
+PASS R:A22出12V                A22 仍为 +12V 输出
+PASS R:B22继电器                 B22 仍专用于继电器线圈+短针回路
+PASS R:B28/B29备用               B28/B29 保留备用
+PASS R:看板goal作废              看板 goal 旧草案作废
+PASS R:峰值窗口                   1.5A/10s 峰值窗口
+PASS R:A21/B21峰值分担            A21/B21 双针并联分担（每针 ≤0.75A）
+PASS A:独立隔离flyback            独立隔离 flyback
+PASS A:HV 250–420V            250–420V
+PASS A:不经55V/400V             不经 55V/400V 母线
+PASS A:22µF/450V              22µF/450V
+PASS A:UVLO 200V/20V          UVLO 200V/20V
+PASS A:SGND                   12V 次级地=信号地（SGND）
+PASS A:星型接地                   星型接地
+PASS A:自举/隔离DC-DC            自举或隔离 DC-DC
+PASS A:单点汇合                   单点汇合
+PASS A:32.0W                  32.0W
+PASS A:D refs                 D-16/D-17/D-18/D-20
+PASS pin-table-rows-unchanged  （git diff -U0 无 |22|/|23|/|28|/|29| 增删行）
