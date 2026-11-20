@@ -7,20 +7,27 @@ CONTENT_SUBJECT: docs(T-0051): 架构⑦-2 固件通信与存储（I2C/寄存器
 CONTENT_TRAILER: Ticket: T-0051
 CONTENT_STAT: 1 file changed, 201 insertions(+), 1 deletion(-)
 CONTENT_DIFF: git diff --numstat 006e9f4..8d2e43e -> 201	1	.agent/docs/architecture.md
+C7_PUSH: git push origin HEAD:refs/heads/master -> 006e9f4..8d2e43e  HEAD -> master (exit 0)
 C8_EVIDENCE: d2c59bb9bdbea6bf53523af2390ffb697c79789e
 C8_PARENT: 8d2e43e650400ac6fdfe726e54192f229d93de3d (C7)
 C8_TRAILER: Evidence: T-0051
 C8_STAT: 6 files changed, 106 insertions(+) (4 P0 + worklog + KB)
 C8_PUSH: git push origin HEAD:refs/heads/master -> 8d2e43e..d2c59bb  HEAD -> master (exit 0)
-LS_REMOTE_AFTER_C8: d2c59bb9bdbea6bf53523af2390ffb697c79789e	refs/heads/master
-FINAL_DIFF_C8: git diff --numstat 006e9f4..d2c59bb -> 7 files: architecture 201/1 + P0 57 + KB 9 + worklog 40 = 307 insertions(+), 1 deletion(-)
-C9_FINAL: see final report (self-referential; cannot embed its own SHA)
-ORIGIN_MASTER: 006e9f4 before C7; 8d2e43e after C7; d2c59bb after C8
-BASE_IS_ANCESTOR_OF_C8: YES (git merge-base --is-ancestor BASE C8 -> exit 0)
-TRACKED_STATUS_AFTER_C8: clean (git status --porcelain=v1 -uall -> empty)
+C9_EVIDENCE: 2caa944c9d40e107f14e9d7a63757d18427e4491
+C9_PARENT: d2c59bb9bdbea6bf53523af2390ffb697c79789e (C8)
+C9_TRAILER: Evidence: T-0051
+C9_STAT: 4 files changed, 24 insertions(+), 14 deletions(-)
+C9_PUSH: git push origin HEAD:refs/heads/master -> d2c59bb..2caa944  HEAD -> master (exit 0)
+LS_REMOTE_AFTER_C9: 2caa944c9d40e107f14e9d7a63757d18427e4491	refs/heads/master
+FINAL_DIFF_C9: git diff --numstat 006e9f4..2caa944 -> 7 files: architecture 201/1 + P0 67 + KB 9 + worklog 40 = 317 insertions(+), 1 deletion(-)
+C10_FINAL: see final report (this file only; C10 is evidence-only and does not change content)
+ORIGIN_MASTER: 006e9f4 before C7; 8d2e43e after C7; d2c59bb after C8; 2caa944 after C9
+BASE_IS_ANCESTOR_OF_C9: YES (git merge-base --is-ancestor BASE C9 -> exit 0)
+TRACKED_STATUS_AFTER_C9: clean (git status --porcelain=v1 -uall -> empty)
 RECOVERY: old C1-C6 archived on task/T-0051-bak-T-0051-20261120-192558=07d098d; engine refreshed base to 006e9f4; only T-0051 files recovered, no merge/rebase
 
-$ git log --oneline 006e9f4..d2c59bb
+$ git log --oneline 006e9f4..2caa944
+2caa944 docs(T-0051): 收口 C7/C8 与最终 clean 证据
 d2c59bb docs(T-0051): 记录 G2 R1 返修 P0 证据、worklog 与知识库
 8d2e43e docs(T-0051): 架构⑦-2 固件通信与存储（I2C/寄存器/心跳/Bootloader/EEPROM）
 
@@ -34,5 +41,10 @@ docs(T-0051): 记录 G2 R1 返修 P0 证据、worklog 与知识库
 
 Evidence: T-0051
 
+$ git log -1 --format=%B 2caa944
+docs(T-0051): 收口 C7/C8 与最终 clean 证据
+
+Evidence: T-0051
+
 $ git ls-remote origin refs/heads/master
-d2c59bb9bdbea6bf53523af2390ffb697c79789e	refs/heads/master
+2caa944c9d40e107f14e9d7a63757d18427e4491	refs/heads/master
