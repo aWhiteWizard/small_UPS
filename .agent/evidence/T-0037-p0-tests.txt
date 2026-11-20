@@ -3,11 +3,11 @@ TASK: T-0037
 AT: 2026-11-20 +08:00
 BRANCH: task/T-0037 @ D:\workspace\wt\small-ups\T-0037
 BASE: 096c83bebc9f7a6f44c342dd82ab6a020ea525a3
-HEAD: 5e32b97857d6d6ca19d56f05e540631f66478bdd（C1）
+HEAD: 33d9f4c86539e135b68d84f781d3569da8a387fe（C3）
 CMD: Markdown 表列/围栏/标题校验；算术校验；git diff 096c83b..HEAD --check；git diff --numstat
 TOTAL_LINES=886 H2=12 H3=52 FENCES=6 TABLES=36 TABLE_MISMATCH=0
 TOKENS: T-0037=17, N0=1, N7=1, 2.6=1, 3.1=1, 3.2=1, 4.1=1, 4.2=1, 12.5=1, 待 owner 确认=6, REMOVAL_LATCH=10, 附录 M=22
-ARITH: PIN_SUM=64, 12V_SUM=0.82A, LOSS_SUM=29.0W, EFF=89.2%, PFC_CURRENT=0.65A, LLC_POWER=247.5W
-DIFF: 230 insertions / 11 deletions / 1 file（architecture，C1）；KB 19 insertions（C2）
-CHECK: git diff --check exit 0；无表列错位；代码围栏成对；T-0036 针长分级/断弧/TVS/REMOVAL_LATCH 已覆盖
+ARITH: PIN_SUM=20+20+9*2+6=64, 12V_SUM=0.82A, LOSS_SUM=29.0W, EFF=89.2%, N0_INPUT=269W/240W, PFC_CURRENT=0.65A, LLC_POWER=247.5W
+DIFF: 230 insertions / 11 deletions / 1 file（architecture）；KB 19 insertions（C2）
+CHECK: git diff --check exit 0；无表列错位；代码围栏成对；N0 269W、§2.1 急停来源、64 针九组 2 已复核
 RESULT: PASS

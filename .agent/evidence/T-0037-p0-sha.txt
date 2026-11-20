@@ -3,12 +3,16 @@ TASK: T-0037
 AT: 2026-11-20 +08:00
 BRANCH: task/T-0037
 BASE: 096c83bebc9f7a6f44c342dd82ab6a020ea525a3
-C1: 5e32b97857d6d6ca19d56f05e540631f66478bdd（Ticket: T-0037）
-C2: 证据提交（本条；SHA 见最终报告 `git log --oneline`）
-PUSH: 096c83b..5e32b97  HEAD -> master（git push origin HEAD:master，exit 0）
-REMOTE: 5e32b97857d6d6ca19d56f05e540631f66478bdd refs/heads/master
+C1: 5e32b97857d6d6ca19d56f05e540631f66478bdd（Ticket，首轮）
+C2: ad0db33dc97b41f469d0feaa276938ca24a17993（Evidence，首轮）
+C3: 33d9f4c86539e135b68d84f781d3569da8a387fe（Ticket，本轮修复）
+C4: 证据提交（本条；SHA 见最终报告 `git log --oneline`）
+PUSH1: 096c83b..5e32b97  HEAD -> master
+PUSH2: 5e32b97..ad0db33  HEAD -> master
+PUSH3: ad0db33..33d9f4c  HEAD -> master
+REMOTE: 33d9f4c86539e135b68d84f781d3569da8a387fe refs/heads/master
 CMD: git rev-parse HEAD; git push origin HEAD:master; git ls-remote origin refs/heads/master; git status --porcelain=v1 -uall
-STATUS-OUT: 空（C1 后 clean）
-LOG-C1: 5e32b97 docs(T-0037): p2 架构① 系统框图/供电链/模块边界与接口责任
-VERIFY: 本地 HEAD = 远端 refs/heads/master = 5e32b97（MATCH）
+STATUS-OUT: 空（C3 后 clean）
+LOG-C3: 33d9f4c docs(T-0037): 修正 N0 输入功率、急停来源标注与 64 针求和
+VERIFY: 本地 HEAD = 远端 refs/heads/master = 33d9f4c（MATCH）
 RESULT: PASS

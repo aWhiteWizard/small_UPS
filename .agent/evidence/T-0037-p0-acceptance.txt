@@ -3,15 +3,15 @@ TASK: T-0037
 AT: 2026-11-20 +08:00
 BRANCH: task/T-0037
 BASE: 096c83bebc9f7a6f44c342dd82ab6a020ea525a3
-HEAD-C1: 5e32b97857d6d6ca19d56f05e540631f66478bdd
-WRITE: .agent/docs/architecture.md:文件头、§1.1、§1.3、§2.5、§2.6、§3.1、§3.2、§4 汇总行、§4.1、§4.2、§12.1–§12.5
-1 系统框图 PASS：§1.1 链路市电→保险/NTC/MOV/EMI→整流→PFC 400V→LLC 55V→buck 0–48V→金手指→负载；§1.3 N0–N7 标电压/电流/功率/OVP/OCP/OTP/短路/反灌
+HEAD-C3: 33d9f4c86539e135b68d84f781d3569da8a387fe
+WRITE: .agent/docs/architecture.md:文件头、§1.1、§1.3、§2.1（急停）、§2.5、§2.6、§3.1、§3.2、§4 汇总行、§4.1、§4.2、§12.1–§12.5
+1 系统框图 PASS：§1.1 链路市电→保险/NTC/MOV/EMI→整流→PFC 400V→LLC 55V→buck 0–48V→金手指→负载；§1.3 N0 约 269W 输入/240W 输出（89.2%）、N1–N7 标电压/电流/功率/OVP/OCP/OTP/短路/反灌
 2 供电链 PASS：§2.5 修正 A22/B22 方向；§2.6 供电树+分路预算表（12V/5V/3.3V/REF/PWM/驱动/风扇/调试板，来源/负载/余量/掉电）+常开/受控边界
 3 模块边界 PASS：§3.1 本体 8 模块、§3.2 调试板 6 模块，均含输入/输出/接口/责任边界/失败模式，沿用 modules §1/§2 骨架；T-0036 事件区/断弧已补入
-4 接口边界 PASS：§4.1 64 针逐针驱动/采样/时序；§4.2 I2C/UART/ALERT/EN/SENSE/SHORT/12V；A24=SDA、B24=SCL 分列；对齐 R §2.1.2–§2.1.4、§2.2–§2.4、§3.3、附录 M；64 针计数=64
+4 接口边界 PASS：§4.1 64 针逐针驱动/采样/时序；§4.2 I2C/UART/ALERT/EN/SENSE/SHORT/12V；A24=SDA、B24=SCL 分列；64 针=20+20+9×2+6=64；对齐 R §2.1.2–§2.1.4、§2.2–§2.4、§3.3、附录 M
 5 关键约束 PASS：§12.1 热（29.0W/40℃/≤70℃/≤55℃）；§12.2 EMC（65k/100k/200k 分区+滤波+TVS/RC）；§12.3 安规（8mm/6mm/PE≤0.1Ω/1500VAC/非受控拔出）；§12.4 可维修性
-6 落地追溯 PASS：新增章节均标 T-0037；§12.5 列 9 项差异/待确认（6 项标“待 owner 确认”，2 项待设计确认，1 项已按 T-0036 执行），不改 R 正文
-7 交付判据 PASS：C1 带 Ticket: T-0037 已 push 到 origin/master（096c83b..5e32b97）；ls-remote=5e32b97；C2 带 Evidence: T-0037；C2 后 clean
+6 落地追溯 PASS：新增章节均标 T-0037（§2.1 急停句已补标）；§12.5 列 9 项差异/待确认（6 项标“待 owner 确认”，2 项待设计确认，1 项已按 T-0036 执行），不改 R 正文
+7 交付判据 PASS：C1=5e32b97 与 C3=33d9f4c 均带 Ticket: T-0037 且已 push；ls-remote=33d9f4c；C2=ad0db33 带 Evidence；C4 为本轮证据提交；C3 后 clean
 8 文件规模 PASS：文档 2 文件 / 260 行（+249/−11，architecture+KB）；代码与配置 0 文件 / 0 行；证据不计阈值；未超提示线
-NOTE: 已按上轮 FAIL 修复：C1 已 push 且远端 SHA 一致；sha 证据补 push/ls-remote/status 空输出；acceptance 第 7 条改为实测 PASS；未改需求正文
+NOTE: 本轮修复上轮 FAIL：N0 输入功率改 269W/240W；acceptance WRITE 补 §2.1；§2.1 急停句标 T-0037；64 针求和改九组 2；未改需求正文
 RESULT: PASS

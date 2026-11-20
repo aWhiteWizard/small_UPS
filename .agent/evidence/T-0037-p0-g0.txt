@@ -3,9 +3,9 @@ TASK: T-0037
 AT: 2026-11-20 +08:00
 BRANCH: task/T-0037 @ D:\workspace\wt\small-ups\T-0037
 BASE: 096c83bebc9f7a6f44c342dd82ab6a020ea525a3（task.baseSha；开工 HEAD 相同）
-HEAD: 5e32b97857d6d6ca19d56f05e540631f66478bdd（C1 Ticket）
+HEAD: 33d9f4c86539e135b68d84f781d3569da8a387fe（C3 Ticket，本轮修复）
 CMD: git rev-parse HEAD; Test-Path .agent/gate.json; git diff 096c83b..HEAD --check; git status --porcelain=v1 -uall; git push origin HEAD:master; git ls-remote origin refs/heads/master
-STATUS: gate.json 未配置（G0 按“未配置门禁”PASS）；开工 HEAD=baseSha；C1 已 push；工作区 clean；diff --check=0
-REMOTE: 5e32b97857d6d6ca19d56f05e540631f66478bdd refs/heads/master（C1；push 096c83b..5e32b97 HEAD -> master）
+STATUS: gate.json 未配置（G0 按“未配置门禁”PASS）；开工 HEAD=baseSha；C3 已 push；工作区 clean；diff --check=0
+REMOTE: 33d9f4c86539e135b68d84f781d3569da8a387fe refs/heads/master（push ad0db33..33d9f4c HEAD -> master）
 OBJECT: .agent/docs/architecture.md 230 insertions / 11 deletions；886 行；无代码/配置
 RESULT: PASS
