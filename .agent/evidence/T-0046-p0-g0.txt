@@ -6,5 +6,5 @@ HEAD==baseSha: YES (worktree rebuilt; prior T-0046 commits recovered via git che
 content commit: d013e95f1ebd84c2610e6f93793b9090698e5334
 git status after content: evidence/worklog/kb to be committed (C2)
 scope content: 1 file / 221 insertions, only .agent/docs/architecture.md
-scope final: 7 files / ~321 insertions (evidence 4 + worklog + kb excluded from doc threshold)
+scope final: 7 files / 329 insertions (evidence 4 + worklog + kb excluded from doc threshold)
 doc-only: YES (no code/config change)

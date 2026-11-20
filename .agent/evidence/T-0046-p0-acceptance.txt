@@ -6,7 +6,7 @@ task: T-0046 架构⑧ 需求→架构覆盖矩阵（G2 R1 返修）
 4 统计+Top10: PASS — §17.2 为 134/108/25/1（80.6%/18.7%/0.7%），按章节汇总；§17.3 Top10 与补齐建议同步
 5 只读不改/冲突登记: PASS — R 未改，architecture 仅追加 §17；C1–C7 为需求自相矛盾，C8–C10 拆入 §17.5 跨文档差异/DEVIATION
 6 写入落点+统计+前 20 行样例: PASS — 选择 architecture 附录（§17，1301-1520），理由见章头；20 行样例见下（1315-1334，R1-01..R2-15）
-7 提交 trailer+commit/log: PASS — C1 d013e95（Ticket: T-0046，已 push，ls-remote 一致）；C2/C3 Evidence: T-0046，log 见 shas
+7 提交 trailer+commit/log: PASS — C1 d013e95（Ticket: T-0046）已 push（ls-remote=d013e95）；C2 9c6154d（Evidence: T-0046）已 push（ls-remote=9c6154d）；C3 本提交回填 C2 log/hash（Evidence: T-0046）
 8 规模: PASS — 内容文档 1 文件 / +221 行；终 diff 7 文件 / ~321 行（证据/worklog/kb 不计入阈值）；代码与配置 0 文件 / 0 行
 sample20:
 | R1-01 | §1.1 定位：0.5–48V/5A 数控 PSU，两板构成 | §1.1（21-47）、§1.2（53-55） | 覆盖 | — |
