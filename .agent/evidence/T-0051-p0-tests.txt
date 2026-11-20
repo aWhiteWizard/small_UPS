@@ -1,0 +1,11 @@
+KIND: tests
+TASK: T-0051
+CONTENT-DIFF: git diff --numstat 006e9f4..8d2e43e -> 201	1	.agent/docs/architecture.md (content commit C7; +201/−1)
+FINAL-DIFF: git diff --numstat 006e9f4..HEAD -> 7 files, see sha.txt/report for exact numbers (architecture + 4 P0 + worklog + KB; evidence not counted in doc threshold)
+WHITESPACE: git diff --check 006e9f4..8d2e43e and 006e9f4..HEAD -> no output, exit 0
+STRUCTURE: architecture.md 1109 lines; H2=13, H3=60; tables=46 blocks bad=0; fences=14; tabs=0; trailing-ws=0; UTF-8 BOM 239,187,191 (preserved from base)
+0x16-FIX: architecture.md:391 "OUTPUT_ENABLE（0x16）为 R/W，读回当前软使能位（0/1）"; :946 read flow "REG OUTPUT_ENABLE-> 返回当前软使能位 0/1"; :963 table split "命令(W)" and "软使能 | 0x16"
+COUNTER-FIX: architecture.md:1054/1078-1093 768B counter zone, 16B header + 64B runtime ring + 22×24B per-code record + time base
+KEYWORDS: D-10/D-23/OUTPUT_ENABLE/0x16/COMMIT/NACK/9 个 SCL/500ms/16–24KB/CRC32/24C64/T-0036/G.6 均命中
+SCOPE: 没有代码/配置/测试脚本改动；纯文档单，未跑 live e2e
+RESULT: PASS (static checks only; no fake runtime claims)

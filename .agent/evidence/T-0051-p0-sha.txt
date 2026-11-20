@@ -1,0 +1,28 @@
+KIND: sha
+TASK: T-0051
+BASE: 006e9f4d7b4a4be05a63f3baf084b1388a285a40 (origin/master at dispatch)
+CONTENT_COMMIT: 8d2e43e650400ac6fdfe726e54192f229d93de3d
+CONTENT_PARENT: 006e9f4d7b4a4be05a63f3baf084b1388a285a40 (BASE)
+CONTENT_SUBJECT: docs(T-0051): 架构⑦-2 固件通信与存储（I2C/寄存器/心跳/Bootloader/EEPROM）
+CONTENT_TRAILER: Ticket: T-0051
+CONTENT_STAT: 1 file changed, 201 insertions(+), 1 deletion(-)
+CONTENT_DIFF: git diff --numstat 006e9f4..8d2e43e -> 201	1	.agent/docs/architecture.md
+C7_PUSH: git push origin HEAD:refs/heads/master -> 006e9f4..8d2e43e  HEAD -> master (exit 0)
+LS_REMOTE_AFTER_C7: 8d2e43e650400ac6fdfe726e54192f229d93de3d	refs/heads/master
+C8_EVIDENCE: see final report (self-referential; cannot embed its own SHA)
+C9_FINAL: see final report (self-referential; cannot embed its own SHA)
+ORIGIN_MASTER: 006e9f4d7b4a4be05a63f3baf084b1388a285a40 before C7; after C7 = 8d2e43e
+BASE_IS_ANCESTOR_OF_C7: YES (git merge-base --is-ancestor BASE C7 -> exit 0)
+TRACKED_STATUS_AFTER_C7: clean (git status --porcelain=v1 -uall -> empty)
+RECOVERY: old C1-C6 archived on task/T-0051-bak-T-0051-20261120-192558=07d098d; this base refreshed by engine to 006e9f4; only T-0051 files recovered, no merge/rebase
+
+$ git log --oneline 006e9f4..8d2e43e
+8d2e43e docs(T-0051): 架构⑦-2 固件通信与存储（I2C/寄存器/心跳/Bootloader/EEPROM）
+
+$ git log -1 --format=%B 8d2e43e
+docs(T-0051): 架构⑦-2 固件通信与存储（I2C/寄存器/心跳/Bootloader/EEPROM）
+
+Ticket: T-0051
+
+$ git ls-remote origin refs/heads/master
+8d2e43e650400ac6fdfe726e54192f229d93de3d	refs/heads/master

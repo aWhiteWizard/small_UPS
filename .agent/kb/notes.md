@@ -537,3 +537,12 @@ KB-LAYER: 2_system
 KB-TAGS: rework, baseline, appendix, architecture, t-0042
 
 T-0042 重派到 a0d208d 后，T-0036 已占用需求附录 M、T-0037 已占用 architecture §2.6；若直接照旧稿写“附录 M / §2.6”会覆盖他单。返修开工先 grep 目标章节/附录字母占用，再决定新字母/新小节号；旧 worktree 成果可从看板 `worktreeRebuild.oldBranch` 找到，但不要拼接旧 worktree。
+
+## worktree 纯文档单的 G0：先补 .tools junction 再跑 check-env/build
+
+KB-TYPE: method
+KB-EVIDENCE: .agent/evidence/T-0051-p0-g0.txt:7（ENV-NOTE）；`firmware/tools/check-env.ps1` 初次 exit 1：`missing tools root: ...\.tools (run firmware/tools/bootstrap.ps1 first)`；建立 junction 后 `CHECK-ENV: PASS`、`firmware/build.ps1 -Clean` exit 0
+KB-LAYER: 1_application
+KB-TAGS: worktree,g0,firmware,docs-only,junction
+
+新建/重置 worktree 不带 `.tools`（gitignored）。纯文档单不跑固件也会被 G0 的 check-env/build 卡住；不要为文档单去 bootstrap/下载工具链，按同机已有 worktree 的 `.tools` 建 junction（本单 -> `T-0002\.tools`），再跑 check-env/build 均 exit 0。证据里注明 junction 是 ignored 环境准备、不计交付 diff。

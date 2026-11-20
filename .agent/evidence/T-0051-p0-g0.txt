@@ -1,0 +1,8 @@
+KIND: g0
+TASK: T-0051
+BASE: 006e9f4d7b4a4be05a63f3baf084b1388a285a40
+CONTENT_HEAD: 8d2e43e650400ac6fdfe726e54192f229d93de3d
+CHECK-ENV: CHECK-ENV: PASS (exit 0; 10/10 listed checks: arm-gcc 15.2.1, cmake 3.31.9, ninja 1.13.2, openocd 0.12.0, serial-api, openocd-config, PuTTY 0.85, cmsis_core v5.9.0, cmsis_device_g0 v1.4.5, stm32g0xx_hal_driver v1.4.7)
+BUILD: firmware/build.ps1 -Clean exit 0; psu_minimal.elf FLASH 1544 B / RAM 1584 B (newlib nano _close/_lseek/_read/_write warnings are pre-existing stubs, not failure)
+ENV-NOTE: worktree reset to 006e9f4 lost gitignored .tools; recreated junction .tools -> D:\workspace\wt\small-ups\T-0002\.tools, then G0 PASS
+SCOPE: G0 at C7 content commit; C8/C9 are evidence/worklog/KB only, no code/config
