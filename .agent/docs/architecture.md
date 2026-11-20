@@ -388,7 +388,7 @@ y=120 ┌───────────────────────�
 - 地址/位定义以 R §3.3.1–§3.3.4 为唯一表，固件不另建第二张表；未列地址读 0、写忽略；保留位写 0，不得驱动 SHARE/SYNC。
 - 多字节小端，16/32 位读写用临界区保证原子；V/I 设定写影子，COMMIT=0x5A 后原子切换。输出 ON 时 COMMIT 触发 §7.4 软变化，不直接跳变。
 - 只读寄存器（MEAS/STATUS/FAULT/RELAY_STATE/VOUT_ZERO/版本）由 1ms 状态任务刷新快照；FAULT_CODE 取最高优先级，FAULT_FLAGS 保留全部锁存位，不因显示低优先级码丢位。
-- CLEAR/OUTPUT_ENABLE/HEARTBEAT/CAL 为命令寄存器：读回 0；CLEAR 只认 0xA5、COMMIT 只认 0x5A；非法写忽略并置原因位。CLEAR 同时清软使能，输出保持 OFF。
+- CLEAR/COMMIT/HEARTBEAT/CAL 为命令寄存器：读回 0；OUTPUT_ENABLE（0x16）为 R/W，读回当前软使能位（0/1），写 1 走四条件、写 0 清软使能；CLEAR 只认 0xA5、COMMIT 只认 0x5A；非法写忽略并置原因位。CLEAR 同时清软使能，输出保持 OFF。
 - EEPROM 只存已 COMMIT 的 V/I 与校准表；上电恢复设定但输出 OFF。PROTOCOL_VERSION/FW_VERSION 只读，仅显示/记录，不参与升级或使能门禁。
 
 ## 7. 时序与状态机
@@ -907,3 +907,203 @@ y=120 ┌───────────────────────�
 | 7 | 急停状态寄存器 | R §3.1.1：地址/位由设计定，不占 FAULT_CODE，不可软件清除 | 本单不分配地址；设计阶段补充，保持不可 CLEAR/伪造 | 待设计确认 |
 | 8 | 风扇“不得停转”边界 | R §3.5.9：≤50℃ 40% 不得停转；R §3.5.11：待机风扇停转 | 输出 ON/功率级工作期间不得停转；输出 OFF 待机允许停转；OTP 例外全速 | 口径澄清，待 owner 确认 |
 | 9 | 非受控拔出/断弧 | T-0036 附录 M 已定版：针长分级、断弧 ≤50ms、TVS/RC、REMOVAL_LATCH | 已并入 §4.1/§4.2/§12.2/§12.3；本单不新增阈值 | 已按 T-0036 执行 |
+
+## 16. 固件架构（续）：通信与存储（T-0051，D-10/D-23）
+
+> 本章为架构⑦-2，承接 T-0050 §15（分层/状态机/调度/测试）；只写 I2C 从机、寄存器、心跳/使能、Bootloader、EEPROM 的实现约束，不改 R §2.2/§2.4/§3.3/§3.4 的寄存器表、故障码、阈值与验收。T-0047–T-0050 为基于 8566822 的并行分支，本单在 006e9f4（含 T-0036/T-0037/T-0042/T-0043）上继续；合入后由引擎按 T-0047→T-0054 顺序并入「固件架构」章并重编号，章内引用以最终章号为准。
+>
+> D-10：16 位双 DAC 设定 + 外部 16 位 ADC 回读，寄存器按 1mV/0.1mA 编码，回读走 1ms 快照、不阻塞 I2C；D-23：STM32G431CBT6（128KB Flash/32KB SRAM，I2C1 从机口 + 独立 I2C2 主机器件总线），本节分区、缓冲与任务预算均按此资源校核。
+
+### 16.1 I2C 从机实现
+
+| 项 | 设计 | 说明/依据 |
+|---|---|---|
+| 总线/地址 | I2C1 从机；7 位地址 `0x30 + DIP[3:0]`；100kHz 默认、400kHz 上限；3.3V 开漏，4.7k 上拉只装主机侧 | R §2.2.1；本体侧预留位置默认不贴 |
+| 实现方式 | **选 DMA 作为数据通路** + 帧边界中断（仅 ADDR/STOP/ERR/NACK），不逐字节进中断 | 400kHz 下 1 字节仅 22.5µs；48B 块读 400kHz 1.08ms、100kHz 4.32ms（64B 为 5.76ms）；逐字节 ISR 会挤占 T-0050 §15.5 的 120µs/1ms 预算 |
+| 缓冲 | 64B 收/发 DMA 缓冲，覆盖 0x00–0x3F 全表；帧结束按寄存器语义提交 | 多字节小端、自动递增；16/32 位读写用临界区或 seqlock 保证原子 |
+| 时钟拉伸 | 仅在 ADDR/首字节准备快照时拉伸；设计 ≤1ms，硬上限 10ms；COMMIT/EEPROM 写不拉伸，改为排队后立即应答 | R §2.2.1；拉伸超 10ms 释放 SCL、复位状态机、置 BUS_ERR，不改变输出状态 |
+| 超时 | SCL 连续低 >25ms 视为总线异常：释放 SDA/SCL、复位 I2C 状态机、保持输出状态 | R §2.2.1；恢复后重新初始化，不自动清故障、不自动使能 |
+| 死锁恢复 | 主机侧（调试板）发 **9 个 SCL + STOP**；本体只释放 SDA 并复位从机状态机。本体作主机访问 EEPROM 时，由本体自己发 9 个 SCL + STOP | 从机不能主动驱动 SCL；9 个时钟在 100kHz 约 90µs，远小于 500ms 心跳窗口 |
+| 拨码 | 4 位拨码 + 上拉，POR 后 10ms 采样并锁存；运行中改变不生效，重新上电/复位后生效 | R §2.2.3；地址范围 0x30–0x3F；只响应本机地址，不实现广播/General Call |
+
+```text
+写事务：
+START | ADDR+W | ACK | REG | ACK | DATA... | STOP
+  REG 未映射/越界(>0x3F) -> NACK 该 REG 字节，STOP，不改任何状态
+  REG 只读              -> NACK 首个 DATA 字节，STOP
+  REG 保留              -> ACK，丢弃后续 DATA（读 0、写忽略）
+  REG 合法              -> 写入 staging；整字宽收齐且 STOP 后才提交到影子
+STOP -> 口令/只读/整字宽校验；数值越界按 R 钳位
+  通过 -> 执行（COMMIT 原子切换；CLEAR 立即清软使能）
+  失败 -> 丢弃 staging，置拒绝原因，生效值不变
+```
+
+```text
+读事务：
+START | ADDR+W | ACK | REG | ACK | Sr | ADDR+R | ACK | DATA... | NACK | STOP
+  REG 未映射/越界 -> NACK REG 字节，STOP
+  REG 命令(W)      -> 返回 0（CLEAR/COMMIT/HEARTBEAT/CAL_*）
+  REG OUTPUT_ENABLE-> 返回当前软使能位 0/1（R/W，不是只写命令）
+  合法             -> 从 1ms 快照 DMA 发送；小端、自动递增
+  快照未就绪       -> 拉伸 SCL ≤1ms（硬上限 10ms）
+  0x3F 之后        -> NACK，禁止回绕到 0x00
+读事务无写副作用；COMMIT/校准写只能在写事务中发生。
+```
+
+### 16.2 寄存器语义
+
+- 地址/位定义唯一表仍是 R §3.3.1–§3.3.4，固件不建第二张表；本节只定访问语义。“越界 NACK”指寄存器地址 >0x3F；V/I 设定数值越界按 R §3.3.6 钳位，不 NACK。
+
+| 类别 | 地址 | 写 | 读 | 越界/异常 |
+|---|---|---|---|---|
+| 版本 | 0x00–0x05 | NACK | 正常 | 只读，写不改变 |
+| 状态/测量 | 0x06–0x0C、0x0E–0x0F、0x18–0x1D、0x2C–0x2D | NACK | 1ms 快照 | 只读，写不改变 |
+| 影子设定 | 0x10–0x15 | 写 staging，不立即生效；越界按 R 钳位 | 返回 staging（含未 COMMIT 值） | 不因数值越界 NACK；半字/半帧丢弃 |
+| 命令(W) | 0x0D、0x1E、0x22–0x27、0x2F | 口令/命令 | 0 | 非法口令 ACK 后忽略并置原因；CLEAR 需先读码 |
+| 软使能 | 0x16 | 写 1 走四条件；写 0 清软使能 | 当前软使能位 0/1 | 条件不满足忽略并置 EN_REJECT，不改变输出 |
+| 校准 | 0x28–0x2B | 按 R §3.4 会话 | 正常 | 会话外写忽略并置 CAL_STATUS |
+| 保留 | 0x17、0x1F、0x20、0x21、0x2E、0x30–0x3F | ACK 后丢弃 | 0 | 不实现均流，不驱动 SHARE/SYNC |
+| 越界 | >0x3F | NACK | NACK | 不得回绕或别名到低地址 |
+
+- **影子/COMMIT**：写 0x10–0x15 只改 staging（越界按 R 钳位：coarse 0–48000、fine −50…+50、I_max 0–5000；I_max=0 即 0A，不是“无限流”），`OUTPUT_STATUS.SETTING_DIRTY=1`；写 0x2F=0x5A 后在临界区把有效值再钳位到 0–48000mV，并原子切换到生效值；COMMIT 口令非 0x5A 时忽略且不改生效值。输出 ON 时按 §7.4 斜率过渡，不跳变；输出 OFF 时 DAC 先归零再写新目标。
+- **COMMIT 后的 EEPROM**：只异步写非活动区；V 存已 COMMIT 的生效值（`Vset_eff`），fine 不落盘、上电归 0；写失败置 0x12，但 RAM 生效值保持到下次上电，下次上电回退到旧的有效区，不出现半写值。
+- **CLEAR**：只认 0xA5；未读 FAULT_CODE+FAULT_FLAGS 时忽略；清锁存位同时清 OUTPUT_ENABLE，输出保持 OFF；不清设定/校准/EEPROM。
+- **HEARTBEAT**：任意写；读 0；只重置 500ms 计时器，不改变输出或设定。
+- **保留/只读**：保留寄存器 ACK 后丢弃、读 0；只读寄存器写 NACK；CLEAR/COMMIT/HEARTBEAT/CAL_* 读 0，OUTPUT_ENABLE 读当前软使能位 0/1。半帧（STOP 前未收齐）丢弃，不产生部分更新。
+- **复位默认值**：OUTPUT_ENABLE=0、RELAY_STATE=0、VOUT_ZERO=1、FAULT_CODE/FAULT_FLAGS=0、staging/生效 V/I 从 EEPROM 有效区恢复、fine=0、HEARTBEAT_OK=0、CAL 从校准区恢复（无效/无表按 R §3.4.6）、版本寄存器为固定值、保留寄存器 0；输出一律 OFF。
+- **表驱动（二选一：选表驱动）**：`firmware/services/regmap.def` 用 X-macro 一行一个寄存器块，字段固定为 `REG(addr,name,width,access,reset,get,set,validate)`；同一文件生成 C 描述表、地址枚举与 PC 主机测试向量。理由：R §3.3.1 有 48 个地址、8 类访问语义，硬编码会在读/写/保留/NACK 四处漂移；T-0050 §15.6 的主机单测已要求单一 `regmap.def` 生成期望，G0 用 grep 禁止第二张地址表。
+
+```c
+/* 示例：描述表由 regmap.def 展开，业务代码只按 descriptor 取 get/set */
+REG(0x10, VOUT_SET_COARSE, 16, RW_SHADOW, 0x0000, get_vset, set_vset, chk_v)
+REG(0x1E, HEARTBEAT,       8,  W_CMD,    0x00,   NULL,     hb_write, NULL)
+REG(0x2F, COMMIT,          8,  W_CMD,    0x00,   NULL,     commit,   NULL)
+REG(0x30, RESERVED,        8,  RESERVED, 0x00,   rd_zero,  wr_ignore, NULL)
+```
+
+### 16.3 心跳与使能
+
+- **心跳**：主机 100ms±10ms 写 0x1E；本体 1ms 计时，500ms 未收到有效写 → HEARTBEAT_OK=0，硬件门关断并锁存 0x0B（硬件路径 ≤10µs，软件兜底 ≤1ms）。心跳恢复不自动输出，需读码+CLEAR+重新使能。
+- **I2C 忙/拉伸/恢复期间**：500ms 计时器**不暂停**，只有完整译码的 HEARTBEAT 写才重置；总线拉伸（≤10ms）与 9 时钟恢复（约 90µs）远小于 500ms，正常恢复不会误触发。若恢复本身超过 500ms，按 HEARTBEAT_LOST 关断是正确 fail-safe，不得用“总线忙”豁免。升级/bootloader 期间 EN 低、输出 OFF、I2C 从机不服务，心跳监视屏蔽；跳回应用后重新开 500ms 窗口，升级前已锁存的 0x0B 保留，不因升级自动清除。
+- **EN 丢失**：EN 双沿 EXTI；下降沿硬件门 ≤1ms 关门，ISR 只置标志，1ms 任务清软使能、停 buck、释放继电器；低电平持续 20ms 去抖后锁存 0x0A。上升沿需稳定 20ms 才参与 S1 检查。EN 复位/掉电由 10k 下拉保证为低，bootloader 同样保持低。
+- **四条件**：EN=1、OUTPUT_ENABLE 请求=1、SHORT_PIN=1、HEARTBEAT_OK=1 同时成立；再加无锁存故障、CAL 有效/恒等、设定已 COMMIT、PFC/LLC READY、RELAY_STATE=0 且 VOUT_ZERO=1。任一条不成立即单票否决，写 1 被忽略、软使能保持 0。
+- **拒绝原因上报**：R §3.3.1 已冻结，不新增 I2C 寄存器或对外命令；16 位 RAM 位图 `EN_REJECT` 由固件维护，I2C 侧经 OUTPUT_STATUS 的 EN_PIN/SHORT_PIN/HEARTBEAT_OK/FAULT_ACTIVE/SETTING_DIRTY/CAL_ACTIVE 与 FAULT_CODE 可见位暴露，D 侧再结合自身 6 组前置检查形成 `OPEN_FAIL` 原因并经 USB-C 给 PC 工具；位图仅供本体日志/调试。成功使能或 CLEAR 清位图；拒绝本身不置故障锁存，除非确有故障源。
+
+| bit | 拒绝原因 | bit | 拒绝原因 |
+|---|---|---|---|
+| 0 | EN 低 | 8 | VOUT 未归零 |
+| 1 | 短针丢失 | 9 | 继电器未释放 |
+| 2 | 故障锁存 | 10 | 未到 READY |
+| 3 | 心跳超时 | 11 | 升级/校准忙 |
+| 4 | 校准无效 | 12 | I2C 总线错误 |
+| 5 | 设定未 COMMIT | 13 | 插反检测 |
+| 6 | PFC 未就绪 | 14 | 保留 |
+| 7 | LLC 未就绪 | 15 | 保留 |
+
+- 开启序列：四条件/前置检查 → EN 高 20ms → 写 V/I+COMMIT+HEARTBEAT → OUTPUT_ENABLE=1 → 100ms 内读回 OUT_ON；关断：ENABLE=0 → 8ms → EN 低 → 继电器释放 ≤50ms → 100ms 内 VOUT_ZERO=1。心跳在 ON/OFF/校准期间都持续，仅升级/复位/掉电停止。
+
+### 16.4 Bootloader
+
+| 区 | 地址范围 | 大小 | 内容/约束 |
+|---|---|---|---|
+| Boot | 0x08000000–0x08005FFF | 24KB（R 允许 16–24KB，取上限） | 仅 SWD 首烧；不被应用区擦除；含升级帧/CRC/跳转 |
+| App | 0x08006000–0x0801F7FF | 102KB | 单区；向量表在 App 基址；VTOR 指向 0x08006000 |
+| Image header | 0x0801F800–0x0801FFFF | 2KB | magic `PSUAPP01`、len、CRC32、版本、build、header CRC16 |
+
+- 帧格式沿用 §8.1，不另立第二套：`SOF 0x7E | VER 0x01 | CMD | SEQ | LEN(2,LE) | PAYLOAD 0–256 | CRC16(2,LE)`，0x7E/0x7D 转义，最大 264B；CRC16-CCITT-FALSE 覆盖 VER..PAYLOAD；镜像校验用 CRC32-IEEE 覆盖 App 区。WRITE 的 offset/len 4B 对齐，ERASE 带镜像长度+CRC32，VERIFY 重算长度/CRC，GO 前必须 VERIFY 通过。
+- 升级期间：复位后 10ms 内 EN 输出低，PFC_EN/LLC_EN/BUCK_EN=0、继电器释放（断开）、DAC=0、IWDG 500ms；I2C 从机不使能（主机读 NACK），只走 A28/A29 UART；不因版本不匹配拒绝升级。
+- 跳转条件：Image header 的 magic/len/header CRC16 与 App 区 CRC32 全部通过才跳 App；任一失败停 bootloader，不跳无效镜像。
+- 失败：HELLO/帧/CRC/擦写/VERIFY 失败均回 NAK/状态并停在 bootloader，不跳无效 App；掉电后下次复位按 App header/CRC 判无效，仍停 boot；应用单区，失败只能重传，不保留旧 App 回滚。bootloader 自身不被应用区写操作覆盖。
+
+```text
+上电/复位
+  -> 初始化安全态（EN低/功率级关/继电器开/DAC=0）
+  -> 备份 RAM magic 或 500ms 内收到 HELLO/0x7F ?
+       是 -> B1_WAIT_LINK（等 ERASE，可无限等）
+       否 -> App header+CRC32 有效 ?
+               是 -> 跳 App（VTOR=0x08006000）
+               否 -> B1_WAIT_LINK（等重传）
+B1 -> ERASE(len,crc32) -> 擦除 App -> WRITE(offset,data)...
+   -> 每帧 SEQ/CRC/范围校验，错则 NAK，主机重传
+   -> VERIFY -> 通过 -> GO -> 复位 -> 再校验 -> 跳 App
+             失败 -> B9_ERROR，停 boot，等重新 HELLO/ERASE
+```
+
+| 阶段 | 超时 | 失败动作 |
+|---|---|---|
+| 复位后 HELLO 窗口 | 500ms | 无请求且 App 有效则跳 App；否则留在 B1 |
+| 字节间/整帧 | 50ms/200ms | NAK，主机重传同一 SEQ；3 次仍失败则停在 B1 |
+| ERASE | 3s | NAK/状态，停在 B9，可重传；51 页×≤40ms 的擦除预算 |
+| WRITE 单帧 | 200ms | NAK，重传；不跳 App |
+| VERIFY | 2s | 失败停 B9，不跳 App |
+| GO | 500ms | 不跳转，回 B1；可重传 |
+| 整次升级 | 180s | 主机中止；本体停 boot，等重传 |
+
+### 16.5 EEPROM 分区与故障日志
+
+- **介质**：本体外部 EEPROM 8KB（24C64 类，32B/页，≥1M 次/字节，≥10 年保持），挂独立 I2C2 主机通道（7 位 0x50，400kHz），不与主机 I2C1 共线，避免“从机口兼作主机”的主从冲突；写周期 ≤5ms，ACK 轮询。最终型号由硬件单按容量/温度/寿命确认，逻辑分区不超过 8KB。
+- **地址规划**（逻辑地址，页对齐）：
+
+| 区 | 地址 | 大小 | 记录/说明 |
+|---|---|---|---|
+| 设定 A/B | 0x0000/0x0100 | 256B×2 | `SET1` magic、seq、Vset_eff（u16，1mV）、I_max、flags、CRC16；不存 fine/输出使能/心跳 |
+| 校准 A/B | 0x0200/0x0300 | 256B×2 | `CAL6`、channel、version、N、cal_count、temp、N 点、CRC16；V 6 点/I 3 点分表 |
+| 生产信息 A/B | 0x0400/0x0500 | 256B×2 | SN≤16 ASCII、生产日期、6V+3I 校准次数/最近日期、硬件版本、CRC16 |
+| 事件 A/B | 0x0600/0x0700 | 256B×2 | T-0036 非受控拔出锁存：mask、seq、CRC16；两副本 |
+| 故障日志环 | 0x0800–0x0FFF | 2KB | 64 槽×32B 环形；字段见下 |
+| 故障计数 A/B | 0x1000/0x1300 | 768B×2 | 16B 头+64B 运行分钟环+22×24B 每码记录+CRC16；见下 |
+| 预设 | 0x1600–0x16FF | 256B | G.4 八组 V/I，每组 32B，独立 CRC16 |
+| 预留 | 0x1700–0x1FFF | — | 不写；读 0/忽略 |
+
+- **CRC/双区/回滚**：全部记录用 CRC16-CCITT-FALSE（poly 0x1021、init 0xFFFF、不反射、xorout 0）；校准 CRC 范围按 R §3.4.3（`CAL6`+channel+version+N×(set+meas)），次数/温度元数据不参与；其余区 CRC 覆盖本记录有效字段。写非活动区→逐字节回读→CRC 通过→切换 seq/活动区；上电选最高有效 seq（校准按最高有效 version），一区有效则用之并记录告警。写失败保留旧区并置 0x12（校准失败置 0x11）；旧区保留即回滚，不自动降级校准 version；设定/校准两区独立，设定写失败不置 CAL_INVALID、校准写失败不改设定。两区均无效时：设定→0V/0A、输出 OFF、0x12；校准→有 magic 则 0x11、禁输出+ALERT，无 magic 则恒等；事件→0x12 且禁止自动使能；日志→“历史不可用”，不得伪造。
+- **事件区（T-0036）**：两副本+seq+CRC16；CLEAR 写两副本 mask=0 并回读，任一失败保持锁存并置 0x12；上电按最高有效 seq 恢复/清除，短针回位/EN 回高/心跳恢复/重启均不得自动清位或自动使能。事件写目标 ≤50ms、不阻塞硬件关断；连接器拔出不等于 AC 掉电，写中 AC 掉电由两副本+CRC 保证至少一份有效。
+- **写次数/掉电保护（与 T-0036 M.7 对齐）**：只在 COMMIT、校准 COMMIT（仅输出 OFF）、事件置位/清除、日志事件时写；心跳/测量/掉电不写。页对齐、32B 整页写、提交字节最后写；半写由 CRC+seq 拒绝；上电不把半写区当有效。1M 次预算下，设定按 ≤100 次/日 COMMIT 计 ≥27 年；校准/事件/日志轮转 ≥10 年，日志每槽 1M 次×64 槽；故障计数每码独立地址，单码 1M 次上限。
+- **故障日志环**：64 槽×32B，`seq` 单调递增；满时覆盖最旧；事件槽只存事件快照，次数/首次/最近时间在计数区按码保存，不随环覆盖清零；至少保留最近 16 条（G.2 下限）。每槽字段：
+
+| 偏移 | 字段 | 字节 | 说明 |
+|---|---|---|---|
+| 0 | seq | 2 | 事件序号，单调递增 |
+| 2 | code | 1 | FAULT_CODE；同时保留 flags |
+| 3 | flags | 4 | FAULT_FLAGS 全部锁存位，保留其他故障位 |
+| 7 | power_cycle | 2 | 上电序号 |
+| 9 | uptime_s | 4 | 本次上电运行秒数（无 RTC 时） |
+| 13 | temp | 2 | 触发时内部温度，0.1°C 有符号 |
+| 15 | Vset/Iset | 4 | 2×u16，1mV/1mA |
+| 19 | Vout/Iout | 4 | 2×u16，1mV/0.1mA |
+| 23 | status | 1 | OUT_ON/RELAY/CV/CC 等快照 |
+| 24 | OVP/OCP | 4 | 2×u16，生效阈值 |
+| 28 | reserved | 2 | 0 |
+| 30 | CRC16 | 2 | 覆盖 0–29 |
+
+- **计数区布局（每区 768B，不随日志环覆盖）**：16B 头（`CNT1` magic、power_cycle u16、total_runtime_min u32、seq u16、ring_head u8、CRC16）+ 64B 运行分钟增量环（16×u32，每分钟写一槽，1M×16 min≈30 年）+ 22 个非保留码（0x01–0x16）各 24B + 区尾 CRC16。时间基准=power_cycle（每次 POR +1）+ total_runtime_min（≤1min 分辨率）+ 事件槽 uptime_s（本次上电秒数），满足 G.2 无 RTC 口径。
+- 每码记录 24B：
+
+| 偏移 | 字段 | 字节 | 说明 |
+|---|---|---|---|
+| 0 | code | 1 | 0x01–0x16，非保留码全覆盖 |
+| 1 | count | 4 | 累计次数，不回绕；满值保持 |
+| 5 | first_power_cycle | 2 | 首次发生的上电序号 |
+| 7 | first_total_min | 4 | 首次发生的累计运行分钟 |
+| 11 | last_power_cycle | 2 | 最近一次上电序号 |
+| 13 | last_total_min | 4 | 最近一次累计运行分钟 |
+| 17 | flags | 1 | bit0 已满、bit1 已清除标记 |
+| 18 | reserved | 4 | 0 |
+| 22 | CRC16 | 2 | 覆盖 0–21；单码损坏只影响该码并提示“历史不可用”，不伪造 |
+
+- **计数与事件分离**：事件槽只存 code/flags/temp/快照；次数/首次/最近时间按码在计数区，不因日志环覆盖而清零；CLEAR/重启/升级不清计数，维护清除才写 flags.bit1 并归零。
+
+- **读取/清除权限**：日志只由固件故障处理写；I2C 不新增历史寄存器（R J.6 冻结）；维护读取经服务口（UART/PC 工具；D 若转发只透传，不伪造）；普通用户无清除入口；维护清除需二次确认，写“已清除”标记并把计数归零，只清日志、不清故障锁存/设定/校准；CLEAR、重新使能、重启、升级都不得清日志。日志损坏只提示“历史不可用”，保护/设定/校准不受影响。
+- **与 R 附录 G.6 #1 的边界**：R §3.3.7 当前默认“不保存故障历史，仅本次上电可追溯”，G.6 #1 待 owner 确认。本章给出上述 EEPROM 环形结构、计数区与地址预留，但**默认只运行 RAM 环（16 条，同字段/同格式）与 RAM 计数，EEPROM 日志区/计数区写使能关闭**；owner 确认持久化后再打开写使能并切到 64 槽，不得在此之前宣称跨上电/换板保持。T-0036 的事件区（拔出锁存）不受此限，按 R §3.3.8/M.7 立即持久化。
+
+### 16.6 实施边界与验收映射
+
+| 工单验收 | 落点 | 可判定判据 |
+|---|---|---|
+| 1 顺序/通信存储章 | 本章 §16.1–§16.5 | 引用 D-10/D-23；不改 R 寄存器/阈值 |
+| 2 I2C 从机 | §16.1 | DMA+帧中断；拉伸 ≤1ms/硬限 10ms；9 SCL+STOP；拨码上电锁存 |
+| 3 寄存器语义 | §16.2 | 影子/COMMIT 原子；越界/只读 NACK；保留读 0 写忽略；复位默认；表驱动 |
+| 4 心跳/使能 | §16.3 | 100/500ms；EN ≤1ms、20ms 锁存；四条件+拒绝位图；总线忙不暂停计时 |
+| 5 Bootloader | §16.4 | 24KB Boot/102KB App/2KB header；单区+CRC32；失败停 boot；EN 低 |
+| 6 EEPROM/日志 | §16.5 | 地址/CRC/双区/回滚/1M 次；环形字段/权限；T-0036 M.7；G.6 默认边界 |
+
+- 本章不写代码、不伪造测试结果；I2C 时序/HIL 按 §10.8 #3（使能链）/#12（升级）与 T-0050 §15.6，Bootloader 掉电重传按 §10.8 #12，EEPROM 掉电注入按 R M-A06（5 个时间点）与 M.7（100 次设定 COMMIT）由实现/测试单执行。与 R 冲突时以 R 为准，需变更走变更单。
