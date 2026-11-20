@@ -6,5 +6,5 @@ TASK: T-0051
 4 PASS 心跳/使能：§16.3 100ms/500ms、EN EXTI ≤1ms/20ms 锁存、四条件+EN_REJECT 位图/D 侧 OPEN_FAIL、I2C 忙/恢复计时不暂停、bootloader 屏蔽边界。
 5 PASS Bootloader：§16.4 24KB Boot/102KB App/2KB header（R 16–24KB）、§8.1 帧+CRC16、CRC32 镜像、失败停 boot 可重传、EN 低/功率级停、单区；流程图+超时表。
 6 PASS EEPROM/日志：§16.5 设定/校准/生产/事件/日志/计数/预设地址；CRC16、A/B 双区+回滚、1M 次与掉电保护（T-0036 M.7）；日志 64 槽字段 + 计数区 16B 头/64B 分钟环/22×24B 每码 count+首次/最近时间/温度，读取/维护清除权限；G.6 #1 未确认前默认 RAM 环+EEPROM 写关闭。
-7 PASS 交付：内容 C7=8d2e43e 已 push（`006e9f4..8d2e43e HEAD -> master`，ls-remote=C7），body `Ticket: T-0051`；证据 C8/C9 body `Evidence: T-0051`（SHA 见报告）；报告附 C7/C8/C9 与 `git log --oneline` 原文。
+7 PASS 交付：内容 C7=8d2e43e 已 push（`006e9f4..8d2e43e HEAD -> master`）、C8=d2c59bb 已 push（`8d2e43e..d2c59bb`，ls-remote=C8），body 分别 `Ticket: T-0051`/`Evidence: T-0051`；证据 C9=最终收口（body `Evidence: T-0051`，SHA 见报告）；报告附 C7/C8/C9 与 `git log --oneline` 原文。
 8 PASS 规模：内容 1 个文档文件 +201/−1（文档线目标 ≤300 行）；整单 7 files（含 4 P0/worklog/KB），证据不计阈值；无代码/配置。
