@@ -670,8 +670,19 @@ KB-TAGS: worktree, redispatch, renumber, architecture, t-0039
 ## 架构决策 D-05/D-06 与需求 §4.1 的 D-05/D-06 不是同一编号体系
 
 KB-TYPE: content
-KB-EVIDENCE: .agent/docs/architecture.md:2597（本章按 design-decisions 的 D-05/D-06 写同板双 BOM/V2 换料复测）；.agent/docs/requirements.md:777-778（R §4.1 的 D-05=ALERT、D-06=PT100）
+KB-EVIDENCE: .agent/docs/architecture.md:2597（本章按 design-decisions 的 D-05/D-06 写同板双 BOM/V2 换料复测）；.agent/docs/architecture.md:2820（D-07=开源许可/商标边界）；.agent/docs/requirements.md:777-778（R §4.1 的 D-05=ALERT、D-06=PT100）；.agent/docs/requirements.md:853（R §4.2 的 D-07=辅助电源与掉电）
 KB-LAYER: 1_application
-KB-TAGS: d-number, bom, alert, pt100, requirements, architecture, t-0053
+KB-TAGS: d-number, bom, alert, pt100, requirements, architecture, t-0053, t-0054
 
 写“引用 D-05/D-06”的 BOM/降本单时，先确认是哪套编号：owner 架构决策记录（`.agent/design-decisions.md`）的 D-05=同板双 BOM、D-06=V2 换料复测；R §4.1 的功能决策 D-05=ALERT、D-06=PT100。两者编号相同、语义不同；落稿要写全称（如“D-05 同板双 BOM”），否则审查会把 ALERT/PT100 条款误当成本策略。另 D-23/D-24 只存在于架构决策记录，R 中没有对应编号。
+
+补充（T-0054）：D-07 同病——架构决策 D-07=开源许可/商标边界，R §4.2 的 D-07=调试板辅助电源与掉电行为；章节引用必须写全称并注明表源，否则审查会把“开源许可”读成“12V 掉电”。
+
+## CERN-OHL-S 下保留变压器绕制参数，只在磁件可作为 Available Component 时成立
+
+KB-TYPE: method
+KB-EVIDENCE: .agent/docs/architecture.md:2834（保留项与 §1.7(b)(i) 条件）、:2841（保留项不得是 Make 所必需）；CERN-OHL-S v2 §1.7/§1.8/§4
+KB-LAYER: 1_application
+KB-TAGS: license, cern-ohl-s, open-hardware, bom, transformer, t-0054
+
+CERN-OHL-S 的 Complete Source 是“Make 所必需”的全套源；强互惠下对外提供产品必须给 Complete Source 或 Source Location（§4）。变压器绕制参数若是自制磁件的唯一制造依据，就不能既保留又声称合规；只有磁件本身作为 Available Component（§1.7(b)(i)，可单独采购且接口/规格足够）时，才可只发规格书级接口。校准工装/生产测试脚本属制造辅助、不是 Make 必需，可保留；校准算法与判据应公开。发布清单要把这条写成门禁，不能只写“保留”。
