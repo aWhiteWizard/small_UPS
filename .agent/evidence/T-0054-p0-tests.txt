@@ -1,0 +1,16 @@
+KIND: tests
+TASK: T-0054
+DATE: 2026-11-21
+BASE: 757db0db9d61b93f96e153729436628b03e368c4
+C1: c6c1b953d5602b9042d39de7650b7a1cd99f63d9
+CMD: git diff --name-only base..C1        -> .agent/docs/architecture.md（仅本单文件）
+CMD: git diff --numstat base..C1          -> 206  0  .agent/docs/architecture.md
+CMD: git diff --check base..C1            -> 无输出，exit 0
+CMD: (Get-Content architecture.md).Count  -> 3020 行
+SEC: §21 = 2816–3020 = 205 行（目标 ≤300）
+ENC: UTF-8 BOM = EF BB BF；CRLF = 3020；LF-only = 0
+LINT: Tab = 0；行尾空白 = 0；无 CR 混行
+KEY: CERN-OHL-S 12；§1.8 5；§1.9 1；§1.10 1；§6.1 1；§8.2 2
+KEY: 必须原厂 5；可替换（通用）6；可替换（需首件）8；D-07 9
+KEY: Ticket: T-0054 1；Evidence: T-0054 1；非医疗 1；适销性 1；特定用途适用性 1
+SCOPE: 纯 .md，无代码/配置；文档线阈值 8 文件/1500 行，本单 1 文件/206 行

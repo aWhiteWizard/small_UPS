@@ -1,0 +1,10 @@
+KIND: g0
+TASK: T-0054
+DATE: 2026-11-21
+BASE: 757db0db9d61b93f96e153729436628b03e368c4
+CMD: powershell -NoProfile -ExecutionPolicy Bypass -File firmware/tools/check-env.ps1
+RESULT: CHECK-ENV: PASS（10/10），exit 0
+CMD: powershell -NoProfile -ExecutionPolicy Bypass -File firmware/build.ps1 -Clean
+RESULT: exit 0；FLASH 1544 B（128 KB，1.18%）；RAM 1584 B（36 KB，4.30%）
+NOTE: 新基线无 .tools；按 T-0002 共享缓存建 junction `T-0054/.tools -> T-0002/.tools`（gitignored，不在 diff）
+NOTE: 本单纯文档，未改固件/构建/配置；G0 仅证明基线可构建，无回归
