@@ -2,7 +2,8 @@ KIND: sha
 TICKET: T-0043
 BASE_SHA: 71f134c21204952f24d3f9934d601bb5189c21ee
 CONTENT_COMMIT: 5a98d9aa595cb6dd9dcf3a2213d4e0a44cac77d2
-EVIDENCE_COMMIT: 见最终报告（本文件所在提交，SHA 不能自指）
+EVIDENCE_COMMIT: e50e8a1d4bbaf29b601f2124eb0bf7f954554a68
+C3_BACKFILL_NOTE: 本文件所在 C3 仅回填 C2 SHA；C3 自身 SHA 见最终报告/远端
 BRANCH: task/T-0043
 WORKTREE: D:\workspace\wt\small-ups\T-0043
 
@@ -10,17 +11,32 @@ WORKTREE: D:\workspace\wt\small-ups\T-0043
 $ git push origin HEAD:master
    71f134c..5a98d9a  HEAD -> master
 exit 0
+PUSH_C1: exit 0 (71f134c..5a98d9a HEAD -> master)
 == C1 ls-remote 核对 ==
 $ git rev-parse HEAD
 5a98d9aa595cb6dd9dcf3a2213d4e0a44cac77d2
 $ git ls-remote origin refs/heads/master
 5a98d9aa595cb6dd9dcf3a2213d4e0a44cac77d2	refs/heads/master
+LS_REMOTE_HEAD: 5a98d9aa595cb6dd9dcf3a2213d4e0a44cac77d2
+EQUAL: yes
+
+== C2 push（证据提交，body 带 Evidence: T-0043）==
+$ git push origin HEAD:master
+   5a98d9a..e50e8a1  HEAD -> master
+exit 0
+$ git rev-parse HEAD
+e50e8a1d4bbaf29b601f2124eb0bf7f954554a68
+$ git ls-remote origin refs/heads/master
+e50e8a1d4bbaf29b601f2124eb0bf7f954554a68	refs/heads/master
+LS_REMOTE_AFTER_EVIDENCE: e50e8a1d4bbaf29b601f2124eb0bf7f954554a68
 EQUAL: yes
 == ancestry ==
 $ git merge-base --is-ancestor 71f134c 5a98d9a → exit 0
 $ git merge-base --is-ancestor 5a98d9a HEAD → exit 0
-== git log --oneline 71f134c..HEAD ==
+== git log --oneline 71f134c..HEAD（C3 回填前）==
+e50e8a1 docs(T-0043): 记录 G0/tests/验收/SHA 证据与 worklog
 5a98d9a docs(T-0043): 主输出纹波收紧至 30/20mVpp（100kHz/68µH + 高边采样/ZCD）
+C3: 本文件回填提交（body Evidence: T-0043），最终 HEAD=ls-remote 见报告
 == git log -1 --format=%B（原文）==
 docs(T-0043): 主输出纹波收紧至 30/20mVpp（100kHz/68µH + 高边采样/ZCD）
 
