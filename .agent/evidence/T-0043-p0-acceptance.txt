@@ -1,0 +1,16 @@
+KIND: acceptance
+TICKET: T-0043
+CONTENT_COMMIT: 5a98d9aa595cb6dd9dcf3a2213d4e0a44cac77d2
+RESULT: 9/9 PASS（第 7 条含 DEVIATION 说明）
+
+1 PASS 主输出 0–48V/5A 由 ≤50/≤30 → ≤30/≤20mVpp；55V 母线 ≤100/≤150mVpp 及测法不变（R §2.8:408）
+2 PASS 0.5V 口径：30mVpp=绝对值/6% 相对值，报告双记，不得放宽 0.5V 以上各段（R §2.8:409）
+3 PASS 100kHz/68µH（47µH→68µH 口径已注明）、≥470µF 低 ESR；BOM +15–30 元、面积 +150–250mm²、温升 +3–5/−5–10/−3–5℃（R §2.8.1:418-420）
+4 PASS Ton=89/59/44ns；结论 100kHz+68µH，Ton_min≤60ns、blanking≤50ns 或可调、最小关断≤200ns；退 75kHz/82–100µH（R §2.8.1:423-424）
+5 PASS 高边采样采纳；SR ZCD 采纳（二次防倒灌）；预设维持 8 组（8–10 区间）；OVP/OCP 可设、OPP 不设、UVP 固定（R §2.8.1 表:429-433）
+6 PASS 0.5/12/24/48V×满载/半载=8 组 Vpp+波形；6 点仍全测；20MHz/弹簧地环/端子处（R §2.8.1:436-438；A §10.3:842-848）
+7 PASS R §2.8/§2.8.1、A §2.4/§10.1/§10.3 已更新；R 附录 C 追加 T-0043 行并注 RT300-MKV 15.5–19mVpp（R:1153）
+8 PASS 内容提交 body 带 `Ticket: T-0043`；证据提交带 `Evidence: T-0043`；报告附 commit 与 git log 原文
+9 PASS 纯文档单口径：3 文件 / 165 行（+103/−62），证据文件不计入阈值
+
+DEVIATION: 验收 7 的 `.agent/docs/test-plan.md` 不存在；自 T-0032 起 test-plan 为 `docs/test-plan.md` 摘要引用页，正文在 `.agent/docs/architecture.md` §10.3，本单按三份事实源改 A §10.1/§10.3，不新建文件。

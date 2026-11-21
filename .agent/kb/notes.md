@@ -594,3 +594,12 @@ KB-TAGS: utf8-bom, g0, review, t-0042
 
 G2 可能因 G0 写“无 BOM”而把 architecture.md 的 BOM 记 advisory；但本项目约定 architecture.md 保留 UTF-8 BOM（T-0040/T-0046）。正确修法是保留/恢复 BOM 并把 G0 改为如实记录（requirements/modules 无 BOM，architecture 有 BOM），不要为了迎合 G0 删除 BOM。
 
+
+## test-plan 自 T-0032 起是摘要页，验收方法在 architecture §10.3
+
+KB-TYPE: content
+KB-EVIDENCE: `docs/test-plan.md:1-7`（状态/唯一事实源/不要在本文件新增测试内容或判据）；`.agent/docs/architecture.md:805`（§10 章头“本章全文承接旧 docs/test-plan.md”）
+KB-LAYER: 1_application
+KB-TAGS: docs, test-plan, redirect, acceptance, t-0043
+
+需求/变更单若写“更新 `.agent/docs/test-plan.md` 验收方法”，先查文件是否存在：T-0032 起 `.agent/docs/test-plan.md` 不存在，只有 `docs/test-plan.md` 摘要引用页，且页头明确“不要在本文件新增测试内容或判据”。正确落点是 `.agent/docs/architecture.md` §10.1（6 点表）/§10.3（纹波测法）；报告记 DEVIATION 说明工单路径过期，不要为凑路径新建 `.agent/docs/test-plan.md`（三份事实源之外的测试文档不认）。

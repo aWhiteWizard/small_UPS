@@ -1,0 +1,18 @@
+KIND: g0
+TICKET: T-0043
+BASE_SHA: 71f134c21204952f24d3f9934d601bb5189c21ee
+HEAD_AT_START: 71f134c21204952f24d3f9934d601bb5189c21ee
+BRANCH: task/T-0043
+WORKTREE: D:\workspace\wt\small-ups\T-0043
+STATUS_AT_START: clean (git status --porcelain=v1 -uall 空)
+CONTENT_COMMIT: 5a98d9aa595cb6dd9dcf3a2213d4e0a44cac77d2
+
+G0_RESULT: PASS
+- baseSha：开工 `git rev-parse HEAD` = 71f134c21204952f24d3f9934d601bb5189c21ee = task.baseSha；未 merge/pull/rebase/reset。
+- 工作区：开工 clean；C1 后仅 3 个 .agent/docs/*.md 文件改动且已提交，无旧目录/他单文件混入。
+- diff 范围：`git diff --name-only 71f134c..5a98d9a` = requirements.md / architecture.md / modules.md，均 .md；无代码/配置。
+- 规模（文档线）：3 文件 / +103 −62（165 行），≤8 文件 / ≤1500 行提示线；无超限。
+- `git diff --check`：无输出，exit 0。
+- BOM：requirements 23 20 E5（无 BOM）；architecture EF BB BF（有 BOM，T-0040/T-0046 约定，edit 后已恢复）；modules 23 20 E5（无 BOM）。
+- docs/ 四份摘要页未改；.agent/requirements.md、requirements-draft.md、mech-draft.md 未改。
+- test-plan：`.agent/docs/test-plan.md` 不存在；T-0032 起 docs/test-plan.md 为摘要引用页，正文在 architecture §10.3；本单不新建，见 acceptance 的 DEVIATION。

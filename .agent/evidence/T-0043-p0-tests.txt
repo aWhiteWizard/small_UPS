@@ -1,0 +1,49 @@
+KIND: tests
+TICKET: T-0043
+COMMAND: [IO.File]::ReadAllText(UTF8, no BOM) + String.Contains 逐条字符检查
+SCOPE: 验收 1–7 的落点；三份事实源交叉引用；旧值残留负向检查
+RESULT: FAIL_COUNT=0（35/35 PASS）
+
+PASS R 主输出 30/20 必达/目标
+PASS R 55V 母线不变
+PASS R 0.5V 6% 口径
+PASS R 不得放宽
+PASS R 100kHz/68µH
+PASS R 470µF/低ESR
+PASS R BOM 代价
+PASS R 板面积代价
+PASS R 温升代价
+PASS R Ton 89ns
+PASS R Ton 150k 59ns
+PASS R Ton 200k 44ns
+PASS R 控制器条件 Ton_min
+PASS R 退 75kHz
+PASS R 高边采样采纳
+PASS R ZCD 采纳
+PASS R 预设 8–10
+PASS R 阈值四项
+PASS R 4 点验收
+PASS R 20MHz/弹簧地环/端子
+PASS R 变更记录
+PASS R RT300 依据
+PASS A §2.4 100kHz
+PASS A 高边采样
+PASS A SR ZCD
+PASS A 10.3 30/20
+PASS A 10.3 0.5V 6%
+PASS A C9 关闭
+PASS A D-21 落定
+PASS A 控制器条件
+PASS M 1.4 30/20
+PASS M 1.4 68µH/470µF
+PASS M 1.4 高边采样
+PASS M 1.3 ZCD
+PASS M 1.7 阈值口径
+
+== 负向（旧值不得作为现行判据） ==
+PASS 旧串 "≤50mVpp 必达" 次数 = 0
+PASS 旧串 "≤50mVpp（目标 ≤30）" 次数 = 0
+PASS 旧串 "210µF" 次数 = 0
+PASS 旧串 "Ton_min ≤40ns"/"Ton_min≤40ns" 次数 = 0
+PASS 现行判据 "同步 buck 200kHz" 次数 = 0（"200kHz" 仅作 55V SR 频率/提频对比/旧值说明）
+PASS "33µH" 仅 2 处历史说明（R:418 "由 200kHz/33µH 调整"、A:1634 "旧 R §3.5.7 为 200kHz/33µH"）
