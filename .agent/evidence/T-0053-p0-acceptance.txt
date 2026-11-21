@@ -5,5 +5,5 @@ TASK: T-0053
 3 PASS 降本路径: §20.3 2641-2669, descending; risk labels lead time/cert/life/margin; Path A 687 (+87), B 658 (+58), C 600 (0) with gap
 4 PASS 复测: §20.4 2671-2694, 5 mandatory tests + reuse conditions same PN/spec/batch
 5 PASS BOM: §20.5 2696-2763, P/D tables with designator/name/spec/qty/V1/V2/note; §20.6 2765-2798 prototype 1,743 and 100-set 950/687/658
-6 PASS 提交: C1=527187a (Ticket: T-0053); C2=686f654 (Evidence: T-0053); C3 final record; push/ls-remote in p0-sha.txt
+6 PASS 提交: C1=527187a (Ticket: T-0053); C2=686f654/C3=93362b9/C4 final record (Evidence: T-0053); push/ls-remote in p0-sha.txt
 7 PASS 规模: doc 1 file / +223 lines (<=300 target); evidence excluded from scale

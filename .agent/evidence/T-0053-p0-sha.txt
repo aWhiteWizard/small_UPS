@@ -14,13 +14,17 @@ EQUAL_C1: true (LOCAL_HEAD == LS_REMOTE_C1)
 EVIDENCE_COMMIT: 686f6548eca8d0c3468d5d39b2670465155d8046 (body `Evidence: T-0053`)
 PUSH_C2: 527187a..686f654 HEAD -> master (exit 0)
 LS_REMOTE_C2: 686f6548eca8d0c3468d5d39b2670465155d8046 refs/heads/master
-BACKFILL_COMMIT: C3 (this file's commit, body `Evidence: T-0053`); final HEAD in report
-REMOTE_MASTER_AFTER_C2: 686f6548eca8d0c3468d5d39b2670465155d8046
-FINAL_DIFF: content 223/0; C2 evidence-only 4 P0 + worklog + KB (87/0)
+C3_COMMIT: 93362b92d900ebc70fa0882d4e2bb79a174e4608 (body `Evidence: T-0053`)
+PUSH_C3: 686f654..93362b9 HEAD -> master (exit 0)
+LS_REMOTE_C3: 93362b92d900ebc70fa0882d4e2bb79a174e4608 refs/heads/master
+BACKFILL_COMMIT: C4 (this file's commit, body `Evidence: T-0053`); final HEAD in report
+REMOTE_MASTER_AFTER_C3: 93362b92d900ebc70fa0882d4e2bb79a174e4608
+FINAL_DIFF: content 223/0; evidence 6 files 110/0 (4 P0 + worklog + KB)
 BASE_IS_ANCESTOR_OF_C1: YES (git merge-base --is-ancestor -> exit 0)
 TRACKED_STATUS_AFTER_C1: clean before evidence creation
 
-## git log --oneline 7c0a31a..HEAD (C2 后)
+## git log --oneline 7c0a31a..HEAD (C3 后)
+93362b9 docs(T-0053): 回填 C2 SHA 与最终 worklog
 686f654 docs(T-0053): 记录 P0 证据与 worklog
 527187a docs(T-0053): 架构⑤-1 版本与 BOM 策略（V1/V2 差异/降本/复测）
 
