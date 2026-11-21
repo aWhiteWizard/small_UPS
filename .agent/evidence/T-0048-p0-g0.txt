@@ -1,0 +1,16 @@
+KIND: g0
+TICKET: T-0048
+BASE_SHA: 1ac7577e1f3a7ee9b63dc7b93e5500ee77696024
+HEAD_AT_START: 1ac7577e1f3a7ee9b63dc7b93e5500ee77696024
+BRANCH: task/T-0048
+WORKTREE: D:\workspace\wt\small-ups\T-0048
+STATUS_AT_START: clean
+WORKLOG_AT_START: absent
+G0_RESULT: PASS
+
+- 开工 `git rev-parse HEAD`=1ac7577=origin/master=task.baseSha；`git status --porcelain=v1 -uall` 为空；无 worklog（重派重建后首跑，无断点可续）。
+- 交付范围：仅 `.agent/docs/architecture.md`；`requirements.md`/`modules.md` 0 改动；无代码/配置。
+- 规模：1 文件 +238 −2（新增 §14 235 行 + §7.3/§7.6 两处口径对齐），文档单口径 ≤300 行，未超。
+- 背景：旧 worktree 内容提交 a62340b 已 PASS 但基于旧 base 8566822；引擎重建到 1ac7577，T-0047 已占 §13，本单按原内容重放为 §14。
+- docs-paths merge 未运行：本单只新增章节，无旧正文迁入；`node --version` 报命令不存在，无法运行（与旧跑一致）。
+- 证据文件不计入阈值；P0 文本合计约 100 行。

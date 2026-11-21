@@ -611,3 +611,11 @@ KB-EVIDENCE: `git ls-remote origin refs/heads/master`=594f151；`git push` → `
 KB-TAGS: git, replay, worktree, push, t-0047
 
 当 worktree 被引擎刷新到新的 origin/master 且本单旧提交只在备份分支时，不要在新 base 上直接 merge/rebase 旧分支（会把他人文件混进本单 diff）。做法：①旧 HEAD 建备份分支；②在新 base 上 cherry-pick 本单内容提交，按当前 base 重编号（本单 §12→§13）并合并同文件改动；③`git diff --name-only <new base>..HEAD` 必须只剩本单文件；④push 前 `git ls-remote` 对照，push 后记录 `PUSH exit 0`、`FINAL_HEAD`、`ls-remote` 相等与 C1 祖先关系；证据提交再补 `Evidence:` trailer。
+## 重派重建且内容已 PASS：按新 base 章号重放，不重写正文
+
+KB-TYPE: method
+KB-EVIDENCE: `git log --all --grep=T-0048` → a62340b；`.agent/docs/architecture.md:1279`（§14 保护架构）；`git diff --numstat 1ac7577..0061535` → `238	2	.agent/docs/architecture.md`
+KB-LAYER: 1_application
+KB-TAGS: worktree, replay, renumber, docs, t-0048
+
+引擎把 worktree 重建到新 origin/master 后，若旧内容提交已 PASS 但基于旧 base：先 `git log --all --grep=<本单>` 找旧提交，按新 base 已占章号重编号后整段重放（保留正文，不改阈值/结论），再用“归一化章号后逐行比对”证明只改了编号/基线说明；不要重写章节，也不要把他人章节并入本单 diff。推前 `git ls-remote` 对 origin/master，快进后 push，紧接 `ls-remote` 核对 SHA=HEAD。

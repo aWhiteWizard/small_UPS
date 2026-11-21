@@ -1,0 +1,58 @@
+KIND: sha
+TICKET: T-0048
+TASK_BASE_SHA: 1ac7577e1f3a7ee9b63dc7b93e5500ee77696024
+BASE_SOURCE: origin/master at start = HEAD at start
+CONTENT_COMMIT: 006153577ff259fbdb19ae0ac3ad8649acc2ecb5
+EVIDENCE_COMMIT: 本文件所在提交 C2（body `Evidence: T-0048`）
+BACKFILL_COMMIT: C3（回填 C2 SHA 与 push 结果；最终 HEAD 见报告）
+BRANCH: task/T-0048
+REMOTE_MASTER_BEFORE: 1ac7577e1f3a7ee9b63dc7b93e5500ee77696024
+REMOTE_MASTER_AFTER_CONTENT: 006153577ff259fbdb19ae0ac3ad8649acc2ecb5
+HEAD_EQUALS_REMOTE_AFTER_CONTENT: YES
+
+## git log --oneline 1ac7577..HEAD（内容提交后）
+0061535 docs(T-0048): 架构⑥-2 保护架构（检测点/RS 锁存/CLEAR 与门/直拉清单）
+
+## git show --stat --format=fuller 0061535
+commit 006153577ff259fbdb19ae0ac3ad8649acc2ecb5
+Author: aWhiteWizard <www.123518341@qq.com>
+AuthorDate: 2026-11-21 08:47:24 +0800
+    docs(T-0048): 架构⑥-2 保护架构（检测点/RS 锁存/CLEAR 与门/直拉清单）
+ .agent/docs/architecture.md | 240 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 238 insertions(+), 2 deletions(-)
+
+## git log -1 --format=%B 0061535（trailer 原文）
+docs(T-0048): 架构⑥-2 保护架构（检测点/RS 锁存/CLEAR 与门/直拉清单）
+
+- 新增 §14（14.1–14.7，接 T-0047 §13）：D-29 比较器+RS 锁存+硬件直拉；ALERT 开漏线与；CLEAR 四条件与门
+- 逐故障检测点/执行路径：OVP 双路或门、2mΩ OCP/SCP、NTC 95/80℃、反灌 0.2A/10µs、EN 直入驱动门
+- 直拉清单（OVP/OCP/SCP/OTP/反灌/HB/SHORT_PIN）与作用点；MCU 分工边界与状态读取
+- P-15 无源触点读取；10µs 示波器验证、故障注入、MCU 死机用例、CLEAR 矩阵
+- 对齐 §7.3/§7.6 与 R §2.3.5 的两处时序措辞
+- 基线 1ac7577 重放：T-0047 §13 已落地，本章编号由 §13 顺延 §14；正文与 a62340b 一致，仅章号/基线说明更新
+
+Ticket: T-0048
+
+## git diff --numstat 1ac7577..0061535
+238	2	.agent/docs/architecture.md
+
+## git diff --name-only 1ac7577..0061535
+.agent/docs/architecture.md
+
+## git push origin HEAD:refs/heads/master（原文）
+To github.com:aWhiteWizard/small_UPS.git
+   1ac7577..0061535  HEAD -> master
+PUSH_EXIT: 0
+
+## git ls-remote origin refs/heads/master（push 后）
+006153577ff259fbdb19ae0ac3ad8649acc2ecb5	refs/heads/master
+LOCAL_HEAD: 006153577ff259fbdb19ae0ac3ad8649acc2ecb5
+HEAD_EQUALS_REMOTE: YES
+
+## ancestry / clean
+git merge-base --is-ancestor 1ac7577 HEAD → exit 0
+git status --porcelain=v1 -uall（C1 后）→ 空
+
+## 说明
+- 旧内容 a62340b 为 PASS 稿；新 base 1ac7577 已含 T-0047 §13，本章顺延 §14，正文未改写。
+- C2（本文件）push 后 ls-remote=C2；C3 回填 C2 SHA 与 push 结果，最终 HEAD 见报告。
