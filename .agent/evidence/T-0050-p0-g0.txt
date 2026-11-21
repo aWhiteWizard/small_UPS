@@ -1,0 +1,15 @@
+KIND: g0
+TICKET: T-0050
+BASE_SHA: b7a213b9ed4493316a096d8fb5edabe4b7199597
+HEAD_AT_START: b7a213b9ed4493316a096d8fb5edabe4b7199597
+BRANCH: task/T-0050
+WORKTREE: D:\workspace\wt\small-ups\T-0050
+STATUS_AT_START: clean
+G0_RESULT: PASS
+
+- 开工核对：git rev-parse HEAD=b7a213b=引擎 baseSha；git status --porcelain=v1 -uall 空；无 worklog（重派后首次开工）。
+- 改动范围：只改 .agent/docs/architecture.md 新增 §15（1515–1671）；requirements/modules/源码/Hardware 0 改动。
+- 规模：内容 1 文件 / +158 −0；新增 158 行（≤300）；证据/worklog/KB 不计阈值。
+- 现有脚手架：check-env.ps1 10/10、CHECK-ENV: PASS、exit 0；uild.ps1 -Clean exit 0，psu_minimal.elf FLASH 1544 B/128 KB（1.18%）、RAM 1584 B/36 KB（4.30%）。
+- .tools 为本机 T-0002 的 junction（ignored）；irmware/build/ ignored。
+ode 不可用，docs-paths merge 未运行（纯新增章节，无旧正文迁入）。

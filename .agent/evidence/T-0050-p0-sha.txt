@@ -1,0 +1,34 @@
+KIND: sha
+TICKET: T-0050
+TASK_BASE_SHA: b7a213b9ed4493316a096d8fb5edabe4b7199597
+BASE_SOURCE: origin/master at start = HEAD at start
+CONTENT_COMMIT: 1cb110e09976c63f5694aa55c7547018a64ba1aa
+BRANCH: task/T-0050
+REMOTE_MASTER_BEFORE: b7a213b9ed4493316a096d8fb5edabe4b7199597
+EVIDENCE_COMMIT: （本文件所在提交 C2，body Evidence: T-0050；SHA 见报告）
+BACKFILL_COMMIT: C3（body Evidence: T-0050，回填 C2 与最终 push；最终 HEAD 见报告）
+
+## C1 push / ls-remote（原文）
+git push origin HEAD:refs/heads/master
+To github.com:aWhiteWizard/small_UPS.git
+   b7a213b..1cb110e  HEAD -> master
+(exit 0)
+
+git ls-remote origin refs/heads/master
+1cb110e09976c63f5694aa55c7547018a64ba1aa	refs/heads/master
+VERIFY_C1: LOCAL_HEAD == LS_REMOTE_AFTER_C1 == 1cb110e09976c63f5694aa55c7547018a64ba1aa
+
+## git log --oneline（C1 后）
+1cb110e docs(T-0050): 架构⑦-1 固件分层/本体状态机/故障调度与测试策略
+
+## git log -1 --format=%B 1cb110e（trailer 原文）
+docs(T-0050): 架构⑦-1 固件分层/本体状态机/故障调度与测试策略
+
+- 新增 §15（158 行，接 T-0048 §14，位于 T-0051 §16 前）：四层目录与单向依赖/禁跨层
+- 本体状态机 BOOT/POR/SELFTEST/STANDBY/READY/OUTPUT/FAULT_LATCH/CAL，逐状态进入/命令/退出/超时/回退
+- 与 T-0049 上下电时序 12 行逐条对应；硬件直拉/MCU 记录分工、读码→CLEAR→重新使能
+- 1ms 任务预算/中断优先级/IWDG 200ms 喂狗点；PC 单测/G0/桩仿真/HIL 策略
+- 引用 D-08/D-32；不改 R 正文、阈值、故障码
+- 基线 b7a213b 重放：内容与已 PASS 的 85a1d8f 一致，仅按新基线位置插入
+
+Ticket: T-0050

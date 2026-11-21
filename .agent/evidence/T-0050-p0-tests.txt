@@ -1,0 +1,17 @@
+KIND: tests
+TICKET: T-0050
+CONTENT_COMMIT: 1cb110e09976c63f5694aa55c7547018a64ba1aa
+RANGE: b7a213b9ed4493316a096d8fb5edabe4b7199597..1cb110e09976c63f5694aa55c7547018a64ba1aa
+COMMANDS: git diff --check / numstat / Markdown 表块 / 围栏 / 关键词 / 编码 / 旧块比对 / 脚手架
+RESULT: PASS（checks=10 fail=0）
+
+1) git diff --check b7a213b..1cb110e → 无输出，exit 0。
+2) git diff --numstat b7a213b..1cb110e → 158 0 .agent/docs/architecture.md；name-only 仅该文件。
+3) 旧块比对：新 §15（1515–1671）与 85a1d8f:.agent/docs/architecture.md:646-802 CRLF 归一后逐字符相同（10432/10432）。
+4) Markdown 表块：89 个连续表块 | 数一致，bad=0；代码围栏 32 个（偶数）。
+5) 编码/格式：2219 行；UTF-8 无 BOM；tabs=0；行尾空白=0。
+6) 关键词 25/25：§15 标题、D-08、D-32、BSP/HAL、驱动层、服务层、应用层、不得直接操作寄存器、POR/SELFTEST/STANDBY/READY/OUTPUT/FAULT_LATCH/CAL/BOOT、T-0049、硬件直拉、CLEAR=0xA5、1ms、IWDG、200ms、保护 > 通信 > 采样 > 人机、G0、regmap、校准算法、psu_host_tests；missing=0。
+7) 位置：§14 尾 1513；§15 1515–1671；空行 1672；§16 1673。
+8) 现有脚手架：check-env.ps1 10/10 PASS、exit 0；uild.ps1 -Clean exit 0（FLASH 1544 B、RAM 1584 B）。
+9) 提交范围：C1 仅 .agent/docs/architecture.md；不含 requirements/modules/源码/配置。
+10) 无 live e2e、无伪造单测：psu_host_tests/桩/HIL 是 §15.6 实现门槛，本单纯文档。

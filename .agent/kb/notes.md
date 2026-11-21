@@ -619,3 +619,14 @@ KB-LAYER: 1_application
 KB-TAGS: worktree, replay, renumber, docs, t-0048
 
 引擎把 worktree 重建到新 origin/master 后，若旧内容提交已 PASS 但基于旧 base：先 `git log --all --grep=<本单>` 找旧提交，按新 base 已占章号重编号后整段重放（保留正文，不改阈值/结论），再用“归一化章号后逐行比对”证明只改了编号/基线说明；不要重写章节，也不要把他人章节并入本单 diff。推前 `git ls-remote` 对 origin/master，快进后 push，紧接 `ls-remote` 核对 SHA=HEAD。
+
+## 重派重建后按旧分支恢复已 PASS 文档并自推交付（T-0050）
+
+KB-TYPE: method
+KB-EVIDENCE: `git show 85a1d8f:.agent/docs/architecture.md` 第 646–802 行与 `.agent/docs/architecture.md:1515-1671` CRLF 归一后 10432/10432 字符相同；`git push origin HEAD:refs/heads/master` → `b7a213b..1cb110e HEAD -> master`；`git ls-remote` 随后 = 1cb110e
+KB-LAYER: 1_application
+KB-TAGS: git, worktree, replay, push, evidence, t-0050
+
+- worktree 被引擎重建到新 base、旧内容提交仍可用 `git log --all --grep=<单号>` 找到时，用 `git show <旧提交>:<文件>` 取已 PASS 章节，按新 base 的前后章位置原样插入，不重写正文；用 CRLF 归一后的字符数/逐字符比对证明只移动位置。
+- 自交付顺序：C1 内容（body `Ticket: <单号>`）→ push → `ls-remote` 记录 C1；C2 证据（body `Evidence: <单号>`）→ push；C3 回填 C2 与最终 push（body `Evidence: <单号>`）→ push，C3 SHA 只写报告，避免证据自指。
+- 纯文档单的 G0 仍要跑 `git diff --check`/脚手架；本单 `check-env.ps1` 10/10、`build.ps1 -Clean` exit 0，未伪造 host 单测/live e2e。
