@@ -1,9 +1,30 @@
 KIND: sha
 TASK: T-0053
-BASE: 7c0a31a3c06412a6952ad217cfb1ea07a4900f3a
-C1: 527187a0c36823197884282692e08735dd70625a
-PUSH_C1: 7c0a31a..527187a HEAD -> master; exit 0
+TASK_BASE_SHA: 7c0a31a3c06412a6952ad217cfb1ea07a4900f3a
+BASE_SOURCE: origin/master at start = HEAD at start
+CONTENT_COMMIT: 527187a0c36823197884282692e08735dd70625a
+CONTENT_PARENT: 7c0a31a3c06412a6952ad217cfb1ea07a4900f3a
+CONTENT_SUBJECT: docs(T-0053): 架构⑤-1 版本与 BOM 策略（V1/V2 差异/降本/复测）
+CONTENT_TRAILER: Ticket: T-0053
+CONTENT_STAT: 1 file changed, 223 insertions(+)
+CONTENT_DIFF: git diff --numstat 7c0a31a..527187a -> 223 0 .agent/docs/architecture.md
+PUSH_C1: git push origin HEAD:refs/heads/master -> 7c0a31a..527187a HEAD -> master (exit 0)
 LS_REMOTE_C1: 527187a0c36823197884282692e08735dd70625a refs/heads/master
-C2: pending (evidence/worklog/KB)
-C3: pending (final SHA/worklog)
-FINAL_HEAD: pending
+EQUAL_C1: true (LOCAL_HEAD == LS_REMOTE_C1)
+EVIDENCE_COMMIT: 686f6548eca8d0c3468d5d39b2670465155d8046 (body `Evidence: T-0053`)
+PUSH_C2: 527187a..686f654 HEAD -> master (exit 0)
+LS_REMOTE_C2: 686f6548eca8d0c3468d5d39b2670465155d8046 refs/heads/master
+BACKFILL_COMMIT: C3 (this file's commit, body `Evidence: T-0053`); final HEAD in report
+REMOTE_MASTER_AFTER_C2: 686f6548eca8d0c3468d5d39b2670465155d8046
+FINAL_DIFF: content 223/0; C2 evidence-only 4 P0 + worklog + KB (87/0)
+BASE_IS_ANCESTOR_OF_C1: YES (git merge-base --is-ancestor -> exit 0)
+TRACKED_STATUS_AFTER_C1: clean before evidence creation
+
+## git log --oneline 7c0a31a..HEAD (C2 后)
+686f654 docs(T-0053): 记录 P0 证据与 worklog
+527187a docs(T-0053): 架构⑤-1 版本与 BOM 策略（V1/V2 差异/降本/复测）
+
+## git log -1 --format=%B 527187a
+docs(T-0053): 架构⑤-1 版本与 BOM 策略（V1/V2 差异/降本/复测）
+
+Ticket: T-0053
