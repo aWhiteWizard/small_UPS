@@ -2237,3 +2237,201 @@ B1 -> ERASE(len,crc32) -> 擦除 App -> WRITE(offset,data)...
 | D-30 | 1:100 分压 + 2mΩ + INA240×50 + 16 位 ADC + 2ppm 基准 | §18.3/§18.4 |
 | D-31 | DAC8552 双通道→缓冲→双环二极管或→COMP；MCU 每 1ms 更新 | §18.3 |
 | D-32 | 上电 PFC→PG→LLC→55V→buck→四条件→继电器→升压；掉电倒序 | §18.1/§18.3 |
+
+## 19. 固件架构（续）：校准流程与调试板固件（T-0052）
+
+> 本章为 ⑦-3，承接 §15（本体固件分层/状态机）与 §16（I2C/寄存器/心跳/Bootloader/EEPROM）；需求口径见 R §3.4、§4.2、§4.5 与附录 J。§15/§16 已按序合入（现行 §15/§16）；§17 为 T-0046 覆盖矩阵、§18 为 T-0038 控制架构，本章按现行末号取 §19；本章只引用其编号，不复制其正文。校准与调试板固件均不在本章写实现代码，只定分层、时序、接口与测试门槛。
+
+### 19.1 校准固件分层与数据流
+
+| 层 | 模块 | 职责 | 禁止 |
+|---|---|---|---|
+| 应用 | `cal_service` | 会话调度、状态机 C0–C9、错误映射 | 直接读写 EEPROM/寄存器 |
+| 服务 | `cal_session` | 点表 RAM、索引/量程/递增校验、CRC/版本/回读 | 绕过 §9.1 状态机 |
+| 服务 | `cal_store` | EEPROM A/B 双区、magic/CRC/版本、上电选表 | 非 COMMIT 写 EEPROM |
+| 驱动 | `i2c_slave`/`uart_svc` | 寄存器/ASCII 适配、busy/NACK | 自行判 CRC/版本 |
+| BSP | `eeprom`/`adc`/`dac` | 字节读写、采样、设定 | 解释校准语义 |
+
+- 唯一会话 owner 是 `cal_session`；I2C 与 UART 只是适配器，共用同一会话、同一 30s 超时与同一双区（R §3.4.5）。I2C 主通道与 UART 服务口同时只允许一个会话，另一通道回 busy。
+- 数据流：PC 工具 → USB-C CDC → D 透传 → A28/A29 → `uart_svc` → `cal_session`；或 I2C 主机 → `i2c_slave` 寄存器 → `cal_session`。两条路径的校验、版本、COMMIT 与回退必须完全一致。
+- RAM 中只保留当前通道的 N 点 `(set,meas)`；旧活动表在 COMMIT 成功前一直用于运行/显示，失败不污染旧表。点表写完才允许写 VERSION/CRC 与 COMMIT。
+- 校准期间 `cal_session` 屏蔽普通 V/I/OUTPUT_ENABLE 写（NACK/ERR busy）；READ/CAL STATUS/ABORT 始终放行；故障仍按硬件直拉与 §7.3 锁存，任何故障立即中止会话。
+
+### 19.2 点表、限流与点录入
+
+| 通道 | 索引 | 标称点 | 编码 | 校准态限流 | 夹具条件（建议） |
+|---|---|---|---|---|---|
+| V | 0–5 | 0.5/3.3/5/12/24/48 V | mV，u16 | 0.5 A | 电子负载 CC 0.1–0.4 A（低于限流，保持 CV）；低压段可用 0.4 A/≥25 W 电阻 |
+| I | 0–2 | 1.0/2.5/5.0 A | 0.1 mA，u16 | 目标点+1 A = 2.0/3.5/6.0 A | 1 A/2.5 A 用 5.0 V，5 A 用 12.0 V；负载 CC |
+
+- 固件以标称点表为白名单：`CAL_INDEX` 越界、`CAL_SET_POINT` 与标称点偏差 >1 LSB、`meas` 越界或 set/meas 非严格递增 → `CAL_STATUS=5`，会话保持，可重写当前点或 ABORT（R §3.4.2）。
+- 点录入顺序固定为索引递增：SET 只写影子并驱动该点，MEAS 才锁存 `(set,meas)`；未 SET 直接 MEAS、重复点、跳点均回点错。测量值由操作员/工具从 6 位半表读入，固件不反推、不插值补点。
+- 工具命令用 mV/mA，固件换算为 1 mV/0.1 mA 编码；I 通道的 CRC 输入按 mA×10 换算为 0.1 mA 后再算（R §3.4.1/§3.4.3）。
+- 限流在 BEGIN 时由校准态内部生效；V 0.5 A、I 目标点+1 A。6.0 A 是 5 A 点的限流值、不是工作点（实际电流仍为 5 A），仅校准态短时使用（建议单点 ≤10 s），仍受硬件 SCP 8 A、OVP/OTP/反灌保护；任何保护动作立即中止会话并锁存，不自动续测。
+- 校准输出由校准态内部使能（继电器闭合、限流生效），不依赖 D 的普通开启序列；COMMIT/ABORT 后立即关断、释放继电器，输出保持 OFF。校准前必须 `OUTPUT_ENABLE=0`、`RELAY_STATE=0`、`VOUT_ZERO=1`，否则 `CAL_STATUS=7`。
+
+### 19.3 COMMIT、回读校验与失败回退
+
+> 本节逐条对齐 R §3.3.1（T-0005 建表、T-0006 时序冻结）的 `CAL_CTRL/CAL_INDEX/CAL_SET_POINT/CAL_MEAS_POINT/CAL_CHECKSUM/CAL_VERSION/CAL_STATUS/CAL_ACTIVE`（0x22–0x2D）与 0x2F 设定 COMMIT；不新增地址、不改读写/复位/语义。0x2F 是 V/I 设定提交，校准提交只用 `CAL_CTRL=0x04`。
+
+```text
+输出 OFF + 无锁存故障?
+  ├─ 否 → CAL_STATUS=7，拒绝 BEGIN
+  └─ 是 → BEGIN V/I（限流、屏蔽普通命令）
+           → 逐点 SET/MEAS（校验索引/标称/递增）
+           → 全部 N 点 → 写 VERSION（>当前有效版本）+ CRC
+           → COMMIT（CAL_CTRL=0x04）
+                ├─ 重算 CRC/版本/点数/范围/次数/温度 失败 → CAL_STATUS=3/4/5，旧表不变
+                ├─ 写 EEPROM 非活动区 → 逐字节回读 + CRC 重算
+                │     ├─ 失败 → 旧表不变，CAL_STATUS=3，重试或 ABORT
+                │     └─ 成功 → 新区版本更高，RAM 切活动表
+                └─ CAL_STATUS=2，CAL_ACTIVE=1，输出 OFF
+```
+
+- CRC16-CCITT-FALSE：poly=0x1021、init=0xFFFF、不反射、xorout=0；范围小端 `'CAL6'`+channel+version+N×(set,meas)，V 31 B、I 19 B（R §3.4.3）。次数/温度为元数据，不参与本 CRC；是否纳入待 owner。
+- 版本 u16 1–65535 单调递增；0 保留未校准。COMMIT 前校验新版本 > 当前有效版本，否则 `CAL_STATUS=4`；不自动编号、不回绕，到顶先 CAL_RESTORE。
+- 双区 A/B：每区含 magic、channel、version、point_count、cal_count、temp、N 点、CRC16。只写非活动区；写完回读逐字节一致且 CRC 一致才切活动区；掉电/写坏时旧区仍有效，上电按“有效且版本最高”选表。切换不需要额外提交标志，新区的 version+CRC 即提交点。
+- 回读校验：写后立即读回整区，比较 magic/长度/点表/CRC；失败保留旧区、`CAL_STATUS=3`、不置 `CAL_ACTIVE`，并记一次 EEPROM 写失败计数（供 PC 工具读取）。COMMIT 前掉电不改旧表；COMMIT 中掉电，新区无效则旧表继续用。
+- 失败回退表：CRC 错→3；版本不递增→4；点错/非递增→5；条件不满足→7；双区均无有效表且存在 magic/CRC 错→`CAL_INVALID` 禁输出（R §3.4.6）；一区坏一区好→用好区并告警。CAL_RESTORE（0x06）仅输出 OFF 时接受，擦除两区、版本归 0、恒等映射。
+
+### 19.4 附录：校准操作指南（P5 整机测试阶段执行）
+
+> 本指南面向操作员，在 **P5 整机测试/出厂校准**阶段执行；开发阶段的预校准、样机调试数据不得作为出厂数据。每台整机必须完成 V6+I3 并留档；抽检复校按批次另行规定。
+
+**仪器与前提**
+
+| 项 | 要求 |
+|---|---|
+| 数字表 | 6 位半（如 34465A/8846A 级），DCV 0.1 µV–1000 V、DCI 10 A；校准证书在有效期内；预热 ≥60 min |
+| 电子负载 | ≥60 V/10 A，CC/CR/CV，带远端 sense；低压段能稳流 0.4 A（不足时用 0.4 A/≥25 W 电阻） |
+| 环境 | 23±5 ℃、RH ≤80%、无强气流；整机预热 ≥30 min；AC 220 V 经隔离变压器 |
+| 夹具 | 4 线开尔文夹、短粗铜线；DMM/负载 sense 接输出端子；I 档串 10 A 电流输入 |
+| D 侧 | PT100 模块已接且读数有效，或用 PT100 模拟器接在模块探头端（100.0 Ω/138.5 Ω）；否则 D 的 PT100_LOST 会拉低 EN，校准无法进行 |
+| 固件/工具 | 本体固件含 CAL 服务；PC 工具 T-0025–T-0028 已连接；记录 SN、FW、PCB Rev、旧 CAL_VERSION/CRC |
+
+**接线**：输出+ → DMM HI 与负载+；输出− → DMM LO 与负载−；V 档 DMM 并在端子，I 档 DMM 串在负载前（10 A 档）；负载 sense 与 DMM 均接输出端子，避免线阻计入。先接线、后上电；拆线前先关输出并断开 AC。
+
+**每步命令（PC 工具自动下发，手工串口仅排障）**
+
+| 步骤 | ASCII（UART，115200 8N1，`\r\n`） | I2C 寄存器 | 判据/动作 |
+|---|---|---|---|
+| 1 | `CAL BEGIN V` | `CAL_CTRL(0x22)=0x01` | `OK`，`STATUS 1`；限流 0.5 A；记录旧版本 |
+| 2 | `SET V i <mV>` | `CAL_INDEX(0x23)=i`、`CAL_SET_POINT(0x24)=<mV>` | 输出到标称点，等 DMM 稳定 |
+| 3 | `MEAS V i <mV>` | `CAL_MEAS_POINT(0x26)=<mV>`、`CAL_CTRL=0x03` | 锁存该点；i=0…5 |
+| 4 | `CAL VERSION <v>` | `CAL_VERSION(0x2A)=<v>` | v=旧有效版本+1，首次为 1 |
+| 5 | `CAL CRC <crc16>` | `CAL_CHECKSUM(0x28)=<crc16>` | 工具按 §19.3 计算；V 31 B |
+| 6 | `CAL COMMIT` | `CAL_CTRL=0x04` | `STATUS 2 1 <v>`；读回 CRC/版本一致；输出 OFF |
+| 7 | I 通道 | `CAL BEGIN I`、`SET/MEAS I 0…2`、`CAL VERSION/CRC/COMMIT` | 点值 1.0/2.5/5.0 A；限流 2.0/3.5/6.0 A |
+
+- 每次 SET 后等读数稳定（建议 2–3 s）再 MEAS；V 点用 0.1–0.4 A 负载，I 点用目标电流 CC；5 A 点用 12 V 夹具电压，避免线阻/负载最小压降使 CC 不成立。
+- COMMIT 前必须核对：当前通道 N 点齐全（V 6 / I 3）、set/meas 严格递增、版本大于旧值、CRC 与工具计算一致；任一不满足不 COMMIT。COMMIT 成功后断电重启，读 `CAL_STATUS=0`、`CAL_ACTIVE=1`、`CAL_VERSION/CAL_CHECKSUM` 与 CSV 一致，输出仍为 OFF。
+- 异常中止：DMM 溢出/开路、负载 OVP/OCP、本体报 OVP/OCP/OTP/反灌、PT100 掉线、USB 掉线、30 s 无命令、读数跳变——立即 `CAL ABORT`（或等 30 s 自动中止），确认输出 OFF；不得带故障继续点录。掉电/复位后旧表仍有效，重新 BEGIN 从头测，不复用未 COMMIT 的点。
+- 留档：每台一份 CSV，字段至少 SN、生产日期、PCB Rev、FW、CAL_VERSION、CAL_CHECKSUM、9 点 set/meas/误差、仪器编号/证书到期、环境温湿度、操作员、日期、COMMIT 结果；随批次保存至产品寿命期（建议 ≥10 年），并回填 R §2.10 生产信息区次数/最近校准日期。失败/中止也要留档（错误码、已测点、原因），不得只留成功记录。
+
+### 19.5 调试板固件分层、任务划分与主循环
+
+| 层 | 模块 | 职责 |
+|---|---|---|
+| 应用 | `app_fsm` | 待机/编辑/ON/FAULT/FORCED_OFF/CAL/UPGRADE 主状态机（R §4.2.3） |
+| 服务 | `ui_svc`/`temp_svc`/`fault_svc`/`up_svc` | 按键显示、PT100 判定、故障锁存/历史、升级透传 |
+| 驱动 | `seg`/`keys`/`modbus_rtu`/`cdc`/`i2c_master` | 数码管扫描、去抖、Modbus、USB CDC、I2C 主机 |
+| BSP | `gpio`/`tim`/`uart`/`usb`/`flash` | 引脚、1 ms 时基、串口、USB FS、A/B 槽 |
+
+- 裸机协作式调度，1 ms 基准节拍；中断只做收/发与时基，解析、判定、UI 全在主循环，禁止阻塞延时（除上电/bootloader）。
+- 主循环周期：1 ms 节拍；单次循环目标 ≤800 µs，长事务（Modbus/I2C/USB）状态机化；看门狗 200 ms，喂狗点只在主循环且 1 ms 任务健康时。
+- 优先级：安全（EN 低/强制关断/PT100 掉线）> I2C 心跳/故障 > 按键 UI > 显示 > USB-C。上+下长按 2 s 在任何任务/状态下都走硬关断路径，不排队等 UI。
+
+| 任务 | 周期 | 预算 | 内容 |
+|---|---|---|---|
+| `tick_1ms` | 1 ms | ≤100 µs | 8 位数码管移位扫描、按键采样、软件定时器、看门狗分频 |
+| `ui_10ms` | 10 ms | ≤300 µs | 实测 V/I 10 Hz 刷新、编辑态 2 Hz 闪烁、确认 3 闪 |
+| `key_20ms` | 20 ms | ≤200 µs | 去抖确认、短按/长按 2 s、0.5 s 后 5 Hz 连发、上+下组合 |
+| `i2c_100ms` | 100 ms | ≤1 ms | 心跳写、STATUS/FAULT 轮询、开关序列、3 次失败判 COMM_LOST |
+| `pt100_500ms` | 500 ms | ≤2 ms | Modbus FC03 单事务（超时 100 ms）、有效性/回差、掉线禁输出 |
+| `usb_main` | 事件 | ≤500 µs/行 | CDC 收发行缓冲、ASCII 解析、`TH/FAULT/CAL/UP` 分发 |
+| `house_1s` | 1 s | ≤200 µs | 温度/阈值快照、故障历史快照（RAM 环；跨上电按 G.6 #1 待定）、版本/状态 |
+
+### 19.6 数码管扫描与 5 键交互
+
+- 显示：2 行×4 位、共 8 位、带小数点；电压行小数点固定在 D2 后（`48.00`），电流行 D1 后（`5.000`）；量程 `0.00–48.00`/`0.000–5.000`，不得 5 位（R §4.2.1/J.1）。单位 V/A 走面板丝印，数码管不显示单位。
+- 扫描：1 ms/位、8 位一轮 8 ms（125 Hz，≥100 Hz 无可见闪烁）；每位先关段再换位（防鬼影），段驱动限流由硬件定；亮度用 PWM 占空比分 8 档，默认 60%，不设用户亮度键。测量数据 10 Hz 更新到帧缓冲，扫描只读帧缓冲。
+- 熄灭/归零：输出 OFF 或故障时 ≤100 ms 装入 `0.00`/`0.000`，不残留旧读数；编辑态只闪被编辑行（2 Hz），另一行显示实测；确认时两行同步闪 3 次（约 1.5 s）后回实测；故障/校准/升级不显示文字、不清故障锁存，只按实测/0 显示（J.2/J.7）。
+- 按键：5 个界面键（左/右/SET/上/下）+ 独立电源键；1 ms 采样，连续 20–30 次一致（20–30 ms）确认；短按 ≤0.8 s、长按 2.0±0.2 s、长按连发 0.5 s 后 5 Hz；上+下在 50 ms 内同时按下并保持 2 s → 任意状态 `FORCED_OFF`（EN 低 + `OUTPUT_ENABLE=0` + 锁存），长按 SET 不触发；解锁短按 SET，输出不自动恢复。
+- 编辑态：SET① 设 V → SET② 设 I → SET③ 确认；左/右选位，上/下 ±0.01 V/0.01 A，超界钳位；电源键在编辑态忽略；30 s 无按键丢弃、不写存储；确认成功才 I2C 写影子+COMMIT，失败保持原设定、不回显错误文字。
+
+### 19.7 PT100、Modbus RTU 与温度判定
+
+| 项 | 口径 |
+|---|---|
+| 物理/协议 | RS485 半双工，9600 8N1，无流控；从站地址 1；FC03 读 1 个保持寄存器；寄存器地址/字节序按模块手册（型号待 owner） |
+| 帧/时序 | 请求 `01 03 00 xx 00 01 CRC`，应答 `01 03 02 data CRC`；CRC16 Modbus（poly 0xA001，init 0xFFFF）；帧间 ≥3.5 字符（9600 约 4 ms）；DE/RE 方向切换，单事务超时 100 ms |
+| 采样 | 500 ms/次，只读 1 个寄存器；待机/ON/校准态都采样；不显示温度，仅本地判定与 PC 工具 `TH GET` |
+| 数据 | 有符号 16 位、0.1 ℃/LSB，−50.0–200.0 ℃；越界/开路/短路/CRC 错/超时 = 无效 |
+| 掉线 | 连续 3 个采样周期（≥1.5 s）失败 → 温度无效；立即 EN 低 + `OUTPUT_ENABLE=0` + `PT100_LOST` 锁存；不显示 E02，不自动恢复 |
+| 恢复 | 连续 3 次有效读数解除无效；输出仍需人工重新使能；阈值判断带回差 2.0 ℃ |
+| 阈值 | 默认 80.0 ℃，范围 0.0–150.0 ℃、步进 0.1 ℃；仅 PC 工具 `TH SET` 写；D 校验后写 A/B 双槽+CRC16+版本，回读确认；失败保留旧值 |
+| 超温 | 温度 ≥阈值 → 立即强制关断并锁存 `OT`；≤阈值−2.0 ℃ 才允许重新使能；新阈值 ≤当前温度按超温立即处理 |
+
+- 阈值存储：A/B 双槽，字段 magic/version/threshold/CRC16；写非活动槽→回读→切活动槽；两槽均无效用 80.0 ℃并告警，不伪造“已配置”。掉电保存；不写本体 EEPROM（J.5）。
+- PT100 掉线/超温是 D 侧本地锁存，不进本体 FAULT_CODE；本体 NTC/OTP 独立生效，二者不互相替代。读数陈旧 >1.5 s 按无效处理，不得当“正常”。
+
+### 19.8 USB-C CDC 与升级透传
+
+- 链路：G431 USB FS CDC（数据 only，不取电），PC 虚拟串口；CDC 收发用 1 KB 环形缓冲，主循环按行解析；行 ≤128 B、`\r\n` 结束、不区分大小写；成功 `OK` 或数据行，失败 `ERR <code> <msg>`。
+- 命令白名单：`INFO`、`TH GET`、`TH SET <0.1℃>`、`FAULT GET`、`FAULT HIST`、`FAULT HIST CLEAR`（二次确认）、`CAL BEGIN/POINT/VERSION/CRC/COMMIT/ABORT/STATUS`、`SET/MEAS/COMMIT/READ`（T-0026 分步别名）、`UP P`、`UP D`。V/I 设定、输出开关、保护阈值放宽、SCPI/LAN/GPIB 一律 `ERR`；PC 工具不是程控口（J.6）。
+- 本体升级 `UP P`：先 EN 低、停心跳、输出 OFF；D 只做 USB↔A28/A29 字节透传，不解析、不改写、不设版本门禁；115200 8N1，帧格式 §8.1；数码管保持实测值（OFF 时 0.00/0.000），不显示 `UP`/`P`。
+- 自身升级 `UP D`：置备份 RAM magic 并复位进 D bootloader；bootloader 用 §8.1 帧经 USB-C 升级，EN 保持低；失败/掉电停在 bootloader 等重传，不跳无效应用。D 应用失效时 bootloader 仍提供 USB→UART 透传，保证本体可升级。
+- 互斥：普通/`UP P`/`UP D` 三态互斥；CAL 与升级互斥；升级中拔 USB/掉电/帧错不跳无效应用，完成后复位、输出 OFF、需人工重新使能。上+下长按 2 s 在升级态仍有效（EN 立即低）。
+
+### 19.9 调试板接口边界与 I2C 交互序列
+
+| 能力 | D 本地面板 | PC 工具（USB-C） | 本体 I2C |
+|---|---|---|---|
+| 设 V/I、开/关输出 | 是（5 键+电源键） | 否（`ERR`） | 是（D 作主机写影子+COMMIT+ENABLE） |
+| PT100 温度显示/阈值设置 | 否（T-0031/J.3） | 阈值 `TH GET/SET`；不显示温度页 | 不新增寄存器（J.6） |
+| 故障码/历史 | 不显示文字 | `FAULT GET/HIST`，维护清除二次确认 | 读 FAULT_CODE/FAULT_FLAGS |
+| 校准/升级 | 无面板入口 | `CAL ...`/`UP P`/`UP D` | CAL 寄存器/升级字节流 |
+
+```text
+开输出：READ STATUS/FAULT/RELAY/VOUT_ZERO → WRITE HEARTBEAT → EN↑ → 20 ms
+        → WRITE V/I → COMMIT=0x5A → HEARTBEAT → OUTPUT_ENABLE=1
+        → 100 ms 内轮询 OUT_ON=1 且无新锁存；失败→ENABLE=0、EN↓、OPEN_FAIL
+关输出：WRITE OUTPUT_ENABLE=0（NACK 5 ms 重试 1 次）→ 8 ms → EN↓
+        → 100 ms 内 RELAY_STATE=0 且 VOUT_ZERO=1；否则报 VOUT_NOT_ZERO/RELAY_WELD
+心跳：自检通过后 100 ms±10 ms 写 0x1E（含待机/ON/CAL）；3 次 I2C 失败或 500 ms 超时
+      → EN↓、OUTPUT_ENABLE=0、COMM_LOST 锁存；不自动恢复输出
+故障：ALERT↓ → 读 FAULT_CODE + FAULT_FLAGS（两者都读）→ EN↓、ENABLE=0、本地锁存
+      → 源消失且已读码后写 CLEAR=0xA5；CLEAR 后保持 OFF，等人工电源键
+```
+
+- I2C：D 作主机，100 kHz 默认、400 kHz 最大；7 位地址 0x30+拨码；单事务 10 ms 超时；不用广播；多字节写原子。EN 为 3.3 V 推挽、100 Ω 串阻、10 kΩ 下拉；复位/掉电为低。D 不得绕过 EN 或短针回路（§9.3/R §4.2.4）。
+- 故障读取必须 CODE+FLAGS 都读才满足 CLEAR 的“已读码”；只读其一不 CLEAR。D 不把故障文字/温度写到数码管；故障灯在本体后面板，PC 工具读原因（J.4）。
+- 参数配置（PT100 阈值、故障历史清除）只在 PC 工具；D 面板没有温度页/阈值入口。校准与升级也只经 PC 工具/服务口，D 面板不提供 CAL/UP 菜单。
+
+### 19.10 测试策略与 G0 命令
+
+| 层 | 自测/联调 | 通过判据 |
+|---|---|---|
+| 显示 | 帧缓冲单测：`48.00`/`5.000`/`0.00`/`0.000`、小数点/消隐/闪烁；8 位扫描时序 | 无 5 位、无残影；OFF/故障 ≤100 ms 归零；刷新 ≥100 Hz |
+| 按键 | 去抖 20–30 ms、短按/长按 2 s、0.5 s 后 5 Hz、上+下 2 s、长按 SET 不关断 | 组合键任意状态进入 FORCED_OFF；解锁不自动重合闸 |
+| 串口 | CDC 行解析：大小写、`\r\n`、超长、未知命令、V/I/输出命令拒绝 | 白名单外一律 `ERR`；断连/重连不改变输出状态 |
+| Modbus | 模拟从站：正常 25.0 ℃、超时、CRC 错、异常码、越界；3 次失败→PT100_LOST；3 次有效恢复 | 掉线 1.5 s 内禁输出并锁存；恢复后仍需人工使能 |
+| 存储 | 阈值 A/B 槽：写坏/半写/CRC 错/版本回退；掉电注入 | 旧值保留；两槽无效用 80.0 ℃并告警；回读一致 |
+| 联调 | D+本体：开/关 100 次、心跳丢失、ALERT 注入、PT100 拔插、USB 升级中拔线、CAL V6+I3 | 不自动重合闸；升级可重传；CAL 回读 CRC/版本一致；故障可读 |
+
+- 上述单测优先在 PC 宿主跑（C 逻辑层 + 桩），HIL 只覆盖时序/电气；不得用“mock 通过”替代 §19.4 的 P5 实机校准。
+- G0 命令清单（当前仓库已存在；实现单增补项标注“待实现”）：
+  - `git rev-parse HEAD`、`git status --porcelain=v1 -uall`、`git diff --check`：基线/洁净/空白。
+  - `powershell -NoProfile -ExecutionPolicy Bypass -File firmware/tools/check-env.ps1`：工具链 10/10。
+  - `powershell -NoProfile -ExecutionPolicy Bypass -File firmware/build.ps1 -Clean`：HAL/启动/链接 exit 0。
+  - `$env:PYTHONPATH="tools"; py -3 -B .agent/evidence/T-0026-p1-selftest.txt`：校准会话离线自测。
+  - `py -3 tools/calib_tool.py --demo`：PC 标定工具离线演示。
+  - 待实现：`ctest --test-dir build`（显示/按键/Modbus/存储单测）、`py -3 tools/debug_sim/modbus_sim.py --port <COM>`（从站模拟）、D 固件 `cmake --build build --target debug_board`。
+- 本单为文档单，不跑 live e2e；上述 G0 的静态/离线项在证据中给原文，硬件/HIL 项由实现与测试单执行。
+
+### 19.11 边界、待确认与合并口径
+
+- 不新增本体 I2C 寄存器：校准用 0x22–0x2D，温度阈值/故障历史在 D 侧，PC 工具经 USB-C 访问（J.6）。`0x2F COMMIT=0x5A` 是 V/I 设定提交，不是校准提交；校准提交是 `CAL_CTRL=0x04`，两者不得混用。
+- 与 §15/§16 的边界：§15 管本体分层/状态机，§16 管 I2C/寄存器/心跳/Bootloader/EEPROM；本章只写校准会话与 D 固件，不重复其寄存器语义与使能时序。T-0026 会话层当前发 `SET/MEAS/COMMIT` 分步别名，未发 `CAL VERSION`/`CAL CRC`；按 R §3.4.5 接线前需补两步（或由 T-0018 固化等价映射），固件不在缺版本/CRC 时自动编号。
+- 待 owner：CAL 命令名/`CAL POINT` 与 SET/MEAS 的最终映射（R 附录 E.2）、温度编码/是否入 CRC、magic 最终值；PT100 模块寄存器/字节序；数码管型号/共阴共阳/驱动/IO；故障灯闪烁频率；USB VID/PID。未确认项按 R 默认值写，不写成已定版。
+- 本章按 base `e1df83b` 落稿（现行 §19）；§17 为 T-0046 覆盖矩阵、§18 为 T-0038 控制架构；章内引用以现行节号为准，最终章号由引擎按 T-0047→T-0054 合并重编号，本章不自行 merge/rebase。
