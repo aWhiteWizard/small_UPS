@@ -1,0 +1,30 @@
+KIND: sha
+TASK: T-0052
+BASE: e1df83bd1d5d0a4e412d991c1f17cca31b3185dc (task.baseSha = origin/master)
+CONTENT_COMMIT: a81c8214872a7f2bbbd524d6123834314fb9311d
+CONTENT_PARENT: e1df83bd1d5d0a4e412d991c1f17cca31b3185dc
+CONTENT_SUBJECT: docs(T-0052): 架构⑦-3 校准流程与调试板固件
+CONTENT_TRAILER: Ticket: T-0052
+CONTENT_STAT: 1 file changed, 198 insertions(+)
+CONTENT_DIFF: git diff --numstat e1df83b..a81c821 -> 198	0	.agent/docs/architecture.md
+PUSH_C1: git push origin HEAD:refs/heads/master -> e1df83b..a81c821  HEAD -> master (exit 0)
+LS_REMOTE_C1: a81c8214872a7f2bbbd524d6123834314fb9311d	refs/heads/master
+EQUAL_C1: true (LOCAL_HEAD == LS_REMOTE_C1)
+C2_EVIDENCE: this evidence commit (body `Evidence: T-0052`); a commit cannot embed its own SHA, final HEAD given in report
+FINAL_DIFF: content 198/0; C2 evidence-only 4 P0 + worklog
+ORIGIN_MASTER_C1: e1df83b before C1; a81c821 after C1
+BASE_IS_ANCESTOR_OF_C1: YES (git merge-base --is-ancestor -> exit 0)
+TRACKED_STATUS_AFTER_C1: clean (git status --porcelain=v1 -uall -> empty)
+RECOVERY: old worktree lost content; recovered G2-PASS section from commit 6b122aa (backup T-0052-20261121-000440), reapplied onto e1df83b, chapter renumbered §17 -> §19 because §17/§18 are occupied
+
+$ git log --oneline e1df83b..a81c821
+a81c821 docs(T-0052): 架构⑦-3 校准流程与调试板固件
+
+$ git log -1 --format=%B a81c821
+docs(T-0052): 架构⑦-3 校准流程与调试板固件
+
+- 新增 §19：校准 6V+3I 流程、P5 操作指南、COMMIT/CRC/回退与流程图
+- 调试板固件任务划分、显示/按键/PT100/USB-C/升级/I2C 交互序列
+- 章号按现行末号 §19（§17/§18 已占用），内容沿用 G2 PASS 稿
+
+Ticket: T-0052

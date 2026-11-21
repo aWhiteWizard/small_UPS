@@ -1,0 +1,11 @@
+KIND: g0
+TASK: T-0052
+BASE: e1df83bd1d5d0a4e412d991c1f17cca31b3185dc
+CONTENT_HEAD: a81c8214872a7f2bbbd524d6123834314fb9311d
+CHECK-ENV: CHECK-ENV: PASS (exit 0; 10/10: arm-gcc 15.2.1, cmake 3.31.9, ninja 1.13.2, openocd 0.12.0, serial-api, openocd-config, PuTTY 0.85, CMSIS core/device/HAL)
+BUILD: firmware/build.ps1 -Clean exit 0; psu_minimal.elf FLASH 1544 B / RAM 1584 B; newlib nano _close/_lseek/_read/_write stub warnings are pre-existing, not failure
+GIT-WHITESPACE: git diff --check e1df83b..HEAD -> no output, exit 0
+NAME-STATUS: M .agent/docs/architecture.md（仅本单正文）
+STATUS: tracked worktree clean after C1（git status --porcelain=v1 -uall -> empty）
+ENV-NOTE: rebuilt worktree lacked .tools; linked junction .tools -> T-0002/.tools（gitignored）, then G0 PASS
+SCOPE: G0 at C1; C2 is evidence/worklog only, no code/config

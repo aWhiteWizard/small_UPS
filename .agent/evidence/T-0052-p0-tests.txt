@@ -1,0 +1,16 @@
+KIND: tests
+TASK: T-0052
+BASE: e1df83bd1d5d0a4e412d991c1f17cca31b3185dc
+CONTENT-COMMIT: a81c8214872a7f2bbbd524d6123834314fb9311d
+DIFF: git diff --numstat e1df83b..HEAD -> 198	0	.agent/docs/architecture.md（仅 1 文件）
+STRUCTURE: 2437 行；H2=19 且编号唯一；H3=106；表分隔=99；代码围栏=36（偶数）；tab=0；行尾空白=0；CRLF=2437/2437；UTF-8 无 BOM
+CHAPTER: §19 起 L2241；19.1–19.11 共 11/11，自引用 §19.3/§19.4 已同步
+CAL: 6V 0.5/3.3/5/12/24/48V；3I 1.0/2.5/5.0A；V 0.5A、I 目标+1A；CRC16-CCITT-FALSE（V 31B/I 19B）；版本单调；A/B 双区回读切区；失败回退 L2294；流程图 L2277–L2289
+REGISTERS: 0x22–0x2D 与 0x2F 对齐 R §3.3.1（L2275）；校准提交 CAL_CTRL=0x04（L2283）；0x2F 为 V/I 设定提交、非校准提交（L2434）
+DEBUG: 8 位数码管 1ms/125Hz/≤100ms 归零；5 键 20–30ms/2s/上+下组合；PT100 9600 8N1、FC03、1.5s 掉线禁输出；USB FS CDC；UP P/UP D；1ms 主循环（L2331–L2385）
+BOUNDARY: D 只做 V/I 与开关、无温度显示/阈值；参数/故障走 PC 工具；开/关、心跳、故障读取 I2C 序列 L2386–L2410
+TEST-G0: 自测/联调矩阵与 G0 清单 L2411–L2431；待实现项显式标注
+KEYWORDS: 31/31 关键项命中（6V/3I 点表、限流、CRC、版本、COMMIT、P5、6 位半、电子负载、9600 8N1、FC03、PT100_LOST、CDC、UP P/D、0x1E、FAULT_CODE/FLAGS、FORCED_OFF 等）
+WHITESPACE: git diff --check e1df83b..HEAD -> no output, exit 0
+SCOPE: 无代码/配置/测试脚本改动；纯文档单，未跑 live e2e；未声称实机/HIL 结果
+RESULT: PASS
