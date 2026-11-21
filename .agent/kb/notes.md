@@ -631,19 +631,19 @@ KB-TAGS: git, worktree, replay, push, evidence, t-0050
 - 自交付顺序：C1 内容（body `Ticket: <单号>`）→ push → `ls-remote` 记录 C1；C2 证据（body `Evidence: <单号>`）→ push；C3 回填 C2 与最终 push（body `Evidence: <单号>`）→ push，C3 SHA 只写报告，避免证据自指。
 - 纯文档单的 G0 仍要跑 `git diff --check`/脚手架；本单 `check-env.ps1` 10/10、`build.ps1 -Clean` exit 0，未伪造 host 单测/live e2e。
 
-## 55V 母线复核要按当前 R/T-0043 的 11mΩ 重算
+## 55V 母线复核数字先对齐审查注入的 R 版本
 
-KB-TYPE: hardware
-KB-EVIDENCE: `.agent/docs/requirements.md:763-764`（11mΩ/55mV、53.185V）；`.agent/docs/architecture.md:192-194`（T-0039 §2.8 同步）
-KB-LAYER: 3_hardware
-KB-TAGS: buck, 55v, bus, duty, t-0043, t-0039
+KB-TYPE: method
+KB-EVIDENCE: `.agent/docs/architecture.md:190-194`（R §3.5.3 10mΩ/50mV/53.18V）；`.agent/evidence/T-0039-p0-tests.txt`（G2 审查 R 口径）
+KB-LAYER: 1_application
+KB-TAGS: buck, 55v, bus, duty, requirements, review, t-0039
 
-T-0039 旧稿按 10mΩ（电感 5mΩ）算出 53.18V；T-0043 把 buck 电感 DCR 改为 6mΩ 后通路为 11mΩ、55mV，最低母线 53.185V≈53.2V，48V 输出 D=(48+0.055)/55=87.4%。重放旧章节时必须先对当前 R §3.5.3，否则会把已过期的 50mV/53.18V 带回来。占空比/最大输出结论不变，但数字要同步。
+本单审查注入的 R §3.5.3 为 10mΩ/50mV/53.18V；工作区 HEAD 的 R 可能已含 T-0043 的另一版通路值，两者数字不同。返修/重放时先以审查注入的 R 为准，不要直接把工作区新版数字带进被审 diff；若引擎改用新 R，再同步并重算。占空比/最大输出结论在两版取值下都成立，但证据行/验收行必须与审查 R 一致。
 
 ## ORing 选型先看 TVS 钳位窗口，不是先比价格
 
 KB-TYPE: hardware
-KB-EVIDENCE: `.agent/docs/architecture.md:262`（LTC4357 100V abs max 与 SMBJ58A 93.6V；LM74700-Q1 65V 无窗口）；`.agent/docs/architecture.md:249-260`（九项对照）
+KB-EVIDENCE: `.agent/docs/architecture.md:264`（LTC4357 100V abs max 与 SMBJ58A 93.6V；LM74700-Q1 65V 无窗口）；`.agent/docs/architecture.md:251-262`（九项对照）
 KB-LAYER: 3_hardware
 KB-TAGS: oring, ltc4357, lm74700, tvs, 55v, t-0039
 
@@ -652,20 +652,38 @@ KB-TAGS: oring, ltc4357, lm74700, tvs, 55v, t-0039
 ## ORing FLT/EN 不是芯片自带，LTC4357 也没有 FLT
 
 KB-TYPE: hardware
-KB-EVIDENCE: `.agent/docs/architecture.md:255`（两颗均无 FLT）；`.agent/docs/architecture.md:268-273`（BSS123 EN + INA240A1/TLV3201 FLT）
+KB-EVIDENCE: `.agent/docs/architecture.md:257`（两颗均无 FLT）；`.agent/docs/architecture.md:268-280`（NPN+BSS123 EN、INA240A1/TLV3201 FLT）
 KB-LAYER: 3_hardware
 KB-TAGS: oring, flt, en, ltc4357, lm74700, t-0039
 
-写“ORing 含 EN/FLT 回读”时不要假设控制器自带：LTC4357 引脚为 OUT/VDD/IN/GATE/GND，LM74700-Q1 为 VCAP/GND/EN/CATHODE/ANODE/GATE；两颗都没有 FLT，LTC4357 也没有 EN。用外部 BSS123 拉 GATE 做 EN（只能在 buck 关、继电器释放后用），INA240A1 跨 VDS + TLV3201 产生 ORING_FLT，映射到现有 0x0C/0x14/0x0F/0x10，不新增故障码。
+写“ORing 含 EN/FLT 回读”时不要假设控制器自带：LTC4357 引脚为 OUT/VDD/IN/GATE/GND，LM74700-Q1 为 VCAP/GND/EN/CATHODE/ANODE/GATE；两颗都没有 FLT，LTC4357 也没有 EN。用外部 NPN+BSS123 反相做 EN（ORING_EN=1 使能、0 关断，MCU 复位下拉即关），INA240A1 跨 VDS + TLV3201 产生 ORING_FLT（1=正常/0=故障），映射到现有 0x0C/0x14/0x0F/0x10，不新增故障码。
 
 ## 重派已 PASS 章节被新基线占号时按主题归位到 §2.x
 
 KB-TYPE: method
-KB-EVIDENCE: 旧提交 `e7e050a` 把 T-0039 放 §18；新基线 `.agent/docs/architecture.md:2266` 的 §18 已是 T-0038、`:2393` 的 §19 已是 T-0052；本单改为 `:184-330` 的 §2.8–§2.12
+KB-EVIDENCE: 旧提交 `e7e050a` 把 T-0039 放 §18；新基线 `.agent/docs/architecture.md:2275` 的 §18 已是 T-0038、`:2402` 的 §19 已是 T-0052；本单改为 `:184-337` 的 §2.8–§2.12
 KB-LAYER: 1_application
 KB-TAGS: worktree, redispatch, renumber, architecture, t-0039
 
-重派新基线已占用旧并行章号（§18/§19）时，不要机械改成 §20 另起顶层章，也不要重写既有 §2.x。按内容主题把已 PASS 的“供电链/输出级细化”归位为 §2.8–§2.12，并在 §2.4/§2.5 各加 1 行指针；正文阈值/结论保持，只改章号和当前基线数字（如 11mΩ/53.185V）。这样 diff 只在对应章节，不碰他人章。
+重派新基线已占用旧并行章号（§18/§19）时，不要机械改成 §20 另起顶层章，也不要重写既有 §2.x。按内容主题把已 PASS 的“供电链/输出级细化”归位为 §2.8–§2.12，并在 §2.4/§2.5 各加 1 行指针；正文阈值/结论保持，只改章号和当前基线数字（如 10mΩ/53.18V）。这样 diff 只在对应章节，不碰他人章。
+
+## ORing EN 低有效会与 MCU 复位安全态冲突
+
+KB-TYPE: hardware
+KB-EVIDENCE: `.agent/docs/architecture.md:270-276`（NPN+BSS123 反相与真值表）；`.agent/docs/architecture.md:292`（继电器粘连 ORING_EN=0）
+KB-LAYER: 3_hardware
+KB-TAGS: oring, en, ltc4357, safety, reset, t-0039
+
+LTC4357 没有 EN，常用 BSS123 把 GATE 拉低来关断；若 BSS123 栅极直接接 `ORING_EN`，则 ORING_EN=0 时 BSS123 截止、GATE 反而释放，Q1 导通，MCU 复位/下拉会变成“使能”，与安全态相反。要用 NPN 反相：ORING_EN=1→NPN 导通→BSS123 栅极低→BSS123 截止→Q1 导通；ORING_EN=0→NPN 截止→BSS123 栅极经 100k 上拉到 12V→BSS123 导通→GATE 低→Q1 关断。落稿必须附真值表，不能只写“默认低”。
+
+## ORing 位置以 R §3.5.7 为准，D-02 不能覆盖需求正文
+
+KB-TYPE: hardware
+KB-EVIDENCE: `.agent/docs/architecture.md:247-248`（R 字面：buck→ORing→输出电容→继电器）；`:304`（继电器粘连只阻断到 55V 母线）；`:331`（D-02 冲突登记）
+KB-LAYER: 3_hardware
+KB-TAGS: oring, relay, location, d-02, requirement, t-0039
+
+D-02 写“buck→滤波→ORing→继电器”，R §3.5.7 写“输出电容与 55V 母线之间”；两者不是同一位置。审查口径是 R 正文优先，D-02 不能覆盖需求。按 R 放 ORing 后：继电器粘连时 ORing 只阻断“输出电容→buck→55V 母线”，负载→输出电容的充电不在阻断范围，100ms 后 >1V 置 0x10；输出电容还需在 ORing 后、继电器前另设并联有源泄放。不要沿用 D-02 的“ORing 在滤波后”来宣称能阻断负载→输出电容。
 
 ## 架构决策 D-05/D-06 与需求 §4.1 的 D-05/D-06 不是同一编号体系
 

@@ -1,14 +1,15 @@
 KIND: tests
 TASK: T-0039
 AT: 2026-11-21 +08:00
-DIFF: 152 0 .agent/docs/architecture.md（1 file, +152/−0）
+DIFF_C1: 39 32 .agent/docs/architecture.md（相对 9502c0d；T-0039 §2.8–§2.12 157 行）
+DOC_SIZE: 文档 2 文件/213 行（architecture 159 + KB 54）；代码与配置 0 文件/0 行；证据/worklog 不计
 DIFF_CHECK: exit 0（无输出）
-REQ_MODULES: git diff --name-only 2558e88..HEAD -- .agent/docs/requirements.md .agent/docs/modules.md → 空
-TABLES: 105 blocks, mismatches=0
-FENCES: 36（成对）
+REQ_MODULES: git diff --name-only 9502c0d..HEAD -- .agent/docs/requirements.md .agent/docs/modules.md → 空
+TABLES: 124 blocks, mismatches=0（含 EN 真值表）
+FENCES: 41（成对）
 TABS/TRAILING: 0/0
-BOM: 无（base 亦无；未引入 BOM）
-HEADINGS: §2.8–§2.12（5 个新小节；§2.4/§2.5 各 1 行指针）
-KEY_NUMBERS: D55=87.4%, D48=100.1%, D40=120.1%; maxout95=52.20/45.55/37.95V; 53.185V/11mΩ; LLC=8.6/9.0/9.9W; standby=1.20/1.40W; ORing 5A VDS=25mV/0.125W; 55/100=55%
-D_REFS: D-01/D-02/D-03/D-04/D-16/D-18/D-19/D-21/D-22/D-29/D-32（均存在于 .agent/design-decisions.md）
+BOM: 无（base 亦无）
+HEADINGS: §2.8–§2.12（5 个）；EN 真值表；FLT 1=正常/0=故障
+KEY_NUMBERS: R §3.5.3 10mΩ/50mV/53.18V；R §3.5.7 200kHz/33µH/5mΩ/210µF；D55=87.4%, D48=100.1%, D40=120.1%; maxout95=52.20/45.55/37.95V; standby=1.20/1.40W; ORing 5A VDS=25mV/0.125W
+D_REFS: D-01/02/03/04/16/18/19/21/22/29/32（均存在）
 RESULT: PASS

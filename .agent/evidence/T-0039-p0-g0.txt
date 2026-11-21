@@ -1,10 +1,11 @@
 KIND: g0
 TASK: T-0039
 AT: 2026-11-21 +08:00
-BASE: 2558e885ca923d5966b27aa5ebbf13c5e8d34dc5（看板 task.baseSha）
-HEAD_AT_START: 2558e885ca923d5966b27aa5ebbf13c5e8d34dc5（== base）
-REMOTE_MASTER_AT_START: 2558e885ca923d5966b27aa5ebbf13c5e8d34dc5
+BASE: 9502c0d5911e8f8d0a481d23f512605552d04591（本轮起点；T-0039 内容已在 f3bdcac 入 master）
+REVIEW_LOWER: 2558e885ca923d5966b27aa5ebbf13c5e8d34dc5（上轮 G2 下界）
+HEAD_AT_START: 9502c0d5911e8f8d0a481d23f512605552d04591
+REMOTE_MASTER_AT_START: 9502c0d5911e8f8d0a481d23f512605552d04591
 CMD: git rev-parse HEAD; git status --porcelain=v1 -uall; git ls-remote origin refs/heads/master; git diff --check; 表块/围栏/tab/trailing/BOM; requirements/modules 差异
-STATUS: 开工 HEAD==base、工作区 clean；C1 仅改 architecture.md +152/−0；表块 105 处 0 错位；围栏 36 成对；tabs=0/trailing=0；BOM 无（与 base 一致）；requirements/modules 无 diff
+STATUS: 开工 HEAD==9502c0d、工作区 clean；C1 e67d023 只改 architecture.md +39/−32（相对 9502c0d）；T-0039 累计文档 2 文件/213 行（architecture 159 + KB 54）；表块 124 处 0 错位；围栏 41 成对；tabs=0/trailing=0；BOM 无（与 base 一致）；requirements/modules 无 diff
 G0-NOTE: 纯文档单；firmware/tools/check-env.ps1 不适用（未改代码/配置）
 RESULT: PASS（docs G0）
