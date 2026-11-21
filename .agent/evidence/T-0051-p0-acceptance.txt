@@ -1,10 +1,11 @@
 KIND: acceptance
 TASK: T-0051
-1 PASS 顺序/通信存储章：architecture §16 标题与导语引用 D-10/D-23，注明承接 T-0050 §15、按 T-0047→T-0054 合并/重编号；本单基线 006e9f4。
-2 PASS I2C 从机：§16.1 表选 DMA 数据通路+帧边界中断；SCL 低 >25ms 超时；拉伸 ≤1ms/硬限 10ms；9 SCL+STOP（主机侧；本体作主机时自做）；拨码 POR 锁存、运行中改需复位/重新上电；写/读两张流程图。
-3 PASS 寄存器语义：§16.2 影子+COMMIT=0x5A 原子切换；地址越界/只读 NACK、数值越界按 R 钳位；保留读 0 写忽略；复位默认；OUTPUT_ENABLE（0x16）为 R/W，读回当前软使能位 0/1，写 1 走四条件、写 0 清软使能；表驱动 regmap.def + 理由。
-4 PASS 心跳/使能：§16.3 100ms/500ms、EN EXTI ≤1ms/20ms 锁存、四条件+EN_REJECT 位图/D 侧 OPEN_FAIL、I2C 忙/恢复计时不暂停、bootloader 屏蔽边界。
-5 PASS Bootloader：§16.4 24KB Boot/102KB App/2KB header（R 16–24KB）、§8.1 帧+CRC16、CRC32 镜像、失败停 boot 可重传、EN 低/功率级停、单区；流程图+超时表。
-6 PASS EEPROM/日志：§16.5 设定/校准/生产/事件/日志/计数/预设地址；CRC16、A/B 双区+回滚、1M 次与掉电保护（T-0036 M.7）；日志 64 槽字段 + 计数区 16B 头/64B 分钟环/22×24B 每码 count+首次/最近时间/温度，读取/维护清除权限；G.6 #1 未确认前默认 RAM 环+EEPROM 写关闭。
-7 PASS 交付：内容 C7=8d2e43e 已 push（`006e9f4..8d2e43e`）、C8=d2c59bb 已 push（`8d2e43e..d2c59bb`）、C9=2caa944 已 push（`d2c59bb..2caa944`，ls-remote=C9），body 分别 `Ticket: T-0051`/`Evidence: T-0051`；C10=最终证据收口（body `Evidence: T-0051`，SHA 见报告）；报告附 C7/C8/C9/C10 与 `git log --oneline` 原文。
-8 PASS 规模：内容 1 个文档文件 +201/−1（文档线目标 ≤300 行）；整单 7 files（含 4 P0/worklog/KB），证据不计阈值；无代码/配置。
+0 基线说明：引擎已把 T-0047–T-0050 合入 a480ee0，§16 完整章节在 HEAD 树 arch:1673–1892；C11 是本轮 T-0051 整合收口（+22/−2），不是重新生成整章。
+1 PASS 顺序/通信存储章：§16 导语（arch:1675）写明承接 §15、T-0047–T-0050 已按序合入、本章为现行 §16；引用 D-10/D-23（1677）。
+2 PASS I2C 从机：§16.1（1679–1713）DMA 数据通路+帧中断、拉伸 ≤1ms/硬限 10ms、SCL >25ms、9 SCL+STOP、拨码 POR 锁存；写/读流程图。
+3 PASS 寄存器语义：§16.2（1715–1744）影子/COMMIT 原子、越界/只读 NACK、保留读 0 写忽略、复位默认、表驱动；OUTPUT_ENABLE（0x16）为 R/W，读回软使能位（arch:395/1708/1725/1735），写 1 四条件、写 0 清软使能。
+4 PASS 心跳/使能：§16.3（1747–1766）100ms/500ms、EN EXTI ≤1ms/20ms、四条件+EN_REJECT、I2C 忙不暂停、bootloader 屏蔽边界。
+5 PASS Bootloader：§16.4（1768–1803）24KB Boot/102KB App/2KB header、§8.1 帧+CRC16、CRC32 镜像、失败停 boot、EN 低、单区、流程图+超时表。
+6 PASS EEPROM/日志：§16.5（1805–1859）地址/CRC/双区/回滚/1M 次；日志 64 槽字段 + 计数区 16B 头/64B 分钟环/22×24B 每码 count+首次/最近时间/温度（arch:1817/1841）；读取/维护清除权限；G.6 #1 未确认前默认 RAM 环+EEPROM 写关闭。
+7 PASS 交付：C11=b57353e 已 push（`a480ee0..b57353e HEAD -> master`，ls-remote=C11），body `Ticket: T-0051`；C12 证据 body `Evidence: T-0051`（SHA 见报告）；报告附 C11/C12 与 `git log --oneline` 原文。
+8 PASS 规模：C11 内容 1 个文档文件 +22/−2（≤300 行）；整单含 4 P0/worklog 为 6 files（KB 基线已有），证据不计阈值；无代码/配置。
