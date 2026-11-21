@@ -585,3 +585,12 @@ KB-TAGS: utf8-bom, architecture, edit-tool, t-0046, t-0040
 
 `.agent/docs/architecture.md` 约定保留 UTF-8 BOM（EF BB BF，T-0040 提交 a43db5e）。用通用 edit 工具改写该文件会整体重写为无 BOM，文件内容仍正确但破坏 BOM 约定、也可能影响按 BOM 识别的审查脚本。改完必须用 `[IO.File]::ReadAllBytes` 检查前 3 字节；若丢失，用 `[IO.File]::WriteAllText($p,$t,[Text.UTF8Encoding]::new($true))` 回写恢复，并复查 `bom=239,187,191`。
 
+## G0 的 BOM 自述必须服从 architecture.md 的 BOM 约定
+
+KB-TYPE: system
+KB-EVIDENCE: .agent/kb/notes.md:579（architecture 保留 BOM）；.agent/docs/architecture.md:1
+KB-LAYER: 2_system
+KB-TAGS: utf8-bom, g0, review, t-0042
+
+G2 可能因 G0 写“无 BOM”而把 architecture.md 的 BOM 记 advisory；但本项目约定 architecture.md 保留 UTF-8 BOM（T-0040/T-0046）。正确修法是保留/恢复 BOM 并把 G0 改为如实记录（requirements/modules 无 BOM，architecture 有 BOM），不要为了迎合 G0 删除 BOM。
+

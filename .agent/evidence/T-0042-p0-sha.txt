@@ -1,41 +1,44 @@
 KIND: sha
 TICKET: T-0042
-BASE_SHA: 3dd8094e6ad6ff47d4ed698ef41c537cf7c1457b
-CONTENT_COMMIT: b93fdb9c3cfadf003c66365bc5e2c7363ac76810
-EVIDENCE_COMMIT: c54838147b85b6f0c2693285baec18d17bd7d3ca
-CLOSURE_COMMIT: 见最终报告（C5 收口提交，SHA 不能在本文件内自指）
-REMOTE_HEAD_AFTER_C4: c54838147b85b6f0c2693285baec18d17bd7d3ca
+BASE_SHA: bc972a935e3a9c85da52413235973619fa7895e4
+CONTENT_COMMIT: 2902b2590e4af67367ac86765356bc860454f3ff
+EVIDENCE_COMMIT: 见最终报告（C9 证据提交，SHA 不能自指）
+REMOTE_HEAD_AFTER_C8: 2902b2590e4af67367ac86765356bc860454f3ff
 BRANCH: task/T-0042
 WORKTREE: D:\workspace\wt\small-ups\T-0042
 
-== C3 pre-push remote ==
-3dd8094e6ad6ff47d4ed698ef41c537cf7c1457b  refs/heads/master
-== C3 push ==
-To github.com:aWhiteWizard/small_UPS.git
-   3dd8094..b93fdb9  HEAD -> master
-== C3 push_exit ==
-0
-== C3 post-push ls-remote ==
-b93fdb9c3cfadf003c66365bc5e2c7363ac76810  refs/heads/master
-== C3 body 尾 ==
-Ticket: T-0042
-== C3 diff ==
-1 file changed, 3 insertions(+), 1 deletion(-)
-== C4 pre-push remote ==
-b93fdb9c3cfadf003c66365bc5e2c7363ac76810  refs/heads/master
-== C4 push ==
-To github.com:aWhiteWizard/small_UPS.git
-   b93fdb9..c548381  HEAD -> master
-== C4 push_exit ==
-0
-== C4 post-push ls-remote ==
-c54838147b85b6f0c2693285baec18d17bd7d3ca  refs/heads/master
-== C4 body 尾 ==
-Evidence: T-0042
-== ancestry ==
-git merge-base --is-ancestor 3dd8094 b93fdb9 → exit 0
-git merge-base --is-ancestor b93fdb9 c548381 → exit 0
-== C4 stat ==
-5 files changed, 57 insertions(+), 58 deletions(-)
+== T-0042 历史提交（均在当前 HEAD 祖先链上）==
+C1 00b12055f0071cf2cf8a28855d0547140570a63c Ticket: T-0042
+C2 3dd8094e6ad6ff47d4ed698ef41c537cf7c1457b Evidence: T-0042
+C3 b93fdb9c3cfadf003c66365bc5e2c7363ac76810 Ticket: T-0042
+C4 c54838147b85b6f0c2693285baec18d17bd7d3ca Evidence: T-0042
+C5 4313cf378a96d5884cf08b3589fd32d56f5a8883 Evidence: T-0042
+C6 006e9f4d7b4a4be05a63f3baf084b1388a285a40 Evidence: T-0042
+C7 6a1586d43a6d3cf37c0fc5a1d9f31b19aad0f33e（去 BOM）
+C8 2902b2590e4af67367ac86765356bc860454f3ff（恢复约定 BOM；Ticket: T-0042）
 
-注：C3/C4 已 fast-forward push 到 origin/master，远端=本地=c548381；C5 为 worklog/P0 收口提交，其 SHA 与最终 push/ls-remote 见最终报告。
+== C1/C2 ancestry（当前 HEAD）==
+git merge-base --is-ancestor 00b1205 HEAD → exit 0
+git merge-base --is-ancestor 3dd8094 HEAD → exit 0
+git merge-base --is-ancestor 006e9f4 HEAD → exit 0
+== C1/C2 push 历史 ==
+C1: a0d208d..00b1205  HEAD -> master；ls-remote=00b1205
+C2: 00b1205..3dd8094  HEAD -> master；ls-remote=3dd8094
+== C3–C8 push 历史 ==
+C3: 3dd8094..b93fdb9；C4: b93fdb9..c548381；C5: c548381..4313cf3
+C6: 4313cf3..006e9f4；C7: bc972a9..6a1586d；C8: 6a1586d..2902b25
+== C8 post-push ls-remote ==
+2902b2590e4af67367ac86765356bc860454f3ff  refs/heads/master
+== C2 git log -1 ==
+3dd8094 docs(T-0042): 记录 G2 R1 返修 P0 证据、worklog 与 KB
+Evidence: T-0042
+== C7/C8 diff ==
+C7: 1 file changed, 1 insertion(+), 1 deletion(-)（去 BOM）
+C8: 1 file changed, 1 insertion(+), 1 deletion(-)（恢复 BOM）
+== BOM ==
+requirements 23 20 E5（无 BOM）；architecture EF BB BF（有 BOM，T-0040/T-0046）；modules 23 20 E5（无 BOM）
+== git log --oneline bc972a9..HEAD ==
+2902b25 docs(T-0042): 恢复 architecture.md 项目约定 BOM
+6a1586d docs(T-0042): 去除 architecture.md 首行 BOM
+
+注：C9 为证据提交；最终 HEAD 与 ls-remote 见最终报告。

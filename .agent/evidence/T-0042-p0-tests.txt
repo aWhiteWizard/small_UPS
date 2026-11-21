@@ -43,3 +43,8 @@ PASS A:单点汇合                   单点汇合
 PASS A:32.0W                  32.0W
 PASS A:D refs                 D-16/D-17/D-18/D-20
 PASS pin-table-rows-unchanged  （git diff -U0 无 |22|/|23|/|28|/|29| 增删行）
+PASS R:§2.1.2 pin rows        | 22 |/| 23 |/| 28 |/| 29 | 无增删（a0d208d..HEAD）
+PASS A:§4.1 A22 assignment    | A22 | +12V 出 | 本体辅助 flyback |
+PASS A:§4.1 B22 assignment    | B22 | +12V 回 | 调试板（由 A22 12V 回送） |
+PASS A:§4.1 B28/B29 reserved  | B28/B29 | 备用 | 无 | 无 |
+PASS BOM                      requirements/modules 无 BOM；architecture EF BB BF（T-0040/T-0046）
