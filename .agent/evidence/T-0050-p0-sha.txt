@@ -3,10 +3,13 @@ TICKET: T-0050
 TASK_BASE_SHA: b7a213b9ed4493316a096d8fb5edabe4b7199597
 BASE_SOURCE: origin/master at start = HEAD at start
 CONTENT_COMMIT: 1cb110e09976c63f5694aa55c7547018a64ba1aa
+EVIDENCE_COMMIT: dcb662ffced6d2d370d3e2688d142940a2052c46（C2，body `Evidence: T-0050`）
+BACKFILL_COMMIT: 本文件所在提交 C3（body `Evidence: T-0050`；最终 HEAD 见报告）
 BRANCH: task/T-0050
 REMOTE_MASTER_BEFORE: b7a213b9ed4493316a096d8fb5edabe4b7199597
-EVIDENCE_COMMIT: （本文件所在提交 C2，body Evidence: T-0050；SHA 见报告）
-BACKFILL_COMMIT: C3（body Evidence: T-0050，回填 C2 与最终 push；最终 HEAD 见报告）
+REMOTE_MASTER_AFTER_CONTENT: 1cb110e09976c63f5694aa55c7547018a64ba1aa
+REMOTE_MASTER_AFTER_EVIDENCE: dcb662ffced6d2d370d3e2688d142940a2052c46
+HEAD_EQUALS_REMOTE_AFTER_EVIDENCE: YES
 
 ## C1 push / ls-remote（原文）
 git push origin HEAD:refs/heads/master
@@ -18,17 +21,30 @@ git ls-remote origin refs/heads/master
 1cb110e09976c63f5694aa55c7547018a64ba1aa	refs/heads/master
 VERIFY_C1: LOCAL_HEAD == LS_REMOTE_AFTER_C1 == 1cb110e09976c63f5694aa55c7547018a64ba1aa
 
-## git log --oneline（C1 后）
+## C2 push / ls-remote（原文）
+git push --porcelain origin HEAD:refs/heads/master
+To github.com:aWhiteWizard/small_UPS.git
+PUSH_C2_REF: HEAD:refs/heads/master 1cb110e..dcb662f
+Done
+(exit 0)
+
+git ls-remote origin refs/heads/master
+dcb662ffced6d2d370d3e2688d142940a2052c46	refs/heads/master
+VERIFY_C2: LOCAL_HEAD == LS_REMOTE_AFTER_C2 == dcb662ffced6d2d370d3e2688d142940a2052c46
+
+## git log --oneline b7a213b..HEAD（C2 后）
+dcb662f docs(T-0050): 记录 P0 证据、worklog 与知识库
 1cb110e docs(T-0050): 架构⑦-1 固件分层/本体状态机/故障调度与测试策略
 
-## git log -1 --format=%B 1cb110e（trailer 原文）
-docs(T-0050): 架构⑦-1 固件分层/本体状态机/故障调度与测试策略
+## git log -1 --format=%B dcb662f（trailer 原文）
+docs(T-0050): 记录 P0 证据、worklog 与知识库
 
-- 新增 §15（158 行，接 T-0048 §14，位于 T-0051 §16 前）：四层目录与单向依赖/禁跨层
-- 本体状态机 BOOT/POR/SELFTEST/STANDBY/READY/OUTPUT/FAULT_LATCH/CAL，逐状态进入/命令/退出/超时/回退
-- 与 T-0049 上下电时序 12 行逐条对应；硬件直拉/MCU 记录分工、读码→CLEAR→重新使能
-- 1ms 任务预算/中断优先级/IWDG 200ms 喂狗点；PC 单测/G0/桩仿真/HIL 策略
-- 引用 D-08/D-32；不改 R 正文、阈值、故障码
-- 基线 b7a213b 重放：内容与已 PASS 的 85a1d8f 一致，仅按新基线位置插入
+- 4 份 P0（85 行）：G0（base b7a213b / 10/10 + build exit 0）、tests（10 项静态校验）、acceptance（8/8）、sha（C1=1cb110e 已 push）
+- 内容提交 1cb110e 仅 architecture.md +158；worklog/KB 记录重放与交付口径
+- 本证据提交 body 为 Evidence: T-0050；C3 回填本提交 SHA 与最终 push
 
-Ticket: T-0050
+Evidence: T-0050
+
+## C3（本文件所在提交）
+- C3 仅回填本文件与 worklog；push 后 git ls-remote origin refs/heads/master 应等于 C3。
+- 证据文件不能自指 C3 SHA，最终 HEAD/远端 SHA 相等原文由报告给出。
