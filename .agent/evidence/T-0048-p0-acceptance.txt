@@ -12,7 +12,7 @@ RESULT: 8/8 PASS（PASS=8 FAIL=0）
 | 4 | 直拉清单（OVP/OCP/SCP/OTP/反灌/HB/SHORT_PIN）及驱动门/继电器/PFC/LLC 作用点；MCU 分工 | PASS | 表 14-4（1392–1402）逐项列 BUCK 门/继电器/PFC/LLC/辅助风扇；直拉集合 1407；MCU 分工 1409–1419 |
 | 5 | MCU 读取 FAULT_CODE/FLAGS/OUTPUT_STATUS；复位锁存时序；不可软件伪造；P-15 读取 | PASS | 14.5.1（1423–1434，0x06/0x08/0x09–0x0C/0x0D）；14.5.2（1436–1442）；14.5.3（1444–1450）；14.5.4（1452–1457，无源干接点/隔离/只读位） |
 | 6 | 10µs 动作时间验证；各故障注入；MCU 死机仍关断 | PASS | 14.6.1（1461–1465，TP_TRIP/TP_GATE/TP_ALERT、50µs 码窗）；14.6.2 注入表（1467–1480）；14.6.3（1482–1487 三死机态）；14.6.4 矩阵（1489–1498）；14.6.5（1500–1503） |
-| 7 | 交付提交带 Ticket；证据提交带 Evidence；报告附 commit 与 git log | PASS | 内容 0061535 body `Ticket: T-0048`；证据 C2/C3 body `Evidence: T-0048`；push `1ac7577..0061535 HEAD -> master` exit 0，ls-remote=0061535=HEAD；原文见 T-0048-p0-sha.txt；报告附 C1/C2/C3 与 `git log` |
+| 7 | 交付提交带 Ticket；证据提交带 Evidence；报告附 commit 与 git log | PASS | 内容 0061535 body `Ticket: T-0048`；证据 2da3373（C2）/C3 body `Evidence: T-0048`；push `1ac7577..0061535`、`0061535..2da3373` 均 exit 0，ls-remote 分别=0061535/2da3373=HEAD；原文见 T-0048-p0-sha.txt；报告附 C1/C2/C3 与 `git log` |
 | 8 | 文档单口径；目标 ≤300 行；证据不计入阈值 | PASS | 文档 1 文件 / +238 −2（240 行）；代码与配置 0 文件/0 行；§14 235 行 <300；证据 4 文件未计入 |
 
 - 说明：旧 a62340b 内容为 PASS 稿，本单在新 base 重放；归一化章号后与旧 §13 仅 2 行基线说明不同（233/235 行逐字一致），未重写章节。

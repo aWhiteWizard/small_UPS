@@ -3,14 +3,15 @@ TICKET: T-0048
 TASK_BASE_SHA: 1ac7577e1f3a7ee9b63dc7b93e5500ee77696024
 BASE_SOURCE: origin/master at start = HEAD at start
 CONTENT_COMMIT: 006153577ff259fbdb19ae0ac3ad8649acc2ecb5
-EVIDENCE_COMMIT: 本文件所在提交 C2（body `Evidence: T-0048`）
-BACKFILL_COMMIT: C3（回填 C2 SHA 与 push 结果；最终 HEAD 见报告）
+EVIDENCE_COMMIT: 2da3373c6fd2b33e4049ebe2201bba30a91f17a1（C2，body `Evidence: T-0048`）
+BACKFILL_COMMIT: 本文件所在提交 C3（body `Evidence: T-0048`；最终 HEAD 见报告）
 BRANCH: task/T-0048
 REMOTE_MASTER_BEFORE: 1ac7577e1f3a7ee9b63dc7b93e5500ee77696024
 REMOTE_MASTER_AFTER_CONTENT: 006153577ff259fbdb19ae0ac3ad8649acc2ecb5
 HEAD_EQUALS_REMOTE_AFTER_CONTENT: YES
 
-## git log --oneline 1ac7577..HEAD（内容提交后）
+## git log --oneline 1ac7577..HEAD（C2 后）
+2da3373 docs(T-0048): 记录 P0 证据、worklog 与 KB
 0061535 docs(T-0048): 架构⑥-2 保护架构（检测点/RS 锁存/CLEAR 与门/直拉清单）
 
 ## git show --stat --format=fuller 0061535
@@ -44,9 +45,19 @@ To github.com:aWhiteWizard/small_UPS.git
    1ac7577..0061535  HEAD -> master
 PUSH_EXIT: 0
 
-## git ls-remote origin refs/heads/master（push 后）
+## git ls-remote origin refs/heads/master（C1 push 后）
 006153577ff259fbdb19ae0ac3ad8649acc2ecb5	refs/heads/master
 LOCAL_HEAD: 006153577ff259fbdb19ae0ac3ad8649acc2ecb5
+HEAD_EQUALS_REMOTE: YES
+
+## git push origin HEAD:refs/heads/master（C2 证据提交，原文）
+To github.com:aWhiteWizard/small_UPS.git
+   0061535..2da3373  HEAD -> master
+PUSH_EXIT: 0
+
+## git ls-remote origin refs/heads/master（C2 push 后）
+2da3373c6fd2b33e4049ebe2201bba30a91f17a1	refs/heads/master
+LOCAL_HEAD: 2da3373c6fd2b33e4049ebe2201bba30a91f17a1
 HEAD_EQUALS_REMOTE: YES
 
 ## ancestry / clean
@@ -55,4 +66,4 @@ git status --porcelain=v1 -uall（C1 后）→ 空
 
 ## 说明
 - 旧内容 a62340b 为 PASS 稿；新 base 1ac7577 已含 T-0047 §13，本章顺延 §14，正文未改写。
-- C2（本文件）push 后 ls-remote=C2；C3 回填 C2 SHA 与 push 结果，最终 HEAD 见报告。
+- C1=0061535（内容，push 后 ls-remote=0061535）；C2=2da3373（证据，push 后 ls-remote=2da3373）；C3 为本文件所在回填提交，最终 HEAD 见报告。
