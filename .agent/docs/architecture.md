@@ -1512,6 +1512,164 @@ EN / B22 / HB / 信号针────┘        （74HC74）                 ├
 - 规模/成本：5×74HC74 + 3×74HC10 + 3×74HC32 + 4×比较器 + 基准约 10–12 个小 IC，需在接口板预留面积；若面积不足，可把锁存/与门集成到小 SPLD，但 D-29 的“比较器+RS 锁存+硬件直拉”语义不变。
 - T-0047（§13 热设计）已在本 base 落地；本章编号 §14，置于 §13 与 §16 之间。后续章节由引擎按 T-0047→T-0054 顺序并入时顺延重编号。
 
+## 15. 固件架构（T-0050，D-08/D-32）
+
+> 本章为 T-0050 新增，编号接 T-0049 §14；T-0047 §12/T-0048 §13/T-0049 §14 为并行分支，由引擎按 T-0047→T-0054 顺序合并/重编号。本章只写固件“怎么做”，不改 R §2.4/§3.3/§3.4 的时序、故障码、阈值与验收；冲突以 R 为准。
+>
+> D-08：PFC/LLC/buck 各一颗模拟控制器，MCU 不闭功率环；D-32：上电 PFC→PG→LLC→55V 稳→buck→四条件→合继电器→升压，掉电倒序。固件只负责使能、设定、状态机、监测与记录，硬件保护/直拉不经过 MCU。
+
+### 15.1 四层与目录结构
+
+| 层 | 目录 | 职责 | 允许依赖 | 禁止 |
+|---|---|---|---|---|
+| 应用层 | `firmware/app/` | 本体状态机、上下电编排、输出控制、校准会话、命令分发、故障策略 | 服务层 | 直接读写寄存器/GPIO/HAL；直接调用驱动具体实现 |
+| 服务层 | `firmware/services/` | 寄存器映射、设定/COMMIT、校准算法、故障解码、历史记录、1ms 调度、保护策略 | 驱动接口（`psu_io_t`） | 依赖 MCU 型号/HAL；反向调用应用层 |
+| 驱动层 | `firmware/drivers/` | DAC8552、ADS1118、EEPROM、继电器/风扇/NTC/AC/母线采样、I2C/UART 设备驱动 | BSP | 直接包含 `app/*.h`；把寄存器地址暴露给上层 |
+| BSP/HAL | `firmware/bsp/` | 时钟、GPIO、SPI/I2C/UART、Flash/EEPROM 总线、IWDG、NVIC、板级引脚表 | CMSIS/HAL | 包含 `services/*.h`/`app/*.h`；承载业务逻辑 |
+
+```text
+firmware/
+├── bsp/            # 唯一允许 include stm32g4xx.h / HAL 的层
+├── drivers/        # 器件驱动，只调 bsp_*，不碰 MCU 寄存器
+├── services/       # 纯逻辑，PC 可编译；通过 psu_io_t 访问硬件
+├── app/            # 状态机/编排；只调 services 的 psu_* API
+├── include/        # 对外接口与 psu_io_t 定义
+├── tests/
+│   ├── host/       # PC 单测（无 HAL）
+│   └── stubs/      # 假 BSP/驱动、故障注入、时间模型
+├── linker/ startup/ cmake/   # 现有 T-0022/T-0023 资产
+└── CMakeLists.txt
+```
+
+- 依赖方向固定为 `app → services → drivers → bsp → MCU`，只允许向下；`services` 通过 `psu_io_t` 回调访问驱动，驱动不反向调用应用层。跨层通知只走事件队列/标志，不在 BSP/ISR 里跑业务。
+- **禁跨层**：`app/` 与 `services/` 不得 `#include "stm32g4xx.h"`、不得出现 `HAL_*`/`LL_*`、不得直接操作寄存器、不得写 `volatile` 寄存器/直接点 GPIO；寄存器只允许在 `bsp/` 出现。CI/G0 用 `grep -R "stm32g4xx\|HAL_\|LL_" firmware/app firmware/services` 必须为空（允许 `psu_hal_*` 这类自有前缀）。
+- D-08 落地：app 只写 DAC 设定/OVP/OCP 阈值、PFC/LLC/BUCK 使能、继电器与软使能；CV/CC、过流/过压比较、PWM trip 全在模拟/硬件侧，固件不参与逐周期闭环，也不得用软件循环替代比较器。
+- 目标 MCU 为 D-23 的 STM32G431CBT6；现有 `src/main.c` 是 T-0022/T-0023 的 G071 占位脚手架。BSP 隔离后，换 MCU 只改 `bsp/`、`linker/`、`startup/` 与时钟，不改 `services/`/`app/` 逻辑。
+
+### 15.2 本体状态机
+
+```text
+主链：BOOT → POR → SELFTEST → STANDBY → READY → OUTPUT
+特殊边：READY ⇄ CAL；READY/OUTPUT/STANDBY → FAULT_LATCH；
+        FAULT_LATCH →(读码+源消失+CLEAR) STANDBY；READY/STANDBY →(升级请求) BOOT。
+```
+
+| 状态 | 进入条件/动作 | 允许命令 | 退出、超时与回退 |
+|---|---|---|---|
+| BOOT | 复位后 bootloader 判定升级请求或 app CRC 无效；EN 低、PFC/LLC/BUCK 全关、继电器释放、DAC=0、Ilim=0 | HELLO/ERASE/WRITE/VERIFY/GO/ABORT/INFO；禁止 I2C 设定/使能 | GO+VERIFY 通过→复位→POR；3s 无命令且 app CRC 有效→跳 app；否则停留可重传；不自动输出 |
+| POR | 复位入口；10ms 内 GPIO 安全态（EN 低、PFC/LLC/BUCK_EN=0、继电器驱动关、DAC=0）；读复位原因；加载 EEPROM 设定/校准并 CRC；初始化时钟/IWDG | 无外部命令；I2C NACK/写忽略 | 初始化通过→SELFTEST；IWDG/HardFault→记录 INTERNAL 0x14→FAULT_LATCH；EEPROM/校准 CRC 失败→0x12/0x11；>20ms→0x14 |
+| SELFTEST | POR 完成；检查时钟/WDG/ADC/DAC/比较器/EEPROM CRC/校准表/继电器辅助触点；读 AC/PFC/55V | 只读状态；READY 前 I2C 只读 | 全通过→STANDBY；失败/超时 200ms→FAULT_LATCH 0x14/0x11/0x12 |
+| STANDBY | 自检通过/CLEAR 后/AC 恢复；PFC/LLC/BUCK 全关、继电器开、DAC=0、Ilim=0、EN 不驱动；I2C 只读 | 只读状态/版本/故障；升级请求 | AC≥180V 去抖 20ms、无锁存、NTC 有效→启动 PFC/LLC；PFC 2s、LLC 1s 内建压→READY；超时→0x15/0x04；AC<150→0x16；升级→BOOT |
+| READY | PFC 400V 320–420V、LLC 55V 54–56V、PG 有效；继电器开、buck 关、VOUT_ZERO=1、无锁存、校准有效/恒等、设定已 COMMIT；I2C 可写 | 读全部；V/I 影子+COMMIT；显式 OVP/OCP（仅输出 OFF）；HEARTBEAT；OUTPUT_ENABLE=1；CAL BEGIN；升级请求 | 使能链通过→OUTPUT；CAL→CAL；母线跌出窗口>1ms→0x15/0x04；AC<150→0x16；升级→BOOT |
+| OUTPUT | READY + OUTPUT_ENABLE=1 + 使能链（EN 高≥20ms、SHORT_PIN=1、无锁存、HB<500ms、CAL 有效/恒等、设定 COMMIT、PFC/LLC READY）全通过；S1_CHECK→S2_RELAY→S3_SOFT→S4_ON | 读全部；V/I+COMMIT 热调；OUTPUT_ENABLE=0；HEARTBEAT；升级请求（先关断）；显式阈值/CAL 拒绝 | 命令关断/EN 低/短针丢/HB 丢→S6_SHUT→S7_DISCHARGE→READY；故障→FAULT_LATCH；S2>50ms→0x0F；S3>1.2×预期→0x14；S6>50ms→0x0F；S7 100ms>1V→0x10 |
+| FAULT_LATCH | 任一硬件/软件锁存故障或看门狗/自检失败；硬件关门、软件清 OUTPUT_ENABLE、继电器开、DAC=0、Ilim=0、ALERT 低 | 读 FAULT_CODE/FAULT_FLAGS（两者都读）；源消失后写 CLEAR=0xA5；历史/诊断读取；禁止使能/设定/CAL | 读码+源消失+CLEAR→校验锁存位全清/ALERT 释放→STANDBY（重走 S0–S4）；源在 CLEAR 无效；无超时，保持锁存；新故障需重新读码 |
+| CAL | READY + 输出 OFF + 继电器开 + VOUT_ZERO=1 + 无锁存 + CAL_CTRL 开始；一次一个会话 | CAL_CTRL/INDEX/SET/MEAS/READ/COMMIT/ABORT；HEARTBEAT；禁止普通 V/I/OUTPUT_ENABLE/COMMIT | COMMIT 成功→CAL_ACTIVE=1、输出 OFF→READY；ABORT/30s 无命令→旧表不变→READY；故障→FAULT_LATCH；点错/CRC 失败→CAL_STATUS=5/3，旧表保留 |
+
+- 状态映射：`READY` = §7.2 S0_OFF/S4_READY（母线已建、输出未使能）；`OUTPUT` = §7.2 S1_CHECK/S2_RELAY/S3_SOFT/S4_ON/S6_SHUT/S7_DISCHARGE；`FAULT_LATCH` = S9_FAULT；`BOOT` = §8.2 B0–B9 + §7.2 S10_UPGRADE；`CAL` = §9.1 C0–C9；`STANDBY` 是 §7.1 S1 之后、§7.2 S0_OFF 之前的低功耗安全态（PFC/LLC 关）。
+- `FAULT_LATCH` 不能直接进 `CAL`/`BOOT`；CLEAR 后先回 STANDBY，升级需在安全态发起。任何状态收到硬件直拉故障都立即进 `FAULT_LATCH`；BOOT 由 bootloader 自己保证 EN/PFC/LLC/BUCK 全关。
+- 不自动输出：只有 `READY` 收到完整使能链才进 `OUTPUT`；CLEAR、复位、掉电恢复、通信恢复都不自动使能。
+
+### 15.3 与 T-0049 上下电时序逐条对应
+
+> T-0049 §14.6（D-32）给出上下电时序；下表逐条落到固件状态/动作/超时，不改其数值。PG≤300ms/55V≤100ms 是正常分配值，2s/1s 是超时回退上限。
+
+| T-0049 §14.6 行 | 固件状态/动作 | 超时/异常 | 故障码/回退 |
+|---|---|---|---|
+| 辅助电源 12V/5V/3.3V ≤300ms | POR 等待，GPIO 安全态；不驱动 I2C/ALERT | >300ms 无 aux：不上报、停在 POR；aux 超窗：0x14 | 0x14；等下次上电 |
+| 自检 ≤200ms | SELFTEST；检查清单同 §15.2 | >200ms 或失败 | 0x14/0x11/0x12→FAULT_LATCH |
+| PFC PG/400V，典型 ≤300ms，上限 2s | STANDBY 退出：PFC_EN=1，等 PG/320–420V | >2s 或 <320V | 0x15→FAULT_LATCH；不重试 |
+| PFC 母线 <320V | READY/OUTPUT 1ms 监测 | ≤1ms | 0x15；禁 LLC/buck |
+| LLC 55V，典型 ≤100ms，上限 1s | PFC 稳定后 LLC_EN=1，等 54–56V | >1s 或 <50V | 0x04→FAULT_LATCH；禁 buck |
+| 55V 母线 <50V | READY/OUTPUT 1ms 监测 | ≤1ms | 0x04；禁 buck |
+| 继电器闭合 ≤50ms | OUTPUT S2_RELAY：四条件全满足（PFC/LLC/DAC/使能链）、DAC=0/Ilim=0，吸合，等 RELAY_STATE=1 | >50ms 或辅助触点不一致 | 0x0F/0x14；继电器开，禁 buck |
+| VOUT_ZERO 合继电器前 | OUTPUT S1/S2：VOUT_ZERO=1 才允许吸合 | >1V | 0x10；不合继电器 |
+| 软启动到 target±1%，1.2×预期 | OUTPUT S3_SOFT：buck 使能，10V/s；OVP 跟踪先写 | 超时/SPI 丢帧/斜率超限 | 0x14/0x04；S6/S9，保持 OFF |
+| 掉电继电器 ≤50ms | OUTPUT S6_SHUT：BUCK_EN=0、DAC=0、Ilim=0，断继电器 | >50ms/粘连 | 0x0F；保持 OFF、ALERT |
+| 掉电残压 100ms | OUTPUT S7_DISCHARGE：针侧泄放，等 VOUT_ZERO=1 | >100ms 仍 >1V | 0x10；禁止宣称可拔 |
+| 12V 记录窗 20–50ms | 掉电中断：只写 RAM/备份寄存器快照，不写 EEPROM | 12V 丢失 | best-effort；下次上电重走 S0–S4；如已确认 0x16 |
+
+- 上电不跳步；掉电先禁 buck 再断继电器；恢复后重走 S0–S4；CLEAR 不自动输出。
+
+### 15.4 故障处理：硬件直拉与 MCU 记录
+
+- 分工一句话：硬件直拉负责“关”和“锁”，MCU 负责“读、记、报、清”；MCU 不得成为关断路径的一部分。
+
+| 类别 | 故障 | 动作/锁存 | 固件职责 | 恢复 |
+|---|---|---|---|---|
+| 硬件直拉 | OVP/OCP/SCP/OTP/REVERSE_CURRENT/HEARTBEAT_LOST/SHORT_PIN_LOST/EN_LOST/REVERSE_INSERT | 比较器/定时器/门驱动/RS 锁存，≤10µs 关断 | 读 FAULT_FLAGS/ALERT；记录码+快照；不重驱 | 源消失+读码+CLEAR+重新使能 |
+| MCU 软件 | UNDERVOLTAGE/PFC_FAULT/POWER_LOST/RELAY_WELD/VOUT_NOT_ZERO/CAL_INVALID/EEPROM_CRC/INTERNAL/NTC_OPEN/NTC_SHORT | 软件 1ms 内判据并置锁存，硬件门同时关门 | 置位/记录；≤1ms 清软使能；不自动重试 | 同上；CAL/EEPROM 先修复/重校 |
+| 告警/降额 | FAN_STALL | 软件 FG 计时 >2s；告警+降额，不直接关输出 | 记录 0x08；按热预算降额；风扇恢复+CLEAR | 风扇恢复+CLEAR |
+| 混合 | OTP/HEARTBEAT_LOST | 硬件与软件双路径，硬件优先 | 以硬件锁存为准，软件只记录 | 按硬件路径 |
+
+- 锁存后固件行为（≤1ms）：清 OUTPUT_ENABLE、写 DAC=0/Ilim=0、关继电器驱动、停 buck 使能、状态=FAULT_LATCH；ALERT 由硬件拉低，固件不驱动高，全部锁存位清零且 FAULT_FLAGS.bit30=0 后才由硬件释放；继电器保持断开，禁止任何自动重合闸。
+- 记录：FAULT_CODE+FAULT_FLAGS+快照（V_set/I_set/Vout/Iout/温度/OUT_ON/RELAY/CV/CC/OVP/OCP 阈值及来源/母线）；G.6 #1 未确认前只保证本次上电内可追溯，不伪造跨上电历史；掉电后不写 EEPROM。
+- 恢复：①读 FAULT_CODE 与 FAULT_FLAGS（两者都读）；②确认源消失（按 R §3.3.3 清除条件）；③写 CLEAR=0xA5；④读回 0、锁存位全清、ALERT 释放；⑤CLEAR 清软使能，回 STANDBY，重走自检/PFC/LLC 与完整使能；⑥源仍在 CLEAR 无效，新故障需重新读码；不自动重试、无 hiccup。
+- 看门狗/异常复位：IWDG 复位按 INTERNAL 0x14 锁存并记事件；POR 先安全态；校准/设定保持；复位后输出 OFF，需人工 CLEAR+重新使能；连续 100 次也不自动恢复。
+
+### 15.5 任务、中断与看门狗
+
+> 裸机前后台，不使用 RTOS；1ms 主循环 + 固定优先级中断。
+
+| 任务/上下文 | 周期 | 最坏预算 | 内容 | 备注 |
+|---|---|---|---|---|
+| 状态机/故障监督 | 1ms | 25µs | 使能链、上下电超时、继电器/软启动、CLEAR、AC/PFC/55V 1ms 监测 | 主循环最高业务优先级 |
+| 心跳/超时监督 | 1ms | 5µs | 100ms 心跳窗口、500ms 超时、EN/短针去抖计时 | 与状态机同层 |
+| DAC 斜坡/热调 | 1ms | 15µs | 定点步进、OVP 先写、Ilim 平滑 | 不阻塞、不浮点 |
+| ADC 采样/平均/校准 | 1.25ms | 35µs | V/I 各 200SPS，10 次平均 50ms；NTC 10Hz | ADS1118 四通道轮询 |
+| I2C 寄存器服务 | 1ms | 120µs | DMA 收帧、寄存器读写、COMMIT/CLEAR | 最坏响应 ≤5ms |
+| UART/升级 | 1ms | 30µs | 环形缓冲、帧转发 | bootloader 独立 |
+| 显示/LED | 10ms | 60µs | D 板 100Hz 刷新；本体 LED 10ms | 低优先级 |
+| 按键/人机 | 20ms | 10µs | 20–30ms 去抖、组合键 | 低优先级 |
+| 慢监测 | 100ms | 20µs | NTC/风扇/环境慢量 | 不替代硬件保护 |
+| 看门狗喂狗 | 1ms | 2µs | 主循环末尾条件喂狗 | 见下 |
+
+- 1ms 预算：任务合计约 322µs，加中断 ≤50µs，约 372µs（1ms 的 37%）；预算上限 500µs（50%），留 ≥50% 空闲。AC 采样 1kHz、20ms/4ms 去抖；PFC/55V 1kHz；V/I 200SPS、10 次平均 50ms。
+- 中断优先级（NVIC 数值越小越高）：0 保护/ALERT/BKIN/比较器 trip；1 通信 I2C/UART DMA 完成/错误；2 采样 ADC ready/TIM 触发；3 1ms 调度 SysTick/TIM6；4 人机按键/显示。顺序满足“保护 > 通信 > 采样 > 人机”。
+- ISR 只置位/搬数据，不跑状态机、不阻塞 I2C、不 `printf`、不擦写 Flash；硬件保护不依赖中断。关中断临界区 ≤10µs，只保护 32 位影子/队列指针。
+- IWDG：LSI≈32kHz，预分频 32（1ms/tick），重装 200→200ms 超时；POR 启动后不可关闭；bootloader 同 200ms，在 Flash 擦/写页间喂狗，不整段擦除时盲等。
+- 喂狗点：1ms 主循环末尾，且满足①本轮所有强制任务完成②状态机不在超时未处理③无待写故障快照；任一不满足跳过喂狗。禁止在 ISR/通信回调/错误处理里喂。
+- 验证：HIL/首样在 POR/SELFTEST/STANDBY/READY/OUTPUT/CAL/BOOT 各注入死循环，确认 ≤200ms 复位、复位后 OUT_ON=0/RELAY_STATE=0/VOUT_ZERO=1≤100ms、5min 不自动使能、历史有 INTERNAL 事件。
+
+### 15.6 测试策略
+
+> 三层：PC 宿主单测（无硬件）→ 桩/仿真（时序与故障注入）→ HIL/首样（IWDG/模拟/继电器）。本单只写策略，不伪造测试结果；live e2e 不在本单，实现与 e2e 分单。
+
+| 层 | 跑在哪 | 覆盖 | 门槛 |
+|---|---|---|---|
+| 宿主单测 | PC gcc/CMake | 状态机、寄存器映射、校准算法、故障解码、调度器 | 状态转移/故障码/寄存器行 100%；核心分支 ≥85%、行 ≥90% |
+| 桩/仿真 | PC + fake BSP | 上下电、继电器粘连、残压、CAL 中止、BOOT CRC、看门狗模型 | 关键路径全覆盖，时序断言按 1ms 步进 |
+| HIL/首样 | STM32G431 + ST-LINK + 夹具 | IWDG 复位、比较器 trip、EN/短针、继电器、100ms 泄放 | 复位/关断时序实测；首样执行 |
+| live e2e | 整机 + 调试板 | 仅后续实现/测试单，本单不做 | 一单最多 1 轮，且与实现拆单 |
+
+- 状态机单测：表驱动遍历全部状态/转移、非法命令矩阵、超时回退、CLEAR/复位/通信恢复不自动输出；用假时钟，不依赖 HAL。
+- 寄存器映射单测：单一 `regmap.def` 生成 C 表与期望；检查地址/宽度/复位/RW/保留位、多字节小端、COMMIT 原子、只读写忽略；覆盖 R §3.3.1 全部行。
+- 校准算法单测：V6+I3 点、CRC16、恒等回退、损坏/旧表、温度、ABORT/COMMIT；用独立脚本算 golden vector，不复用被测代码算期望。
+- 故障单测：硬件/软件锁存位、先读码后 CLEAR、源在 CLEAR 无效、新故障重读、ALERT 释放、无自动重试；覆盖 0x01–0x16（0x0D/0x0E 保留不产生）。
+- 桩/仿真：`tests/stubs/fake_bsp.c` 模拟时间、DAC/ADC、继电器辅助触点（含粘连/延时）、VOUT RC 泄放、EEPROM A/B 掉电、AC/PFC/55V 阈值；`tests/sim/power_seq` 每 1ms 推进一步，断言合继电器前 PFC/LLC/VOUT_ZERO/四条件全部满足，掉电顺序与 20–50ms 记录窗正确。
+- 看门狗：PC 只测复位原因解码与安全启动策略；真实 IWDG 复位路径必须 HIL/首样注入，不用仿真冒充。
+- G0 命令清单（宿主单测目标由实现单落地；现有脚手架门槛沿用 T-0022/T-0023）：
+
+```powershell
+git rev-parse HEAD
+git status --porcelain=v1 -uall
+git diff --check
+
+cmake -S firmware -B build/host -DPSU_HOST_TEST=ON
+cmake --build build/host --target psu_host_tests
+ctest --test-dir build/host --output-on-failure
+
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/tools/check-env.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File firmware/build.ps1 -Clean
+```
+
+### 15.7 口径与未决
+
+- G.6 #1 故障历史跨上电/换板：owner 未确认前按 §3.3.7 仅本次上电内可追溯；固件用 RAM/备份寄存器，不写 EEPROM，不伪造历史。
+- G.6 #2 显式 OVP/OCP 持久化：未确认前不持久化；上电回默认跟踪并提示；G.6 #4 显式模式仅输出 OFF 设定，默认模式仍按 §2.4.2 ramp+2V。
+- D-21 的 buck 100kHz/68µH 与 R §3.5.7 的 200kHz/33µH 冲突：本章 1ms 调度与状态机不依赖 PWM 频率；采样触发/分频按 T-0049 §14.3，PWM 频率由硬件单裁决。
+- 现有 G071 脚手架与 D-23 的 G431 差异收敛在 BSP/链接/启动/时钟/HAL 配置；`services`/`app` 不得出现型号条件编译。
+- 本章不新增故障码、不改阈值/时序；与 R 冲突时以 R 为准，需变更走变更单。
+
 ## 16. 固件架构（续）：通信与存储（T-0051，D-10/D-23）
 
 > 本章为架构⑦-2，承接 T-0050 §15（分层/状态机/调度/测试）；只写 I2C 从机、寄存器、心跳/使能、Bootloader、EEPROM 的实现约束，不改 R §2.2/§2.4/§3.3/§3.4 的寄存器表、故障码、阈值与验收。T-0047–T-0050 为基于 8566822 的并行分支，本单在 006e9f4（含 T-0036/T-0037/T-0042/T-0043）上继续；合入后由引擎按 T-0047→T-0054 顺序并入「固件架构」章并重编号，章内引用以最终章号为准。
