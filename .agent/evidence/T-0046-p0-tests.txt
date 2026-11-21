@@ -1,10 +1,10 @@
 KIND: tests
-matrix: 134 rows | 覆盖 108 | 部分 25 | 缺 1
-by section: §1-§2 27(22/5/0), §3 45(36/8/1), §4 24(20/4/0), 附录 38(30/8/0)
-G2 R1 blockers fixed: G-2 覆盖→部分; R3-ESTOP 覆盖→部分; G-6 缺→部分 (章节列=无，§4.1 仅引脚、§4.2 仅回退)
-architecture.md: 1299 -> 1520 lines (+221)
-new section: §17 1301; §17.1 1311; §17.2 1450; §17.3 1467; §17.4 1484; §17.5 1496; §17.6 1504
+matrix: 134 rows | 覆盖 113 | 部分 21 | 缺 0
+by section: §1-§2 27(22/5/0), §3 45(39/6/0), §4 24(21/3/0), 附录 38(31/7/0)
+G2 R2 blockers fixed: C1/C2/C4 moved §17.4→§17.5 (cross-doc); G-6 column=§4.1/§4.2（仅部分落点）; R4-44/R4-45 覆盖→部分; acceptance 规模行改为实际 6 files/+97/−95
+merge refresh (§13-§19): D-06/R4-25/J-5→覆盖(§19.7); R4-23→覆盖(§19.6); P-15/R3-ESTOP→覆盖(§14.5.4); R3-PWR12→覆盖(§14.7); R3-CAL4 缺→部分(§18.4)
+architecture.md: 2589 -> 2591 lines (+2 net; 40 insertions/38 deletions)
+sections: §17 2045; §17.1 2055; §17.2 2194; §17.3 2211; §17.4 2228; §17.5 2237; §17.6 ~2253
 UTF-8 BOM: EF BB BF (restored after edit tool removed it)
-requirements.md: REQ- 0 条; T-0043 0 行; P-/D- 表行 26 (16 P + 10 D); blob 7e6b6d5 前后一致
-T-0043 c675a9c ancestor of HEAD: NO (git merge-base --is-ancestor exit 1)
-commands: row-count script; git diff --stat; Select-String '^### 17\.'; git rev-parse <rev>:requirements.md
+requirements.md: REQ- 0 条; T-0043 已合入 v2.2 (§2.8.1); blob 2d44f7c 前后一致
+commands: §17.1 range row count; grep '^### 17\.'; git diff --numstat; ReadAllBytes BOM check

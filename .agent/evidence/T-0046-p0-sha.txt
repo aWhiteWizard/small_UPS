@@ -1,18 +1,18 @@
 KIND: sha
-TASK: T-0046 (G2 R1 返修)
-DATE: 2026-11-20 (UTC+8)
-BASE_HEAD: 73076c165fb0084f11bb2c160a1e4a2a9d74c9ac
-CONTENT_COMMIT: d013e95f1ebd84c2610e6f93793b9090698e5334
-PUSH_C1: git push origin HEAD:master -> "73076c1..d013e95  HEAD -> master"; exit 0
-LS_REMOTE_C1: d013e95f1ebd84c2610e6f93793b9090698e5334	refs/heads/master
-EVIDENCE_COMMIT: 9c6154d585fc44f8efec6b87e258193a18dd3044
-PUSH_C2: git push origin HEAD:master -> "d013e95..9c6154d  HEAD -> master"; exit 0
-LS_REMOTE_C2: 9c6154d585fc44f8efec6b87e258193a18dd3044	refs/heads/master
-FINAL_EVIDENCE_COMMIT: C3（本文件所在提交；回填 C2 hash/log 后 push，终态 ls-remote 见报告/P1）
-REQUIREMENTS_HASH_BASE: 7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
-REQUIREMENTS_HASH_HEAD: 7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+TASK: T-0046 (G2 R2 返修)
+DATE: 2026-11-21 (UTC+8)
+BASE_HEAD: 0b231f74f0f1e251f586607c21272dbcf48041f5
+CONTENT_COMMIT: 361d8ab15255d9940aab1be9cff1a54bf72e97ef
+PUSH: git push origin HEAD:master -> "0b231f7..361d8ab  HEAD -> master"; exit 0
+LS_REMOTE: 361d8ab15255d9940aab1be9cff1a54bf72e97ef	refs/heads/master
+REQUIREMENTS_HASH_BASE: 2d44f7c12d35a8d4427330fe72cbc9679f4b1079
+REQUIREMENTS_HASH_HEAD: 2d44f7c12d35a8d4427330fe72cbc9679f4b1079
 ARCHITECTURE_BOM: EF BB BF
-CONTENT_STAT: 1 file changed, 221 insertions(+)
+CONTENT_STAT: 1 file changed, 40 insertions(+), 38 deletions(-)
 LOG:
-d013e95 docs(T-0046): 修正矩阵状态/统计并拆分冲突节（108/25/1，G2 R1 返修）
+361d8ab docs(T-0046): 按 G2 R2 修正冲突归类与统计，并同步并行合入章节（113/21/0）
+PRIOR_LOG (merged before this round):
+fef3656 docs(T-0046): 回填 C2 提交原文与 push/ls-remote 记录
 9c6154d docs(T-0046): 记录 G2 R1 返修证据、worklog 与知识库
+d013e95 docs(T-0046): 修正矩阵状态/统计并拆分冲突节（108/25/1，G2 R1 返修）
+EVIDENCE_COMMIT: C2（本文件所在提交，trailer: Evidence: T-0046；push 后 ls-remote 见报告/P1）

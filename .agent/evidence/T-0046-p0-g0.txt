@@ -1,10 +1,10 @@
 KIND: g0
-task: T-0046 (G2 R1 返修)
-baseSha(task): 73076c165fb0084f11bb2c160a1e4a2a9d74c9ac
-HEAD at start: 73076c165fb0084f11bb2c160a1e4a2a9d74c9ac
-HEAD==baseSha: YES (worktree rebuilt; prior T-0046 commits recovered via git checkout 33018dc)
-content commit: d013e95f1ebd84c2610e6f93793b9090698e5334
-git status after content: evidence/worklog/kb to be committed (C2)
-scope content: 1 file / 221 insertions, only .agent/docs/architecture.md
-scope final: 7 files / 329 insertions (evidence 4 + worklog + kb excluded from doc threshold)
+task: T-0046 (G2 R2 返修)
+base HEAD (engine merge): 0b231f74f0f1e251f586607c21272dbcf48041f5
+origin/master at start: 0b231f74f0f1e251f586607c21272dbcf48041f5
+HEAD==origin/master: YES
+content commit: 361d8ab15255d9940aab1be9cff1a54bf72e97ef
+scope content: 1 file, +40/-38, only .agent/docs/architecture.md
+scope final: 6 files, +97/-95 (evidence 4 + worklog + architecture; kb 无改动，不计入文档阈值)
 doc-only: YES (no code/config change)
+note: worktree was refreshed by engine to merged base 0b231f7 (T-0038/39/43/47/48/50/51/52 merged); prior T-0046 section §17 preserved at architecture.md:2045
