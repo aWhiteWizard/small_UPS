@@ -630,3 +630,39 @@ KB-TAGS: git, worktree, replay, push, evidence, t-0050
 - worktree 被引擎重建到新 base、旧内容提交仍可用 `git log --all --grep=<单号>` 找到时，用 `git show <旧提交>:<文件>` 取已 PASS 章节，按新 base 的前后章位置原样插入，不重写正文；用 CRLF 归一后的字符数/逐字符比对证明只移动位置。
 - 自交付顺序：C1 内容（body `Ticket: <单号>`）→ push → `ls-remote` 记录 C1；C2 证据（body `Evidence: <单号>`）→ push；C3 回填 C2 与最终 push（body `Evidence: <单号>`）→ push，C3 SHA 只写报告，避免证据自指。
 - 纯文档单的 G0 仍要跑 `git diff --check`/脚手架；本单 `check-env.ps1` 10/10、`build.ps1 -Clean` exit 0，未伪造 host 单测/live e2e。
+
+## 55V 母线复核要按当前 R/T-0043 的 11mΩ 重算
+
+KB-TYPE: hardware
+KB-EVIDENCE: `.agent/docs/requirements.md:763-764`（11mΩ/55mV、53.185V）；`.agent/docs/architecture.md:192-194`（T-0039 §2.8 同步）
+KB-LAYER: 3_hardware
+KB-TAGS: buck, 55v, bus, duty, t-0043, t-0039
+
+T-0039 旧稿按 10mΩ（电感 5mΩ）算出 53.18V；T-0043 把 buck 电感 DCR 改为 6mΩ 后通路为 11mΩ、55mV，最低母线 53.185V≈53.2V，48V 输出 D=(48+0.055)/55=87.4%。重放旧章节时必须先对当前 R §3.5.3，否则会把已过期的 50mV/53.18V 带回来。占空比/最大输出结论不变，但数字要同步。
+
+## ORing 选型先看 TVS 钳位窗口，不是先比价格
+
+KB-TYPE: hardware
+KB-EVIDENCE: `.agent/docs/architecture.md:262`（LTC4357 100V abs max 与 SMBJ58A 93.6V；LM74700-Q1 65V 无窗口）；`.agent/docs/architecture.md:249-260`（九项对照）
+KB-LAYER: 3_hardware
+KB-TAGS: oring, ltc4357, lm74700, tvs, 55v, t-0039
+
+55V 母线/输出针选 ORing 时，先找“TVS standoff>55V 且 clamp<控制器 abs max”的窗口：LTC4357 100V abs max 配 SMBJ58A（93.6V）可行；LM74700-Q1 65V abs max 配 SMBJ58A 会打穿，SMBJ45A（72.7V）仍高，SMBJ40A（64.5V）standoff 又不够。价格低不能抵消钳位窗口不成立。最终定选 LTC4357IMS8#PBF + 100V/≤5mΩ。
+
+## ORing FLT/EN 不是芯片自带，LTC4357 也没有 FLT
+
+KB-TYPE: hardware
+KB-EVIDENCE: `.agent/docs/architecture.md:255`（两颗均无 FLT）；`.agent/docs/architecture.md:268-273`（BSS123 EN + INA240A1/TLV3201 FLT）
+KB-LAYER: 3_hardware
+KB-TAGS: oring, flt, en, ltc4357, lm74700, t-0039
+
+写“ORing 含 EN/FLT 回读”时不要假设控制器自带：LTC4357 引脚为 OUT/VDD/IN/GATE/GND，LM74700-Q1 为 VCAP/GND/EN/CATHODE/ANODE/GATE；两颗都没有 FLT，LTC4357 也没有 EN。用外部 BSS123 拉 GATE 做 EN（只能在 buck 关、继电器释放后用），INA240A1 跨 VDS + TLV3201 产生 ORING_FLT，映射到现有 0x0C/0x14/0x0F/0x10，不新增故障码。
+
+## 重派已 PASS 章节被新基线占号时按主题归位到 §2.x
+
+KB-TYPE: method
+KB-EVIDENCE: 旧提交 `e7e050a` 把 T-0039 放 §18；新基线 `.agent/docs/architecture.md:2266` 的 §18 已是 T-0038、`:2393` 的 §19 已是 T-0052；本单改为 `:184-330` 的 §2.8–§2.12
+KB-LAYER: 1_application
+KB-TAGS: worktree, redispatch, renumber, architecture, t-0039
+
+重派新基线已占用旧并行章号（§18/§19）时，不要机械改成 §20 另起顶层章，也不要重写既有 §2.x。按内容主题把已 PASS 的“供电链/输出级细化”归位为 §2.8–§2.12，并在 §2.4/§2.5 各加 1 行指针；正文阈值/结论保持，只改章号和当前基线数字（如 11mΩ/53.185V）。这样 diff 只在对应章节，不碰他人章。

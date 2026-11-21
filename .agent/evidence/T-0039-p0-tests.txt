@@ -1,0 +1,14 @@
+KIND: tests
+TASK: T-0039
+AT: 2026-11-21 +08:00
+DIFF: 152 0 .agent/docs/architecture.md（1 file, +152/−0）
+DIFF_CHECK: exit 0（无输出）
+REQ_MODULES: git diff --name-only 2558e88..HEAD -- .agent/docs/requirements.md .agent/docs/modules.md → 空
+TABLES: 105 blocks, mismatches=0
+FENCES: 36（成对）
+TABS/TRAILING: 0/0
+BOM: 无（base 亦无；未引入 BOM）
+HEADINGS: §2.8–§2.12（5 个新小节；§2.4/§2.5 各 1 行指针）
+KEY_NUMBERS: D55=87.4%, D48=100.1%, D40=120.1%; maxout95=52.20/45.55/37.95V; 53.185V/11mΩ; LLC=8.6/9.0/9.9W; standby=1.20/1.40W; ORing 5A VDS=25mV/0.125W; 55/100=55%
+D_REFS: D-01/D-02/D-03/D-04/D-16/D-18/D-19/D-21/D-22/D-29/D-32（均存在于 .agent/design-decisions.md）
+RESULT: PASS

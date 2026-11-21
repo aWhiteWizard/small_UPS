@@ -1,0 +1,12 @@
+KIND: acceptance
+TASK: T-0039
+AT: 2026-11-21 +08:00
+1 55V 复核：PASS——维持 55V（D-19）；D=87.4%/100.1%/120.1%；95% Dmax 最大 52.20/45.55/37.95V；55V 29.0W/89.2%；R §3.5.3 的 11mΩ/53.185V 已同步
+2 待机三方案：PASS——A 4.60（1.20W typ/1.40W max）、B 2.35（PFC 常开≥2.1W 否决）、C 3.95（备选）；推荐 A（D-18）
+3 ORing 定选：PASS——LTC4357 80V/100V、0.5µs、SMBJ58A 93.6V 兼容；LM74700-Q1 65V abs max 无 TVS 窗口；定选 LTC4357IMS8#PBF + 100V/≤5mΩ + 外部 EN/FLT
+4 时序：PASS——正向 buck→relay→ORing EN；反向 ORing→buck→relay；继电器粘连 ORing 阻断反向、不能正向/隔离；0x0F/0x10/0x0C/0x14/0x16
+5 写入：PASS——architecture §2.8–§2.12（§2.4/§2.5 各 1 行指针），引用 D；R/modules 未改
+6 交付：PASS——C1 d0465d6（Ticket: T-0039）；C2 本证据提交（Evidence: T-0039）；push/ls-remote 见 sha 与报告
+7 规模：PASS——文档 1 文件/152 行；代码与配置 0 文件/0 行；证据/worklog 不计
+SIZE: 文档 1 文件 / 152 行；代码与配置 0 文件 / 0 行
+RESULT: PASS

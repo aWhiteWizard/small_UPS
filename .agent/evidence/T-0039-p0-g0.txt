@@ -1,0 +1,10 @@
+KIND: g0
+TASK: T-0039
+AT: 2026-11-21 +08:00
+BASE: 2558e885ca923d5966b27aa5ebbf13c5e8d34dc5（看板 task.baseSha）
+HEAD_AT_START: 2558e885ca923d5966b27aa5ebbf13c5e8d34dc5（== base）
+REMOTE_MASTER_AT_START: 2558e885ca923d5966b27aa5ebbf13c5e8d34dc5
+CMD: git rev-parse HEAD; git status --porcelain=v1 -uall; git ls-remote origin refs/heads/master; git diff --check; 表块/围栏/tab/trailing/BOM; requirements/modules 差异
+STATUS: 开工 HEAD==base、工作区 clean；C1 仅改 architecture.md +152/−0；表块 105 处 0 错位；围栏 36 成对；tabs=0/trailing=0；BOM 无（与 base 一致）；requirements/modules 无 diff
+G0-NOTE: 纯文档单；firmware/tools/check-env.ps1 不适用（未改代码/配置）
+RESULT: PASS（docs G0）
