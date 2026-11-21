@@ -6,8 +6,11 @@ CONTENT_COMMIT: 00e643a896a1167f36e5f20a70b084b1fa8457c7
 CONTENT_STAT: 1 file changed, 133 insertions(+), 4 deletions(-) (.agent/docs/architecture.md only)
 PUSH_C1: git push origin HEAD:refs/heads/master -> "fef3656..00e643a  HEAD -> master", exit 0
 LS_REMOTE_C1: 00e643a896a1167f36e5f20a70b084b1fa8457c7	refs/heads/master
-EVIDENCE_COMMIT: (backfilled in C3)
-PUSH_C2: (backfilled in C3)
-LS_REMOTE_C2: (backfilled in C3)
-FINAL_EVIDENCE_COMMIT: C3 (this file updated; final ls-remote recorded in report/P1)
-LOG: (backfilled in C3)
+EVIDENCE_COMMIT: 8fd0cb0dbd20ea715b568a452fd54c21d9cb2720
+EVIDENCE_STAT: 6 files changed, 76 insertions(+) (4 P0 evidence + worklog + kb note; evidence dirs force-added per repo convention)
+PUSH_C2: git push origin HEAD:refs/heads/master -> "00e643a..8fd0cb0  HEAD -> master", exit 0
+LS_REMOTE_C2: 8fd0cb0dbd20ea715b568a452fd54c21d9cb2720	refs/heads/master
+FINAL_EVIDENCE_COMMIT: C3 (this file updated with C2 hash/log; C3 push + ls-remote in report/P1)
+LOG:
+00e643a task(T-0038): 架构②：控制架构与 MCU 选型（已定：三颗模拟控制器 + G431CB）
+8fd0cb0 docs(T-0038): 记录交付返工 P0 证据、worklog 与知识库
