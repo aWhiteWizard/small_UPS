@@ -1,0 +1,26 @@
+KIND: tests
+TICKET: T-0047
+COMMAND: PowerShell UTF8 Contains + Markdown table pipe checks
+SCOPE: 验收 1–6 的关键词/数值/章节/结构；验收 7–8 在 acceptance/sha 文件
+RESULT: FAIL=0
+REPLAY: 594f151（origin/master）；C1=3243207；C1b=8a0b63c
+
+GROUP A1 顺序/架构/D: PASS 6/6
+GROUP A2 散热/风道: PASS 16/16
+GROUP A3 噪音: PASS 12/12
+GROUP A4 PCB: PASS 13/13
+GROUP A5 散热器: PASS 9/9
+GROUP A6 验证: PASS 16/16
+- 数字闭合：29.0+3.0=32.0；10.0+1.8+20.2=32.0。
+- 章节：13.1/13.2/13.3/13.4/13.5/13.6 全部存在；§13 在 1112，§16 在 1279。
+- 表格：管道数异常 0；UTF-8 无 BOM；CRLF；尾空白 0。
+- 文件范围：`git diff --name-only 594f151..HEAD` = `.agent/docs/architecture.md`；firmware/tools/Hardware 0。
+- `git diff --check` exit 0；C1/C1b 已 push，`git ls-remote`=8a0b63c。
+- G2 advisory 已修：51℃ 校核说明、5A 铜条 ≥8 孔、12V 30min 测试包络 vs 10s 产品工况口径。
+KEY: 32.0W/29.0W/3.0W、60×60×25、向内吹/正压、180×120/44cm²、防尘棉/可拆洗、FILTER_CLOG/0x08、30%/50–75℃/≥75℃/5℃、≤35dB(A)/1m/A 计权/自由场、Top/GND/PWR/Bottom/1oz、开窗铜条、0.3mm 过孔、8mm/6mm、CNC/6063-T5/10–20psi、T1–T17、D-27/D-28/D-33/D-34/D-35。
+
+## G2 R1 复核（重放后）
+- blocker：C1 3243207 已 push（594f151..3243207），C1b 8a0b63c 已 push（3243207..8a0b63c），remote=8a0b63c；C1 为 C2 祖先，详见 sha.txt。
+- process：C1/C1b body 均带 `Ticket: T-0047`，C2'/C3' body 带 `Evidence: T-0047`；git log 见 sha.txt:11-14。
+- advisory g0 67/72：g0.txt:14 已补去重/复用说明。
+- advisory architecture 802/804、667、739/744：已在 C1b 修正（30min 仅测试包络、51℃ 说明、≥8 孔）。

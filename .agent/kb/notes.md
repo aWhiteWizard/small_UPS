@@ -603,3 +603,11 @@ KB-LAYER: 1_application
 KB-TAGS: docs, test-plan, redirect, acceptance, t-0043
 
 需求/变更单若写“更新 `.agent/docs/test-plan.md` 验收方法”，先查文件是否存在：T-0032 起 `.agent/docs/test-plan.md` 不存在，只有 `docs/test-plan.md` 摘要引用页，且页头明确“不要在本文件新增测试内容或判据”。正确落点是 `.agent/docs/architecture.md` §10.1（6 点表）/§10.3（纹波测法）；报告记 DEVIATION 说明工单路径过期，不要为凑路径新建 `.agent/docs/test-plan.md`（三份事实源之外的测试文档不认）。
+
+## 并行分支重放：先刷新 worktree 到 origin/master，再 cherry-pick 本单提交（T-0047）
+
+KB-TYPE: method
+KB-EVIDENCE: `git ls-remote origin refs/heads/master`=594f151；`git push` → `594f151..3243207`、`3243207..8a0b63c HEAD -> master` exit 0；`git diff --name-only 594f151..HEAD` 仅 `.agent/docs/architecture.md`；`git ls-remote` 随后=8a0b63c
+KB-TAGS: git, replay, worktree, push, t-0047
+
+当 worktree 被引擎刷新到新的 origin/master 且本单旧提交只在备份分支时，不要在新 base 上直接 merge/rebase 旧分支（会把他人文件混进本单 diff）。做法：①旧 HEAD 建备份分支；②在新 base 上 cherry-pick 本单内容提交，按当前 base 重编号（本单 §12→§13）并合并同文件改动；③`git diff --name-only <new base>..HEAD` 必须只剩本单文件；④push 前 `git ls-remote` 对照，push 后记录 `PUSH exit 0`、`FINAL_HEAD`、`ls-remote` 相等与 C1 祖先关系；证据提交再补 `Evidence:` trailer。

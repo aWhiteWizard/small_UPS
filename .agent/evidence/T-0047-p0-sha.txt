@@ -1,0 +1,53 @@
+KIND: sha
+TICKET: T-0047
+TASK_BASE_SHA: 8566822cc796a477bc894af9a396e75f11f582d3
+REPLAY_BASE: 594f1515e7715b958686d6d24ff594ea4a191eff（origin/master at replay）
+CONTENT_COMMIT: 3243207cbebc24816ea34dae7f2bd60dfadb002e
+ADVISORY_COMMIT: 8a0b63cbd68c32a8e502e1172ce181f295fe82a9
+EVIDENCE_COMMIT: 见报告（本文件所在 C2'；C2' 的 push 与最终 HEAD 见 C3'）
+BRANCH: task/T-0047
+WORKTREE: D:\workspace\wt\small-ups\T-0047
+
+== git log --oneline 594f151..HEAD ==
+8a0b63c docs(T-0047): 修正 G2 advisory（51℃/8 孔/12V 30min-10s 口径）
+3243207 docs(T-0047): 架构⑥-1 散热风道/32W 热预算/四层板/CNC 散热器
+
+== commit trailers ==
+C1 3243207 body: Ticket: T-0047
+C1b 8a0b63c body: Ticket: T-0047
+C2'（证据）body: Evidence: T-0047；C3'（最终证据）body: Evidence: T-0047
+
+== diff stat 594f151..HEAD（C1+C1b） ==
+1 file changed, 185 insertions(+), 15 deletions(-)
+git diff --name-only 594f151..HEAD = .agent/docs/architecture.md
+
+== push 1（C1） ==
+To github.com:aWhiteWizard/small_UPS.git
+   594f151..3243207  HEAD -> master
+PUSH_EXIT: 0
+
+== push 2（C1b） ==
+To github.com:aWhiteWizard/small_UPS.git
+   3243207..8a0b63c  HEAD -> master
+PUSH_EXIT: 0
+
+== verify after 8a0b63c ==
+git ls-remote origin refs/heads/master:
+8a0b63cbd68c32a8e502e1172ce181f295fe82a9	refs/heads/master
+LOCAL_HEAD: 8a0b63cbd68c32a8e502e1172ce181f295fe82a9
+HEAD_EQUALS_REMOTE: YES
+
+== ancestry ==
+git merge-base --is-ancestor 594f151 3243207 → exit 0
+git merge-base --is-ancestor 3243207 8a0b63c → exit 0
+git merge-base --is-ancestor 8a0b63c HEAD → exit 0（HEAD = C2' 证据提交）
+
+== evidence push（C2'/C3'） ==
+C2'：本文件所在证据提交，push 输出与 HEAD/remote 相等见 C3' 追加。
+C3'：最终证据提交，body `Evidence: T-0047`，SHA 见最终报告。
+
+== final state ==
+CONTENT_PUSHED_HEAD: 8a0b63c
+REMOTE_AFTER_CONTENT: 8a0b63c
+HEAD_EQUALS_REMOTE_AFTER_CONTENT: YES
+FINAL_EVIDENCE_HEAD: 见最终报告（C3'）

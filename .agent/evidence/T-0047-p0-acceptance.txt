@@ -1,0 +1,30 @@
+KIND: acceptance
+TICKET: T-0047
+RESULT: 8 PASS / 0 FAIL
+TASK_BASE: 8566822cc796a477bc894af9a396e75f11f582d3
+REPLAY_BASE: 594f1515e7715b958686d6d24ff594ea4a191eff
+CONTENT_COMMIT: 3243207cbebc24816ea34dae7f2bd60dfadb002e
+ADVISORY_COMMIT: 8a0b63cbd68c32a8e502e1172ce181f295fe82a9
+写入文件:章节: .agent/docs/architecture.md:13.1–13.6（另 §10.6/§10.10/§10.11/§12.1/§11.3#9 同步）
+
+| # | 验收口径 | 结论 | 证据（文件:行） |
+|---|---|---|---|
+| 1 | 顺序/只写 architecture/引用 D | PASS | architecture.md:1112–1124（§13 引 D-27…D-35）；`git diff --name-only 594f151..HEAD` 仅该文件 |
+| 2 | 散热风道 D-27/32W/40℃校核 | PASS | architecture.md:1126–1149（13.1）、1150–1167（13.2）、975–989（§10.11 的 29W+3W=32W） |
+| 3 | 噪音/风扇曲线/降噪 | PASS | architecture.md:1168–1174（13.3）、1162（30% 曲线） |
+| 4 | PCB 四层/1oz/开窗焊铜/爬电 | PASS | architecture.md:1175–1214（13.4） |
+| 5 | CNC 散热器/12V 3W | PASS | architecture.md:1215–1238（13.5） |
+| 6 | 热测点/热电偶/噪音判据 | PASS | architecture.md:1239–1278（13.6） |
+| 7 | Ticket/Evidence/commit/git log | PASS | C1 3243207、C1b 8a0b63c 均 push（594f151..3243207、3243207..8a0b63c，exit 0）；C2'/C3' body `Evidence: T-0047`；git log 见 sha.txt:11-14 |
+| 8 | 文档规模/证据不计 | PASS | 1 文件 / +185 −15（200 行 diff，≤300 目标）；代码与配置 0/0；证据 4 文件不计 |
+
+## G2 R1 逐条回应
+
+| finding | 处理 | 状态 |
+|---|---|---|
+| blocker sha:25（未 push/无 PUSH/HEAD≠ls-remote） | C1 3243207、C1b 8a0b63c 已 push 到 origin/master；`git ls-remote`=8a0b63c=本地 HEAD；C1 为 C2 祖先；PUSH/VERIFY 原文见 sha.txt:24-38 | PASS |
+| process sha:5（C2 body/最终报告未落 P0） | C1/C1b body `Ticket: T-0047`、C2'/C3' body `Evidence: T-0047`；git log 见 sha.txt:11-14 | PASS |
+| advisory architecture:802/804（30min vs 10s） | C1b 改为“12V 1.25A 连续 30min 仅热测试包络；产品专项按 1.25A/10s” | PASS |
+| advisory architecture:667（50℃ 上界） | C1b 取 51℃ 最坏校核，表中 50℃ 值 +1K 说明 | PASS |
+| advisory architecture:739/744（6/8 孔） | C1b 统一为 5A 铜条端 ≥8×Ø1.0mm | PASS |
+| advisory g0:14（67 vs 72） | g0.txt:14 补 67 去重 / 72 组内成员、5 项跨组复用说明 | PASS |

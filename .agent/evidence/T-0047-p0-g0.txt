@@ -1,0 +1,18 @@
+KIND: g0
+TICKET: T-0047
+TASK_BASE_SHA: 8566822cc796a477bc894af9a396e75f11f582d3
+REPLAY_BASE: 594f1515e7715b958686d6d24ff594ea4a191eff
+HEAD_AT_START: 594f1515e7715b958686d6d24ff594ea4a191eff
+CONTENT_COMMIT: 3243207cbebc24816ea34dae7f2bd60dfadb002e
+ADVISORY_COMMIT: 8a0b63cbd68c32a8e502e1172ce181f295fe82a9
+BRANCH: task/T-0047
+G0_RESULT: PASS
+
+- 基线：任务 baseSha=8566822；引擎刷新 worktree 到 origin/master 594f151（C1/C1b 的父提交）；工作区 clean。
+- 重放内容：C1 3243207 + C1b 8a0b63c，仅 `.agent/docs/architecture.md`：1 文件 / +185 −15；requirements/modules/firmware/tools/Hardware 0 改动。
+- `git diff --check`：无输出，exit 0；UTF-8 无 BOM；CRLF；行尾空白 0 处。
+- 文件行数：architecture 1655 → 1825（净 +170）；新增 §13.1–§13.6，同步 §10.6/§10.10/§10.11/§12.1/§11.3#9。
+- Markdown 表格管道一致性：0 行异常；关键词 67 项去重 Contains：FAIL=0（72 组内成员，5 项跨组复用：40±1℃、30min、1m、A 计权、自由场）。
+- `git push origin HEAD:refs/heads/master`：594f151..3243207、3243207..8a0b63c 均 exit 0；`git ls-remote`=8a0b63c=本地 HEAD；C1 已 push 且为 C2 祖先。
+- 需求正文未改：R §2.9/§3.5.9 保持 29W/40%；architecture 按 D-27 写 32W/30%，§11.3#9 标明 R 待变更单同步。
+- 规模：文档 1 文件 / 185 insertions / 15 deletions（200 行 diff，≤300 目标）；代码与配置 0 文件 / 0 行。
