@@ -1,0 +1,9 @@
+KIND: acceptance
+TASK: T-0053
+1 PASS 顺序/章节: architecture.md §20 at 2593; D-05/06/23/24 table at 2605-2608; follows §19 (T-0052)
+2 PASS 差异清单: §20.2 2617-2639, rows 1-14 cover shell/heatsink/fan/wire/PCB 4->2/caps/packaging/display+keys; MCU no change (D-23) row 9
+3 PASS 降本路径: §20.3 2641-2669, descending; risk labels lead time/cert/life/margin; Path A 687 (+87), B 658 (+58), C 600 (0) with gap
+4 PASS 复测: §20.4 2671-2694, 5 mandatory tests + reuse conditions same PN/spec/batch
+5 PASS BOM: §20.5 2696-2763, P/D tables with designator/name/spec/qty/V1/V2/note; §20.6 2765-2798 prototype 1,743 and 100-set 950/687/658
+6 PASS 提交: C1=527187a (Ticket: T-0053); C2/C3 evidence commits (Evidence: T-0053) + push/ls-remote in p0-sha.txt
+7 PASS 规模: doc 1 file / +223 lines (<=300 target); evidence excluded from scale

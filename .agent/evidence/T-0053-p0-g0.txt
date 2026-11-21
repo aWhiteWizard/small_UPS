@@ -1,0 +1,10 @@
+KIND: g0
+TASK: T-0053
+BASE: 7c0a31a3c06412a6952ad217cfb1ea07a4900f3a
+HEAD_AT_START: 7c0a31a3c06412a6952ad217cfb1ea07a4900f3a
+STATUS_AT_START: empty (git status --porcelain=v1 -uall)
+CMD: powershell -NoProfile -ExecutionPolicy Bypass -File firmware\tools\check-env.ps1
+RESULT: CHECK-ENV: PASS (10/10), exit 0
+CMD: powershell -NoProfile -ExecutionPolicy Bypass -File firmware\build.ps1 -Clean
+RESULT: exit 0; FLASH 1544 B/128 KB; RAM 1584 B/36 KB; firmware/build/psu_minimal.elf
+NOTE: .tools is a gitignored junction to T-0002/.tools (rebuilt for this worktree)

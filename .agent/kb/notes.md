@@ -666,3 +666,12 @@ KB-LAYER: 1_application
 KB-TAGS: worktree, redispatch, renumber, architecture, t-0039
 
 重派新基线已占用旧并行章号（§18/§19）时，不要机械改成 §20 另起顶层章，也不要重写既有 §2.x。按内容主题把已 PASS 的“供电链/输出级细化”归位为 §2.8–§2.12，并在 §2.4/§2.5 各加 1 行指针；正文阈值/结论保持，只改章号和当前基线数字（如 11mΩ/53.185V）。这样 diff 只在对应章节，不碰他人章。
+
+## 架构决策 D-05/D-06 与需求 §4.1 的 D-05/D-06 不是同一编号体系
+
+KB-TYPE: content
+KB-EVIDENCE: .agent/docs/architecture.md:2597（本章按 design-decisions 的 D-05/D-06 写同板双 BOM/V2 换料复测）；.agent/docs/requirements.md:777-778（R §4.1 的 D-05=ALERT、D-06=PT100）
+KB-LAYER: 1_application
+KB-TAGS: d-number, bom, alert, pt100, requirements, architecture, t-0053
+
+写“引用 D-05/D-06”的 BOM/降本单时，先确认是哪套编号：owner 架构决策记录（`.agent/design-decisions.md`）的 D-05=同板双 BOM、D-06=V2 换料复测；R §4.1 的功能决策 D-05=ALERT、D-06=PT100。两者编号相同、语义不同；落稿要写全称（如“D-05 同板双 BOM”），否则审查会把 ALERT/PT100 条款误当成本策略。另 D-23/D-24 只存在于架构决策记录，R 中没有对应编号。

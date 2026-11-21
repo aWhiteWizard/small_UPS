@@ -1,0 +1,9 @@
+KIND: tests
+TASK: T-0053
+DOC: .agent/docs/architecture.md §20 (2593-2814)
+DIFF: 1 file changed, 223 insertions(+), 0 deletions(-); git diff --check exit 0
+STRUCT: section20_lines=222; H2 total=20; §20 H3=7; table pipe rows all consistent
+TERMS: D-05/D-06/D-23/D-24/STM32G431CBT6/V1 选型/V2 替代/降本/需复测项/热/纹波/效率/待机/寿命/V1 单价/V2 单价/替代说明/打样/100 套/600/700 = all present
+BOM: P 36 rows V1=710 V2=474; D 14 rows V1=120 V2=105; qty*unit subtotal mismatch=0
+PATH: 13 rows sum=292 -> V2-A=687 V2-B=658 V2-C=600; diff table 14 rows sum=286 (incl 29 eval + 6 packaging)
+ENC: UTF-8 BOM=True CRLF=True; tabs=0; trailing spaces=0

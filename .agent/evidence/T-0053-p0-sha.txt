@@ -1,0 +1,9 @@
+KIND: sha
+TASK: T-0053
+BASE: 7c0a31a3c06412a6952ad217cfb1ea07a4900f3a
+C1: 527187a0c36823197884282692e08735dd70625a
+PUSH_C1: 7c0a31a..527187a HEAD -> master; exit 0
+LS_REMOTE_C1: 527187a0c36823197884282692e08735dd70625a refs/heads/master
+C2: pending (evidence/worklog/KB)
+C3: pending (final SHA/worklog)
+FINAL_HEAD: pending
