@@ -1,39 +1,40 @@
 KIND: tests
 TASK: T-0040
 DATE: 2026-11-21 (UTC+8)
-SCOPE: architecture.md §6.4（G2 R1 返修）+ requirements.md hash; no code/config
+SCOPE: T-0040 content at a43db5e (ancestor of current HEAD) + current line refs
 RESULT: PASS (13/13)
 CHECKS:
-[1] encoding/format
-BOM=True (preserved); TABS=0; TRAILING=0
+[1] encoding/format (current worktree)
+TABS=0; TRAILING=0; current BOM=False (later tickets changed it; T-0040 a43db5e had BOM=True)
 [2] size
-architecture.md = 1299 lines / 150077 bytes
-$ git diff --stat 44b699b..HEAD -- .agent/docs -> 1 file changed, 190 insertions(+)
-[3] markdown tables
-TABLES=53; pipe-count mismatch rows = 0
-[4] headings
-394: ### 6.4 板级划分与结构分区（T-0040）
-400: #### 6.4.1 单板与双板的五维对比
-417: #### 6.4.2 双板方案边界（未采用，仅留档）
-426: #### 6.4.3 坐标、包络与主板前缘
-445: #### 6.4.4 60×120×180 壳内三维分区
-511: #### 6.4.5 强/弱电隔离与禁布
-529: #### 6.4.6 与调试板的机械接口复核
-550: #### 6.4.7 装配、维修与公差
-557: #### 6.4.8 与 R §3.5.2 的差异、待确认与收口
-572: #### 6.4.9 验收映射
+current architecture.md = 2589 lines / 299874 bytes
+T-0040 content: $ git diff --stat 44b699b..a43db5e -- .agent/docs
+1 file changed, 190 insertions(+)
+[3] markdown tables (current)
+TABLES=105; pipe-count mismatch rows = 0
+[4] T-0040 headings (current line refs)
+550: ### 6.4 板级划分与结构分区（T-0040）
+556: #### 6.4.1 单板与双板的五维对比
+573: #### 6.4.2 双板方案边界（未采用，仅留档）
+582: #### 6.4.3 坐标、包络与主板前缘
+601: #### 6.4.4 60×120×180 壳内三维分区
+667: #### 6.4.5 强/弱电隔离与禁布
+685: #### 6.4.6 与调试板的机械接口复核
+706: #### 6.4.7 装配、维修与公差
+713: #### 6.4.8 与 R §3.5.2 的差异、待确认与收口
+728: #### 6.4.9 验收映射
 [5] heatsink dimension (R1 blocker 1)
-architecture.md:507 “基板 ≤110（z）×55（y），实际 z=45–145（100mm）”
-z: 145-45=100 <= 110; table :502 z=45–145 consistent
+architecture.md:663 “基板 ≤110（z）×55（y），实际 z=45–145（100mm）”
+z: 145-45=100 <= 110; table :658 z=45–145 consistent
 [6] slot/tongue vs cavity (R1 blocker 2)
-architecture.md:434/443: 3.2×79 slot, y=20.5–99.5
+architecture.md:590/599: 3.2×79 slot, y=20.5–99.5
 tongue height: 99.5-20.5=79
-architecture.md:536: body 120, cavity 115, tongue 79
+architecture.md:665: body 120, cavity 115, tongue 79
 79 < 115; body 120 > 115 but body stops at z=0 and does not enter cavity
 clearance: (115-79)/2=18 mm each side
 [7] isolation band (R1 blocker 3)
-architecture.md:526: SELV z≤90; band z=90–100 = 10mm; primary non-isolated z≥100
-10mm >= 8mm creepage; 10mm >= 6mm clearance; :415 same in §6.4.1
+architecture.md:682: SELV z≤90; band z=90–100 = 10mm; primary non-isolated z≥100
+10mm >= 8mm creepage; 10mm >= 6mm clearance; :571 same in §6.4.1
 [8] five-dimension arithmetic
 single = (3+4+3+5+4)/5 = 3.8
 dual   = (4+3+4+2+3)/5 = 3.2 -> recommend single
@@ -42,13 +43,15 @@ A1 y=99.5; pin n y=99.5-(n-1)*2.54
 pin20=51.24; pin21=48.70; pin32=20.76; strip 20.5–99.5 = 79.0
 [10] protrusion/timing
 gold finger 10 = insert 5 + exposed 5; pin 18 -> pin leads 8mm
-[11] short-pin T-0036 alignment (new base requirement)
-architecture.md:541: s=2.0 (long 12.0/power 10.0/short 8.0, d=5±1), short wipe ≥2mm
-architecture.md:542: long group -> power pins 1–20 -> short pin; extract reverse
-[12] requirements body unchanged
-BASE=7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
-HEAD=7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
-WORK=7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+[11] short-pin T-0036 alignment
+architecture.md:697: s=2.0 (long 12.0/power 10.0/short 8.0, d=5±1), short wipe ≥2mm
+architecture.md:698: long group -> power pins 1–20 -> short pin; extract reverse
+[12] requirements body
+44b699b:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+a43db5e:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+current HEAD differs due to later T-0039/T-0052, not T-0040
 [13] git/scope
-$ git diff --check 44b699b..HEAD -> exit 0
-only .agent/docs/architecture.md content file; no code/config
+$ git merge-base --is-ancestor a43db5e HEAD -> exit 0
+$ git diff --check 44b699b..a43db5e -> exit 0
+$ git status --porcelain -> empty
+T-0040 content touches only .agent/docs/architecture.md; no code/config

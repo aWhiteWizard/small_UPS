@@ -4,36 +4,44 @@ DATE: 2026-11-21 (UTC+8)
 WORKTREE: D:\workspace\wt\small-ups\T-0040
 BASE_HEAD: 44b699bd192e443e9b88f25c8ad3dbe8d256921a
 CONTENT_COMMIT: a43db5e62bb018b9327debe8b4ad179786e3b802
+CURRENT_HEAD: f3bdcacce4bf46ac3476b77c860138077c253518
 G0_STATUS: PASS
 P0_GATES:
-1) base / remote before C1
-$ git rev-parse HEAD -> 44b699bd192e443e9b88f25c8ad3dbe8d256921a
-$ git ls-remote origin refs/heads/master -> 44b699bd192e443e9b88f25c8ad3dbe8d256921a
-=> fast-forward base; no merge/rebase/ff pulled by worker
-2) content diff
-$ git diff --name-only 44b699b..HEAD -- .agent/docs
+1) T-0040 content already merged
+$ git merge-base --is-ancestor a43db5e HEAD
+exit 0
+$ git log --oneline -1 a43db5e
+a43db5e docs(T-0040): 保留 architecture.md 的 UTF-8 BOM
+=> content at a43db5e is an ancestor of current HEAD; no content redo
+2) T-0040 content diff (scoped to its own commits)
+$ git diff --name-only 44b699b..a43db5e -- .agent/docs
 .agent/docs/architecture.md
-$ git diff --stat 44b699b..HEAD -- .agent/docs
+$ git diff --stat 44b699b..a43db5e -- .agent/docs
  .agent/docs/architecture.md | 190 ++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 190 insertions(+)
 3) whitespace
-$ git diff --check 44b699b..HEAD
+$ git diff --check 44b699b..a43db5e
 exit 0
-4) requirements body unchanged
-BASE:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
-HEAD:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
-WORK:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
-5) encoding / tables
-BOM=True (preserved); TABS=0; TRAILING=0
-TABLES=53; BAD_ROWS=0
-6) scope
-no .c/.h/.py/.ps1/.json/.yaml/.toml/KiCad files changed
+4) requirements body unchanged by T-0040
+44b699b:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+a43db5e:7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+(current HEAD 2d44f7c differs due to later T-0039/T-0052, not T-0040)
+5) current worktree clean
+$ git status --porcelain
+(empty)
+6) current architecture sanity (line refs in P0 point here)
+architecture.md = 2589 lines; TABLES=105; BAD_ROWS=0; TABS=0; TRAILING=0
+current BOM=False (later tickets changed it; T-0040 content commit a43db5e had BOM=True)
 7) pushes
 a) C1: 44b699b..a09e6cd  HEAD -> master  (PUSH_EXIT=0)
 b) C3: a09e6cd..5bb31ef  HEAD -> master  (PUSH_EXIT=0)
 c) C3b: 5bb31ef..a43db5e HEAD -> master  (PUSH_EXIT=0)
-LS_REMOTE: a43db5e62bb018b9327debe8b4ad179786e3b802 refs/heads/master
+d) C4: a43db5e..73076c1 HEAD -> master  (PUSH_EXIT=0, Evidence)
+e) C5: this evidence refresh -> master (final HEAD in report)
+LS_REMOTE_C1: a43db5e62bb018b9327debe8b4ad179786e3b802
 NOTES:
-- C1=架构④ R1 返修；C3=T-0036 短针 s=2.0 对齐；C3b=恢复 BOM；C4=本证据提交。
-- 第 1 轮旧 C1=469e86c / C2=0957970 保留在 task/T-0040-bak-T-0040-20261120-204200。
-- worklog/evidence 被 .gitignore 忽略，C4 用 git add -f 提交。
+- Current HEAD f3bdcac includes later T-0039/T-0052 changes to architecture/R;
+  T-0040 scoped diff remains 190 lines / 1 file (44b699b..a43db5e).
+- Old R1 review line numbers 335/270/354 were pre-merge; current refs are
+  663/590/599/682 (see acceptance/tests).
+- worklog/evidence are .gitignore'd; C5 force-adds them.

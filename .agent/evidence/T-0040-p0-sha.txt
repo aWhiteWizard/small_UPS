@@ -3,19 +3,19 @@ TASK: T-0040
 DATE: 2026-11-21 (UTC+8)
 BASE_HEAD: 44b699bd192e443e9b88f25c8ad3dbe8d256921a
 CONTENT_COMMIT: a43db5e62bb018b9327debe8b4ad179786e3b802
-LOCAL_HEAD: a43db5e62bb018b9327debe8b4ad179786e3b802
-ORIGIN_MASTER: a43db5e62bb018b9327debe8b4ad179786e3b802
 LS_REMOTE_C1: a43db5e62bb018b9327debe8b4ad179786e3b802
 PUSH: exit 0; 5bb31ef..a43db5e  HEAD -> master
 PUSH_EXIT: 0
 C1_ANCESTOR_OF_HEAD: YES
+CURRENT_HEAD: f3bdcacce4bf46ac3476b77c860138077c253518
+REMOTE_MASTER_NOW: f3bdcacce4bf46ac3476b77c860138077c253518
 REQUIREMENTS_HASH_BASE: 7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
-REQUIREMENTS_HASH_HEAD: 7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
+REQUIREMENTS_HASH_C1: 7e6b6d5f9ad3d7d282a38e24a9b7efb803f4432e
 LOG:
 a43db5e docs(T-0040): 保留 architecture.md 的 UTF-8 BOM
 5bb31ef docs(T-0040): 对齐 T-0036 短针分级 s=2.0
 a09e6cd docs(T-0040): 架构④ 板级划分与结构分区（G2 R1 返修）
 NOTE:
-- C1=a09e6cd（R1 返修）、C3=5bb31ef（T-0036 短针）、C3b=a43db5e（BOM）均含 Ticket: T-0040。
-- C4 (this evidence commit) body trailer: Evidence: T-0040; C4 SHA is reported, not self-recorded.
-- old round C1=469e86c/C2=0957970 kept on task/T-0040-bak-T-0040-20261120-204200.
+- C1=a09e6cd、C3=5bb31ef、C3b=a43db5e（CONTENT_COMMIT）均含 Ticket: T-0040。
+- C4=73076c1（Evidence: T-0040）已 push；C5 为本次合并后证据刷新提交（Evidence: T-0040），SHA 见报告。
+- a43db5e 是当前 HEAD 的祖先；当前 HEAD 另含 T-0039/T-0052 等后续单。
