@@ -1,0 +1,12 @@
+KIND: g0
+task: T-0038 (rework: delivery only; content already PASS, reused)
+baseSha(task): fef3656dd224ccd7d4cc137f1ad6f71555f1644d
+HEAD at start: fef3656dd224ccd7d4cc137f1ad6f71555f1644d
+HEAD==baseSha: YES (worktree clean; prior PASS content recovered from commit 284f1c4)
+ENV-NOTE: .tools junction -> D:\workspace\wt\small-ups\T-0002\.tools (gitignored env prep, not in delivery diff)
+g0-check-env: powershell -NoProfile -File firmware/tools/check-env.ps1 -> CHECK-ENV: PASS, exit 0
+g0-build: powershell -NoProfile -File firmware/build.ps1 -Clean -> exit 0; psu_minimal.elf RAM 1584/36KB, FLASH 1544/128KB
+build-warning: _close/_lseek/_read/_write not implemented (libc_nano stubs; pre-existing, unrelated to docs)
+content commit: 00e643a896a1167f36e5f20a70b084b1fa8457c7
+scope content: 1 file / +133 -4, only .agent/docs/architecture.md
+doc-only: YES (no code/config change)

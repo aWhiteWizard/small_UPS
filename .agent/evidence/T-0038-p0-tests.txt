@@ -1,0 +1,13 @@
+KIND: tests
+task: T-0038 (doc consistency checks; docs-only change)
+PASS BOM: first3=EF BB BF (.agent/docs/architecture.md)
+PASS line endings: CRLF only, bareLF=0
+PASS whitespace: tabs=0, trailingWS=0
+PASS headings: §18.1-§18.7 all present (7)
+PASS tables: 9 table blocks in §18, pipe-count inconsistent=0
+PASS numbering: residual "§12." or "### 12." inside §18 = 0
+PASS decisions: D-refs in §18 = 40 (D-08/10/11/21/23/29/30/31/32)
+PASS owner flag: §18.6 contains "待 owner 确认" (D-21 100kHz vs R 200kHz)
+PASS fidelity: §18 text IDENTICAL to PASS commit 284f1c4 modulo §12->§18 renumber (Compare-Object empty)
+PASS scope: git diff --numstat = 133 4 .agent/docs/architecture.md (single file)
+PASS non-touch: requirements.md/modules.md unchanged (git status only architecture.md)

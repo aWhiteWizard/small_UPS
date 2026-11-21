@@ -1,0 +1,13 @@
+KIND: sha
+TASK: T-0038 (delivery rework; content PASS reused from 284f1c4)
+BASE_SHA: fef3656dd224ccd7d4cc137f1ad6f71555f1644d
+HEAD_AT_START: fef3656dd224ccd7d4cc137f1ad6f71555f1644d
+CONTENT_COMMIT: 00e643a896a1167f36e5f20a70b084b1fa8457c7
+CONTENT_STAT: 1 file changed, 133 insertions(+), 4 deletions(-) (.agent/docs/architecture.md only)
+PUSH_C1: git push origin HEAD:refs/heads/master -> "fef3656..00e643a  HEAD -> master", exit 0
+LS_REMOTE_C1: 00e643a896a1167f36e5f20a70b084b1fa8457c7	refs/heads/master
+EVIDENCE_COMMIT: (backfilled in C3)
+PUSH_C2: (backfilled in C3)
+LS_REMOTE_C2: (backfilled in C3)
+FINAL_EVIDENCE_COMMIT: C3 (this file updated; final ls-remote recorded in report/P1)
+LOG: (backfilled in C3)

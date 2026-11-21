@@ -538,6 +538,8 @@ KB-TAGS: rework, baseline, appendix, architecture, t-0042
 
 T-0042 重派到 a0d208d 后，T-0036 已占用需求附录 M、T-0037 已占用 architecture §2.6；若直接照旧稿写“附录 M / §2.6”会覆盖他单。返修开工先 grep 目标章节/附录字母占用，再决定新字母/新小节号；旧 worktree 成果可从看板 `worktreeRebuild.oldBranch` 找到，但不要拼接旧 worktree。
 
+N=2（T-0038）：旧基线 PASS 的「§12 控制架构」重派到 fef3656 后，§12 已被 T-0037 占用（architecture.md:1043）。处理为整章移到文末空号 §18（:1524），只做 `§12.`→`§18.`/`### 12.`→`### 18.` 机械替换，再归一化编号用 `Compare-Object` 与旧 PASS 提交 `284f1c4` 的章节逐行比对（必须全等），避免“重排=重写”被审查重判内容。回写仍按 BOM 条用 `UTF8Encoding($true)`。
+
 ## worktree 纯文档单的 G0：先补 .tools junction 再跑 check-env/build
 
 KB-TYPE: method
