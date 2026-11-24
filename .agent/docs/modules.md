@@ -945,6 +945,120 @@ A21/B21 + A23/B23 ──► independent 12V return copper ──► star point
 
 > 核对：D5 的预充 22Ω/5W + MOS 旁路（到 90% 闭合）、泄放 150Ω/15W 水泥电阻 + N-MOS、比较器“端电压 > 设定+1V”导通、峰值 40W/2s、外接制动 2pin/3A 丝印 50–100W、状态（泄放中/预充完成/累计能量）经 MCU → I2C 上报本体、NTC >100℃ 关断并报 `BLEED_OVERTEMP`、泄放电阻放板最下侧均按 D5/D-13/D-25/D-36 原文落稿；六栏齐全（输入、输出、供电与接地、关键器件与规格、接口信号/检测点、失败模式与后果）；与本体 OVP 不锁存（D-26）的配合及吸收能力上限对外口径已写明；未新增/修改 D5 参数与 R 验收阈值；8 项差异列于「待 owner 确认」。
 
+### 2.8 调试板 MCU 与调试口（D6）
+
+> 编号说明：工单 T-0077 要求写入“§2.6”；本文件 §2.6 已为“EN/心跳/ALERT 主机侧”（T-0009/T-0031），§2.7 为负载适配区（D5，T-0076）。为保持既有编号稳定，D6 正文落 §2.8；编号差异列「待 owner 确认」#1，不改 §2.1–§2.7、不重号。
+
+> 责任边界：调试板（D 板）MCU 最小系统、HSE 8MHz 时钟、复位/BOR、IWDG、SWD 调试焊盘、USB-C 升级通道与复位安全态；给 D1–D5 所需的 MCU 引脚分配。不做本体 MCU（M9/本体功率与保护）、不做 D1 电源树、D2 显示驱动、D3 协议、D4 USB PHY、D5 预充/泄放功率回路，不改变各模块参数与 R 验收阈值。来源：`.agent/module-design.md` D6；architecture §18.5（D-23 同款 G431CBT6）、§8.4/§19.8（D 板升级）、§19.5（D 板固件/看门狗）、§7.2（使能/心跳）；需求口径见 R §3.5.10/§4.2.6/§4.4.3；D1–D5 见 §2.1–§2.7。本单只改本节，§2.1–§2.7 不动。
+
+> 链路（D6）：A22 12V → D1 的 5V buck/3.3V LDO → G431CBT6 3.3V/VDDA；HSE 8MHz 晶振（PF0/PF1）→ PLL → 170MHz 内核/48MHz USB；NRST + 内置 BOR；IWDG 1s 由主循环喂狗；SWD 5 信号（3.3V/SWDIO/SWCLK/NRST/GND）仅首烧/救援；USB-C D± → G431 USB FS CDC → D bootloader/应用，`UP P` 经 USART2 透传本体，`UP D` 进 D bootloader；复位/IWDG/BOR 后 EN 低、预充/泄放 MOS 栅极下拉关断。
+
+| 输入 | 输出 | 供电与接地 | 关键器件与规格 | 接口信号/检测点 | 失败模式与后果 |
+|---|---|---|---|---|---|
+| 3.3V、HSE 8MHz 晶振、NRST、BOOT0/PB8；IWDG 喂狗 | 170MHz 内核、48MHz USB 时钟、IWDG 1s 复位、BOR 复位 | 3.3V/SGND；VDDA/VREF+ 经 LC 从 3.3V 供给；每电源脚 100nF+4.7µF | STM32G431CBT6（LQFP48，128KB Flash/32KB SRAM，Cortex-M4F 170MHz）；8MHz 晶振；NRST 10k 上拉+100nF；内置 BOR；IWDG 1s | PF0/PF1（脚 5/6）、NRST（脚 7）、BOOT0/PB8（脚 45）、SWDIO/SWCLK（脚 37/38）、3.3V/VDDA 测试点 | HSE 失效→时钟降级；USB 48MHz 不能维持时升级不可用，输出保持 OFF；IWDG/BOR 复位→EN 低、输出 OFF；晶振/去耦不良→USB 枚举失败或复位 |
+| 6 键、ALERT、RS485 RX、I2C 总线、VBUS_SENSE、BLEED_NTC | 595 三线、RS485 TX/DE、UART TX/RX、USB D±、预充/旁路/泄放、EN | 3.3V IO/SGND；模拟输入参考 VDDA/VREF+；I2C 4.7k 上拉 | G431CBT6 的 24+5 路 IO；引脚表见下；595 链式（2 或 3 片待确认）；MAX3485；USB FS；10k 下拉/上拉 | 24 信号逐脚见下表；EN/ALERT/DE/VBUS/NTC 见补充表；595 三线、USART2/3、I2C1、USB FS | IO 复用冲突/AF 配错→外设不工作；5V 注入→超 3.3V；IO 不足→扩 595/改封装；复位态错→误预充/误泄放 |
+| SWDIO/SWCLK、NRST、3.3V（VTREF）、GND | 调试/烧写访问；首烧/救援 D bootloader | 3.3V 仅 VTREF/NC，不作 D 板电源；SWD GND 与 SGND 同点；D 板由 A22 12V 供电 | 5 信号（3.3V/SWDIO/SWCLK/NRST/GND），2×5 1.27mm 或 4–6P 2.54mm；板上无开孔；丝印 `SWD_DEBUG，仅首烧/救援` | PA13/PA14；NRST；IDCODE/烧写校验；与 USB 同时连接时 3.3V 轨/地电流 | 5V 调试器/强供 3.3V→反灌；热插拔→IO 过压；SWD halt→心跳停、本体 HB_LOST；升级中 attach/reset→半写 |
+| USB-C CDC 升级帧、`UP P`/`UP D`、本体 UART 字节流 | D bootloader/应用；本体经 A28/A29 透传升级；升级态 EN 低、输出 OFF、心跳停 | 升级期间由 A22 12V 供电；不得靠 USB VBUS/SWD 3.3V；EN 硬件下拉 | D bootloader 16–24KB（不随应用擦除）；应用单区+镜像 CRC；备份 RAM magic；1KB CDC 缓冲；USART2 115200 8N1 | PA11/PA12、PA2/PA3、EN；HELLO/ERASE/WRITE/VERIFY/GO/ABORT/INFO；CRC/帧错/超时 | 掉电/拔线/帧错→停 bootloader 等重传，不跳无效应用；D 应用失效→bootloader 仍透传；无版本门禁；升级完成复位后输出 OFF |
+| 复位/BOR/IWDG/升级请求/EN | EN 低；预充/旁路/泄放 MOS 栅极低；595 输出安全态 | 3.3V/SGND；栅极 10k 下拉到 SGND；EN 100Ω 串阻+10k 下拉 | PA0/PA1/PA6 10k 下拉；PA9 EN 100Ω+10k 下拉；595 OE/MR 按 D2；D5 预充/泄放功率回路 | PA0/PA1/PA6、PA9、NRST；复位后 EN/栅极电压；IWDG 复位波形 | 栅极浮空/上电毛刺→误预充/误泄放；MCU 死机→IWDG 复位但仍需本体心跳/EN 兜底；复位自动重合闸（禁止） |
+
+**D6 参数与口径（D6 结论按原文落稿，不重算/不改值；支撑项注明来源）**
+
+| 项 | 口径/结果 | 用途/落点 |
+|---|---|---|
+| MCU | STM32G431CBT6，LQFP48，128KB Flash/32KB SRAM，Cortex-M4F 170MHz（D6/architecture §18.5/D-23） | 调试板主控；与本体同款 |
+| 时钟 | HSE 8MHz 晶振（PF0/PF1，脚 5/6）→PLL→170MHz 内核/48MHz USB；HSE 失效按时钟安全策略降级 | USB FS/CDC、升级、1ms 时基 |
+| 复位/BOR | NRST 10k 上拉+100nF（M9 同款）；内置 BOR 使能；BOOT0/PB8 10k 下拉+测试点 | 上电/掉电安全态；首烧 |
+| 看门狗 | IWDG 1s，主循环 1ms 任务健康时喂狗；IWDG 复位→EN 低、输出 OFF（architecture §19.5 为 200ms，见待确认 #2） | 死机兜底；不替代本体 HB/EN |
+| SWD | 5 信号（3.3V/SWDIO/SWCLK/NRST/GND）；仅首烧/救援；不参与正常升级；外壳不开孔 | 首烧 bootloader/救援 |
+| 升级 | USB-C CDC→D bootloader；`UP P` 透传本体、`UP D` 自身；应用单区+镜像 CRC；boot 16–24KB；掉电/帧错停 boot 等重传；无版本门禁 | D/本体升级；EN 低 |
+| 安全态 | 复位/BOR/IWDG 后 EN 低；PA0/PA1/PA6 10k 下拉，预充/旁路/泄放 MOS 默认关断；不自动重合闸 | D5 预充/泄放；本体输出 OFF |
+| IO 数 | D6 列 ≈24 IO；补 EN/ALERT/RS485_DE/VBUS_SENSE/BLEED_NTC 后 29 IO；LQFP48 38 GPIO，余 9；状态灯/存储待定 | 引脚预算；不改 LQFP48 结论 |
+| 供电 | 3.3V 由 D1 的 12V→5V buck→3.3V LDO；D 板 3.3V≈0.10A 预算；VDDA/VREF+ 单独 LC/去耦 | MCU/显示/RS485/USB |
+| 存储 | D6 未定；D3 的阈值 A/B 槽可用内部 Flash 数据页或外部 EEPROM；选型待 owner 确认 #6 | 阈值/故障历史掉电保存 |
+
+**引脚分配（D6 要求的 24 个信号；LQFP48 物理脚按 ST DS12589 Table 12）**
+
+| 功能组 | 信号 | LQFP48 脚 | 端口/复用 | 方向/复位态 | 备注 |
+|---|---|---|---|---|---|
+| 595×3 | 595_SER | 15 | PA7 / SPI1_MOSI | 输出 / 输入 | 595 串行数据；D2 段/位驱动 |
+| 595×3 | 595_SRCLK | 13 | PA5 / SPI1_SCK | 输出 / 输入 | 595 移位时钟 |
+| 595×3 | 595_RCLK | 30 | PA8 / GPIO | 输出 / 输入 | 595 锁存；上升沿更新 |
+| 按键 6 | KEY_LEFT | 16 | PB0 / GPIO | 输入上拉 / 输入 | 5 界面键 + 电源键；按下低，10k 上拉+100nF |
+| 按键 6 | KEY_RIGHT | 17 | PB1 / GPIO | 输入上拉 / 输入 | 同上 |
+| 按键 6 | KEY_SET | 18 | PB2 / GPIO | 输入上拉 / 输入 | 同上 |
+| 按键 6 | KEY_UP | 42 | PB5 / GPIO | 输入上拉 / 输入 | 同上 |
+| 按键 6 | KEY_DOWN | 27 | PB13 / GPIO | 输入上拉 / 输入 | 同上 |
+| 按键 6 | KEY_POWER | 29 | PB15 / GPIO | 输入上拉 / 输入 | 独立电源键；只发请求，不直连 EN |
+| UART 2 | UART_TX | 10 | PA2 / USART2_TX | 输出 / 输入 | 115200 8N1 → A28 |
+| UART 2 | UART_RX | 11 | PA3 / USART2_RX | 输入 / 输入 | ← A29 |
+| USB 2 | USB_DM | 33 | PA11 / USB_DM | 双向 / 输入 | USB FS CDC；22Ω/ESD/CMC |
+| USB 2 | USB_DP | 34 | PA12 / USB_DP | 双向 / 输入 | 同上 |
+| RS485 2 | RS485_TX | 22 | PB10 / USART3_TX | 输出 / 输入 | MAX3485；9600 8N1 |
+| RS485 2 | RS485_RX | 25 | PB11 / USART3_RX | 输入 / 输入 | 同上；DE/RE 见补充表 |
+| I2C 2 | I2C_SCL | 43 | PB6 / I2C1_SCL | 开漏 / 输入 | 4.7k 上拉；100kHz 默认/400kHz 最大 |
+| I2C 2 | I2C_SDA | 44 | PB7 / I2C1_SDA | 开漏 / 输入 | 同上；→ A24/B24 |
+| 泄放/预充 3 | PRECHARGE_EN | 8 | PA0 / GPIO | 输出 / 输入 | 10k 下拉；预充 MOS |
+| 泄放/预充 3 | PRECHARGE_BYPASS | 9 | PA1 / GPIO | 输出 / 输入 | 10k 下拉；端电压 90% 旁路 |
+| 泄放/预充 3 | BLEED_EN | 14 | PA6 / GPIO | 输出 / 输入 | 10k 下拉；泄放 MOS |
+| SWD 2 | SWDIO | 37 | PA13 / SWDIO | 双向 / 上拉 | 5 信号；仅首烧/救援 |
+| SWD 2 | SWCLK | 38 | PA14 / SWCLK | 输入 / 下拉 | 同上 |
+| 晶振 2 | OSC_IN | 5 | PF0 / OSC_IN | 模拟 | HSE 8MHz |
+| 晶振 2 | OSC_OUT | 6 | PF1 / OSC_OUT | 模拟 | HSE 8MHz |
+
+> 计数核对：595×3 + 按键 6 + UART 2 + USB 2 + RS485 2 + I2C 2 + 泄放/预充 3 + SWD 2 + 晶振 2 = 24 个信号。595 为链式三线，芯片数 2（D2）或 3（D6）不改变 MCU 引脚数。
+
+**D6 口径外的必需信号（未计入上述 24；补后 29 IO）**
+
+| 信号 | LQFP48 脚 | 端口/复用 | 方向/复位态 | 说明 |
+|---|---|---|---|---|
+| EN | 31 | PA9 / GPIO | 输出 / 输入 | 100Ω→B25，本体 10k 下拉；D 复位/掉电为低 |
+| ALERT | 32 | PA10 / GPIO | 输入上拉 / 输入 | ←A25；10k 上拉+100nF+1k 串阻 |
+| RS485_DE | 28 | PB14 / USART3_RTS_DE | 输出 / 输入 | D3 要求 DE/RE；D6 的 RS485 2 未计 |
+| VBUS_SENSE | 12 | PA4 / ADC2_IN17 | 模拟输入 | D4 VBUS 分压；不进电源树 |
+| BLEED_NTC | 26 | PB12 / ADC1_IN11 | 模拟输入 | D5 NTC 分压；>100℃ 关断泄放 |
+| BOOT0 | 45 | PB8-BOOT0 | 输入 / 输入 | 10k 下拉+测试点；不作 GPIO |
+
+> 说明：24 + 5 = 29 IO；LQFP48 有 38 GPIO，余 9。M10 前面板 3 颗状态灯（电源/运行/故障）未入 D6 的 IO 表，若由 3 GPIO 驱动则为 32 IO，仍在 38 以内；也可由 595 第三片驱动，待 owner 确认 #7。D3 的 A/B 槽存储介质未定，见待确认 #6。
+
+**复位、升级与失效安全（D6）**
+
+- 复位：NRST/BOR/IWDG 复位后 GPIO 为输入；PA0/PA1/PA6 靠 10k 下拉保持低，PA9 EN 靠串阻+10k 下拉保持低；595 输出按 D2 的安全态；不自动重合闸。
+- 看门狗：IWDG 1s，只在主循环 1ms 任务健康时喂狗；IWDG 复位不依赖本体，本体 500ms 心跳丢失仍按 architecture §7.2 独立关断（D6 与 §19.5 的 200ms 冲突见待确认 #2）。
+- 时钟/USB：HSE 8MHz 供 170MHz 内核与 48MHz USB；HSE 失效按时钟安全策略降级；USB 48MHz 不能维持时升级不可用，输出保持 OFF；恢复需人工或 SWD 救援。
+- 升级：USB-C CDC→D bootloader；boot 16–24KB 不随应用擦除；应用单区+镜像 CRC；`UP P` 只透传 A28/A29，不解析/不改写；`UP D` 置备份 RAM magic 后复位；升级态 EN 低、输出 OFF、心跳停；失败停 bootloader 等重传；无版本门禁。
+- SWD：5 信号；3.3V 仅 VTREF/NC，禁止 5V/强供；SWD halt/reset 会停 100ms 心跳并触发本体 HB_LOST；升级中不得 attach/halt/reset（D4）。
+- 安全态：预充/旁路/泄放 MOS 默认关断；EN 默认低；复位/掉电/升级完成均不自动使能；D5 的 NTC/状态另见 §2.7。
+
+**边界（D1–D5/M9/architecture）**
+
+| 边界 | 节点/口径 | 责任分界 |
+|---|---|---|
+| D1↔D6 | 3.3V、I2C A24/B24、ALERT A25、EN B25、UART A28/A29 | D1 负责电源/I2C 上拉/ESD；D6 负责 MCU 引脚与 EN 输出 |
+| D2↔D6 | 595 三线、6 键 | D2 负责显示驱动/扫描；D6 负责引脚/IO 预算 |
+| D3↔D6 | USART3+DE/RE、阈值 A/B 槽 | D3 负责协议/判定；D6 负责 MCU/引脚/存储介质 |
+| D4↔D6 | USB FS PA11/PA12、SWD、D bootloader | D4 负责 USB PHY/协议；D6 负责 MCU/SWD/boot |
+| D5↔D6 | 预充/旁路/泄放 3 路、NTC ADC | D5 负责功率/时序；D6 负责引脚与复位安全态 |
+| M9↔D6 | 本体 MCU：M9 写 G431RBT6（LQFP64），D-23/architecture §18.5 写同款 G431CBT6（LQFP48） | 本体选型不在本单；D6 只落调试板 G431CBT6 LQFP48；冲突待确认 #9 |
+| R/architecture↔D6 | SWD 5 信号、IWDG、USB 升级、EN 低 | 以 R/architecture 为准；D6 只落 MCU/引脚，不改验收阈值 |
+
+**待 owner 确认（不改 R/architecture 正文）**
+
+| # | 事项 | 现状/差异 |
+|---|---|---|
+| 1 | 章节号 | 工单 T-0077 写“modules.md §2.6”；本文件 §2.6 已为 EN/心跳/ALERT（T-0009/T-0031），§2.7 为 D5（T-0076）。本稿按内容落 §2.8、保持既有编号稳定；是否把 D6 改挂 §2.6 待 owner 确认。 |
+| 2 | IWDG 周期 | D6 写 **IWDG 1s**；architecture §19.5 写调试板固件“看门狗 200 ms”。本稿按 D6 的 1s 落稿，不擅自改 §19.5；以哪个为准、心跳/喂狗窗口如何配合待 owner 确认。 |
+| 3 | 595 数量 | D6 写 **595×3**；D2 写 **2×74HC595 + 8 颗三极管（或 ULN2003）**。本稿按 595 三线落引脚（链式，不增加 MCU 引脚）；第三片用途（状态灯/位驱动/扩展）待 owner 确认。 |
+| 4 | 24 IO 口径 | D6 的 ≈24 IO 未计 EN、ALERT、RS485 DE、VBUS_SENSE、BLEED_NTC；补后 29 IO。LQFP48 有 38 GPIO，仍够用；是否把 5 个口径外信号正式纳入 D6 的 IO 预算待 owner 确认。 |
+| 5 | RS485 DE/RE | D6 只列 RS485 2；D3 要求 USART + DE/RE 方向切换。本稿用 PB14/USART3_RTS_DE 补 1 路 DE，是否改自动方向收发器或再加 RE 待 owner 确认。 |
+| 6 | 阈值存储介质 | D3 写“MCU 内部 Flash 数据页/外部 EEPROM（D6 定）”；D6 未给介质。本稿只列两种可选，不代选；A/B 槽、CRC、掉电写保护待接口冻结。 |
+| 7 | 状态灯 | M10 前面板 3 颗状态灯（电源/运行/故障）未入 D6 的 IO 表。本稿按 595 第三片或 3 GPIO 两种路径留余量；具体驱动/引脚待 owner 确认。 |
+| 8 | SWD 焊盘 | D6 写“SWD 焊盘”与“SWD 2”；R §3.5.10 要求含 3.3V/SWDIO/SWCLK/NRST/GND。本稿按 5 信号落，其中仅 SWDIO/SWCLK 计 2 IO；焊盘形式（2×5 1.27mm 或 4–6P 2.54mm）待结构确认。 |
+| 9 | 本体 MCU 封装 | M9 写本体改 **G431RBT6（LQFP64）**；D-23/architecture §18.5 写本体+调试板同款 **G431CBT6（LQFP48）**。本单只落调试板 LQFP48，不受影响；本体封装冲突待 owner 收口。 |
+
+> 风险（待设计/实测，不改参数）：D6 的 ≈24 IO 实际需 29（补 EN/ALERT/DE/VBUS/NTC），虽在 LQFP48 的 38 GPIO 内，但 ADC/复用/5V 容忍引脚需在原理图阶段逐脚复核；IWDG 1s 与 §19.5 的 200ms 未统一，影响喂狗窗口与 HB_LOST 配合；595 第三片、状态灯与存储介质未冻结，可能改变 IO/SPI/EEPROM 方案；SWD 5V/强供、USB 与 SWD 同时连接、SWD halt 导致心跳丢失需按 D4 实测；HSE 失效后若 USB 时钟不能维持，升级只能 SWD 救援；PB8-BOOT0 与 BOOT0 电平需首件确认；物理脚位按 DS12589 Table 12 落稿，投板前需与数据手册/原理图逐脚核对。
+
+> 核对：D6 的 G431CBT6 LQFP48、HSE 8MHz、IWDG 1s、SWD 焊盘+USB 升级、复位后预充/泄放 MOS 默认关断均按原文落稿；六栏齐全（输入、输出、供电与接地、关键器件与规格、接口信号/检测点、失败模式与后果）；引脚表覆盖 595×3、按键 6、UART 2、USB 2、RS485 2、I2C 2、泄放/预充 3、SWD 2、晶振 2（24 信号）；D6 口径外的 EN/ALERT/DE/VBUS/NTC 单列并说明；未新增/修改 D6 参数与 R 验收阈值；9 项差异列于「待 owner 确认」。
+
 ## 3. 模块与验收映射
 
 > 只做“模块 → 设计落点 → 需求 → 验证”索引，不复制判据数值；判据以 R 与 `.agent/docs/architecture.md` §10 为准。
@@ -967,6 +1081,7 @@ A21/B21 + A23/B23 ──► independent 12V return copper ──► star point
 | §2.5 USB-C 与升级透传 | architecture §8.1–§8.4、§9.4 | R §4.2.6、§4.5、附录 J.6 | architecture §10.8 |
 | §2.6 EN/心跳/ALERT 主机侧 | architecture §7.2、§7.3、§9.3 | R §4.2.4、§4.1 D-04/D-05 | architecture §10.8 |
 | §2.7 负载适配区（D5） | `.agent/module-design.md` D5；architecture §7.5/§7.6（本体 OVP/残压边界） | D-12/D-13/D-25/D-26/D-36（owner 决策）；R §2.8（容性负载）；R 无 D5 专节 | 首样：预充/泄放/外接制动/NTC 热与回馈注入（测试单待定） |
+| §2.8 调试板 MCU 与调试口（D6） | `.agent/module-design.md` D6；architecture §18.5、§8.4、§19.5/§19.8 | R §3.5.10、§4.2.6、§4.4.3；D-23（G431CBT6 同款） | 首样：SWD 首烧、USB 升级/掉电重传、IWDG 复位、复位安全态（测试单待定） |
 | §1.6/§1.7/§2.1/§2.6 非受控拔出（T-0036） | architecture §6.1、§7.2、§7.5、§9.5；R 附录 M | R §1.5、§2.1.1/§2.1.4、§3.3.8、§4.4.2/§4.4.7 | architecture §10.6、§10.8（第 16/17 项） |
 
 ## 4. 来源、迁移与审查口径
@@ -989,6 +1104,7 @@ A21/B21 + A23/B23 ──► independent 12V return copper ──► star point
 | `.agent/docs/modules.md`:§2.4 | `docs/module-design.md`:§2.4 | 全文迁入四栏 |
 | `.agent/docs/modules.md`:§2.5 | `docs/module-design.md`:§2.5 | 全文迁入四栏 |
 | `.agent/docs/modules.md`:§2.6 | `docs/module-design.md`:§2.6（原待填） | 用 T-0009/T-0031 已定稿的主机侧使能/心跳/ALERT 内容回填四栏，不新增验收 |
+| `.agent/docs/modules.md`:§2.8 | `.agent/module-design.md` D6 | 新增 D6 正文（工单要求 §2.6；§2.6 已占，落 §2.8） |
 | `.agent/docs/modules.md`:§3 | 新增索引 | 只做模块→设计→需求→验证映射，不新增判据 |
 | `.agent/docs/modules.md`:§4 | 新增/迁移说明 | 记录来源与审查口径 |
 
