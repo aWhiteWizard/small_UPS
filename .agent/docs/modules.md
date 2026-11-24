@@ -808,12 +808,63 @@ A21/B21 + A23/B23 ──► independent 12V return copper ──► star point
 
 > 核对：D3 的 MAX31865 + MAX3485 + TVS + 共模电感、Modbus RTU 9600/8N1/地址 1/FC03、连续 3 次超时（500ms/次）判掉线、端子入口 TVS 均按原文落稿；六栏齐全（输入、输出、供电与接地、关键器件与规格、接口信号/检测点、失败模式与后果）；掉线/超温对本体输出的“禁输出”与恢复条件已写明；未新增/修改 D3 参数与 R 验收阈值；6 项差异列于「待 owner 确认」。
 
-### 2.5 USB-C 与升级透传
+### 2.5 USB-C 与升级透传（D4）
 
-| 输入 | 输出 | 关键器件 | 风险 |
-|---|---|---|---|
-| USB-C CDC（数据 only） | PC 工具页面：温度阈值、故障码/历史、校准、升级；不提供 V/I/输出控制 | USB FS CDC、TVS、共模扼流圈、CC 5.1k 下拉 | ESD/共模、误当程控口、未授权改阈值 |
-| 本体/调试板升级请求 | 本体透传 A28/A29；D bootloader；升级态 EN 低、输出 OFF | bootloader、备份 RAM magic、帧解析 | 变砖、升级中掉电、模式互斥；数码管不显示 UP 文字 |
+> 编号说明：工单 T-0075 要求写入“§2.4”；本文件 §2.4 已为“PT100/RS485 通道（D3）”，D4/USB-C 的既有落点为 §2.5。为保持章节编号稳定，D4 正文落 §2.5；编号差异列「待 owner 确认」#1，不改 §2.4、不重号。
+
+> 责任边界：D 侧 USB-C 16P 数据口、CC1/CC2 配置、D± ESD/共模/串阻、G431 USB FS CDC、PC 工具 ASCII 行协议、`UP P`/`UP D` 升级入口与 UART 透传、VBUS 检测（不进电源树）、USB 与 SWD 同时连接时的电平/供电/接地/功能互斥处理；不做 V/I 设定/输出控制（R §4.2.6）、不做本体保护/EN/短针（M7/M9）、不把 USB-C 扩展为 SCPI/LAN/GPIB 程控口（R O-08）。来源：`.agent/module-design.md` D4；接口/保护见 architecture §6.2.4；协议/失败恢复见 architecture §8.4/§9.4/§19.8；需求口径见 R §2.4.3/§4.2.6/§4.4.3/§3.5.10。本单只改本节，§2.1–§2.4、§2.6 不动。
+
+> 链路（D4）：PC ↔ USB-C 16P 母座（D+/D−、CC1/CC2 各 5.1kΩ 下拉、VBUS 仅分压检测）→ USBLC6-2SC6（连接器侧 ESD）→ 共模扼流圈（90Ω@100MHz）→ D± 串 22Ω → G431 PA12/PA11（USB FS CDC）→ 应用层 ASCII 行协议；升级时 D 应用/bootloader 把 USB 字节流透明转发到 A28/A29（115200 8N1）→ 本体 bootloader；D 自身升级经 `UP D` 置备份 RAM magic → 复位进 D bootloader → USB-C 升级。SWD 焊盘仅首烧/救援 D bootloader，不参与正常升级。
+
+| 输入 | 输出 | 供电与接地 | 关键器件与规格 | 接口信号/检测点 | 失败模式与后果 |
+|---|---|---|---|---|---|
+| PC USB 2.0 主机经 USB-C 16P（数据 only）：D+/D− 差分、CC1/CC2、VBUS（仅检测）；USB FS 12Mbps；PC 侧虚拟串口 | USB FS CDC 虚拟串口；ASCII 行协议（≤128B/行、`\r\n`、不区分大小写）；服务命令 `INFO`/`TH`/`FAULT`/`CAL` 与升级 `UP P`/`UP D`（状态/故障/版本/日志、PT100 阈值、故障历史、校准、升级）；不允许 V/I 设定/输出开关 | D 板 3.3V 由 D1 12V→5V buck→3.3V LDO 提供；VBUS 不接板内 5V/3.3V、不进电源树，仅高阻分压检测；USB 屏蔽经 1MΩ 并联 1nF 到 PCB GND；金属壳与铝壳绝缘；SGND 单点，不形成地环 | USB-C 16P 母座（USB2.0，数据 only）；CC1/CC2 各 5.1kΩ 下拉；USBLC6-2SC6（连接器侧，IEC 61000-4-2 ±8kV 接触/±15kV 空气）；CMC 90Ω@100MHz/≥100mA/DCR≤0.5Ω；D± 串 22Ω；差分 90Ω、≤50mm、地回流 ≤5mm；G431 内置 USB FS | D+/D−（PA12/PA11）、CC1/CC2、VBUS_SENSE、USB 壳地；枚举/虚拟串口、CDC 回环、行协议错误码；VBUS 检测电压、CC 下拉、90Ω 差分、ESD 钳位 | ESD/浪涌→USBLC6 钳位（牺牲件）、CMC 抑制共模；VBUS 误接/反灌→不进电源树，分压高阻+钳位；D± 反接/短路/阻抗不符→不枚举/掉线；CC 缺失/错值→主机不识别；USB 误当程控口→V/I/开关命令一律 `ERR`；PC 连接/断开不得改变输出状态或置故障 |
+| PC 升级帧（`UP P`/`UP D` + bootloader 帧）；本体 UART 字节流 A28/A29；D 应用/bootloader | 本体升级：USB↔A28/A29 透明转发（不解析/不改写/不设版本门禁）；D 自身升级：备份 RAM magic + 复位进 bootloader；升级态 EN 低、输出 OFF、心跳停、继电器释放；上+下长按 2s 在升级态仍强制 EN 低 | 升级期间 D 板仍由 A22 12V 供电，不得靠 USB VBUS/SWD 3.3V 供电；EN 硬件下拉；USB 掉线不改变 EN 低 | D bootloader（独立于应用区，不随应用升级擦除）；备份 RAM magic；1KB CDC 环形缓冲；A28/A29 3.3V TTL 115200 8N1；本体 bootloader 16–24KB 单区+镜像 CRC | A28/A29 TX/RX；升级请求/HELLO、ERASE/WRITE/VERIFY/GO/ABORT/INFO；CRC/帧错/超时；EN、PFC/LLC/BUCK 使能、继电器状态；版本读回 | 升级中拔 USB/掉电/帧错/CRC 错→停 bootloader 等重传，不跳无效应用；D 应用失效→D bootloader 仍提供 USB→UART 透传；普通/`UP P`/`UP D` 三态互斥、CAL 与升级互斥；升级完成复位后输出保持 OFF，需人工重新使能；不做版本门禁，任何版本组合可升级 |
+| SWD 调试器：SWDIO/SWCLK/GND（NRST/3.3V 按 D6 选配）；仅首烧/救援 D bootloader | D MCU 调试/烧写访问；不参与正常 USB 升级；3.3V 仅参考/检测，不作 D 板电源 | SWD 3.3V 不向 D 板供电（只作 VTREF 或 NC）；D 板由 A22 12V 供电；SWD GND 与 SGND 同点；与 USB 同时连接时保持单点接地 | SWD 焊盘/排针（D6 定，至少 SWDIO/SWCLK/GND；3.3V 仅 VTREF/NC）；G431 SWD | SWDIO/SWCLK；NRST/VTREF 3.3V（若引出）；IDCODE/烧写校验；与 USB 同时连接时的 3.3V 轨电压、地电流 | 调试器 5V 电平/强供 3.3V→反灌/对灌，损坏 LDO/MCU；D 板未上电时驱动 SWD→经 ESD 二极管反灌；USB+SWD 双地→地环；升级中 SWD attach/halt/reset→升级中断/半写，需重传；处理见下节 |
+
+**USB 与 SWD 同时连接时的电平/供电冲突及处理（D4）**
+
+| 冲突面 | 现象/后果 | 处理（本稿口径） |
+|---|---|---|
+| 电平 | USB D± 为 3.3V FS，SWD 为 3.3V，同域无需电平转换；若调试器 VTREF/IO 选 5V，5V 驱动 SWDIO/SWCLK 会超出 3.3V 域，经保护二极管向 3.3V 轨灌流，且电平不匹配 | SWD 调试器 VTREF/IO 必须选 3.3V，禁止 5V；D 板 3.3V 未建立时不得驱动 SWD 引脚；SWDIO/SWCLK 是否串阻/钳位由 D6 定（待确认 #2） |
+| 供电 | D 板只由 A22 12V→5V→3.3V 供电，USB VBUS 5V 与 SWD 3.3V 都不是 D 板电源；若调试器向目标供 3.3V，会与 D 板 LDO 输出对灌；若 VBUS 经分压/ESD 二极管反灌，会在 D 板未上电时给 3.3V 轨/GPIO 加电 | ①USB VBUS 不接板内 5V/3.3V，仅高阻分压检测；②SWD 3.3V 只作 VTREF/NC，调试器设为“不向目标供电”；③D 板必须先由 12V 上电、3.3V 稳定后再接 USB/SWD；④若调试器不能关供电，SWD 3.3V 串二极管/限流（器件/值待 D6 定，待确认 #2） |
+| 接地 | USB 连 PC、SWD 连调试器，两个外部地经 PC/调试器可能形成地环；USB 屏蔽两端接机壳会加大环流；R §1.5 要求外部地引入共地时仍单点共地、不得多点接地/地环 | USB 屏蔽经 1MΩ 并联 1nF 到 PCB GND，金属壳与铝壳绝缘；SWD GND 与 SGND 同点；同时连接时只保留一个地参考，PC 与调试器接同一接地系统或用隔离调试器；不得把 USB 壳/SWD 地另接机壳（待确认 #2） |
+| 功能/时序 | SWD halt/断点会停 D 的 100ms 心跳，本体 500ms 内判 HEARTBEAT_LOST 并关断锁存；SWD reset/烧写会拉低 EN、输出 OFF；USB 升级中 SWD attach/halt/reset 会中断升级/半写；普通/`UP P`/`UP D` 三态互斥 | ①SWD 仅首烧/救援，不参与正常升级；②USB 升级（`UP P`/`UP D`）期间不得 SWD attach/halt/reset，需 SWD 救援时先断开 USB 升级、确认 EN 低；③输出 ON 时不得 SWD halt/断点，调试应在输出 OFF/待机态进行；④SWD 复位导致心跳丢失按本体 HB_LOST 锁存处理，调试后人工 CLEAR+重新使能 |
+| 上电/下电顺序 | 先接 USB/SWD 后上 12V，或先掉 12V 后拔 USB/SWD，都可能让 VBUS/3.3V 先于 D 板电源出现在 GPIO/3.3V 轨 | 上电：12V→3.3V 稳定→USB/SWD；下电：USB/SWD→12V；D 板无 3.3V 时插 USB 只允许 VBUS 检测脚带电，分压高阻/限流并确保不反灌（方案待 D6/首样，待确认 #2） |
+
+**D4 参数与口径（按 `.agent/module-design.md` D4 落稿，不重算/不改值）**
+
+| 项 | 口径/结果 | 用途/落点 |
+|---|---|---|
+| 接口 | USB 2.0 Type-C 16P 母座，数据 only、不取电/不充电；D+/D− 到 G431 PA12/PA11；CC1/CC2 各 5.1kΩ 下拉；VBUS 不接板内 5V，仅分压检测 | PC 工具/升级数据口；不承载 V/I 控制 |
+| 保护 | USBLC6-2SC6 连接器侧；CMC 90Ω@100MHz/≥100mA/DCR≤0.5Ω；D± 串 22Ω；差分 90Ω、≤50mm、地回流 ≤5mm；屏蔽 1MΩ 并联 1nF 到 PCB GND | ESD/共模/阻抗；结电容与 R 的差异见待确认 #3 |
+| CDC | USB FS 12Mbps；1KB 环形缓冲；行 ≤128B、`\r\n`、不区分大小写；成功 `OK`/数据行，失败 `ERR <code> <msg>`；命令白名单 | PC 工具服务/标定/诊断；V/I/开关/SCPI 一律 `ERR` |
+| 升级 | `UP P` 本体透传（A28/A29，115200 8N1，不解析/不改写/不设版本门禁）；`UP D` 自身升级（备份 RAM magic + 复位进 D bootloader）；升级态 EN 低、输出 OFF、心跳停；失败停 bootloader 可重传 | 本体/D 均可升级；任何版本组合可升级 |
+| 电源关系 | D 板 3.3V 由 D1 12V→5V buck→3.3V LDO；USB PHY 计入 D1 3.3V≈0.10A；VBUS 不进电源树；SWD 3.3V 不作电源 | 不引入第二电源/反灌；USB 单独插入不启动 D 板 |
+| SWD | 仅首烧/救援 D bootloader；3.3V 仅 VTREF/NC；不参与正常升级；与 USB 升级互斥 | 与 USB 同时连接的处理见上表 |
+| 显示 | 升级/故障不显示 `UP`/`P`/`d` 等文字；保持实测 V/I（OFF 时 0.00/0.000） | 与 R §4.2.6/§4.2.2 一致 |
+
+**边界（D1/D3/D6/M7/M9/architecture）**
+
+| 边界 | 节点/口径 | 责任分界 |
+|---|---|---|
+| D1↔D4（供电） | A22 12V→PTC/TVS→5V buck 500kHz/1A→3.3V LDO/0.5A；D 板 3.3V≈0.10A；USB VBUS 不进电源树 | D1 负责电源树/保护；D4 只取 3.3V，不新增电源、不把 VBUS 接入 |
+| D4↔D6（MCU/USB/SWD） | G431 USB FS（PA11/PA12）、USB-C 16P、SWD 焊盘、D bootloader；D6 定 MCU/引脚/SWD 连接器 | D6 负责 MCU/引脚/存储/SWD；D4 负责 USB PHY/保护/CDC/升级拓扑 |
+| D4↔D3（PC 工具） | PT100 阈值/故障历史命令经 USB-C CDC；D3 定命令语义，D4 只做传输 | D4 不解析/不改写温度阈值语义；D3 不扩 V/I 程控 |
+| D4↔M7/M9（本体升级） | A28/A29 115200 8N1；本体 bootloader、EN 低、输出 OFF | 本体负责 bootloader/保护/EN；D4 只透明转发，不设版本门禁、不旁路 EN |
+| D4↔R/architecture（参数） | 16P、CC 5.1k、USBLC6-2SC6、D± 22Ω、90Ω、115200、1KB/128B | 以 R/architecture 为准；D4 只落器件与六栏，不改验收阈值 |
+
+**待 owner 确认（不改 R/architecture 正文）**
+
+| # | 事项 | 现状/差异 |
+|---|---|---|
+| 1 | 章节号 | 工单 T-0075 要求写“modules.md §2.4”；本文件 §2.4 已为“PT100/RS485 通道（D3）”，D4/USB-C 的既有落点为 §2.5。本稿按内容落 §2.5、保持章节编号稳定；是否把 D4 改挂 §2.4 待 owner 确认。 |
+| 2 | USB 与 SWD 同时连接的供电/接地细则 | D4 只给 USB-C 与“SWD 焊盘”，R/architecture 未规定 D 板 SWD 的 3.3V 引脚处理、是否串阻/钳位、调试器是否可向目标供电、隔离调试器/共地方案、VBUS 分压阻值。本稿按“SWD 3.3V 仅 VTREF/NC、调试器不向目标供电、12V 先上电、单点接地”落；具体电路/器件值待 D6/首样确认。 |
+| 3 | USBLC6-2SC6 结电容 | D4 指定 USBLC6-2SC6；R §4.4.3 要求 TVS 结电容 ≤3pF。器件厂方数据手册标称 3.5pF max（IEC 61000-4-2 ±8kV 接触/±15kV 空气满足）。本稿按 D4 型号落稿；是否放宽 R 到 3.5pF 或换更低电容型号待 owner 确认；USB FS 12Mbps 下 3.5pF 影响需首样眼图实测。 |
+
+> 风险（待设计/实测，不改参数）：USBLC6-2SC6 的 3.5pF 与 R §4.4.3 的 ≤3pF 需 owner 裁定；USB FS 12Mbps 在 22Ω 串阻+CMC+3.5pF 下的眼图/阻抗需首样实测；VBUS 分压阻值/反灌防护未定，D 板未上电时插 USB 的反灌电流需实测；USB 与 SWD 同时连接的地环/调试器供电方式需按 D6 实物验证；升级中拔 USB/掉电的重传、D bootloader 自身升级的失败恢复需 HIL；PC 工具连接/断开 10 次不改变输出状态需联调；SWD halt 导致本体 HB_LOST 的时序需实测确认。
+
+> 核对：D4 的 16P 数据 only、CC1/CC2 各 5.1k、USBLC6-2SC6、D± 串 22Ω、VBUS 不进电源树（仅分压检测）、升级帧经 D UART 透传本体均按原文落稿；六栏齐全（输入、输出、供电与接地、关键器件与规格、接口信号/检测点、失败模式与后果）；USB 与 SWD 同时连接的电平/供电/接地/功能冲突及处理已写明；未新增/修改 D4 参数与 R 验收阈值；3 项差异列于「待 owner 确认」。
 
 ### 2.6 EN/心跳/ALERT 主机侧
 
